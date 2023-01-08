@@ -11,6 +11,18 @@
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
 		CE1A30DA296B0AD6003D1476 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D9296B0AD6003D1476 /* Preview Assets.xcassets */; };
+		CE1A30E7296B195B003D1476 /* AF.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30E6296B195B003D1476 /* AF.swift */; };
+		CE1A30E9296B1973003D1476 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30E8296B1973003D1476 /* Message.swift */; };
+		CE1A30ED296B1A0F003D1476 /* AFAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30EC296B1A0F003D1476 /* AFAttributes.swift */; };
+		CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30EF296B1AA5003D1476 /* AFView.swift */; };
+		CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30F2296B1B48003D1476 /* DividerView.swift */; };
+		CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30F6296B1BF8003D1476 /* Styles.swift */; };
+		CE1A30FA296B1C3D003D1476 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30F9296B1C3D003D1476 /* ChatView.swift */; };
+		CE1A30FC296B1C62003D1476 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30FB296B1C62003D1476 /* MessageBubbleView.swift */; };
+		CE1A30FE296B1C78003D1476 /* MessageFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30FD296B1C78003D1476 /* MessageFieldView.swift */; };
+		CE1A3100296B1CC5003D1476 /* TitleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30FF296B1CC5003D1476 /* TitleRowView.swift */; };
+		CE1A3103296B1DDA003D1476 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3102296B1DDA003D1476 /* SignUpView.swift */; };
+		CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3104296B1E07003D1476 /* EditorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +31,18 @@
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CE1A30D6296B0AD6003D1476 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1A30D9296B0AD6003D1476 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CE1A30E6296B195B003D1476 /* AF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AF.swift; sourceTree = "<group>"; };
+		CE1A30E8296B1973003D1476 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		CE1A30EC296B1A0F003D1476 /* AFAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFAttributes.swift; sourceTree = "<group>"; };
+		CE1A30EF296B1AA5003D1476 /* AFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFView.swift; sourceTree = "<group>"; };
+		CE1A30F2296B1B48003D1476 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
+		CE1A30F6296B1BF8003D1476 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		CE1A30F9296B1C3D003D1476 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		CE1A30FB296B1C62003D1476 /* MessageBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
+		CE1A30FD296B1C78003D1476 /* MessageFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFieldView.swift; sourceTree = "<group>"; };
+		CE1A30FF296B1CC5003D1476 /* TitleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleRowView.swift; sourceTree = "<group>"; };
+		CE1A3102296B1DDA003D1476 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		CE1A3104296B1E07003D1476 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +75,8 @@
 		CE1A30D1296B0AD4003D1476 /* af-ios */ = {
 			isa = PBXGroup;
 			children = (
-				CE1A30E2296B0B26003D1476 /* Components */,
-				CE1A30E1296B0B1C003D1476 /* Models */,
-				CE1A30E0296B0B06003D1476 /* Views */,
+				CE1A30EE296B1A93003D1476 /* Views */,
+				CE1A30E5296B1945003D1476 /* Models */,
 				CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */,
 				CE1A30D4296B0AD4003D1476 /* ContentView.swift */,
 				CE1A30D6296B0AD6003D1476 /* Assets.xcassets */,
@@ -70,25 +93,46 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		CE1A30E0296B0B06003D1476 /* Views */ = {
+		CE1A30E5296B1945003D1476 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		CE1A30E1296B0B1C003D1476 /* Models */ = {
-			isa = PBXGroup;
-			children = (
+				CE1A30E6296B195B003D1476 /* AF.swift */,
+				CE1A30E8296B1973003D1476 /* Message.swift */,
+				CE1A30EC296B1A0F003D1476 /* AFAttributes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		CE1A30E2296B0B26003D1476 /* Components */ = {
+		CE1A30EE296B1A93003D1476 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE1A3101296B1DBC003D1476 /* SignUp */,
+				CE1A30F8296B1C15003D1476 /* Chat */,
+				CE1A30EF296B1AA5003D1476 /* AFView.swift */,
+				CE1A30F2296B1B48003D1476 /* DividerView.swift */,
+				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
 			);
-			path = Components;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CE1A30F8296B1C15003D1476 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				CE1A30F9296B1C3D003D1476 /* ChatView.swift */,
+				CE1A30FB296B1C62003D1476 /* MessageBubbleView.swift */,
+				CE1A30FD296B1C78003D1476 /* MessageFieldView.swift */,
+				CE1A30FF296B1CC5003D1476 /* TitleRowView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		CE1A3101296B1DBC003D1476 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				CE1A3102296B1DDA003D1476 /* SignUpView.swift */,
+				CE1A3104296B1E07003D1476 /* EditorView.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,8 +205,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */,
+				CE1A30FE296B1C78003D1476 /* MessageFieldView.swift in Sources */,
 				CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */,
+				CE1A30FA296B1C3D003D1476 /* ChatView.swift in Sources */,
+				CE1A30E9296B1973003D1476 /* Message.swift in Sources */,
+				CE1A30FC296B1C62003D1476 /* MessageBubbleView.swift in Sources */,
+				CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */,
+				CE1A3100296B1CC5003D1476 /* TitleRowView.swift in Sources */,
+				CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */,
 				CE1A30D3296B0AD4003D1476 /* af_iosApp.swift in Sources */,
+				CE1A3103296B1DDA003D1476 /* SignUpView.swift in Sources */,
+				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
+				CE1A30ED296B1A0F003D1476 /* AFAttributes.swift in Sources */,
+				CE1A30E7296B195B003D1476 /* AF.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,11 +349,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"af-ios/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -321,11 +379,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"af-ios/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

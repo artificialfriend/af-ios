@@ -9,18 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        SignupView()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    @State static var activeTab: Feature = .skin
+    @State static var currentStep: SignupStep = .welcome
+    
     static var previews: some View {
         ContentView()
+            .environmentObject(AF())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        
+        ContentView()
+            .environmentObject(AF())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
     }
 }
