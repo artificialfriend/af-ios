@@ -14,5 +14,4 @@ class AF: ObservableObject {
     @Published var hairStyle: Option = hairStyles[0]
     @Published var eyeColor: Option = eyeColors[0]
     @Published var lashes: Option = eyeLashes[0]
-    @Published var bubbleColor: Option = bubbleColors[0]
 }

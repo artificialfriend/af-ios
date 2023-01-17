@@ -22,8 +22,6 @@ struct EditorView: View {
             activeTabOptionsView = OptionsView(feature: .hair, row1Label: "Color", row1Options: hairColors, row1ActiveOption: af.hairColor, row2Label: "Styles", row2Options: hairStyles, row2ActiveOption: af.hairStyle)
         case .eyes:
             activeTabOptionsView = OptionsView(feature: .eyes, row1Label: "Color", row1Options: eyeColors, row1ActiveOption: af.eyeColor, row2Label: "Lashes", row2Options: eyeLashes, row2ActiveOption: af.lashes)
-        case .bubble:
-            activeTabOptionsView = OptionsView(feature: .eyes, row1Label: "Color", row1Options: bubbleColors, row1ActiveOption: af.bubbleColor, row2Label: "None", row2Options: bubbleColors, row2ActiveOption: bubbleColors[0])
         }
         
         return activeTabOptionsView
@@ -62,10 +60,6 @@ struct TabsView: View {
             Spacer()
             
             TabLabelView(label: "Eyes", feature: .eyes, activeTab: $activeTab)
-            
-            Spacer()
-            
-            TabLabelView(label: "Bubble", feature: .bubble, activeTab: $activeTab)
             
             Spacer()
         }
@@ -139,8 +133,6 @@ struct OptionRowView: View {
             af.eyeColor = option
         case .eyeLashes:
             af.lashes = option
-        case .bubbleColor:
-            af.bubbleColor = option
         }
    }
     
