@@ -56,6 +56,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		489DA246297624CA00A37ED4 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				CE1A30EF296B1AA5003D1476 /* AFView.swift */,
+				CE1A30F2296B1B48003D1476 /* DividerView.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
 		CE1A30C6296B0AD4003D1476 = {
 			isa = PBXGroup;
 			children = (
@@ -77,9 +86,8 @@
 			children = (
 				CE1A30EE296B1A93003D1476 /* Views */,
 				CE1A30E5296B1945003D1476 /* Models */,
-				CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */,
-				CE1A30D4296B0AD4003D1476 /* ContentView.swift */,
 				CE1A30D6296B0AD6003D1476 /* Assets.xcassets */,
+				CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */,
 				CE1A30D8296B0AD6003D1476 /* Preview Content */,
 			);
 			path = "af-ios";
@@ -106,11 +114,11 @@
 		CE1A30EE296B1A93003D1476 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE1A30D4296B0AD4003D1476 /* ContentView.swift */,
+				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
 				CE1A3101296B1DBC003D1476 /* SignUp */,
 				CE1A30F8296B1C15003D1476 /* Chat */,
-				CE1A30EF296B1AA5003D1476 /* AFView.swift */,
-				CE1A30F2296B1B48003D1476 /* DividerView.swift */,
-				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
+				489DA246297624CA00A37ED4 /* Global */,
 			);
 			path = Views;
 			sourceTree = "<group>";
