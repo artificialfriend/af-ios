@@ -14,9 +14,6 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    @State static var activeTab: Feature = .skin
-    @State static var currentStep: SignupStep = .welcome
-    
     static var previews: some View {
         ContentView()
             .environmentObject(AF())

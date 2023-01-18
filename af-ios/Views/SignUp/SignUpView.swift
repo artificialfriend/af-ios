@@ -14,6 +14,7 @@ enum SignupStep {
 }
 
 struct SignupView: View {
+    @EnvironmentObject var af: AF
     @State private var currentStep: SignupStep = .welcome
     @State private var activeTab: Feature = .skin
     @State private var afOffset: CGFloat = 0
@@ -25,7 +26,8 @@ struct SignupView: View {
             if currentStep == .welcome {
                 Image("Logomark")
                     .padding(.top, 16)
-                    .opacity(currentStep == .welcome ? 0.1 : welcomeOpacity)
+                    .foregroundColor(af.interface.lineColor)
+                    .opacity(welcomeOpacity)
                 
                 Spacer()
             }
@@ -45,11 +47,11 @@ struct SignupView: View {
                     .padding(.bottom, currentStep == .welcome ? 16 : 0)
                     .animation(.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1), value: currentStep)
                     .offset(y: afOffset)
-//                    .task {
-//                        withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
-//                            afOffset = -16
-//                        }
-//                    }
+                    .task {
+                        withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
+                            afOffset = -12
+                        }
+                    }
                 
                 if currentStep == .welcome {
                     VStack(spacing: 0) {
@@ -83,6 +85,7 @@ struct SignupButtonView: View {
     @Binding var afOffset: CGFloat
     @Binding var welcomeOpacity: Double
     @Binding var createOpacity: Double
+    //@Binding var buttonOpacity: Double
     
     func changeState() {
         switch currentStep {
@@ -100,28 +103,30 @@ struct SignupButtonView: View {
             if currentStep == .welcome {
                 impactMedium.impactOccurred()
                 changeState()
-                //afOffset = 0
+                afOffset = 0
                 
                 withAnimation(.linear(duration: 0.2)){
                     welcomeOpacity = 0
+                    //buttonOpacity = 0
                 }
                 
                 Task {
                     try await Task.sleep(nanoseconds: 400_000_000)
-//                    withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
-//                        afOffset = -16
-//                    }
+                    withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
+                        afOffset = -12
+                    }
                     
                     withAnimation(.linear(duration: 0.2)){
                         createOpacity = 1
+                        //buttonOpacity = 1
                     }
                 }
             } else {
                 changeState()
                 welcomeOpacity = 1
                 createOpacity = 0
+                //buttonOpacity = 1
             }
-            
         }) {
             ZStack {
                 RoundedRectangle(cornerRadius: 16)
@@ -141,6 +146,8 @@ struct SignupButtonView: View {
                     .opacity(createOpacity)
                     .animation(.linear(duration: 0.2), value: currentStep)
             }
+            //.opacity(buttonOpacity)
+            .animation(.linear(duration: 0.2), value: currentStep)
         }
         .font(.h3)
         .padding(.horizontal, 12)

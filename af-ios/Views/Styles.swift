@@ -18,7 +18,30 @@ extension Font {
 extension Color {
     static let afBlack: Color = Color("afBlack")
     static let afGray: Color = Color("afGray")
+    
+    static let afGreen: Color = Color("afGreen")
+    static let afUserGreen: Color = Color("afUserGreen")
+    static let afIconGreen: Color = Color("afIconGreen")
+    static let afLineGreen: Color = Color("afLineGreen")
+    static let afBubbleGreen: Color = Color("afBubbleGreen")
+    
+    static let afBlue: Color = Color("afBlue")
+    static let afUserBlue: Color = Color("afUserBlue")
+    static let afIconBlue: Color = Color("afIconBlue")
+    static let afLineBlue: Color = Color("afLineBlue")
     static let afBubbleBlue: Color = Color("afBubbleBlue")
+    
+    static let afPurple: Color = Color("afPurple")
+    static let afUserPurple: Color = Color("afUserPurple")
+    static let afIconPurple: Color = Color("afIconPurple")
+    static let afLinePurple: Color = Color("afLinePurple")
+    static let afBubblePurple: Color = Color("afBubblePurple")
+    
+    static let afPink: Color = Color("afPink")
+    static let afUserPink: Color = Color("afUserPink")
+    static let afIconPink: Color = Color("afIconPink")
+    static let afLinePink: Color = Color("afLinePink")
+    static let afBubblePink: Color = Color("afBubblePink")
 }
 
 struct Plain: ButtonStyle {

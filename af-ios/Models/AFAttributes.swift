@@ -36,6 +36,17 @@ struct Options {
     let row2Options: [Option]
 }
 
+struct Interface {
+    let name: String
+    let afColor: Color
+    let userColor: Color
+    let iconColor: Color
+    let lineColor: Color
+    let bubbleColor: Color
+    let afImage: Image
+    let bubbleImage: Image
+}
+
 var skinColors: [Option] = [
     Option(name: "Green Skin", image: Image("Option"), optionType: .skinColor),
     Option(name: "Blue Skin", image: Image("Option"), optionType: .skinColor),
@@ -76,4 +87,47 @@ var eyeColors: [Option] = [
 var eyeLashes: [Option] = [
     Option(name: "Short", image: Image("Option"), optionType: .eyeLashes),
     Option(name: "Long", image: Image("Option"), optionType: .eyeLashes)
+]
+
+var interfaces: [Interface] = [
+    Interface(
+        name: "Green",
+        afColor: Color.afGreen,
+        userColor: Color.afUserGreen,
+        iconColor: Color.afIconGreen,
+        lineColor: Color.afLineGreen,
+        bubbleColor: Color.afBubbleGreen,
+        afImage: Image("GreenAF"),
+        bubbleImage: Image("GreenBubble")
+    ),
+    Interface(
+        name: "Blue",
+        afColor: Color.afBlue,
+        userColor: Color.afUserBlue,
+        iconColor: Color.afIconBlue,
+        lineColor: Color.afLineBlue,
+        bubbleColor: Color.afBubbleBlue,
+        afImage: Image("BlueAF"),
+        bubbleImage: Image("BlueBubble")
+    ),
+    Interface(
+        name: "Purple",
+        afColor: Color.afPurple,
+        userColor: Color.afUserPurple,
+        iconColor: Color.afIconPurple,
+        lineColor: Color.afLinePurple,
+        bubbleColor: Color.afBubblePurple,
+        afImage: Image("PurpleAF"),
+        bubbleImage: Image("PurpleBubble")
+    ),
+    Interface(
+        name: "Pink",
+        afColor: Color.afPink,
+        userColor: Color.afUserPink,
+        iconColor: Color.afIconPink,
+        lineColor: Color.afLinePink,
+        bubbleColor: Color.afBubblePink,
+        afImage: Image("PinkAF"),
+        bubbleImage: Image("PinkBubble")
+    )
 ]

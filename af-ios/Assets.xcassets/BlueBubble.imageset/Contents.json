@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "AF.png",
+      "filename" : "BlueBubble.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AF@2x.png",
+      "filename" : "BlueBubble@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "AF@3x.png",
+      "filename" : "BlueBubble@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

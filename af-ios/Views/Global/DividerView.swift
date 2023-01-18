@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct DividerView: View {
+    @EnvironmentObject var af: AF
+    
     var body: some View {
         Rectangle()
-            .fill(Color.afBlack)
-            .opacity(0.1)
+            .fill(af.interface.lineColor)
             .frame(height: 1.5)
             .edgesIgnoringSafeArea(.horizontal)
     }

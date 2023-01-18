@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Logomark.png",
+      "filename" : "Logomark.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Logomark@2x.png",
+      "filename" : "Logomark 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Logomark@3x.png",
+      "filename" : "Logomark 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,5 +19,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

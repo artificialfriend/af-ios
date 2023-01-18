@@ -8,43 +8,37 @@
 import SwiftUI
 
 struct AFView: View {
+    @EnvironmentObject var af: AF
+    let width = UIScreen.main.bounds.width * 0.075
+    
     var body: some View {
-        GeometryReader { geo in
+        ZStack {
             ZStack {
-                ZStack {
-                    Circle()
-                        .shadow(
-                            color: Color(hue: 190/360, saturation: 1, brightness: 1).opacity(0.5),
-                            radius: geo.size.width * 0.075,
-                            x: 0,
-                            y: geo.size.width * 0.075
-                        )
-                    Circle()
-                        .blendMode(.destinationOut)
-                }
-                .compositingGroup()
-                
                 Circle()
-                    .fill(Color.afBubbleBlue.opacity(0.6))
+                    .shadow(
+                        color: af.interface.bubbleColor.opacity(0.5),
+                        radius: width,
+                        x: 0,
+                        y: width
+                    )
                     
-                Image("Memoji")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                
-                Image("BlueBubble")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                Circle()
+                    .blendMode(.destinationOut)
             }
+            .compositingGroup()
+            
+            Circle()
+                .fill(af.interface.bubbleColor).opacity(0.3)
+                
+            af.interface.afImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            
+            af.interface.bubbleImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
         .frame(maxWidth: 400)
         .aspectRatio(contentMode: .fit)
     }
 }
-
-struct BubbleView_Previews: PreviewProvider {
-    static var previews: some View {
-        AFView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}
-

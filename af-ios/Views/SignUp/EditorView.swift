@@ -12,21 +12,6 @@ struct EditorView: View {
     @EnvironmentObject var af: AF
     @Binding var activeTab: Feature
     
-    func populateTabOptions() -> OptionsView {
-        var activeTabOptionsView: OptionsView
-        
-        switch activeTab {
-        case .skin:
-            activeTabOptionsView = OptionsView(feature: .skin, row1Label: "Color", row1Options: skinColors, row1ActiveOption: af.skinColor, row2Label: "Freckles", row2Options: skinFreckles, row2ActiveOption: af.freckles)
-        case .hair:
-            activeTabOptionsView = OptionsView(feature: .hair, row1Label: "Color", row1Options: hairColors, row1ActiveOption: af.hairColor, row2Label: "Styles", row2Options: hairStyles, row2ActiveOption: af.hairStyle)
-        case .eyes:
-            activeTabOptionsView = OptionsView(feature: .eyes, row1Label: "Color", row1Options: eyeColors, row1ActiveOption: af.eyeColor, row2Label: "Lashes", row2Options: eyeLashes, row2ActiveOption: af.lashes)
-        }
-        
-        return activeTabOptionsView
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             DividerView()
@@ -35,7 +20,7 @@ struct EditorView: View {
             
             DividerView()
             
-            populateTabOptions()
+            OptionsView(activeTab: $activeTab)
             
             DividerView()
         }
@@ -49,26 +34,16 @@ struct TabsView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Spacer()
-            
             TabLabelView(label: "Skin", feature: .skin, activeTab: $activeTab)
-            
-            Spacer()
-            
             TabLabelView(label: "Hair", feature: .hair, activeTab: $activeTab)
-            
-            Spacer()
-            
             TabLabelView(label: "Eyes", feature: .eyes, activeTab: $activeTab)
-            
-            Spacer()
         }
-        .padding(.horizontal, 24)
         .frame(height: 48)
     }
 }
 
 struct TabLabelView: View {
+    @EnvironmentObject var af: AF
     let label: String
     let feature: Feature
     @Binding var activeTab: Feature
@@ -80,7 +55,7 @@ struct TabLabelView: View {
         }) {
             Text(label)
                 .font(activeTab == feature ? .h3 : .s)
-                .foregroundColor(.afBlack)
+                .foregroundColor(activeTab == feature ? .afBlack : af.interface.iconColor)
                 .opacity(activeTab == feature ? 1 : 0.5)
                 .frame(width: 80)
                 .animation(.easeIn(duration: 0.02), value: activeTab == feature)
@@ -90,25 +65,29 @@ struct TabLabelView: View {
 }
 
 struct OptionsView: View {
-    let feature: Feature
-    let row1Label: String
-    let row1Options: [Option]
-    var row1ActiveOption: Option
-    let row2Label: String
-    let row2Options: [Option]
-    var row2ActiveOption: Option
+    @EnvironmentObject var af: AF
+    @Binding var activeTab: Feature
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            OptionRowView(rowLabel: row1Label, rowOptions: row1Options, activeOption: row1ActiveOption)
-            
-            if row2Label != "None" {
-                OptionRowView(rowLabel: row2Label, rowOptions: row2Options, activeOption: row2ActiveOption)
-            } else {
-                Spacer()
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: af.skinColor)
+                OptionRowView(rowLabel: "Freckles", rowOptions: skinFreckles, activeOption: af.freckles)
             }
+            .opacity(activeTab == .skin ? 1 : 0)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: af.hairColor)
+                OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: af.hairStyle)
+            }
+            .opacity(activeTab == .hair ? 1 : 0)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: af.eyeColor)
+                OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: af.lashes)
+            }
+            .opacity(activeTab == .eyes ? 1 : 0)
         }
-        .frame(height: 257)
         .padding(.bottom, 24)
     }
 }
@@ -123,6 +102,15 @@ struct OptionRowView: View {
         switch optionType {
         case .skinColor:
             af.skinColor = option
+            if af.skinColor.name == "Green Skin" {
+                af.interface = interfaces[0]
+            } else if af.skinColor.name == "Blue Skin" {
+                af.interface = interfaces[1]
+            } else if af.skinColor.name == "Purple Skin" {
+                af.interface = interfaces[2]
+            } else if af.skinColor.name == "Pink Skin" {
+                af.interface = interfaces[3]
+            }
         case .skinFreckles:
             af.freckles = option
         case .hairColor:
@@ -138,12 +126,11 @@ struct OptionRowView: View {
     
     var body: some View {
         Text(rowLabel)
-            .font(.xs)
-            .textCase(.uppercase)
-            .opacity(0.75)
+            .font(.s)
+            .foregroundColor(.afBlack)
             .padding(.horizontal, 12)
             .padding(.top, 16)
-            .padding(.bottom, 8)
+            .padding(.bottom, 4)
         
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
@@ -159,28 +146,63 @@ struct OptionRowView: View {
             }
             .padding(.horizontal, 12)
         }
-        .frame(height: 88)
+        .frame(height: (UIScreen.main.bounds.width - 48) / 4.25)
     }
 }
 
 struct OptionView: View {
+    @EnvironmentObject var af: AF
     let name: String
     let optionType: OptionType
+    let width = (UIScreen.main.bounds.width - 48) / 4.25
     var activeOption: Option
+    
+    func setOptionElements() -> (Image, Color, Color) {
+        if optionType == .skinColor {
+            if name == "Green Skin" {
+                return (interfaces[0].afImage, interfaces[0].afColor, interfaces[0].lineColor)
+            } else if name == "Blue Skin" {
+                return (interfaces[1].afImage, interfaces[1].afColor, interfaces[1].lineColor)
+            } else if name == "Purple Skin" {
+                return (interfaces[2].afImage, interfaces[2].afColor, interfaces[2].lineColor)
+            } else if name == "Pink Skin" {
+                return (interfaces[3].afImage, interfaces[3].afColor, interfaces[3].lineColor)
+            }
+        }
+        
+        return (af.interface.afImage, af.interface.afColor, af.interface.lineColor)
+    }
     
     var body: some View {
         ZStack {
-            Image("Option")
+            setOptionElements().0
+                .resizable()
+                .frame(width: width * 1.05, height: width * 1.05)
+                .frame(width: width, height: width)
+                .clipped()
         }
-        .background(Color.afGray)
+        .background(setOptionElements().1)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.afBlack.opacity(activeOption.name == name ? 0.8 : 0.1), lineWidth: activeOption.name == name ? 3 : 2)
-                .frame(width: activeOption.name == name ? 85 : 86, height: activeOption.name == name ? 85: 86)
+                .stroke(activeOption.name == name ? af.interface.userColor : setOptionElements().2, lineWidth: activeOption.name == name ? 2.5 : 2)
+                .frame(width: activeOption.name == name ? width - 2.5 : width - 2, height: activeOption.name == name ? width - 2.5 : width - 2)
         )
-        .frame(width: 88, height: 88)
+        .frame(width: width, height: width)
         .animation(.easeIn(duration: 0.05), value: activeOption.name == name)
     }
 }
 
+struct EditorView_Previews: PreviewProvider {
+    @State static var activeTab: Feature = .skin
+    
+    static var previews: some View {
+        EditorView(activeTab: $activeTab)
+            .environmentObject(AF())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        
+        EditorView(activeTab: $activeTab)
+            .environmentObject(AF())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
+    }
+}
