@@ -15,4 +15,6 @@ class AF: ObservableObject {
     @Published var eyeColor: Option = eyeColors[0]
     @Published var lashes: Option = eyeLashes[0]
     @Published var interface: Interface = interfaces[1]
+    @Published var name: String = "AF4096"
+    @Published var nameFieldInput: String = ""
 }

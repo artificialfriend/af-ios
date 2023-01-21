@@ -10,33 +10,31 @@ import UIKit
 
 struct EditorView: View {
     @EnvironmentObject var af: AF
-    @Binding var activeTab: Feature
+    @EnvironmentObject var signup: Signup
     
     var body: some View {
         VStack(spacing: 0) {
             DividerView()
-
-            TabsView(activeTab: $activeTab)
+            
+            TabsView()
             
             DividerView()
             
-            OptionsView(activeTab: $activeTab)
+            OptionsView()
             
             DividerView()
         }
-        .padding(.top, 32)
-        .padding(.bottom, 12)
     }
 }
 
 struct TabsView: View {
-    @Binding var activeTab: Feature
+    @EnvironmentObject var signup: Signup
     
     var body: some View {
         HStack(spacing: 0) {
-            TabLabelView(label: "Skin", feature: .skin, activeTab: $activeTab)
-            TabLabelView(label: "Hair", feature: .hair, activeTab: $activeTab)
-            TabLabelView(label: "Eyes", feature: .eyes, activeTab: $activeTab)
+            TabLabelView(label: "Skin", feature: .skin)
+            TabLabelView(label: "Hair", feature: .hair)
+            TabLabelView(label: "Eyes", feature: .eyes)
         }
         .frame(height: 48)
     }
@@ -44,21 +42,21 @@ struct TabsView: View {
 
 struct TabLabelView: View {
     @EnvironmentObject var af: AF
+    @EnvironmentObject var signup: Signup
     let label: String
     let feature: Feature
-    @Binding var activeTab: Feature
     
     var body: some View {
         Button(action: {
-            self.activeTab = feature
+            signup.activeCreateTab = feature
             impactMedium.impactOccurred()
         }) {
             Text(label)
-                .font(activeTab == feature ? .h3 : .s)
-                .foregroundColor(activeTab == feature ? .afBlack : af.interface.iconColor)
-                .opacity(activeTab == feature ? 1 : 0.5)
+                .font(signup.activeCreateTab == feature ? .h3 : .s)
+                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.interface.iconColor)
+                .opacity(signup.activeCreateTab == feature ? 1 : 0.5)
                 .frame(width: 80)
-                .animation(.easeIn(duration: 0.02), value: activeTab == feature)
+                .animation(.easeIn(duration: 0.02), value: signup.activeCreateTab == feature)
         }
         .buttonStyle(Plain())
     }
@@ -66,7 +64,7 @@ struct TabLabelView: View {
 
 struct OptionsView: View {
     @EnvironmentObject var af: AF
-    @Binding var activeTab: Feature
+    @EnvironmentObject var signup: Signup
     
     var body: some View {
         ZStack {
@@ -74,19 +72,19 @@ struct OptionsView: View {
                 OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: af.skinColor)
                 OptionRowView(rowLabel: "Freckles", rowOptions: skinFreckles, activeOption: af.freckles)
             }
-            .opacity(activeTab == .skin ? 1 : 0)
+            .opacity(signup.activeCreateTab == .skin ? 1 : 0)
             
             VStack(alignment: .leading, spacing: 0) {
                 OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: af.hairColor)
                 OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: af.hairStyle)
             }
-            .opacity(activeTab == .hair ? 1 : 0)
+            .opacity(signup.activeCreateTab == .hair ? 1 : 0)
             
             VStack(alignment: .leading, spacing: 0) {
                 OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: af.eyeColor)
                 OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: af.lashes)
             }
-            .opacity(activeTab == .eyes ? 1 : 0)
+            .opacity(signup.activeCreateTab == .eyes ? 1 : 0)
         }
         .padding(.bottom, 24)
     }
@@ -194,15 +192,10 @@ struct OptionView: View {
 }
 
 struct EditorView_Previews: PreviewProvider {
-    @State static var activeTab: Feature = .skin
-    
     static var previews: some View {
-        EditorView(activeTab: $activeTab)
+        EditorView()
             .environmentObject(AF())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-        
-        EditorView(activeTab: $activeTab)
-            .environmentObject(AF())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
+            .environmentObject(Signup())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

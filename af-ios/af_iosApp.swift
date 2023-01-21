@@ -13,6 +13,8 @@ struct af_iosApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(AF())
+                .environmentObject(Signup())
+                .environmentObject(TextBindingManager())
         }
     }
 }
