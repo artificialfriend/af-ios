@@ -12,6 +12,27 @@ struct SignupView: View {
     @EnvironmentObject var signup: Signup
     @FocusState private var keyboardFocused: Bool
     
+    func appearAF() {
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)) {
+            signup.afScale = 1
+        }
+
+        withAnimation(.linear(duration: 0.5)) {
+            signup.welcomeOpacity = 1
+        }
+        
+        withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
+            signup.afOffset = -12
+        }
+        
+        Task { try await Task.sleep(nanoseconds: 1_500_000_000)
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)) {
+                signup.buttonOffset = 0
+                signup.buttonOpacity = 1
+            }
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             if signup.currentStep == .welcome {
@@ -42,37 +63,12 @@ struct SignupView: View {
             .padding(.bottom, 32)
             
             AFView()
-                //.scaleEffect(signup.afScale)
                 .padding(.horizontal, 64)
-                .padding(.bottom, signup.currentStep == .welcome ? 16 : 0)
-                .animation(.spring(response: 1, dampingFraction: 0.7, blendDuration: 0.1), value: signup.currentStep)
+                .scaleEffect(signup.afScale)
+                .animation(.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1), value: signup.currentStep)
                 .offset(y: signup.afOffset)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation(.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1)) {
-                            signup.afScale = 1
-                        }
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation(.linear(duration: 0.5)) {
-                            signup.welcomeOpacity = 1
-                            
-                        }
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.1)) {
-                            signup.buttonOffset = 0
-                            signup.buttonOpacity = 1
-                        }
-                    }
-                }
-                .task {
-                    withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
-                        signup.afOffset = -12
-                    }
-                }
+                .opacity(signup.afOpacity)
+                .onAppear { appearAF() }
             
             if signup.currentStep == .welcome {
                 VStack(spacing: 0) {
@@ -82,7 +78,8 @@ struct SignupView: View {
                     
                     Text("just for you.")
                 }
-                .padding(.bottom, 64)
+                .padding(.bottom, 88)
+                .padding(.top, 16)
                 .font(.h1)
                 .foregroundColor(.afBlack)
                 .opacity(signup.welcomeOpacity)
@@ -122,14 +119,10 @@ struct SignupView: View {
                             .font(.m)
                             .foregroundColor(af.interface.iconColor.opacity(0.3))
 
-                        Image("Spinner")
+                        Image("SpinnerIcon")
                             .foregroundColor(af.interface.iconColor.opacity(0.3))
                             .rotationEffect(signup.spinnerRotation)
-                            .task {
-                                withAnimation(.linear(duration: 1.5).repeatForever(autoreverses: false)){
-                                    signup.spinnerRotation = Angle(degrees: 360)
-                                }
-                            }
+                            .animation(.linear(duration: 1.5).repeatForever(autoreverses: false), value: signup.isLoading)
                     }
                     .padding(.top, 48)
                     .opacity(signup.bootupOpacity)
