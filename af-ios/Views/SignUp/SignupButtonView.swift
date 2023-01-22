@@ -19,32 +19,42 @@ struct SignupButtonView: View {
         case .create:
             signup.currentStep = .name
         case .name:
+            signup.currentStep = .bootup
+        case .bootup:
             signup.currentStep = .welcome
         }
     }
     
     func transition() {
-        let initialStep = signup.currentStep
-        signup.afOffset = 0
-        changeStep()
-        
-        withAnimation(.linear(duration: 0.2)){
-            if initialStep == .welcome {
+        withAnimation(.linear(duration: 0.1)){
+            if signup.currentStep == .welcome {
                 signup.welcomeOpacity = 0
-            } else if initialStep == .create {
+            } else if signup.currentStep == .create {
                 signup.createOpacity = 0
-            } else if initialStep == .name {
+            } else if signup.currentStep == .name {
                 signup.nameOpacity = 0
+            } else if signup.currentStep == .bootup {
+                signup.bootupOpacity = 0
             }
         }
         
-        Task {
-            try await Task.sleep(nanoseconds: 400_000_000)
-            
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.1)) {
+            if signup.currentStep == .name {
+                signup.buttonOffset = 104
+                signup.buttonOpacity = 0
+            }
+        }
+        
+        Task { try await Task.sleep(nanoseconds: 100_000_000)
+            signup.afOffset = 0
+            changeStep()
+        }
+
+        Task { try await Task.sleep(nanoseconds: 600_000_000)
             withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
                 signup.afOffset = -12
             }
-            
+
             withAnimation(.linear(duration: 0.2)){
                 if signup.currentStep == .welcome {
                     signup.welcomeOpacity = 1
@@ -52,6 +62,9 @@ struct SignupButtonView: View {
                     signup.createOpacity = 1
                 } else if signup.currentStep == .name {
                     signup.nameOpacity = 1
+                } else if signup.currentStep == .bootup {
+                    signup.bootupOpacity = 1
+                    signup.buttonIsDismissed = true
                 }
             }
         }
