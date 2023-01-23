@@ -13,20 +13,20 @@ struct SignupView: View {
     @FocusState private var keyboardFocused: Bool
     
     func appearAF() {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)) {
+        withAnimation(.medSpring) {
             signup.afScale = 1
         }
 
-        withAnimation(.linear(duration: 0.5)) {
+        withAnimation(.linear5) {
             signup.welcomeOpacity = 1
         }
         
-        withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
-            signup.afOffset = -12
+        withAnimation(.afFloat){
+            signup.afOffset = -s12
         }
         
         Task { try await Task.sleep(nanoseconds: 1_500_000_000)
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)) {
+            withAnimation(.medSpring) {
                 signup.buttonOffset = 0
                 signup.buttonOpacity = 1
             }
@@ -37,7 +37,7 @@ struct SignupView: View {
         VStack(spacing: 0) {
             if signup.currentStep == .welcome {
                 Image("Logomark")
-                    .padding(.top, 16)
+                    .padding(.top, s16)
                     .foregroundColor(af.interface.lineColor)
                     .opacity(signup.welcomeOpacity)
             }
@@ -59,13 +59,13 @@ struct SignupView: View {
             }
             .font(.h2)
             .foregroundColor(.afBlack)
-            .padding(.top, 24)
-            .padding(.bottom, 32)
+            .padding(.top, s24)
+            .padding(.bottom, s32)
             
             AFView()
-                .padding(.horizontal, 64)
+                .padding(.horizontal, s64)
                 .scaleEffect(signup.afScale)
-                .animation(.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1), value: signup.currentStep)
+                .animation(.longSpring, value: signup.currentStep)
                 .offset(y: signup.afOffset)
                 .opacity(signup.afOpacity)
                 .onAppear { appearAF() }
@@ -73,13 +73,13 @@ struct SignupView: View {
             if signup.currentStep == .welcome {
                 VStack(spacing: 0) {
                     Text("An AI assistant,")
-                        .padding(.bottom, -6)
-                        .frame(width: 250)
+                        .padding(.bottom, -s4)
+                        .frame(width: s240)
                     
                     Text("just for you.")
                 }
-                .padding(.bottom, 88)
-                .padding(.top, 16)
+                .padding(.bottom, s88)
+                .padding(.top, s16)
                 .font(.h1)
                 .foregroundColor(.afBlack)
                 .opacity(signup.welcomeOpacity)
@@ -88,8 +88,8 @@ struct SignupView: View {
             if signup.currentStep == .name {
                 NameFieldView()
                     .padding(.horizontal, 14)
-                    .padding(.top, 32)
-                    .padding(.bottom, 8)
+                    .padding(.top, s32)
+                    .padding(.bottom, s8)
                     .opacity(signup.nameOpacity)
                     .keyboardType(.alphabet)
                     .disableAutocorrection(true)
@@ -107,24 +107,24 @@ struct SignupView: View {
             
             if signup.currentStep == .create {
                 EditorView()
-                    .padding(.top, 32)
-                    .padding(.bottom, 12)
+                    .padding(.top, s32)
+                    .padding(.bottom, s12)
                     .opacity(signup.createOpacity)
             }
             
             ZStack(alignment: .bottom) {
                 if signup.currentStep == .bootup {
-                    VStack(spacing: 6) {
+                    VStack(spacing: s6) {
                         Text("Booting Up")
                             .font(.m)
-                            .foregroundColor(af.interface.iconColor.opacity(0.3))
+                            .foregroundColor(af.interface.softColor)
 
                         Image("SpinnerIcon")
-                            .foregroundColor(af.interface.iconColor.opacity(0.3))
+                            .foregroundColor(af.interface.softColor)
                             .rotationEffect(signup.spinnerRotation)
-                            .animation(.linear(duration: 1.5).repeatForever(autoreverses: false), value: signup.isLoading)
+                            .animation(.loadingSpin, value: signup.isLoading)
                     }
-                    .padding(.top, 48)
+                    .padding(.top, s48)
                     .opacity(signup.bootupOpacity)
                 }
                 

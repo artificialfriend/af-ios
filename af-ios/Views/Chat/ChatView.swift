@@ -22,7 +22,7 @@ struct ChatView: View {
                             MessageBubbleView(message: message)
                         }
                     }
-                    .padding(.top, 10)
+                    .sding(.top, 10)
                     .background(.white)
                     .cornerRadius(30, corners: [.topLeft, .topRight])
                     .onChange(of: messagesManager.lastMessageId) { id in

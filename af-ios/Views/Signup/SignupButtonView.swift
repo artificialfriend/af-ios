@@ -13,7 +13,7 @@ struct SignupButtonView: View {
     @EnvironmentObject var textBindingManager: TextBindingManager
     
     func changeStep() {
-        signup.afOffset = 0
+        signup.afOffset = s0
         
         switch signup.currentStep {
         case .welcome:
@@ -28,7 +28,7 @@ struct SignupButtonView: View {
     }
     
     func fadeOut() {
-        withAnimation(.linear(duration: 0.1)) {
+        withAnimation(.linear1) {
             switch signup.currentStep {
             case .welcome:
                 signup.welcomeOpacity = 0
@@ -43,11 +43,11 @@ struct SignupButtonView: View {
     }
     
     func fadeIn() {
-        withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)){
-            signup.afOffset = -12
+        withAnimation(.afFloat){
+            signup.afOffset = -s12
         }
         
-        withAnimation(.linear(duration: 0.2)) {
+        withAnimation(.linear2) {
             switch signup.currentStep {
             case .welcome:
                 signup.welcomeOpacity = 1
@@ -62,12 +62,12 @@ struct SignupButtonView: View {
     }
     
     func presentOrDismissButton() {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)) {
+        withAnimation(.medSpring) {
             if signup.buttonIsDismissed == false {
-                signup.buttonOffset = 104
+                signup.buttonOffset = s104
                 signup.buttonOpacity = 0
             } else {
-                signup.buttonOffset = 0
+                signup.buttonOffset = s0
                 signup.buttonOpacity = 1
             }
         }
@@ -135,7 +135,7 @@ struct SignupButtonView: View {
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 200_000_000)
-                            withAnimation(.linear(duration: 0.1)) {
+                            withAnimation(.linear1) {
                                 signup.afOpacity = 0
                             }
                         }
@@ -150,7 +150,7 @@ struct SignupButtonView: View {
             fadeOut()
             
             Task { try await Task.sleep(nanoseconds: 100_000_000)
-                signup.afOffset = 0
+                signup.afOffset = s0
                 signup.currentStep = .create
             }
             
@@ -161,24 +161,24 @@ struct SignupButtonView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: s0) {
             Button(action: {
                 impactMedium.impactOccurred()
                 transitionBack()
             }) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: cr16)
                         .fill(Color.afGray)
                     
                     Image("BackIcon")
                         .foregroundColor(.afBlack.opacity(0.5))
                 }
             }
-            .frame(width: 64)
-            .padding(.leading, signup.currentStep == .name || signup.currentStep == .bootup ? 0 : -72)
-            .padding(.trailing, signup.currentStep == .name || signup.currentStep == .bootup ? 8 : 0)
+            .frame(width: s64)
+            .padding(.leading, signup.currentStep == .name || signup.currentStep == .bootup ? s0 : -s72)
+            .padding(.trailing, signup.currentStep == .name || signup.currentStep == .bootup ? s8 : s0)
             .opacity(signup.currentStep == .name || signup.currentStep == .bootup ? 1 : 0)
-            .animation(.spring(response: 0.3, dampingFraction: 0.7, blendDuration: 0.1), value: signup.currentStep)
+            .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
             Button(action: {
@@ -190,7 +190,7 @@ struct SignupButtonView: View {
                 }
             }) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: cr16)
                         .fill(Color.afBlack)
                     
                     HStack {
@@ -199,14 +199,14 @@ struct SignupButtonView: View {
                         Text("Sign up with Apple")
                     }
                     .opacity(signup.buttonWelcomeLabelOpacity)
-                    .animation(.linear(duration: 0.1), value: signup.isLoading)
+                    .animation(.linear1, value: signup.isLoading)
                     
                     Image("SpinnerIcon")
                         .foregroundColor(.white)
                         .rotationEffect(signup.spinnerRotation)
-                        .animation(.linear(duration: 1.5).repeatForever(autoreverses: false), value: signup.isLoading)
+                        .animation(.loadingSpin, value: signup.isLoading)
                         .opacity(signup.isLoading ? 1 : 0)
-                        .animation(.linear(duration: 0.1), value: signup.isLoading)
+                        .animation(.linear1, value: signup.isLoading)
 
                     Text("Next")
                         .opacity(signup.createOpacity)
@@ -216,13 +216,12 @@ struct SignupButtonView: View {
                 }
                 .foregroundColor(.white)
             }
-            .animation(.spring(response: 0.3, dampingFraction: 0.7, blendDuration: 0.1), value: signup.currentStep)
+            .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
         }
         .font(.h3)
-        .padding(.horizontal, 12)
-        .frame(maxWidth: 480)
-        .frame(height: 64)
+        .padding(.horizontal, s12)
+        .frame(height: s64)
     }
 }
 

@@ -126,7 +126,7 @@
 			children = (
 				CE1A30D4296B0AD4003D1476 /* ContentView.swift */,
 				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
-				CE1A3101296B1DBC003D1476 /* SignUp */,
+				CE1A3101296B1DBC003D1476 /* Signup */,
 				CE1A30F8296B1C15003D1476 /* Chat */,
 				489DA246297624CA00A37ED4 /* Global */,
 			);
@@ -144,7 +144,7 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
-		CE1A3101296B1DBC003D1476 /* SignUp */ = {
+		CE1A3101296B1DBC003D1476 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
 				CE1A3102296B1DDA003D1476 /* SignupView.swift */,
@@ -152,7 +152,7 @@
 				483317FB297A09DA0008F61E /* NameFieldView.swift */,
 				483317FF297B48830008F61E /* SignupButtonView.swift */,
 			);
-			path = SignUp;
+			path = Signup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

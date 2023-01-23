@@ -8,12 +8,14 @@
 import SwiftUI
 import UIKit
 
+let optionWidth = (UIScreen.main.bounds.width - s48) / 4.25
+
 struct EditorView: View {
     @EnvironmentObject var af: AF
     @EnvironmentObject var signup: Signup
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: s0) {
             DividerView()
             
             TabsView()
@@ -31,12 +33,12 @@ struct TabsView: View {
     @EnvironmentObject var signup: Signup
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: s0) {
             TabLabelView(label: "Skin", feature: .skin)
             TabLabelView(label: "Hair", feature: .hair)
             TabLabelView(label: "Eyes", feature: .eyes)
         }
-        .frame(height: 48)
+        .frame(height: s48)
     }
 }
 
@@ -53,10 +55,9 @@ struct TabLabelView: View {
         }) {
             Text(label)
                 .font(signup.activeCreateTab == feature ? .h3 : .s)
-                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.interface.iconColor)
-                .opacity(signup.activeCreateTab == feature ? 1 : 0.5)
-                .frame(width: 80)
-                .animation(.easeIn(duration: 0.02), value: signup.activeCreateTab == feature)
+                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.interface.medColor)
+                .frame(width: s80)
+                .animation(.shortSpring, value: signup.activeCreateTab == feature)
         }
         .buttonStyle(Plain())
     }
@@ -68,25 +69,26 @@ struct OptionsView: View {
     
     var body: some View {
         ZStack {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: s0) {
                 OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: af.skinColor)
                 OptionRowView(rowLabel: "Freckles", rowOptions: skinFreckles, activeOption: af.freckles)
             }
             .opacity(signup.activeCreateTab == .skin ? 1 : 0)
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: s0) {
                 OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: af.hairColor)
                 OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: af.hairStyle)
             }
             .opacity(signup.activeCreateTab == .hair ? 1 : 0)
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: s0) {
                 OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: af.eyeColor)
                 OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: af.lashes)
             }
             .opacity(signup.activeCreateTab == .eyes ? 1 : 0)
         }
-        .padding(.bottom, 24)
+        .padding(.top, s4)
+        .padding(.bottom, s24)
     }
 }
 
@@ -120,18 +122,17 @@ struct OptionRowView: View {
         case .eyeLashes:
             af.lashes = option
         }
-   }
+    }
     
     var body: some View {
         Text(rowLabel)
             .font(.s)
             .foregroundColor(.afBlack)
-            .padding(.horizontal, 12)
-            .padding(.top, 16)
-            .padding(.bottom, 4)
+            .padding(.horizontal, s12)
+            .padding(.top, s12)
         
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: s8) {
                 ForEach(rowOptions, id: \.name) { option in
                     Button(action: {
                         setActiveOption(optionType: option.optionType, option: option)
@@ -139,12 +140,12 @@ struct OptionRowView: View {
                     }) {
                         OptionView(name: option.name, optionType: option.optionType, activeOption: activeOption)
                     }
-                    .buttonStyle(Plain())
+                    .buttonStyle(Spring())
                 }
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, s12)
+            .padding(.vertical, 4)
         }
-        .frame(height: (UIScreen.main.bounds.width - 48) / 4.25)
     }
 }
 
@@ -152,7 +153,7 @@ struct OptionView: View {
     @EnvironmentObject var af: AF
     let name: String
     let optionType: OptionType
-    let width = (UIScreen.main.bounds.width - 48) / 4.25
+    let width = optionWidth
     var activeOption: Option
     
     func setOptionElements() -> (Image, Color, Color) {
@@ -180,14 +181,14 @@ struct OptionView: View {
                 .clipped()
         }
         .background(setOptionElements().1)
-        .cornerRadius(16)
+        .cornerRadius(cr16)
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: cr16)
                 .stroke(activeOption.name == name ? af.interface.userColor : setOptionElements().2, lineWidth: activeOption.name == name ? 2.5 : 2)
                 .frame(width: activeOption.name == name ? width - 2.5 : width - 2, height: activeOption.name == name ? width - 2.5 : width - 2)
         )
         .frame(width: width, height: width)
-        .animation(.easeIn(duration: 0.05), value: activeOption.name == name)
+        .animation(.linear(duration: 0.1), value: activeOption.name == name)
     }
 }
 

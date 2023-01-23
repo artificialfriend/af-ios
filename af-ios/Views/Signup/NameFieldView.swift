@@ -28,14 +28,13 @@ struct NameFieldView: View {
             TextField("", text: $textBindingManager.text)
                 .placeholder(when: textBindingManager.text.isEmpty) {
                     Text("AF4096")
-                        .foregroundColor(af.interface.iconColor)
-                        .opacity(0.3)
+                        .foregroundColor(af.interface.softColor)
                 }
-                .cornerRadius(16)
+                .cornerRadius(cr16)
                 .font(.h3)
                 .foregroundColor(.afBlack)
-                .frame(height: 56)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(lineWidth: 2).foregroundColor(af.interface.lineColor))
+                .frame(height: s56)
+                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.interface.lineColor))
                 .multilineTextAlignment(.center)
                 .accentColor(af.interface.userColor)
                 
@@ -49,9 +48,9 @@ struct NameFieldView: View {
                     .opacity(textBindingManager.characterLimit - textBindingManager.text.count <= 5 ? 1 : 0)
                     .multilineTextAlignment(.trailing)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, s16)
             .font(.xs)
-            .foregroundColor(af.interface.iconColor.opacity(0.3))
+            .foregroundColor(af.interface.softColor)
         }
     }
 }

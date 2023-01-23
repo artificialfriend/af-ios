@@ -24,16 +24,16 @@ struct MessageFieldView: View {
             } label: {
                 Image(systemName: "paperplane.fill")
                     .foregroundColor(.white)
-                    .padding(10)
+                    .sding(10)
                     .background(Color("Peach"))
                     .cornerRadius(50)
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, 10)
+        .sding(.horizontal)
+        .sding(.vertical, 10)
         .background(Color("Gray"))
         .cornerRadius(50)
-        .padding()
+        .sding()
     }
 }
 

@@ -40,7 +40,9 @@ struct Interface {
     let name: String
     let afColor: Color
     let userColor: Color
-    let iconColor: Color
+    let darkColor: Color
+    let medColor: Color
+    let softColor: Color
     let lineColor: Color
     let bubbleColor: Color
     let afImage: Image
@@ -94,7 +96,9 @@ var interfaces: [Interface] = [
         name: "Green",
         afColor: Color.afGreen,
         userColor: Color.afUserGreen,
-        iconColor: Color.afIconGreen,
+        darkColor: Color.afDarkGreen,
+        medColor: Color.afMedGreen,
+        softColor: Color.afSoftGreen,
         lineColor: Color.afLineGreen,
         bubbleColor: Color.afBubbleGreen,
         afImage: Image("GreenAF"),
@@ -104,7 +108,9 @@ var interfaces: [Interface] = [
         name: "Blue",
         afColor: Color.afBlue,
         userColor: Color.afUserBlue,
-        iconColor: Color.afIconBlue,
+        darkColor: Color.afDarkBlue,
+        medColor: Color.afMedBlue,
+        softColor: Color.afSoftBlue,
         lineColor: Color.afLineBlue,
         bubbleColor: Color.afBubbleBlue,
         afImage: Image("BlueAF"),
@@ -114,7 +120,9 @@ var interfaces: [Interface] = [
         name: "Purple",
         afColor: Color.afPurple,
         userColor: Color.afUserPurple,
-        iconColor: Color.afIconPurple,
+        darkColor: Color.afDarkPurple,
+        medColor: Color.afMedPurple,
+        softColor: Color.afSoftPurple,
         lineColor: Color.afLinePurple,
         bubbleColor: Color.afBubblePurple,
         afImage: Image("PurpleAF"),
@@ -124,7 +132,9 @@ var interfaces: [Interface] = [
         name: "Pink",
         afColor: Color.afPink,
         userColor: Color.afUserPink,
-        iconColor: Color.afIconPink,
+        darkColor: Color.afDarkPink,
+        medColor: Color.afMedPink,
+        softColor: Color.afSoftPink,
         lineColor: Color.afLinePink,
         bubbleColor: Color.afBubblePink,
         afImage: Image("PinkAF"),
