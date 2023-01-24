@@ -20,7 +20,7 @@ class TextBindingManager: ObservableObject {
 }
 
 struct NameFieldView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var afState: AFState
     @EnvironmentObject var textBindingManager: TextBindingManager
     
     var body: some View {
@@ -28,15 +28,15 @@ struct NameFieldView: View {
             TextField("", text: $textBindingManager.text)
                 .placeholder(when: textBindingManager.text.isEmpty) {
                     Text("AF4096")
-                        .foregroundColor(af.interface.softColor)
+                        .foregroundColor(afState.interface.softColor)
                 }
                 .cornerRadius(cr16)
                 .font(.h3)
                 .foregroundColor(.afBlack)
                 .frame(height: s56)
-                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.interface.lineColor))
+                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(afState.interface.lineColor))
                 .multilineTextAlignment(.center)
-                .accentColor(af.interface.userColor)
+                .accentColor(afState.interface.userColor)
                 
             
             HStack {
@@ -50,7 +50,7 @@ struct NameFieldView: View {
             }
             .padding(.horizontal, s16)
             .font(.xs)
-            .foregroundColor(af.interface.softColor)
+            .foregroundColor(afState.interface.softColor)
         }
     }
 }

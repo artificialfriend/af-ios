@@ -94,9 +94,9 @@
 		CE1A30D1296B0AD4003D1476 /* af-ios */ = {
 			isa = PBXGroup;
 			children = (
-				CE1A3106297E3D33003D1476 /* Controllers */,
 				CE1A30EE296B1A93003D1476 /* Views */,
 				CE1A30E5296B1945003D1476 /* Models */,
+				CE1A3106297E3D33003D1476 /* Controllers */,
 				CE1A30D6296B0AD6003D1476 /* Assets.xcassets */,
 				CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */,
 				CE1A30D8296B0AD6003D1476 /* Preview Content */,
