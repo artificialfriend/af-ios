@@ -27,7 +27,6 @@
 		CE1A3100296B1CC5003D1476 /* TitleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30FF296B1CC5003D1476 /* TitleRowView.swift */; };
 		CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3102296B1DDA003D1476 /* SignupView.swift */; };
 		CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3104296B1E07003D1476 /* EditorView.swift */; };
-		CE1A310A297E417E003D1476 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3109297E417E003D1476 /* SignupController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,7 +51,6 @@
 		CE1A30FF296B1CC5003D1476 /* TitleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleRowView.swift; sourceTree = "<group>"; };
 		CE1A3102296B1DDA003D1476 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		CE1A3104296B1E07003D1476 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
-		CE1A3109297E417E003D1476 /* SignupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +94,6 @@
 			children = (
 				CE1A30EE296B1A93003D1476 /* Views */,
 				CE1A30E5296B1945003D1476 /* Models */,
-				CE1A3106297E3D33003D1476 /* Controllers */,
 				CE1A30D6296B0AD6003D1476 /* Assets.xcassets */,
 				CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */,
 				CE1A30D8296B0AD6003D1476 /* Preview Content */,
@@ -156,14 +153,6 @@
 				483317FF297B48830008F61E /* SignupButtonView.swift */,
 			);
 			path = Signup;
-			sourceTree = "<group>";
-		};
-		CE1A3106297E3D33003D1476 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				CE1A3109297E417E003D1476 /* SignupController.swift */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +241,6 @@
 				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
 				CE1A30ED296B1A0F003D1476 /* AFAttributes.swift in Sources */,
 				483317FE297A1E680008F61E /* Extensions.swift in Sources */,
-				CE1A310A297E417E003D1476 /* SignupController.swift in Sources */,
 				483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */,
 				CE1A30E7296B195B003D1476 /* AFState.swift in Sources */,
 			);

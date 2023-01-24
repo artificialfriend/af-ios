@@ -14,7 +14,6 @@ struct af_iosApp: App {
             ContentView()
                 .environmentObject(AFState())
                 .environmentObject(SignupState())
-                .environmentObject(SignupController())
                 .environmentObject(TextBindingManager())
         }
     }
