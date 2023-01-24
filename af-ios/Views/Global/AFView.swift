@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AFView: View {
-    @EnvironmentObject var af: AF
+    @EnvironmentObject var af: AFState
     let width = UIScreen.main.bounds.width * 0.075
     
     var body: some View {

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SignupView: View {
-    @EnvironmentObject var af: AF
-    @EnvironmentObject var signup: Signup
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     @FocusState private var keyboardFocused: Bool
     
     func appearAF() {
@@ -48,12 +48,12 @@ struct SignupView: View {
             
             VStack {
                 if signup.currentStep == .create {
-                    Text("Create your AF.")
+                    Text("Create Your AF.")
                         .opacity(signup.createOpacity)
                 }
                 
                 if signup.currentStep == .name {
-                    Text("Name your AF.")
+                    Text("Name Your AF.")
                         .opacity(signup.nameOpacity)
                 }
             }
@@ -76,7 +76,7 @@ struct SignupView: View {
                         .padding(.bottom, -s4)
                         .frame(width: s240)
                     
-                    Text("just for you.")
+                    Text("Just For You.")
                 }
                 .padding(.bottom, s88)
                 .padding(.top, s16)

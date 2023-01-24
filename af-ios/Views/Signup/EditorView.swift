@@ -11,8 +11,8 @@ import UIKit
 let optionWidth = (UIScreen.main.bounds.width - s48) / 4.25
 
 struct EditorView: View {
-    @EnvironmentObject var af: AF
-    @EnvironmentObject var signup: Signup
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     
     var body: some View {
         VStack(spacing: s0) {
@@ -30,7 +30,7 @@ struct EditorView: View {
 }
 
 struct TabsView: View {
-    @EnvironmentObject var signup: Signup
+    @EnvironmentObject var signup: SignupState
     
     var body: some View {
         HStack(spacing: s0) {
@@ -43,8 +43,8 @@ struct TabsView: View {
 }
 
 struct TabLabelView: View {
-    @EnvironmentObject var af: AF
-    @EnvironmentObject var signup: Signup
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     let label: String
     let feature: Feature
     
@@ -64,8 +64,8 @@ struct TabLabelView: View {
 }
 
 struct OptionsView: View {
-    @EnvironmentObject var af: AF
-    @EnvironmentObject var signup: Signup
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     
     var body: some View {
         ZStack {
@@ -93,7 +93,7 @@ struct OptionsView: View {
 }
 
 struct OptionRowView: View {
-    @EnvironmentObject var af: AF
+    @EnvironmentObject var af: AFState
     let rowLabel: String
     let rowOptions: [Option]
     var activeOption: Option
@@ -150,7 +150,7 @@ struct OptionRowView: View {
 }
 
 struct OptionView: View {
-    @EnvironmentObject var af: AF
+    @EnvironmentObject var af: AFState
     let name: String
     let optionType: OptionType
     let width = optionWidth
@@ -192,11 +192,11 @@ struct OptionView: View {
     }
 }
 
-struct EditorView_Previews: PreviewProvider {
+struct EditorViewPreviews: PreviewProvider {
     static var previews: some View {
         EditorView()
-            .environmentObject(AF())
-            .environmentObject(Signup())
+            .environmentObject(AFState())
+            .environmentObject(SignupState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

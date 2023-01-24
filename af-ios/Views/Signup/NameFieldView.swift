@@ -20,7 +20,7 @@ class TextBindingManager: ObservableObject {
 }
 
 struct NameFieldView: View {
-    @EnvironmentObject var af: AF
+    @EnvironmentObject var af: AFState
     @EnvironmentObject var textBindingManager: TextBindingManager
     
     var body: some View {
@@ -40,7 +40,7 @@ struct NameFieldView: View {
                 
             
             HStack {
-                Text("NAME")
+                Text("Name")
                 
                 Spacer()
                 

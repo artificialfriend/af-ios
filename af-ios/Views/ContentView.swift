@@ -13,11 +13,11 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ContentViewPreviews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(AF())
-            .environmentObject(Signup())
+            .environmentObject(AFState())
+            .environmentObject(SignupState())
             .environmentObject(TextBindingManager())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SignupButtonView: View {
-    @EnvironmentObject var af: AF
-    @EnvironmentObject var signup: Signup
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     @EnvironmentObject var textBindingManager: TextBindingManager
     
     func changeStep() {
@@ -30,14 +30,14 @@ struct SignupButtonView: View {
     func fadeOut() {
         withAnimation(.linear1) {
             switch signup.currentStep {
-            case .welcome:
-                signup.welcomeOpacity = 0
-            case .create:
-                signup.createOpacity = 0
-            case .name:
-                signup.nameOpacity = 0
-            case .bootup:
-                signup.bootupOpacity = 0
+                case .welcome:
+                    signup.welcomeOpacity = 0
+                case .create:
+                    signup.createOpacity = 0
+                case .name:
+                    signup.nameOpacity = 0
+                case .bootup:
+                    signup.bootupOpacity = 0
             }
         }
     }
@@ -49,14 +49,14 @@ struct SignupButtonView: View {
         
         withAnimation(.linear2) {
             switch signup.currentStep {
-            case .welcome:
-                signup.welcomeOpacity = 1
-            case .create:
-                signup.createOpacity = 1
-            case .name:
-                signup.nameOpacity = 1
-            case .bootup:
-                signup.bootupOpacity = 1
+                case .welcome:
+                    signup.welcomeOpacity = 1
+                case .create:
+                    signup.createOpacity = 1
+                case .name:
+                    signup.nameOpacity = 1
+                case .bootup:
+                    signup.bootupOpacity = 1
             }
         }
     }
@@ -196,7 +196,7 @@ struct SignupButtonView: View {
                     HStack {
                         Image("AppleLogo")
                             .padding(.top, -5)
-                        Text("Sign up with Apple")
+                        Text("Sign Up With Apple")
                     }
                     .opacity(signup.buttonWelcomeLabelOpacity)
                     .animation(.linear1, value: signup.isLoading)
@@ -225,11 +225,11 @@ struct SignupButtonView: View {
     }
 }
 
-struct SignupButtonView_Previews: PreviewProvider {
+struct SignupButtonViewPreviews: PreviewProvider {
     static var previews: some View {
         SignupButtonView()
-            .environmentObject(AF())
-            .environmentObject(Signup())
+            .environmentObject(AFState())
+            .environmentObject(SignupState())
             .environmentObject(TextBindingManager())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }

@@ -1,5 +1,5 @@
 //
-//  AF.swift
+//  AFState.swift
 //  af-ios
 //
 //  Created by Ashutosh Narang on 08/01/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class AF: ObservableObject {
+class AFState: ObservableObject {
     @Published var skinColor: Option = skinColors[1]
     @Published var freckles: Option = skinFreckles[0]
     @Published var hairColor: Option = hairColors[0]

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 //FONTS
 
 extension Font {
@@ -97,9 +96,8 @@ let cr24: CGFloat = 24
 
 extension Animation {
     static let longSpring: Animation = Animation.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1)
-    static let medSpring: Animation = Animation.spring(response: 0.4, dampingFraction: 0.6, blendDuration: 0.1)
+    static let medSpring: Animation = Animation.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)
     static let shortSpring: Animation = Animation.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.1)
-    //static let afSpring: Animation = Animation.spring(response: 0.4, dampingFraction: 0.6, blendDuration: 0.1)
     static let linear5: Animation = Animation.linear(duration: 0.5)
     static let linear2: Animation = Animation.linear(duration: 0.2)
     static let linear1: Animation = Animation.linear(duration: 0.1)

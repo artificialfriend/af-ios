@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DividerView: View {
-    @EnvironmentObject var af: AF
+    @EnvironmentObject var af: AFState
     
     var body: some View {
         Rectangle()

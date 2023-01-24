@@ -12,8 +12,8 @@ struct af_iosApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(AF())
-                .environmentObject(Signup())
+                .environmentObject(AFState())
+                .environmentObject(SignupState())
                 .environmentObject(TextBindingManager())
         }
     }
