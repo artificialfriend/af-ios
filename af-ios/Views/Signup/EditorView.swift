@@ -187,7 +187,7 @@ struct OptionView: View {
     }
 }
 
-struct EditorViewPreviews: PreviewProvider {
+struct EditorView_Previews: PreviewProvider {
     static var previews: some View {
         EditorView()
             .environmentObject(AFState())
