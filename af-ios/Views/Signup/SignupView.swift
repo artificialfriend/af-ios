@@ -8,53 +8,53 @@
 import SwiftUI
 
 struct SignupView: View {
-    @EnvironmentObject var afState: AFState
-    @EnvironmentObject var signupState: SignupState
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     @FocusState private var keyboardFocused: Bool
     
     func appearAF() {
         withAnimation(.medSpring) {
-            signupState.afScale = 1
+            signup.afScale = 1
         }
 
         withAnimation(.linear5) {
-            signupState.welcomeOpacity = 1
+            signup.welcomeOpacity = 1
         }
         
         withAnimation(.afFloat){
-            signupState.afOffset = -s12
+            signup.afOffset = -s12
         }
         
         Task { try await Task.sleep(nanoseconds: 1_500_000_000)
             withAnimation(.medSpring) {
-                signupState.buttonOffset = 0
-                signupState.buttonOpacity = 1
+                signup.buttonOffset = 0
+                signup.buttonOpacity = 1
             }
         }
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            if signupState.currentStep == .welcome {
+            if signup.currentStep == .welcome {
                 Image("Logomark")
                     .padding(.top, s16)
-                    .foregroundColor(afState.interface.lineColor)
-                    .opacity(signupState.welcomeOpacity)
+                    .foregroundColor(af.interface.lineColor)
+                    .opacity(signup.welcomeOpacity)
             }
             
-            if signupState.currentStep == .welcome || signupState.currentStep == .bootup {
+            if signup.currentStep == .welcome || signup.currentStep == .bootup {
                 Spacer()
             }
             
             VStack {
-                if signupState.currentStep == .create {
+                if signup.currentStep == .create {
                     Text("Create Your AF.")
-                        .opacity(signupState.createOpacity)
+                        .opacity(signup.createOpacity)
                 }
                 
-                if signupState.currentStep == .name {
+                if signup.currentStep == .name {
                     Text("Name Your AF.")
-                        .opacity(signupState.nameOpacity)
+                        .opacity(signup.nameOpacity)
                 }
             }
             .font(.h2)
@@ -64,13 +64,13 @@ struct SignupView: View {
             
             AFView()
                 .padding(.horizontal, s64)
-                .scaleEffect(signupState.afScale)
-                .animation(.longSpring, value: signupState.currentStep)
-                .offset(y: signupState.afOffset)
-                .opacity(signupState.afOpacity)
+                .scaleEffect(signup.afScale)
+                .animation(.longSpring, value: signup.currentStep)
+                .offset(y: signup.afOffset)
+                .opacity(signup.afOpacity)
                 .onAppear { appearAF() }
             
-            if signupState.currentStep == .welcome {
+            if signup.currentStep == .welcome {
                 VStack(spacing: 0) {
                     Text("An AI assistant,")
                         .padding(.bottom, -s4)
@@ -82,15 +82,15 @@ struct SignupView: View {
                 .padding(.top, s16)
                 .font(.h1)
                 .foregroundColor(.afBlack)
-                .opacity(signupState.welcomeOpacity)
+                .opacity(signup.welcomeOpacity)
             }
             
-            if signupState.currentStep == .name {
+            if signup.currentStep == .name {
                 NameFieldView()
                     .padding(.horizontal, 14)
                     .padding(.top, s32)
                     .padding(.bottom, s8)
-                    .opacity(signupState.nameOpacity)
+                    .opacity(signup.nameOpacity)
                     .keyboardType(.alphabet)
                     .disableAutocorrection(true)
                     .focused($keyboardFocused)
@@ -101,37 +101,37 @@ struct SignupView: View {
                         }
             }
             
-            if signupState.currentStep != .create {
+            if signup.currentStep != .create {
                 Spacer()
             }
             
-            if signupState.currentStep == .create {
+            if signup.currentStep == .create {
                 EditorView()
                     .padding(.top, s32)
                     .padding(.bottom, s12)
-                    .opacity(signupState.createOpacity)
+                    .opacity(signup.createOpacity)
             }
             
             ZStack(alignment: .bottom) {
-                if signupState.currentStep == .bootup {
+                if signup.currentStep == .bootup {
                     VStack(spacing: s6) {
                         Text("Booting Up")
                             .font(.m)
-                            .foregroundColor(afState.interface.softColor)
+                            .foregroundColor(af.interface.softColor)
 
                         Image("SpinnerIcon")
-                            .foregroundColor(afState.interface.softColor)
-                            .rotationEffect(signupState.spinnerRotation)
-                            .animation(.loadingSpin, value: signupState.isLoading)
+                            .foregroundColor(af.interface.softColor)
+                            .rotationEffect(signup.spinnerRotation)
+                            .animation(.loadingSpin, value: signup.isLoading)
                     }
                     .padding(.top, s48)
-                    .opacity(signupState.bootupOpacity)
+                    .opacity(signup.bootupOpacity)
                 }
                 
-                if signupState.buttonIsDismissed == false {
+                if signup.buttonIsDismissed == false {
                     SignupButtonView()
-                        .offset(y: signupState.buttonOffset)
-                        .opacity(signupState.buttonOpacity)
+                        .offset(y: signup.buttonOffset)
+                        .opacity(signup.buttonOpacity)
                 }
             }
         }

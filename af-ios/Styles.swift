@@ -12,10 +12,11 @@ import SwiftUI
 extension Font {
     static let h1: Font = Font.custom("AvenirNext-Bold", size: 32)
     static let h2: Font = Font.custom("AvenirNext-Bold", size: 28)
-    static let h3: Font = Font.custom("AvenirNext-Bold", size: 19)
+    static let l: Font = Font.custom("AvenirNext-Bold", size: 18)
     static let m: Font = Font.custom("AvenirNext-Bold", size: 17)
     static let s: Font = Font.custom("AvenirNext-Bold", size: 15)
     static let xs: Font = Font.custom("AvenirNext-Bold", size: 12)
+    static let user: Font = Font.custom("AvenirNext-DemiBold", size: 17)
 }
 
 
@@ -23,6 +24,7 @@ extension Font {
 
 extension Color {
     static let afBlack: Color = Color("afBlack")
+    static let afBlurryWhite: Color = Color("afBlurryWhite")
     static let afGray: Color = Color("afGray")
     
     static let afGreen: Color = Color("afGreen")
@@ -62,6 +64,7 @@ extension Color {
 //SIZE
 
 let s0: CGFloat = 0
+let s1_5: CGFloat = 1.5
 let s4: CGFloat = 4
 let s6: CGFloat = 6
 let s8: CGFloat = 8
@@ -127,3 +130,16 @@ struct Spring: ButtonStyle {
 //HAPTICS
 
 let impactMedium = UIImpactFeedbackGenerator(style: .medium)
+
+
+//BLUR
+
+struct Blur: UIViewRepresentable {
+    var style: UIBlurEffect.Style = .light
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: style))
+    }
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: style)
+    }
+}

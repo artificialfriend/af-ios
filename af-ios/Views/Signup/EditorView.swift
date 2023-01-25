@@ -38,49 +38,49 @@ struct TabsView: View {
 }
 
 struct TabLabelView: View {
-    @EnvironmentObject var afState: AFState
-    @EnvironmentObject var signupState: SignupState
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     let label: String
     let feature: Feature
     
     var body: some View {
         Button(action: {
-            signupState.activeCreateTab = feature
+            signup.activeCreateTab = feature
             impactMedium.impactOccurred()
         }) {
             Text(label)
-                .font(signupState.activeCreateTab == feature ? .h3 : .s)
-                .foregroundColor(signupState.activeCreateTab == feature ? .afBlack : afState.interface.medColor)
+                .font(signup.activeCreateTab == feature ? .l : .s)
+                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.interface.medColor)
                 .frame(width: s80)
-                .animation(.shortSpring, value: signupState.activeCreateTab == feature)
+                .animation(.shortSpring, value: signup.activeCreateTab == feature)
         }
         .buttonStyle(Plain())
     }
 }
 
 struct OptionsView: View {
-    @EnvironmentObject var afState: AFState
-    @EnvironmentObject var signupState: SignupState
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: s0) {
-                OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: afState.skinColor)
-                OptionRowView(rowLabel: "Freckles", rowOptions: skinFreckles, activeOption: afState.freckles)
+                OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: af.skinColor)
+                OptionRowView(rowLabel: "Freckles", rowOptions: skinFreckles, activeOption: af.freckles)
             }
-            .opacity(signupState.activeCreateTab == .skin ? 1 : 0)
+            .opacity(signup.activeCreateTab == .skin ? 1 : 0)
             
             VStack(alignment: .leading, spacing: s0) {
-                OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: afState.hairColor)
-                OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: afState.hairStyle)
+                OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: af.hairColor)
+                OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: af.hairStyle)
             }
-            .opacity(signupState.activeCreateTab == .hair ? 1 : 0)
+            .opacity(signup.activeCreateTab == .hair ? 1 : 0)
             
             VStack(alignment: .leading, spacing: s0) {
-                OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: afState.eyeColor)
-                OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: afState.lashes)
+                OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: af.eyeColor)
+                OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: af.lashes)
             }
-            .opacity(signupState.activeCreateTab == .eyes ? 1 : 0)
+            .opacity(signup.activeCreateTab == .eyes ? 1 : 0)
         }
         .padding(.top, s4)
         .padding(.bottom, s24)
@@ -88,7 +88,7 @@ struct OptionsView: View {
 }
 
 struct OptionRowView: View {
-    @EnvironmentObject var afState: AFState
+    @EnvironmentObject var af: AFState
     let rowLabel: String
     let rowOptions: [Option]
     var activeOption: Option
@@ -96,26 +96,26 @@ struct OptionRowView: View {
     func setActiveOption(optionType: OptionType, option: Option) {
         switch optionType {
             case .skinColor:
-                afState.skinColor = option
-                if afState.skinColor.name == "Green Skin" {
-                    afState.interface = interfaces[0]
-                } else if afState.skinColor.name == "Blue Skin" {
-                    afState.interface = interfaces[1]
-                } else if afState.skinColor.name == "Purple Skin" {
-                    afState.interface = interfaces[2]
-                } else if afState.skinColor.name == "Pink Skin" {
-                    afState.interface = interfaces[3]
+                af.skinColor = option
+                if af.skinColor.name == "Green Skin" {
+                    af.interface = interfaces[0]
+                } else if af.skinColor.name == "Blue Skin" {
+                    af.interface = interfaces[1]
+                } else if af.skinColor.name == "Purple Skin" {
+                    af.interface = interfaces[2]
+                } else if af.skinColor.name == "Pink Skin" {
+                    af.interface = interfaces[3]
                 }
             case .skinFreckles:
-                afState.freckles = option
+                af.freckles = option
             case .hairColor:
-                afState.hairColor = option
+                af.hairColor = option
             case .hairStyle:
-                afState.hairStyle = option
+                af.hairStyle = option
             case .eyeColor:
-                afState.eyeColor = option
+                af.eyeColor = option
             case .eyeLashes:
-                afState.lashes = option
+                af.lashes = option
         }
     }
     
@@ -145,7 +145,7 @@ struct OptionRowView: View {
 }
 
 struct OptionView: View {
-    @EnvironmentObject var afState: AFState
+    @EnvironmentObject var af: AFState
     let name: String
     let optionType: OptionType
     let width = optionWidth
@@ -164,7 +164,7 @@ struct OptionView: View {
             }
         }
         
-        return (afState.interface.afImage, afState.interface.afColor, afState.interface.lineColor)
+        return (af.interface.afImage, af.interface.afColor, af.interface.lineColor)
     }
     
     var body: some View {
@@ -179,7 +179,7 @@ struct OptionView: View {
         .cornerRadius(cr16)
         .overlay(
             RoundedRectangle(cornerRadius: cr16)
-                .stroke(activeOption.name == name ? afState.interface.userColor : setOptionElements().2, lineWidth: activeOption.name == name ? 2.5 : 2)
+                .stroke(activeOption.name == name ? af.interface.userColor : setOptionElements().2, lineWidth: activeOption.name == name ? 2.5 : 2)
                 .frame(width: activeOption.name == name ? width - 2.5 : width - 2, height: activeOption.name == name ? width - 2.5 : width - 2)
         )
         .frame(width: width, height: width)

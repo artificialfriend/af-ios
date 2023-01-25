@@ -13,7 +13,7 @@ struct DividerView: View {
     var body: some View {
         Rectangle()
             .fill(af.interface.lineColor)
-            .frame(height: 1.5)
+            .frame(height: s1_5)
             .edgesIgnoringSafeArea(.horizontal)
     }
 }

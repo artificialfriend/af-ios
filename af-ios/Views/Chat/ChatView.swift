@@ -2,47 +2,62 @@
 //  ChatView.swift
 //  af-ios
 //
-//  Created by Ashutosh Narang on 08/01/23.
+//  Created by Cam Crain on 2023-01-24.
 //
 
-/*
 import SwiftUI
 
 struct ChatView: View {
-    @StateObject var messagesManager = MessagesManager()
-    
     var body: some View {
-        VStack {
-            VStack {
-                TitleRowView()
+        GeometryReader { geo in
+            ZStack {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: s160) {
+                        Rectangle()
+                            .fill(Color.afUserBlue)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, -s16)
+
+                        Rectangle()
+                            .fill(Color.afUserBlue)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, -s16)
+
+                        Rectangle()
+                            .fill(Color.afUserBlue)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, -s16)
+
+                        Rectangle()
+                            .fill(Color.afUserBlue)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, -s16)
+
+                        Rectangle()
+                            .fill(Color.afUserBlue)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, -s16)
+
+                        Rectangle()
+                            .fill(Color.afUserBlue)
+                            .frame(width: 80, height: 80)
+                            .padding(.top, -s16)
+
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                }
                 
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        ForEach(messagesManager.messages, id: \.id) { message in
-                            MessageBubbleView(message: message)
-                        }
-                    }
-                    .sding(.top, 10)
-                    .background(.white)
-                    .cornerRadius(30, corners: [.topLeft, .topRight])
-                    .onChange(of: messagesManager.lastMessageId) { id in
-                        withAnimation {
-                            proxy.scrollTo(id, anchor: .bottom)
-                        }
-                    }
+                VStack(spacing: s0) {
+                    TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
+
+                    Spacer()
+                    
+                    ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
                 }
             }
-            .background(Color("Peach"))
-            
-            MessageFieldView()
-                .environmentObject(messagesManager)
+            .ignoresSafeArea(edges: .all)
         }
+        .environmentObject(AFState())
     }
 }
-
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView()
-    }
-}
-*/

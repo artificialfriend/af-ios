@@ -8,84 +8,84 @@
 import SwiftUI
 
 struct SignupButtonView: View {
-    @EnvironmentObject var signupState: SignupState
-    @EnvironmentObject var afState: AFState
-    @EnvironmentObject var textBindingManager: TextBindingManager
+    @EnvironmentObject var signup: SignupState
+    @EnvironmentObject var af: AFState
+    @EnvironmentObject var nameField: NameFieldState
 
     func changeStep() {
-        signupState.afOffset = s0
+        signup.afOffset = s0
 
-        switch signupState.currentStep {
+        switch signup.currentStep {
             case .welcome:
-                signupState.currentStep = .create
+                signup.currentStep = .create
             case .create:
-                signupState.currentStep = .name
+                signup.currentStep = .name
             case .name:
-                signupState.currentStep = .bootup
+                signup.currentStep = .bootup
             case .bootup:
-                signupState.currentStep = .bootup
+                signup.currentStep = .bootup
         }
     }
 
     func fadeOut() {
         withAnimation(.linear1) {
-            switch signupState.currentStep {
+            switch signup.currentStep {
                 case .welcome:
-                    signupState.welcomeOpacity = 0
+                    signup.welcomeOpacity = 0
                 case .create:
-                    signupState.createOpacity = 0
+                    signup.createOpacity = 0
                 case .name:
-                    signupState.nameOpacity = 0
+                    signup.nameOpacity = 0
                 case .bootup:
-                    signupState.bootupOpacity = 0
+                    signup.bootupOpacity = 0
             }
         }
     }
 
     func fadeIn() {
         withAnimation(.afFloat){
-            signupState.afOffset = -s12
+            signup.afOffset = -s12
         }
 
         withAnimation(.linear2) {
-            switch signupState.currentStep {
+            switch signup.currentStep {
                 case .welcome:
-                    signupState.welcomeOpacity = 1
+                    signup.welcomeOpacity = 1
                 case .create:
-                    signupState.createOpacity = 1
+                    signup.createOpacity = 1
                 case .name:
-                    signupState.nameOpacity = 1
+                    signup.nameOpacity = 1
                 case .bootup:
-                    signupState.bootupOpacity = 1
+                    signup.bootupOpacity = 1
             }
         }
     }
 
     func presentOrDismissButton() {
         withAnimation(.medSpring) {
-            if signupState.buttonIsDismissed == false {
-                signupState.buttonOffset = s104
-                signupState.buttonOpacity = 0
+            if signup.buttonIsDismissed == false {
+                signup.buttonOffset = s104
+                signup.buttonOpacity = 0
             } else {
-                signupState.buttonOffset = s0
-                signupState.buttonOpacity = 1
+                signup.buttonOffset = s0
+                signup.buttonOpacity = 1
             }
         }
     }
 
     func startOrStopLoading() {
-        if !signupState.isLoading {
-            signupState.isLoading = true
-            signupState.spinnerRotation = Angle(degrees: 360)
+        if !signup.isLoading {
+            signup.isLoading = true
+            signup.spinnerRotation = Angle(degrees: 360)
         } else {
-            signupState.isLoading = false
-            signupState.spinnerRotation = Angle(degrees: 0)
+            signup.isLoading = false
+            signup.spinnerRotation = Angle(degrees: 0)
         }
     }
 
     func transition() {
-        if signupState.currentStep == .welcome {
-            signupState.buttonWelcomeLabelOpacity = 0
+        if signup.currentStep == .welcome {
+            signup.buttonWelcomeLabelOpacity = 0
             startOrStopLoading()
 
             Task { try await Task.sleep(nanoseconds: 2_000_000_000)
@@ -103,7 +103,7 @@ struct SignupButtonView: View {
         } else {
             fadeOut()
 
-            if signupState.currentStep == .name {
+            if signup.currentStep == .name {
                 presentOrDismissButton()
 
                 Task { try await Task.sleep(nanoseconds: 400_000_000)
@@ -121,22 +121,22 @@ struct SignupButtonView: View {
         }
 
         Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-            if signupState.currentStep == .bootup {
+            if signup.currentStep == .bootup {
                 Task { try await Task.sleep(nanoseconds: 4_000_000_000)
                     fadeOut()
 
                     withAnimation(.easeInOut(duration: 0.5)) {
-                        signupState.afScale = 1.1
+                        signup.afScale = 1.1
                     }
 
                     Task { try await Task.sleep(nanoseconds: 500_000_000)
                         withAnimation(.easeIn(duration: 0.3)) {
-                            signupState.afScale = 0
+                            signup.afScale = 0
                         }
 
                         Task { try await Task.sleep(nanoseconds: 200_000_000)
                             withAnimation(.linear1) {
-                                signupState.afOpacity = 0
+                                signup.afOpacity = 0
                             }
                         }
                     }
@@ -146,12 +146,12 @@ struct SignupButtonView: View {
     }
 
     func transitionBack() {
-        if signupState.currentStep == .name {
+        if signup.currentStep == .name {
             fadeOut()
 
             Task { try await Task.sleep(nanoseconds: 100_000_000)
-                signupState.afOffset = s0
-                signupState.currentStep = .create
+                signup.afOffset = s0
+                signup.currentStep = .create
             }
 
             Task { try await Task.sleep(nanoseconds: 400_000_000)
@@ -164,14 +164,18 @@ struct SignupButtonView: View {
         impactMedium.impactOccurred()
         transition()
 
-        if signupState.currentStep == .welcome {
+        if signup.currentStep == .welcome {
             //Put auth logic in here
             //For transition reasons, I used the same button at each step of the signup flow, but it behaves differently at each step
             //Once the logic is hooked up let me know and I'll adjust the transition stuff (right now I just have the loader on a timer)
         }
 
-        if signupState.currentStep == .name {
-            afState.name = textBindingManager.text
+        if signup.currentStep == .name {
+            af.name = nameField.text
+        }
+        
+        if signup.currentStep == .bootup {
+            //Put db logic for account creation in here
         }
     }
 
@@ -194,10 +198,10 @@ struct SignupButtonView: View {
                 }
             }
             .frame(width: s64)
-            .padding(.leading, signupState.currentStep == .name || signupState.currentStep == .bootup ? s0 : -s72)
-            .padding(.trailing, signupState.currentStep == .name || signupState.currentStep == .bootup ? s8 : s0)
-            .opacity(signupState.currentStep == .name || signupState.currentStep == .bootup ? 1 : 0)
-            .animation(.medSpring, value: signupState.currentStep)
+            .padding(.leading, signup.currentStep == .name || signup.currentStep == .bootup ? s0 : -s72)
+            .padding(.trailing, signup.currentStep == .name || signup.currentStep == .bootup ? s8 : s0)
+            .opacity(signup.currentStep == .name || signup.currentStep == .bootup ? 1 : 0)
+            .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
             Button(action: {
@@ -212,28 +216,28 @@ struct SignupButtonView: View {
                             .padding(.top, -5)
                         Text("Sign Up With Apple")
                     }
-                    .opacity(signupState.buttonWelcomeLabelOpacity)
-                    .animation(.linear1, value: signupState.isLoading)
+                    .opacity(signup.buttonWelcomeLabelOpacity)
+                    .animation(.linear1, value: signup.isLoading)
                     
                     Image("SpinnerIcon")
                         .foregroundColor(.white)
-                        .rotationEffect(signupState.spinnerRotation)
-                        .animation(.loadingSpin, value: signupState.isLoading)
-                        .opacity(signupState.isLoading ? 1 : 0)
-                        .animation(.linear1, value: signupState.isLoading)
+                        .rotationEffect(signup.spinnerRotation)
+                        .animation(.loadingSpin, value: signup.isLoading)
+                        .opacity(signup.isLoading ? 1 : 0)
+                        .animation(.linear1, value: signup.isLoading)
 
                     Text("Next")
-                        .opacity(signupState.createOpacity)
+                        .opacity(signup.createOpacity)
                     
                     Text("Boot Up")
-                        .opacity(signupState.nameOpacity)
+                        .opacity(signup.nameOpacity)
                 }
                 .foregroundColor(.white)
             }
-            .animation(.medSpring, value: signupState.currentStep)
+            .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
         }
-        .font(.h3)
+        .font(.l)
         .padding(.horizontal, s12)
         .frame(height: s64)
     }
@@ -244,7 +248,7 @@ struct SignupButtonViewPreviews: PreviewProvider {
         SignupButtonView()
             .environmentObject(AFState())
             .environmentObject(SignupState())
-            .environmentObject(TextBindingManager())
+            .environmentObject(NameFieldState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }
