@@ -10,8 +10,64 @@ import SwiftUI
 struct SignupButtonView: View {
     @EnvironmentObject var signup: SignupState
     @EnvironmentObject var af: AFState
-    @EnvironmentObject var nameField: NameFieldState
+    
+    var body: some View {
+        HStack(spacing: s0) {
+            Button(action: { handleBackButtonTap() }) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: cr16)
+                        .fill(Color.afGray)
+                    
+                    Image("BackIcon")
+                        .foregroundColor(.afBlack.opacity(0.5))
+                }
+            }
+            .frame(width: s64)
+            .padding(.leading, signup.currentStep == .name || signup.currentStep == .bootup ? s0 : -s72)
+            .padding(.trailing, signup.currentStep == .name || signup.currentStep == .bootup ? s8 : s0)
+            .opacity(signup.currentStep == .name || signup.currentStep == .bootup ? 1 : 0)
+            .animation(.medSpring, value: signup.currentStep)
+            .buttonStyle(Spring())
+            
+            Button(action: { handleButtonTap() }) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: cr16)
+                        .fill(Color.afBlack)
+                    
+                    HStack {
+                        Image("AppleLogo")
+                            .padding(.top, -5)
+                        Text("Sign Up With Apple")
+                    }
+                    .opacity(signup.buttonWelcomeLabelOpacity)
+                    .animation(.linear1, value: signup.isLoading)
+                    
+                    Image("SpinnerIcon")
+                        .foregroundColor(.white)
+                        .rotationEffect(signup.spinnerRotation)
+                        .animation(.loadingSpin, value: signup.isLoading)
+                        .opacity(signup.isLoading ? 1 : 0)
+                        .animation(.linear1, value: signup.isLoading)
 
+                    Text("Next")
+                        .opacity(signup.createOpacity)
+                    
+                    Text("Boot Up")
+                        .opacity(signup.nameOpacity)
+                }
+                .foregroundColor(.white)
+            }
+            .animation(.medSpring, value: signup.currentStep)
+            .buttonStyle(Spring())
+        }
+        .font(.l)
+        .padding(.horizontal, s12)
+        .frame(height: s64)
+    }
+    
+    
+    //FUNCTIONS
+    
     func changeStep() {
         signup.afOffset = s0
 
@@ -171,7 +227,7 @@ struct SignupButtonView: View {
         }
 
         if signup.currentStep == .name {
-            af.name = nameField.text
+            af.name = signup.nameFieldInput
         }
         
         if signup.currentStep == .bootup {
@@ -183,64 +239,6 @@ struct SignupButtonView: View {
         impactMedium.impactOccurred()
         transitionBack()
     }
-    
-    var body: some View {
-        HStack(spacing: s0) {
-            Button(action: {
-                handleBackButtonTap()
-            }) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: cr16)
-                        .fill(Color.afGray)
-                    
-                    Image("BackIcon")
-                        .foregroundColor(.afBlack.opacity(0.5))
-                }
-            }
-            .frame(width: s64)
-            .padding(.leading, signup.currentStep == .name || signup.currentStep == .bootup ? s0 : -s72)
-            .padding(.trailing, signup.currentStep == .name || signup.currentStep == .bootup ? s8 : s0)
-            .opacity(signup.currentStep == .name || signup.currentStep == .bootup ? 1 : 0)
-            .animation(.medSpring, value: signup.currentStep)
-            .buttonStyle(Spring())
-            
-            Button(action: {
-                handleButtonTap()
-            }) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: cr16)
-                        .fill(Color.afBlack)
-                    
-                    HStack {
-                        Image("AppleLogo")
-                            .padding(.top, -5)
-                        Text("Sign Up With Apple")
-                    }
-                    .opacity(signup.buttonWelcomeLabelOpacity)
-                    .animation(.linear1, value: signup.isLoading)
-                    
-                    Image("SpinnerIcon")
-                        .foregroundColor(.white)
-                        .rotationEffect(signup.spinnerRotation)
-                        .animation(.loadingSpin, value: signup.isLoading)
-                        .opacity(signup.isLoading ? 1 : 0)
-                        .animation(.linear1, value: signup.isLoading)
-
-                    Text("Next")
-                        .opacity(signup.createOpacity)
-                    
-                    Text("Boot Up")
-                        .opacity(signup.nameOpacity)
-                }
-                .foregroundColor(.white)
-            }
-            .animation(.medSpring, value: signup.currentStep)
-            .buttonStyle(Spring())
-        }
-        .font(.l)
-        .padding(.horizontal, s12)
-        .frame(height: s64)
-    }
 }
 
 struct SignupButtonView_Previews: PreviewProvider {
@@ -248,7 +246,6 @@ struct SignupButtonView_Previews: PreviewProvider {
         SignupButtonView()
             .environmentObject(AFState())
             .environmentObject(SignupState())
-            .environmentObject(NameFieldState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

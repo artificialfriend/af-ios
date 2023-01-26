@@ -9,31 +9,30 @@ import SwiftUI
 
 struct NameFieldView: View {
     @EnvironmentObject var af: AFState
-    @EnvironmentObject var nameField: NameFieldState
+    @EnvironmentObject var signup: SignupState
     
     var body: some View {
         ZStack {
-            TextField("", text: $nameField.text)
-                .placeholder(when: nameField.text.isEmpty) {
+            TextField("", text: $signup.nameFieldInput)
+                .placeholder(when: signup.nameFieldInput.isEmpty, alignment: .center) {
                     Text("AF4096")
                         .foregroundColor(af.interface.softColor)
                 }
                 .cornerRadius(cr16)
                 .font(.l)
                 .foregroundColor(.afBlack)
-                .frame(height: s56)
-                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.interface.lineColor))
                 .multilineTextAlignment(.center)
                 .accentColor(af.interface.userColor)
-                
+                .frame(height: s56)
+                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.interface.lineColor))
             
             HStack {
                 Text("NAME")
                 
                 Spacer()
                 
-                Text(String(nameField.characterLimit - nameField.text.count))
-                    .opacity(nameField.characterLimit - nameField.text.count <= 5 ? 1 : 0)
+                Text(String(signup.nameFieldCharLimit - signup.nameFieldInput.count))
+                    .opacity(signup.nameFieldCharLimit - signup.nameFieldInput.count <= 5 ? 1 : 0)
                     .multilineTextAlignment(.trailing)
             }
             .padding(.horizontal, s16)

@@ -30,4 +30,12 @@ class SignupState: ObservableObject {
     @Published var buttonWelcomeLabelOpacity: CGFloat = 1
     @Published var isLoading: Bool = false
     @Published var spinnerRotation: Angle = Angle(degrees: 0)
+    @Published var nameFieldCharLimit: Int = 12
+    @Published var nameFieldInput = "" {
+        didSet {
+            if nameFieldInput.count > nameFieldCharLimit && oldValue.count <= nameFieldCharLimit {
+                nameFieldInput = oldValue
+            }
+        }
+    }
 }

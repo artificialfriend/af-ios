@@ -12,7 +12,7 @@ import Combine
 extension View {
     func placeholder<Content: View>(
         when shouldShow: Bool,
-        alignment: Alignment = .center,
+        alignment: Alignment,
         @ViewBuilder placeholder: () -> Content) -> some View {
 
         ZStack(alignment: alignment) {
@@ -22,19 +22,37 @@ extension View {
     }
 }
 
+protocol KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+extension KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> {
+        Publishers.Merge(
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillShowNotification)
+                .map { _ in true },
+            
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in false }
+        )
+        .eraseToAnyPublisher()
+    }
+}
+
 extension View {
-  var keyboardPublisher: AnyPublisher<Bool, Never> {
-    Publishers
-      .Merge(
-        NotificationCenter
-          .default
-          .publisher(for: UIResponder.keyboardWillShowNotification)
-          .map { _ in true },
-        NotificationCenter
-          .default
-          .publisher(for: UIResponder.keyboardWillHideNotification)
-          .map { _ in false })
-      .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
-      .eraseToAnyPublisher()
-  }
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
 }

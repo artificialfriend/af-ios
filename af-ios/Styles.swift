@@ -16,7 +16,8 @@ extension Font {
     static let m: Font = Font.custom("AvenirNext-Bold", size: 17)
     static let s: Font = Font.custom("AvenirNext-Bold", size: 15)
     static let xs: Font = Font.custom("AvenirNext-Bold", size: 12)
-    static let user: Font = Font.custom("AvenirNext-DemiBold", size: 17)
+    static let p: Font = Font.custom("AvenirNext-Medium", size: 17)
+    static let pDemi: Font = Font.custom("AvenirNext-DemiBold", size: 17)
 }
 
 
@@ -24,7 +25,7 @@ extension Font {
 
 extension Color {
     static let afBlack: Color = Color("afBlack")
-    static let afBlurryWhite: Color = Color("afBlurryWhite")
+    static let afBlurryWhite: Color = Color.white.opacity(0.8)
     static let afGray: Color = Color("afGray")
     
     static let afGreen: Color = Color("afGreen")
@@ -65,6 +66,7 @@ extension Color {
 
 let s0: CGFloat = 0
 let s1_5: CGFloat = 1.5
+let s2: CGFloat = 2
 let s4: CGFloat = 4
 let s6: CGFloat = 6
 let s8: CGFloat = 8
@@ -100,7 +102,7 @@ let cr24: CGFloat = 24
 extension Animation {
     static let longSpring: Animation = Animation.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1)
     static let medSpring: Animation = Animation.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)
-    static let shortSpring: Animation = Animation.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.1)
+    static let shortSpring: Animation = Animation.spring(response: 0.2, dampingFraction: 0.6, blendDuration: 0.1)
     static let linear5: Animation = Animation.linear(duration: 0.5)
     static let linear2: Animation = Animation.linear(duration: 0.2)
     static let linear1: Animation = Animation.linear(duration: 0.1)

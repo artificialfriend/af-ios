@@ -10,17 +10,18 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         //SignupView()
-//        ChatView()
-        SignupWithAppleView()
+        ChatView()
+        //SignupWithAppleView()
     }
 }
 
-struct ContentViewPreviews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(AFState())
             .environmentObject(SignupState())
-            .environmentObject(NameFieldState())
+            .environmentObject(ChatState())
+            .environmentObject(MessagesState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }
