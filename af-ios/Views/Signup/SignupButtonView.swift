@@ -242,7 +242,7 @@ struct SignupButtonView: View {
     }
 }
 
-struct SignupButtonViewPreviews: PreviewProvider {
+struct SignupButtonView_Previews: PreviewProvider {
     static var previews: some View {
         SignupButtonView()
             .environmentObject(AFState())
