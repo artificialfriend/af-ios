@@ -19,7 +19,7 @@ struct ContentViewPreviews: PreviewProvider {
         ContentView()
             .environmentObject(AFState())
             .environmentObject(SignupState())
-            .environmentObject(NameFieldState())
+            .environmentObject(ChatState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481598172981A14200201B32 /* ChatState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481598162981A14200201B32 /* ChatState.swift */; };
 		483317FA29788EB20008F61E /* SignupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317F929788EB20008F61E /* SignupState.swift */; };
 		483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FB297A09DA0008F61E /* NameFieldView.swift */; };
 		483317FE297A1E680008F61E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FD297A1E680008F61E /* Extensions.swift */; };
 		48331800297B48830008F61E /* SignupButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FF297B48830008F61E /* SignupButtonView.swift */; };
-		48A3E38129803D6F0093BDA0 /* NameFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E38029803D6F0093BDA0 /* NameFieldState.swift */; };
 		48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E382298040E10093BDA0 /* TopNavView.swift */; };
 		48A3E385298047270093BDA0 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E384298047270093BDA0 /* ChatView.swift */; };
 		48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E386298095AC0093BDA0 /* ComposerView.swift */; };
@@ -34,11 +34,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		481598162981A14200201B32 /* ChatState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatState.swift; sourceTree = "<group>"; };
 		483317F929788EB20008F61E /* SignupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupState.swift; sourceTree = "<group>"; };
 		483317FB297A09DA0008F61E /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
 		483317FD297A1E680008F61E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		483317FF297B48830008F61E /* SignupButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupButtonView.swift; sourceTree = "<group>"; };
-		48A3E38029803D6F0093BDA0 /* NameFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldState.swift; sourceTree = "<group>"; };
 		48A3E382298040E10093BDA0 /* TopNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavView.swift; sourceTree = "<group>"; };
 		48A3E384298047270093BDA0 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		48A3E386298095AC0093BDA0 /* ComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerView.swift; sourceTree = "<group>"; };
@@ -124,8 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				CE1A30E6296B195B003D1476 /* AFState.swift */,
+				481598162981A14200201B32 /* ChatState.swift */,
 				483317F929788EB20008F61E /* SignupState.swift */,
-				48A3E38029803D6F0093BDA0 /* NameFieldState.swift */,
 				CE1A30E8296B1973003D1476 /* Message.swift */,
 				CE1A30EC296B1A0F003D1476 /* AFAttributes.swift */,
 			);
@@ -244,13 +244,13 @@
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
 				483317FA29788EB20008F61E /* SignupState.swift in Sources */,
 				CE1A30FA296B1C3D003D1476 /* OldChatView.swift in Sources */,
+				481598172981A14200201B32 /* ChatState.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,
 				CE1A30E9296B1973003D1476 /* Message.swift in Sources */,
 				CE1A30FC296B1C62003D1476 /* MessageBubbleView.swift in Sources */,
 				CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */,
 				CE1A3100296B1CC5003D1476 /* TitleRowView.swift in Sources */,
 				CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */,
-				48A3E38129803D6F0093BDA0 /* NameFieldState.swift in Sources */,
 				CE1A30D3296B0AD4003D1476 /* af_iosApp.swift in Sources */,
 				CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */,
 				48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */,
@@ -396,7 +396,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -430,7 +430,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

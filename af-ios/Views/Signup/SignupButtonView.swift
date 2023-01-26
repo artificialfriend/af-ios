@@ -10,7 +10,6 @@ import SwiftUI
 struct SignupButtonView: View {
     @EnvironmentObject var signup: SignupState
     @EnvironmentObject var af: AFState
-    @EnvironmentObject var nameField: NameFieldState
 
     func changeStep() {
         signup.afOffset = s0
@@ -171,7 +170,7 @@ struct SignupButtonView: View {
         }
 
         if signup.currentStep == .name {
-            af.name = nameField.text
+            af.name = signup.nameFieldInput
         }
         
         if signup.currentStep == .bootup {
@@ -248,7 +247,6 @@ struct SignupButtonViewPreviews: PreviewProvider {
         SignupButtonView()
             .environmentObject(AFState())
             .environmentObject(SignupState())
-            .environmentObject(NameFieldState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }
