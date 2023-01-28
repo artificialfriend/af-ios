@@ -10,5 +10,6 @@ import SwiftUI
 class ChatState: ObservableObject {
     @Published var composerInput: String = ""
     @Published var composerBottomPadding: CGFloat = s0
-    @Published var messagesBottomPadding: CGFloat = s96
+    @Published var messagesBottomPadding: CGFloat = s80
+    @Published var messageHeight: CGFloat = s0
 }

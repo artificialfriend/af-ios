@@ -17,6 +17,7 @@ extension Font {
     static let s: Font = Font.custom("AvenirNext-Bold", size: 15)
     static let xs: Font = Font.custom("AvenirNext-Bold", size: 12)
     static let user: Font = Font.custom("AvenirNext-DemiBold", size: 17)
+    static let p: Font = Font.custom("AvenirNext-Medium", size: 17)
 }
 
 
