@@ -35,13 +35,14 @@ struct SignupWithAppleView: View {
             onRequest: configure,
             onCompletion: handle
         )
-        .frame(height: 64)
-        .cornerRadius(cr16)
+        .frame(height: 45)
         .padding()
+        
     }
     
     func configure(_ request: ASAuthorizationAppleIDRequest) {
         request.requestedScopes = [.fullName, .email]
+        
     }
     
     func handle(_ authResult: Result<ASAuthorization, Error>) {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		481598172981A14200201B32 /* ChatState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481598162981A14200201B32 /* ChatState.swift */; };
-		48159819298328AF00201B32 /* UserMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48159818298328AF00201B32 /* UserMessageView.swift */; };
 		483317FA29788EB20008F61E /* SignupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317F929788EB20008F61E /* SignupState.swift */; };
 		483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FB297A09DA0008F61E /* NameFieldView.swift */; };
 		483317FE297A1E680008F61E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FD297A1E680008F61E /* Extensions.swift */; };
@@ -16,8 +15,6 @@
 		48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E382298040E10093BDA0 /* TopNavView.swift */; };
 		48A3E385298047270093BDA0 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E384298047270093BDA0 /* ChatView.swift */; };
 		48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3E386298095AC0093BDA0 /* ComposerView.swift */; };
-		48B5633529846AAF0077B372 /* AFMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5633429846AAF0077B372 /* AFMessageView.swift */; };
-		48B56337298479270077B372 /* MessagesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B56336298479270077B372 /* MessagesState.swift */; };
 		CE1A30D3296B0AD4003D1476 /* af_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */; };
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
@@ -39,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		481598162981A14200201B32 /* ChatState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatState.swift; sourceTree = "<group>"; };
-		48159818298328AF00201B32 /* UserMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageView.swift; sourceTree = "<group>"; };
 		483317F929788EB20008F61E /* SignupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupState.swift; sourceTree = "<group>"; };
 		483317FB297A09DA0008F61E /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
 		483317FD297A1E680008F61E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -47,8 +43,6 @@
 		48A3E382298040E10093BDA0 /* TopNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavView.swift; sourceTree = "<group>"; };
 		48A3E384298047270093BDA0 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		48A3E386298095AC0093BDA0 /* ComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerView.swift; sourceTree = "<group>"; };
-		48B5633429846AAF0077B372 /* AFMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFMessageView.swift; sourceTree = "<group>"; };
-		48B56336298479270077B372 /* MessagesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesState.swift; sourceTree = "<group>"; };
 		CE1A30CF296B0AD4003D1476 /* af-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "af-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = af_iosApp.swift; sourceTree = "<group>"; };
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,7 +130,6 @@
 				CE1A30E6296B195B003D1476 /* AFState.swift */,
 				481598162981A14200201B32 /* ChatState.swift */,
 				483317F929788EB20008F61E /* SignupState.swift */,
-				48B56336298479270077B372 /* MessagesState.swift */,
 				CE1A30E8296B1973003D1476 /* Message.swift */,
 				CE1A30EC296B1A0F003D1476 /* AFAttributes.swift */,
 			);
@@ -159,8 +152,6 @@
 			children = (
 				48A3E384298047270093BDA0 /* ChatView.swift */,
 				48A3E386298095AC0093BDA0 /* ComposerView.swift */,
-				48159818298328AF00201B32 /* UserMessageView.swift */,
-				48B5633429846AAF0077B372 /* AFMessageView.swift */,
 				CE1A30F9296B1C3D003D1476 /* OldChatView.swift */,
 				CE1A30FB296B1C62003D1476 /* MessageBubbleView.swift */,
 				CE1A30FD296B1C78003D1476 /* MessageFieldView.swift */,
@@ -254,12 +245,10 @@
 				48331800297B48830008F61E /* SignupButtonView.swift in Sources */,
 				CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */,
 				CE1A30FE296B1C78003D1476 /* MessageFieldView.swift in Sources */,
-				48B5633529846AAF0077B372 /* AFMessageView.swift in Sources */,
 				CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */,
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
 				CEB954D529819AFC00C5A9E8 /* SignupWithAppleView.swift in Sources */,
 				483317FA29788EB20008F61E /* SignupState.swift in Sources */,
-				48159819298328AF00201B32 /* UserMessageView.swift in Sources */,
 				CE1A30FA296B1C3D003D1476 /* OldChatView.swift in Sources */,
 				481598172981A14200201B32 /* ChatState.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,
@@ -270,7 +259,6 @@
 				CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */,
 				CE1A30D3296B0AD4003D1476 /* af_iosApp.swift in Sources */,
 				CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */,
-				48B56337298479270077B372 /* MessagesState.swift in Sources */,
 				48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */,
 				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
 				CE1A30ED296B1A0F003D1476 /* AFAttributes.swift in Sources */,

@@ -15,7 +15,6 @@ struct af_iosApp: App {
                 .environmentObject(AFState())
                 .environmentObject(SignupState())
                 .environmentObject(ChatState())
-                .environmentObject(MessagesState())
         }
     }
 }

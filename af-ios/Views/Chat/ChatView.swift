@@ -10,25 +10,30 @@ import SwiftUI
 struct ChatView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @EnvironmentObject var messages: MessagesState
-    @State private var isKeyboardVisible = false
+    @FocusState private var isComposerFocused: Bool
     
     var body: some View {
         ZStack {
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: s8) {
-                        ForEach(messages.messages) { message in
-                            if message.byAF {
-                                AFMessageView(text: message.text)
-                            } else {
-                                UserMessageView(text: message.text)
-                            }
-                        }
-//                        UserMessageView(text: "Summarize chapter 2")
-//                        AFMessageView(text: "Heathcliffe is a bad guy but he also loves that girl. They frollic on the moors and have a pretty unhealthy relationship overall, but it's romantic as all get out.")
+                    VStack(spacing: s80) {
+                        Rectangle()
+                            .fill(af.interface.userColor)
+                            .frame(width: 80, height: 80)
+                        
+                        Rectangle()
+                            .fill(af.interface.userColor)
+                            .frame(width: 80, height: 80)
+                        
+                        Rectangle()
+                            .fill(af.interface.userColor)
+                            .frame(width: 80, height: 80)
+                        
+                        Rectangle()
+                            .fill(af.interface.userColor)
+                            .frame(width: 80, height: 80)
                     }
-                    .padding(.bottom, isKeyboardVisible ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
+                    .padding(.bottom, isComposerFocused ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
                 }
                 .animation(.shortSpring, value: chat.messagesBottomPadding)
@@ -41,11 +46,9 @@ struct ChatView: View, KeyboardReadable {
                     Spacer()
                     
                     ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                        .padding(.bottom, isKeyboardVisible ? s8 : s0)
+                        .padding(.bottom, isComposerFocused ? s8 : s0)
+                        .focused($isComposerFocused)
                         .animation(.shortSpring, value: chat.composerInput)
-                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                            isKeyboardVisible = newIsKeyboardVisible
-                        }
                 }
                 .ignoresSafeArea(edges: .vertical)
             }
