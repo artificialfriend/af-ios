@@ -17,7 +17,7 @@ struct ChatView: View, KeyboardReadable {
         ZStack {
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: s8) {
+                    VStack(spacing: s0) {
                         ForEach(messages.messages) { message in
                             if message.byAF {
                                 AFMessageView(text: message.text)
@@ -25,8 +25,6 @@ struct ChatView: View, KeyboardReadable {
                                 UserMessageView(text: message.text)
                             }
                         }
-//                        UserMessageView(text: "Summarize chapter 2")
-//                        AFMessageView(text: "Heathcliffe is a bad guy but he also loves that girl. They frollic on the moors and have a pretty unhealthy relationship overall, but it's romantic as all get out.")
                     }
                     .padding(.bottom, isKeyboardVisible ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)

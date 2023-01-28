@@ -28,10 +28,11 @@ struct ComposerView: View, KeyboardReadable {
         ZStack(alignment: .bottomTrailing) {
             TextField("", text: $chat.composerInput, axis: .vertical)
                 .placeholder(when: chat.composerInput.isEmpty, alignment: .leading) {
-                    Text("Ask me anything!")
+                    Text("Ask anything!")
+                        .font(.pDemi)
                         .foregroundColor(af.interface.softColor)
                 }
-                .font(.user)
+                .font(.p)
                 .foregroundColor(.afBlack)
                 .multilineTextAlignment(.leading)
                 .lineLimit(10)
@@ -50,7 +51,6 @@ struct ComposerView: View, KeyboardReadable {
                     ZStack {
                         Circle()
                             .fill(af.interface.userColor)
-                        
                         
                             Image("SendIcon")
                                 .resizable()
