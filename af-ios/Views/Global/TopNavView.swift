@@ -40,3 +40,11 @@ struct TopNavView: View {
         .background(Blur())
     }
 }
+
+struct TopNavView_Previews: PreviewProvider {
+    static var previews: some View {
+        TopNavView(safeAreaHeight: s32)
+            .environmentObject(AFState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}

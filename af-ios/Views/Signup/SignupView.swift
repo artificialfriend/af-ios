@@ -138,3 +138,12 @@ struct SignupView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
+
+struct SignupView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignupView()
+            .environmentObject(AFState())
+            .environmentObject(SignupState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}

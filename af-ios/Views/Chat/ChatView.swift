@@ -50,3 +50,13 @@ struct ChatView: View, KeyboardReadable {
         }
     }
 }
+
+struct ChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(AFState())
+            .environmentObject(ChatState())
+            .environmentObject(MessagesState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}

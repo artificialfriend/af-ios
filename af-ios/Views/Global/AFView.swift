@@ -42,3 +42,11 @@ struct AFView: View {
         .aspectRatio(contentMode: .fit)
     }
 }
+
+struct AFView_Previews: PreviewProvider {
+    static var previews: some View {
+        AFView()
+            .environmentObject(AFState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}
