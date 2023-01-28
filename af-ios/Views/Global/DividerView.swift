@@ -17,3 +17,11 @@ struct DividerView: View {
             .edgesIgnoringSafeArea(.horizontal)
     }
 }
+
+struct DividerView_Previews: PreviewProvider {
+    static var previews: some View {
+        DividerView()
+            .environmentObject(AFState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}

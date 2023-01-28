@@ -88,3 +88,13 @@ struct ComposerView: View, KeyboardReadable {
         .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
     }
 }
+
+struct ComposerView_Previews: PreviewProvider {
+    static var previews: some View {
+        ComposerView(safeAreaHeight: s32)
+            .environmentObject(AFState())
+            .environmentObject(ChatState())
+            .environmentObject(MessagesState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}

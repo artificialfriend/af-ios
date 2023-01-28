@@ -71,3 +71,13 @@ struct AFMessageView: View {
         .padding(.top, setDynamicStyling().0)
     }
 }
+
+struct AFMessageView_Previews: PreviewProvider {
+    static var previews: some View {
+        AFMessageView(text: "Heathcliffe is a bad guy but he also loves that girl. They frollic on the moors and have a pretty unhealthy relationship overall, but it's romantic as all get out.")
+            .environmentObject(AFState())
+            .environmentObject(ChatState())
+            .environmentObject(MessagesState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}

@@ -87,3 +87,13 @@ struct UserMessageView: View {
         .padding(.top, setDynamicStyling().0)
     }
 }
+
+struct UserMessage_Previews: PreviewProvider {
+    static var previews: some View {
+        UserMessageView(text: "Summarize chapter 2")
+            .environmentObject(AFState())
+            .environmentObject(ChatState())
+            .environmentObject(MessagesState())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+    }
+}
