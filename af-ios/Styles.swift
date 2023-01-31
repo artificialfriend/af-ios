@@ -102,11 +102,14 @@ let cr24: CGFloat = 24
 extension Animation {
     static let longSpring: Animation = Animation.spring(response: 0.7, dampingFraction: 0.7, blendDuration: 0.1)
     static let medSpring: Animation = Animation.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.1)
+    static let shortSpringA: Animation = Animation.spring(response: 0.25, dampingFraction: 0.7, blendDuration: 0.1)
+    static let shortSpringB: Animation = Animation.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0.1)
     static let shortSpring: Animation = Animation.spring(response: 0.2, dampingFraction: 0.6, blendDuration: 0.1)
     static let linear5: Animation = Animation.linear(duration: 0.5)
     static let linear2: Animation = Animation.linear(duration: 0.2)
     static let linear1: Animation = Animation.linear(duration: 0.1)
     static let easeIn2: Animation = Animation.easeIn(duration: 0.2)
+    static let easeOut2: Animation = Animation.easeInOut(duration: 0.3)
     static let loadingSpin: Animation = Animation.linear(duration: 1.5).repeatForever(autoreverses: false)
     static let afFloat: Animation = Animation.easeInOut(duration: 4).repeatForever(autoreverses: true)
 }

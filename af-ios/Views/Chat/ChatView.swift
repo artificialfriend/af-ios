@@ -20,17 +20,23 @@ struct ChatView: View, KeyboardReadable {
                     VStack(spacing: s0) {
                         ForEach(messages.messages) { message in
                             if message.byAF {
-                                AFMessageView(text: message.text)
+                                AFMessageView(id: message.id, text: message.text, isNew: message.isNew)
+                                    .fixedSize(horizontal: false, vertical: true)
+
                             } else {
-                                UserMessageView(text: message.text)
+                                UserMessageView(id: message.id, text: message.text, isNew: message.isNew)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                         }
                     }
+                    .padding(.top, s240)
                     .padding(.bottom, isKeyboardVisible ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
-                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottom)
+                    .rotationEffect(Angle(degrees: 180))
                 }
+                .rotationEffect(Angle(degrees: 180))
                 .animation(.shortSpring, value: chat.messagesBottomPadding)
             }
+            .ignoresSafeArea(edges: .vertical)
             
             GeometryReader { geo in
                 VStack(spacing: s0) {
@@ -39,8 +45,8 @@ struct ChatView: View, KeyboardReadable {
                     Spacer()
                     
                     ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                        .padding(.bottom, isKeyboardVisible ? s8 : s0)
                         .animation(.shortSpring, value: chat.composerInput)
+                        .padding(.bottom, isKeyboardVisible ? s8 : s0)
                         .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                             isKeyboardVisible = newIsKeyboardVisible
                         }
@@ -48,7 +54,9 @@ struct ChatView: View, KeyboardReadable {
                 .ignoresSafeArea(edges: .vertical)
             }
         }
-
+//        .onAppear { //This just simulates receiving a response from AF
+//            messages.addMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit elit non magna bibendum, id mattis turpis tristique. Sed non rhoncus dui. Proin consequat scelerisque eros, in interdum velit pellentesque et. Proin at odio nec tellus feugiat suscipit ac nec tellus. Integer ac consectetur justo. Aenean in sagittis nisi. Duis et ultricies elit. Aliquam erat volutpat. Nam iaculis eget mi at fermentum. Proin ut sapien leo. Aliquam elementum vehicula arcu sit amet placerat. Quisque gravida felis ante, et rhoncus est congue viverra. Sed sagittis ornare mollis. Vivamus lorem libero, tincidunt vel feugiat nec, ultricies sed orci. Nulla facilisi. Etiam imperdiet condimentum eros, at sagittis quam euismod et. Maecenas cursus imperdiet mi, at ultrices nulla lacinia lobortis.", byAF: true)
+//        }
     }
 }
 
@@ -59,6 +67,5 @@ struct ChatView_Previews: PreviewProvider {
             .environmentObject(ChatState())
             .environmentObject(MessagesState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-
     }
 }

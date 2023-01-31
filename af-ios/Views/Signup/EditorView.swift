@@ -13,15 +13,15 @@ let optionWidth = (UIScreen.main.bounds.width - s48) / 4.25
 struct EditorView: View {
     var body: some View {
         VStack(spacing: s0) {
-            DividerView()
+            DividerView(direction: .horizontal)
             
             TabsView()
             
-            DividerView()
+            DividerView(direction: .horizontal)
             
             OptionsView()
             
-            DividerView()
+            DividerView(direction: .horizontal)
         }
     }
 }

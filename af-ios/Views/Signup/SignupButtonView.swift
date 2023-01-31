@@ -117,7 +117,7 @@ struct SignupButtonView: View {
         }
     }
 
-    func presentOrDismissButton() {
+    func toggleButtonPresence() {
         withAnimation(.medSpring) {
             if signup.buttonIsDismissed == false {
                 signup.buttonOffset = s104
@@ -129,7 +129,7 @@ struct SignupButtonView: View {
         }
     }
 
-    func startOrStopLoading() {
+    func toggleLoading() {
         if !signup.isLoading {
             signup.isLoading = true
             signup.spinnerRotation = Angle(degrees: 360)
@@ -142,11 +142,11 @@ struct SignupButtonView: View {
     func transition() {
         if signup.currentStep == .welcome {
             signup.buttonWelcomeLabelOpacity = 0
-            startOrStopLoading()
+            toggleLoading()
 
             Task { try await Task.sleep(nanoseconds: 2_000_000_000)
                 fadeOut()
-                startOrStopLoading()
+                toggleLoading()
 
                 Task { try await Task.sleep(nanoseconds: 100_000_000)
                     changeStep()
@@ -160,10 +160,10 @@ struct SignupButtonView: View {
             fadeOut()
 
             if signup.currentStep == .name {
-                presentOrDismissButton()
+                toggleButtonPresence()
 
                 Task { try await Task.sleep(nanoseconds: 400_000_000)
-                    startOrStopLoading()
+                    toggleLoading()
                 }
             }
 

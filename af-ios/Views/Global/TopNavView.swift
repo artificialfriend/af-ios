@@ -35,7 +35,7 @@ struct TopNavView: View {
             }
             .background(Color.afBlurryWhite)
             
-            DividerView()
+            DividerView(direction: .horizontal)
         }
         .background(Blur())
     }

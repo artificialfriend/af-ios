@@ -148,8 +148,8 @@
 			children = (
 				48A3E384298047270093BDA0 /* ChatView.swift */,
 				48A3E386298095AC0093BDA0 /* ComposerView.swift */,
-				48159818298328AF00201B32 /* UserMessageView.swift */,
 				48B5633429846AAF0077B372 /* AFMessageView.swift */,
+				48159818298328AF00201B32 /* UserMessageView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";

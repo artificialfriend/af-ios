@@ -7,20 +7,33 @@
 
 import SwiftUI
 
+enum Direction {
+    case horizontal
+    case vertical
+}
+
 struct DividerView: View {
     @EnvironmentObject var af: AFState
     
+    let direction: Direction
+    
     var body: some View {
-        Rectangle()
-            .fill(af.interface.lineColor)
-            .frame(height: s1_5)
-            .edgesIgnoringSafeArea(.horizontal)
+        if direction == .horizontal {
+            Rectangle()
+                .fill(af.interface.lineColor)
+                .frame(height: s1_5)
+                .edgesIgnoringSafeArea(.horizontal)
+        } else {
+            Rectangle()
+                .fill(af.interface.lineColor)
+                .frame(width: s1_5, height: s16)
+        }
     }
 }
 
 struct DividerView_Previews: PreviewProvider {
     static var previews: some View {
-        DividerView()
+        DividerView(direction: .horizontal)
             .environmentObject(AFState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }

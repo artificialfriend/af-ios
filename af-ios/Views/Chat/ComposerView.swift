@@ -14,16 +14,6 @@ struct ComposerView: View, KeyboardReadable {
     
     let safeAreaHeight: CGFloat
     
-    func setMessagesBottomPadding(height: CGFloat) {
-        chat.messagesBottomPadding = height + s16
-    }
-    
-    func handleTap(message: String) {
-        impactMedium.impactOccurred()
-        messages.addMessage(text: chat.composerInput, byAF: false)
-        chat.composerInput = ""
-    }
-    
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             TextField("", text: $chat.composerInput, axis: .vertical)
@@ -65,14 +55,15 @@ struct ComposerView: View, KeyboardReadable {
             .padding(.trailing, 2.5)
             .padding(.bottom, 2.5)
         }
-        .padding(EdgeInsets(top: s1_5, leading: s1_5, bottom: s1_5, trailing: s1_5))
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
                 .stroke(af.interface.lineColor, lineWidth: s1_5)
         )
+        .padding(EdgeInsets(top: s1_5, leading: s1_5, bottom: s1_5, trailing: s1_5))
         .background(Blur())
         .cornerRadius(cr24)
         .padding(.horizontal, s12)
+        .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
         .background {
             GeometryReader { geo in
                 Rectangle()
@@ -85,7 +76,19 @@ struct ComposerView: View, KeyboardReadable {
                     })
             }
         }
-        .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
+    }
+    
+    
+    //FUNCTIONS
+    
+    func setMessagesBottomPadding(height: CGFloat) {
+        chat.messagesBottomPadding = height + s16
+    }
+    
+    func handleTap(message: String) {
+        impactMedium.impactOccurred()
+        messages.addMessage(text: chat.composerInput, byAF: false, isNew: true)
+        chat.composerInput = ""
     }
 }
 

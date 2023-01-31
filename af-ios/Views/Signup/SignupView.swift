@@ -12,27 +12,6 @@ struct SignupView: View {
     @EnvironmentObject var signup: SignupState
     @FocusState private var keyboardFocused: Bool
     
-    func appearAF() {
-        withAnimation(.medSpring) {
-            signup.afScale = 1
-        }
-
-        withAnimation(.linear5) {
-            signup.welcomeOpacity = 1
-        }
-        
-        withAnimation(.afFloat){
-            signup.afOffset = -s12
-        }
-        
-        Task { try await Task.sleep(nanoseconds: 1_500_000_000)
-            withAnimation(.medSpring) {
-                signup.buttonOffset = 0
-                signup.buttonOpacity = 1
-            }
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             if signup.currentStep == .welcome {
@@ -136,6 +115,30 @@ struct SignupView: View {
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+    
+    
+    //FUNCTIONS
+    
+    func appearAF() {
+        withAnimation(.medSpring) {
+            signup.afScale = 1
+        }
+
+        withAnimation(.linear5) {
+            signup.welcomeOpacity = 1
+        }
+        
+        withAnimation(.afFloat){
+            signup.afOffset = -s12
+        }
+        
+        Task { try await Task.sleep(nanoseconds: 1_500_000_000)
+            withAnimation(.medSpring) {
+                signup.buttonOffset = 0
+                signup.buttonOpacity = 1
+            }
+        }
     }
 }
 
