@@ -24,8 +24,8 @@ struct ContentView: View, KeyboardReadable {
     var body: some View {
         ZStack {
             //SignupView()
-//            ChatView()
-//                .opacity(chatOpacity)
+            ChatView()
+                .opacity(chatOpacity)
             
             GeometryReader { geo in
                 VStack(spacing: s0) {
@@ -79,12 +79,12 @@ struct ContentView: View, KeyboardReadable {
                 toggleChat()
             }
         }
-        .onTapGesture {
-            toggleChat()
-            Task { try await Task.sleep(nanoseconds: 500_000_000)
-                toggleChat()
-            }
-        }
+//        .onTapGesture {
+//            toggleChat()
+//            Task { try await Task.sleep(nanoseconds: 500_000_000)
+//                toggleChat()
+//            }
+//        }
     }
     
     func toggleChat() {
