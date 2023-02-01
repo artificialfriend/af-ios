@@ -80,8 +80,8 @@ struct UserMessageView: View {
             messages.messages[index].isNew = false
         }
             
-            //This just simulates receiving a response from AF
-            messages.addMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit elit non magna bibendum, id mattis turpis tristique. Sed non rhoncus dui. Proin consequat scelerisque eros, in interdum velit pellentesque et. Proin at odio nec tellus feugiat suscipit ac nec tellus. Integer ac consectetur justo. Aenean in sagittis nisi. Duis et ultricies elit. Aliquam erat volutpat. Nam iaculis eget mi at fermentum. Proin ut sapien leo. Aliquam elementum vehicula arcu sit amet placerat. Quisque gravida felis ante, et rhoncus est congue viverra. Sed sagittis ornare mollis. Vivamus lorem libero, tincidunt vel feugiat nec, ultricies sed orci. Nulla facilisi. Etiam imperdiet condimentum eros, at sagittis quam euismod et. Maecenas cursus imperdiet mi, at ultrices nulla lacinia lobortis.", byAF: true, isNew: true)
+        //This just simulates receiving a response from AF
+        //messages.addMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit elit non magna bibendum, id mattis turpis tristique. Sed non rhoncus dui. Proin consequat scelerisque eros, in interdum velit pellentesque et. Proin at odio nec tellus feugiat suscipit ac nec tellus. Integer ac consectetur justo. Aenean in sagittis nisi. Duis et ultricies elit. Aliquam erat volutpat. Nam iaculis eget mi at fermentum. Proin ut sapien leo. Aliquam elementum vehicula arcu sit amet placerat. Quisque gravida felis ante, et rhoncus est congue viverra. Sed sagittis ornare mollis. Vivamus lorem libero, tincidunt vel feugiat nec, ultricies sed orci. Nulla facilisi. Etiam imperdiet condimentum eros, at sagittis quam euismod et. Maecenas cursus imperdiet mi, at ultrices nulla lacinia lobortis.", byAF: true, isNew: true)
     }
     
     func setDynamicStyling() -> (CGFloat, CGFloat) {
