@@ -22,7 +22,6 @@ struct ChatView: View, KeyboardReadable {
                             if message.byAF {
                                 AFMessageView(id: message.id, text: message.text, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
-
                             } else {
                                 UserMessageView(id: message.id, text: message.text, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -34,29 +33,11 @@ struct ChatView: View, KeyboardReadable {
                     .rotationEffect(Angle(degrees: 180))
                 }
                 .rotationEffect(Angle(degrees: 180))
+                .scrollDismissesKeyboard(.interactively)
                 .animation(.shortSpring, value: chat.messagesBottomPadding)
             }
             .ignoresSafeArea(edges: .vertical)
-            
-            GeometryReader { geo in
-                VStack(spacing: s0) {
-                    TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
-                    
-                    Spacer()
-                    
-                    ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                        .animation(.shortSpring, value: chat.composerInput)
-                        .padding(.bottom, isKeyboardVisible ? s8 : s0)
-                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                            isKeyboardVisible = newIsKeyboardVisible
-                        }
-                }
-                .ignoresSafeArea(edges: .vertical)
-            }
         }
-//        .onAppear { //This just simulates receiving a response from AF
-//            messages.addMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit elit non magna bibendum, id mattis turpis tristique. Sed non rhoncus dui. Proin consequat scelerisque eros, in interdum velit pellentesque et. Proin at odio nec tellus feugiat suscipit ac nec tellus. Integer ac consectetur justo. Aenean in sagittis nisi. Duis et ultricies elit. Aliquam erat volutpat. Nam iaculis eget mi at fermentum. Proin ut sapien leo. Aliquam elementum vehicula arcu sit amet placerat. Quisque gravida felis ante, et rhoncus est congue viverra. Sed sagittis ornare mollis. Vivamus lorem libero, tincidunt vel feugiat nec, ultricies sed orci. Nulla facilisi. Etiam imperdiet condimentum eros, at sagittis quam euismod et. Maecenas cursus imperdiet mi, at ultrices nulla lacinia lobortis.", byAF: true)
-//        }
     }
 }
 

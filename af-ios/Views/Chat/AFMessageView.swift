@@ -11,13 +11,13 @@ struct AFMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @EnvironmentObject var messages: MessagesState
-    @State var isLoading: Bool = false
-    @State var toolbarShowing: Bool = false
-    @State var opacity: Double = 0
-    @State var bottomPadding: CGFloat = -s64
-    @State var textOpacity: Double = 0
-    @State var spinnerRotation: Angle = Angle(degrees: 0)
-    @State var textPlaceholder: String = "T"
+    @State private var isLoading: Bool = false
+    @State private var toolbarShowing: Bool = false
+    @State private var opacity: Double = 0
+    @State private var bottomPadding: CGFloat = -s64
+    @State private var textOpacity: Double = 0
+    @State private var spinnerRotation: Angle = Angle(degrees: 0)
+    @State private var textPlaceholder: String = "T"
     
     let id: String
     let text: String
@@ -142,7 +142,7 @@ struct MessageToolbarView: View {
     @EnvironmentObject var af: AFState
     @State var optionsOpen: Bool = false
     @State var optionsOpacity: Double = 0
-    @State var optionsOffset: CGFloat = 108
+    @State var optionsOffset: CGFloat = 112
     
     var body: some View {
         HStack(spacing: s16) {
@@ -198,8 +198,8 @@ struct MessageToolbarView: View {
             }
             
             Task { try await Task.sleep(nanoseconds: 50_000_000)
-                withAnimation(.shortSpringA) {
-                    optionsOffset = 108
+                withAnimation(.shortSpringC) {
+                    optionsOffset = 112
                 }
                 
                 optionsOpen = false
@@ -207,7 +207,7 @@ struct MessageToolbarView: View {
             
             
         } else {
-            withAnimation(.shortSpringA) {
+            withAnimation(.shortSpringC) {
                 optionsOffset = 0
             }
             

@@ -29,6 +29,8 @@ struct AFView: View {
             
             Circle()
                 .fill(af.interface.bubbleColor).opacity(0.3)
+                .background(Blur())
+                .clipShape(Circle())
                 
             af.interface.afImage
                 .resizable()

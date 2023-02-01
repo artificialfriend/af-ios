@@ -11,9 +11,9 @@ struct UserMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @EnvironmentObject var messages: MessagesState
-    @State var isLoaded: Bool = true
-    @State var opacity: Double = 0
-    @State var bottomPadding: CGFloat = -s64
+    @State private var isLoaded: Bool = true
+    @State private var opacity: Double = 0
+    @State private var bottomPadding: CGFloat = -s64
     
     let id: String
     let text: String
