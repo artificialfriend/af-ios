@@ -10,6 +10,7 @@ import SwiftUI
 struct AFMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    
     @State private var isLoading: Bool = false
     @State private var toolbarShowing: Bool = false
     @State private var opacity: Double = 0

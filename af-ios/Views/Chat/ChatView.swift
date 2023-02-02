@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    
     @State private var isKeyboardVisible = false
     
     var body: some View {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 class NavState: ObservableObject {
-    @Published var activeSection: Section = .chat
+    @Published var activeSection: Section = .signup
 }
 
 enum Section {

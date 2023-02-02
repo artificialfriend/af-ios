@@ -10,6 +10,7 @@ import SwiftUI
 struct UserMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    
     @State private var isLoaded: Bool = true
     @State private var opacity: Double = 0
     @State private var bottomPadding: CGFloat = -s64

@@ -10,6 +10,7 @@ import SwiftUI
 struct SignupView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
+    
     @FocusState private var keyboardFocused: Bool
     
     var body: some View {

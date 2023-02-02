@@ -9,17 +9,27 @@ import SwiftUI
 
 struct AFView: View {
     @EnvironmentObject var af: AFState
-    let width = UIScreen.main.bounds.width * 0.075
+    
+    @State var shadowRadius = UIScreen.main.bounds.width * 0.075
     
     var body: some View {
         ZStack {
             ZStack {
                 Circle()
+                    .background {
+                        GeometryReader { geo in
+                            Rectangle()
+                                .fill(Color.clear)
+                                .onAppear {
+                                    shadowRadius = geo.size.width / 8
+                                }
+                        }
+                    }
                     .shadow(
                         color: af.interface.bubbleColor.opacity(0.5),
-                        radius: width,
+                        radius: shadowRadius,
                         x: s0,
-                        y: width
+                        y: shadowRadius / 2
                     )
                     
                 Circle()

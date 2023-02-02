@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TopNavView: View {
     @EnvironmentObject var af: AFState
+    
     let safeAreaHeight: CGFloat
     
     var body: some View {
