@@ -2,7 +2,7 @@
 //  AFState.swift
 //  af-ios
 //
-//  Created by Ashutosh Narang on 08/01/23.
+//  Created by Cam Crain on 2023-02-02.
 //
 
 import SwiftUI

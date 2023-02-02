@@ -7,48 +7,6 @@
 
 import SwiftUI
 
-enum Feature {
-    case skin
-    case hair
-    case eyes
-}
-
-enum OptionType {
-    case skinColor
-    case skinFreckles
-    case hairColor
-    case hairStyle
-    case eyeColor
-    case eyeLashes
-}
-
-struct Option {
-    let name: String
-    let image: Image
-    let optionType: OptionType
-}
-
-struct Options {
-    let feature: Feature
-    let row1Label: String
-    let row1Options: [Option]
-    let row2Label: String
-    let row2Options: [Option]
-}
-
-struct Interface {
-    let name: String
-    let afColor: Color
-    let userColor: Color
-    let darkColor: Color
-    let medColor: Color
-    let softColor: Color
-    let lineColor: Color
-    let bubbleColor: Color
-    let afImage: Image
-    let bubbleImage: Image
-}
-
 var skinColors: [Option] = [
     Option(name: "Green Skin", image: Image("Option"), optionType: .skinColor),
     Option(name: "Blue Skin", image: Image("Option"), optionType: .skinColor),
@@ -141,3 +99,45 @@ var interfaces: [Interface] = [
         bubbleImage: Image("PinkBubble")
     )
 ]
+
+enum Feature {
+    case skin
+    case hair
+    case eyes
+}
+
+enum OptionType {
+    case skinColor
+    case skinFreckles
+    case hairColor
+    case hairStyle
+    case eyeColor
+    case eyeLashes
+}
+
+struct Option {
+    let name: String
+    let image: Image
+    let optionType: OptionType
+}
+
+struct Options {
+    let feature: Feature
+    let row1Label: String
+    let row1Options: [Option]
+    let row2Label: String
+    let row2Options: [Option]
+}
+
+struct Interface {
+    let name: String
+    let afColor: Color
+    let userColor: Color
+    let darkColor: Color
+    let medColor: Color
+    let softColor: Color
+    let lineColor: Color
+    let bubbleColor: Color
+    let afImage: Image
+    let bubbleImage: Image
+}

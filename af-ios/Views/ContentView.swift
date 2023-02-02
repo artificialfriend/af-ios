@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
-    @EnvironmentObject var global: GlobalState
+    @EnvironmentObject var nav: NavState
     @EnvironmentObject var chat: ChatState
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
@@ -28,16 +28,16 @@ struct ContentView: View, KeyboardReadable {
     
     var body: some View {
         ZStack {
-            if global.activeSection == .signup {
+            if nav.activeSection == .signup {
                 SignupView()
             }
             
-            if global.activeSection == .chat {
+            if nav.activeSection == .chat {
                 ChatView()
-                    .opacity(chatOpacity)
+                    //.opacity(chatOpacity)
             }
             
-            if global.activeSection != .signup {
+            if nav.activeSection != .signup {
                 GeometryReader { geo in
                     VStack(spacing: s0) {
                         TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
@@ -84,7 +84,7 @@ struct ContentView: View, KeyboardReadable {
                 }
             }
             
-            if global.activeSection != .signup {
+            if nav.activeSection != .signup {
                 AFView()
                     .opacity(afOpacity)
                     .offset(y: afOffset)
@@ -177,11 +177,10 @@ struct ContentView: View, KeyboardReadable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(GlobalState())
+            .environmentObject(NavState())
             .environmentObject(AFState())
-            .environmentObject(SignupState())
             .environmentObject(ChatState())
-            .environmentObject(MessagesState())
+            .environmentObject(SignupState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

@@ -10,24 +10,23 @@ import SwiftUI
 struct AFMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @EnvironmentObject var messages: MessagesState
     @State private var isLoading: Bool = false
     @State private var toolbarShowing: Bool = false
     @State private var opacity: Double = 0
     @State private var bottomPadding: CGFloat = -s64
     @State private var textOpacity: Double = 0
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
-    @State private var textPlaceholder: String = "T"
     
-    let id: String
-    let text: String
+    let id: Double
+    let prompt: String
+    @State var text: String
     let isNew: Bool
     
     var body: some View {
         HStack(spacing: s0) {
             ZStack {
                 VStack {
-                    Text(isNew ? textPlaceholder : text)
+                    Text(text)
                         .opacity(isNew ? textOpacity : 1)
                         .foregroundColor(.afBlack)
                     
@@ -37,18 +36,22 @@ struct AFMessageView: View {
                     }
                     
                 }
+                .frame(alignment: .trailing)
                 
-                Image("SpinnerIcon")
-                    .resizable()
-                    .foregroundColor(af.interface.medColor)
-                    .frame(width: s16, height: s16)
-                    .rotationEffect(spinnerRotation)
-                    .opacity(isLoading ? 1 : 0)
-                    .onAppear {
-                        if isNew {
-                            loadIn()
+                ZStack {
+                    Image("SpinnerIcon")
+                        .resizable()
+                        .foregroundColor(af.interface.medColor)
+                        .frame(width: s16, height: s16)
+                        .rotationEffect(spinnerRotation)
+                        .opacity(isLoading ? 1 : 0)
+                        .onAppear {
+                            if isNew {
+                                loadIn()
+                            }
                         }
-                    }
+                }
+                .frame(width: s16, height: s24)
             }
             .font(.p)
             .padding(.horizontal, s16)
@@ -72,9 +75,20 @@ struct AFMessageView: View {
     
     //FUNCTIONS
     
+    struct RequestBody: Codable {
+        let user_id: String
+        let text: String
+        let is_prompt: Bool
+    }
+    
+    struct APIResponse: Decodable {
+        let response: String
+    }
+    
     func loadIn() {
-        Task { try await Task.sleep(nanoseconds: 750_000_000)
+        Task { try await Task.sleep(nanoseconds: 500_000_000)
             toggleLoading()
+            generateMessage(prompt: prompt)
 
             withAnimation(.loadingSpin) {
                 spinnerRotation = Angle(degrees: 360)
@@ -87,17 +101,31 @@ struct AFMessageView: View {
             withAnimation(.linear1) {
                 opacity = 1
             }
+        }
+    }
+    
+    func generateMessage(prompt: String) {
+        let requestBody = RequestBody(user_id: "1", text: prompt, is_prompt: true)
+        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONEncoder().encode(requestBody)
 
-            Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+        URLSession.shared.dataTask(with: request) { [self] data, response, error in
+            guard let data = data else { return }
+            let apiResponse = try! JSONDecoder().decode(APIResponse.self, from: data)
+            
+            DispatchQueue.main.async {
+                withAnimation(.shortSpringB) {
+                    text = apiResponse.response
+                }
+                
                 withAnimation(.linear1) {
                     toggleLoading()
                 }
 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
-                    withAnimation(.shortSpringB) {
-                        textPlaceholder = text
-                    }
-                    
                     toolbarShowing = true
 
                     Task { try await Task.sleep(nanoseconds: 300_000_000)
@@ -106,13 +134,13 @@ struct AFMessageView: View {
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 100_000_000)
-                            let index = messages.messages.firstIndex(where: {$0.text == text})!
-                            messages.messages[index].isNew = false
+                            let index = chat.messages.firstIndex(where: {$0.id == id})!
+                            chat.messages[index].isNew = false
                         }
                     }
                 }
             }
-        }
+        }.resume()
     }
     
     func toggleLoading() {
@@ -124,10 +152,10 @@ struct AFMessageView: View {
     }
     
     func setDynamicStyling() -> (CGFloat, CGFloat) {
-        let previousIndex = messages.messages.firstIndex(where: {$0.id == id})! - 1
+        let previousIndex = chat.messages.firstIndex(where: {$0.id == id})! - 1
         
         if previousIndex >= 0 {
-            if !messages.messages[previousIndex].byAF {
+            if !chat.messages[previousIndex].byAF {
                 return (cr24, s8)
             } else {
                 return (cr8, s4)

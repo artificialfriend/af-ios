@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SignupButtonView: View {
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var signup: SignupState
+    @EnvironmentObject var nav: NavState
     @EnvironmentObject var af: AFState
+    @EnvironmentObject var signup: SignupState
     
     var body: some View {
         HStack(spacing: s0) {
@@ -196,8 +196,8 @@ struct SignupButtonView: View {
                                 signup.afOpacity = 0
                             }
                             
-                            Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-                                global.activeSection = .chat
+                            Task { try await Task.sleep(nanoseconds: 500_000_000)
+                                nav.activeSection = .chat
                             }
                         }
                     }
@@ -249,6 +249,7 @@ struct SignupButtonView: View {
 struct SignupButtonView_Previews: PreviewProvider {
     static var previews: some View {
         SignupButtonView()
+            .environmentObject(NavState())
             .environmentObject(AFState())
             .environmentObject(SignupState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))

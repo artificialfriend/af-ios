@@ -10,7 +10,6 @@ import SwiftUI
 struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @EnvironmentObject var messages: MessagesState
     
     let safeAreaHeight: CGFloat
     
@@ -51,9 +50,9 @@ struct ComposerView: View, KeyboardReadable {
                 .buttonStyle(Spring())
                 .opacity(chat.composerInput.isEmpty ? 0 : 1)
             }
-            .frame(width: s40, height: s40)
-            .padding(.trailing, 2.5)
-            .padding(.bottom, 2.5)
+            .frame(width: 37.5, height: 37.5)
+            .padding(.trailing, 3.5)
+            .padding(.bottom, 3.5)
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
@@ -87,8 +86,9 @@ struct ComposerView: View, KeyboardReadable {
     
     func handleTap(message: String) {
         impactMedium.impactOccurred()
-        messages.addMessage(text: chat.composerInput, byAF: false, isNew: true)
+        chat.addMessage(prompt: "", text: chat.composerInput, byAF: false, isNew: true)
         chat.composerInput = ""
+        print("button tapped")
     }
 }
 
@@ -97,7 +97,6 @@ struct ComposerView_Previews: PreviewProvider {
         ComposerView(safeAreaHeight: s32)
             .environmentObject(AFState())
             .environmentObject(ChatState())
-            .environmentObject(MessagesState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

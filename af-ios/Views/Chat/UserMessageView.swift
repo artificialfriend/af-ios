@@ -10,12 +10,11 @@ import SwiftUI
 struct UserMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @EnvironmentObject var messages: MessagesState
     @State private var isLoaded: Bool = true
     @State private var opacity: Double = 0
     @State private var bottomPadding: CGFloat = -s64
     
-    let id: String
+    let id: Double
     let text: String
     let isNew: Bool
     
@@ -46,17 +45,6 @@ struct UserMessageView: View {
                     loadIn()
                 }
             }
-//            .background {
-//                GeometryReader { geo in
-//                    Rectangle()
-//                        .fill(Color.clear)
-//                        .onAppear {
-//                            if isNew {
-//                                loadIn()
-//                            }
-//                        }
-//                }
-//            }
         }
     }
     
@@ -66,29 +54,28 @@ struct UserMessageView: View {
     func loadIn() {
         isLoaded = true
         
-        //Task { try await Task.sleep(nanoseconds: 100_000_000)
-            withAnimation(.shortSpringA) {
-                bottomPadding = s0
-            }
+        withAnimation(.shortSpringA) {
+            bottomPadding = s0
+        }
 
-            withAnimation(.linear1) {
-                opacity = 1
-            }
+        withAnimation(.linear1) {
+            opacity = 1
+        }
         
         Task { try await Task.sleep(nanoseconds: 100_000_000)
-            let index = messages.messages.firstIndex(where: {$0.text == text})!
-            messages.messages[index].isNew = false
-        }
+            let index = chat.messages.firstIndex(where: {$0.id == id})!
+            chat.messages[index].isNew = false
             
-        //This just simulates receiving a response from AF
-        //messages.addMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc blandit elit non magna bibendum, id mattis turpis tristique. Sed non rhoncus dui. Proin consequat scelerisque eros, in interdum velit pellentesque et. Proin at odio nec tellus feugiat suscipit ac nec tellus. Integer ac consectetur justo. Aenean in sagittis nisi. Duis et ultricies elit. Aliquam erat volutpat. Nam iaculis eget mi at fermentum. Proin ut sapien leo. Aliquam elementum vehicula arcu sit amet placerat. Quisque gravida felis ante, et rhoncus est congue viverra. Sed sagittis ornare mollis. Vivamus lorem libero, tincidunt vel feugiat nec, ultricies sed orci. Nulla facilisi. Etiam imperdiet condimentum eros, at sagittis quam euismod et. Maecenas cursus imperdiet mi, at ultrices nulla lacinia lobortis.", byAF: true, isNew: true)
+            //Trigger response from AF
+            chat.addMessage(prompt: text, text: "", byAF: true, isNew: true)
+        }
     }
     
     func setDynamicStyling() -> (CGFloat, CGFloat) {
-        let previousIndex = messages.messages.firstIndex(where: {$0.text == text})! - 1
+        let previousIndex = chat.messages.firstIndex(where: {$0.id == id})! - 1
         
         if previousIndex >= 0 {
-            if messages.messages[previousIndex].byAF {
+            if chat.messages[previousIndex].byAF {
                 return (cr24, s8)
             } else {
                 return (cr8, s4)

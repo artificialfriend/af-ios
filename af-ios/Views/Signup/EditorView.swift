@@ -40,6 +40,7 @@ struct TabsView: View {
 struct TabLabelView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
+    
     let label: String
     let feature: Feature
     
@@ -89,6 +90,7 @@ struct OptionsView: View {
 
 struct OptionRowView: View {
     @EnvironmentObject var af: AFState
+    
     let rowLabel: String
     let rowOptions: [Option]
     var activeOption: Option
@@ -97,6 +99,7 @@ struct OptionRowView: View {
         switch optionType {
             case .skinColor:
                 af.skinColor = option
+                
                 if af.skinColor.name == "Green Skin" {
                     af.interface = interfaces[0]
                 } else if af.skinColor.name == "Blue Skin" {
@@ -146,6 +149,7 @@ struct OptionRowView: View {
 
 struct OptionView: View {
     @EnvironmentObject var af: AFState
+    
     let name: String
     let optionType: OptionType
     let width = optionWidth

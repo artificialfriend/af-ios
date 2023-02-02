@@ -1,18 +1,11 @@
 //
-//  Signup.swift
+//  SignupState.swift
 //  af-ios
 //
-//  Created by Cam Crain on 2023-01-18.
+//  Created by Cam Crain on 2023-02-02.
 //
 
 import SwiftUI
-
-enum SignupStep {
-    case welcome
-    case create
-    case name
-    case bootup
-}
 
 class SignupState: ObservableObject {
     @Published var currentStep: SignupStep = .welcome
@@ -38,4 +31,11 @@ class SignupState: ObservableObject {
             }
         }
     }
+}
+
+enum SignupStep {
+    case welcome
+    case create
+    case name
+    case bootup
 }

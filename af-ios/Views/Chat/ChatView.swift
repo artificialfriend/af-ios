@@ -10,7 +10,6 @@ import SwiftUI
 struct ChatView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @EnvironmentObject var messages: MessagesState
     @State private var isKeyboardVisible = false
     
     var body: some View {
@@ -18,9 +17,9 @@ struct ChatView: View, KeyboardReadable {
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: s0) {
-                        ForEach(messages.messages) { message in
+                        ForEach(chat.messages) { message in
                             if message.byAF {
-                                AFMessageView(id: message.id, text: message.text, isNew: message.isNew)
+                                AFMessageView(id: message.id, prompt: message.prompt, text: message.text, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             } else {
                                 UserMessageView(id: message.id, text: message.text, isNew: message.isNew)
@@ -46,7 +45,6 @@ struct ChatView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(AFState())
             .environmentObject(ChatState())
-            .environmentObject(MessagesState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }
