@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignupButtonView: View {
+    @EnvironmentObject var global: GlobalState
     @EnvironmentObject var signup: SignupState
     @EnvironmentObject var af: AFState
     
@@ -150,10 +151,10 @@ struct SignupButtonView: View {
 
                 Task { try await Task.sleep(nanoseconds: 100_000_000)
                     changeStep()
-                }
-
-                Task { try await Task.sleep(nanoseconds: 400_000_000)
-                    fadeIn()
+                    
+                    Task { try await Task.sleep(nanoseconds: 300_000_000)
+                        fadeIn()
+                    }
                 }
             }
         } else {
@@ -169,10 +170,10 @@ struct SignupButtonView: View {
 
             Task { try await Task.sleep(nanoseconds: 100_000_000)
                 changeStep()
-            }
-
-            Task { try await Task.sleep(nanoseconds: 400_000_000)
-                fadeIn()
+                
+                Task { try await Task.sleep(nanoseconds: 300_000_000)
+                    fadeIn()
+                }
             }
         }
 
@@ -194,6 +195,10 @@ struct SignupButtonView: View {
                             withAnimation(.linear1) {
                                 signup.afOpacity = 0
                             }
+                            
+                            Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+                                global.activeSection = .chat
+                            }
                         }
                     }
                 }
@@ -208,10 +213,10 @@ struct SignupButtonView: View {
             Task { try await Task.sleep(nanoseconds: 100_000_000)
                 signup.afOffset = s0
                 signup.currentStep = .create
-            }
-
-            Task { try await Task.sleep(nanoseconds: 400_000_000)
-                fadeIn()
+                
+                Task { try await Task.sleep(nanoseconds: 300_000_000)
+                    fadeIn()
+                }
             }
         }
     }

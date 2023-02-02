@@ -114,6 +114,7 @@ extension Animation {
     static let easeOut2: Animation = Animation.easeInOut(duration: 0.3)
     static let loadingSpin: Animation = Animation.linear(duration: 1.5).repeatForever(autoreverses: false)
     static let afFloat: Animation = Animation.easeInOut(duration: 4).repeatForever(autoreverses: true)
+    static let afFloatSmall: Animation = Animation.easeInOut(duration: 3).repeatForever(autoreverses: true)
 }
 
 
