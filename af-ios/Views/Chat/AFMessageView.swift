@@ -39,7 +39,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView()
+                            MessageToolbarView(text: $text)
                         }
                         .opacity(isNew ? textOpacity : 1)
                         .frame(width: textWidth)
@@ -95,6 +95,7 @@ struct AFMessageView: View {
     
     //FUNCTIONS
     
+    //Todo: Change "text" constant to "prompt" and remove is_prompt
     struct RequestBody: Codable {
         let user_id: String
         let text: String
@@ -124,6 +125,7 @@ struct AFMessageView: View {
         }
     }
     
+    //Todo: Figure out how to move this to model
     func generateMessage(prompt: String) {
         let requestBody = RequestBody(user_id: "1", text: prompt, is_prompt: true)
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
@@ -203,10 +205,16 @@ struct AFMessageView: View {
 
 struct MessageToolbarView: View {
     @EnvironmentObject var af: AFState
+    @EnvironmentObject var chat: ChatState
     
-    @State var optionsOpen: Bool = false
-    @State var optionsOpacity: Double = 0
-    @State var optionsOffset: CGFloat = 112
+    var text: Binding<String>
+    @State private var optionsOpen: Bool = false
+    @State private var optionsOpacity: Double = 0
+    @State private var optionsOffset: CGFloat = 112
+    @State private var moreColor: Color = Color.black
+    @State private var copyOpacity: Double = 1
+    @State private var copyRotation: Angle = Angle(degrees: 0)
+    @State private var copyColor: Color = Color.black
     
     var body: some View {
         HStack(spacing: s16) {
@@ -214,9 +222,9 @@ struct MessageToolbarView: View {
                 Button(action: { handleMoreTap() }) {
                     Image("MoreIcon")
                         .resizable()
+                        .onAppear { moreColor = af.interface.medColor }
+                        .foregroundColor(moreColor)
                         .frame(width: 22, height: 22)
-                        .foregroundColor(optionsOpen ? af.interface.userColor : af.interface.medColor)
-                        .animation(.linear1, value: optionsOpen)
                 }
                 .buttonStyle(Spring())
                 
@@ -240,9 +248,23 @@ struct MessageToolbarView: View {
             
             DividerView(direction: .vertical)
             
-            Image("CopyIcon")
-                .resizable()
+            Button(action: { handleCopyTap(text: text) }) {
+                ZStack {
+                    Image("CheckIcon")
+                        .resizable()
+                        .rotationEffect(Angle(degrees: 270))
+                        .opacity(1 - copyOpacity)
+                    
+                    Image("CopyIcon")
+                        .resizable()
+                        .opacity(copyOpacity)
+                }
+                .onAppear { copyColor = af.interface.medColor }
+                .foregroundColor(copyColor)
+                .rotationEffect(copyRotation)
                 .frame(width: 22, height: 22)
+            }
+            .buttonStyle(Spring())
         }
         .foregroundColor(af.interface.medColor)
         .frame(height: 22)
@@ -251,12 +273,40 @@ struct MessageToolbarView: View {
     
     //FUNCTIONS
     
+    func handleCopyTap(text: Binding<String>) {
+        impactMedium.impactOccurred()
+        
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = text.wrappedValue
+        
+        withAnimation(.linear1) {
+            copyColor = af.interface.userColor
+            copyOpacity = 0
+        }
+        
+        withAnimation(.shortSpringC) {
+            copyRotation = Angle(degrees: 90)
+        }
+        
+        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+            withAnimation(.linear1) {
+                copyColor = af.interface.medColor
+                copyOpacity = 1
+            }
+            
+            withAnimation(.shortSpringC) {
+                copyRotation = Angle(degrees: 0)
+            }
+        }
+    }
+    
     func handleMoreTap() {
         impactMedium.impactOccurred()
         
         if optionsOpen {
             withAnimation(.linear1) {
                 optionsOpacity = 0
+                moreColor = af.interface.medColor
             }
             
             Task { try await Task.sleep(nanoseconds: 75_000_000)
@@ -271,6 +321,7 @@ struct MessageToolbarView: View {
         } else {
             withAnimation(.shortSpringC) {
                 optionsOffset = 0
+                moreColor = af.interface.userColor
             }
             
             Task { try await Task.sleep(nanoseconds: 75_000_000)

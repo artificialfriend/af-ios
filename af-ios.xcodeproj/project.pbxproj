@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		481598172981A14200201B32 /* NavState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481598162981A14200201B32 /* NavState.swift */; };
+		481598172981A14200201B32 /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481598162981A14200201B32 /* GlobalState.swift */; };
 		48159819298328AF00201B32 /* UserMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48159818298328AF00201B32 /* UserMessageView.swift */; };
 		483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FB297A09DA0008F61E /* NameFieldView.swift */; };
 		483317FE297A1E680008F61E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FD297A1E680008F61E /* Extensions.swift */; };
@@ -33,7 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		481598162981A14200201B32 /* NavState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavState.swift; sourceTree = "<group>"; };
+		481598162981A14200201B32 /* GlobalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 		48159818298328AF00201B32 /* UserMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageView.swift; sourceTree = "<group>"; };
 		483317FB297A09DA0008F61E /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
 		483317FD297A1E680008F61E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 		CE1A30E5296B1945003D1476 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				481598162981A14200201B32 /* NavState.swift */,
+				481598162981A14200201B32 /* GlobalState.swift */,
 				489DD51D298C45A3006D15A7 /* AFState.swift */,
 				489DD519298C444F006D15A7 /* ChatState.swift */,
 				489DD51B298C456D006D15A7 /* SignupState.swift */,
@@ -243,7 +243,7 @@
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
 				CEB954D529819AFC00C5A9E8 /* SignupWithAppleView.swift in Sources */,
 				48159819298328AF00201B32 /* UserMessageView.swift in Sources */,
-				481598172981A14200201B32 /* NavState.swift in Sources */,
+				481598172981A14200201B32 /* GlobalState.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,
 				CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */,
 				CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */,

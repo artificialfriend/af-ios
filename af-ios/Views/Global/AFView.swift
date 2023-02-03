@@ -21,15 +21,15 @@ struct AFView: View {
                             Rectangle()
                                 .fill(Color.clear)
                                 .onAppear {
-                                    shadowRadius = geo.size.width / 8
+                                    shadowRadius = geo.size.width / 12
                                 }
                         }
                     }
                     .shadow(
-                        color: af.interface.bubbleColor.opacity(0.5),
+                        color: af.interface.bubbleColor.opacity(0.25),
                         radius: shadowRadius,
                         x: s0,
-                        y: shadowRadius / 2
+                        y: shadowRadius / 1
                     )
                     
                 Circle()

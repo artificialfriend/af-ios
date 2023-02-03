@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
-    @EnvironmentObject var nav: NavState
+    @EnvironmentObject var global: GlobalState
     @EnvironmentObject var chat: ChatState
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
@@ -28,16 +28,16 @@ struct ContentView: View, KeyboardReadable {
     
     var body: some View {
         ZStack {
-            if nav.activeSection == .signup {
+            if global.activeSection == .signup {
                 SignupView()
             }
             
-            if nav.activeSection == .chat {
+            if global.activeSection == .chat {
                 ChatView()
                     //.opacity(chatOpacity)
             }
             
-            if nav.activeSection != .signup {
+            if global.activeSection != .signup {
                 GeometryReader { geo in
                     VStack(spacing: s0) {
                         TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
@@ -60,9 +60,9 @@ struct ContentView: View, KeyboardReadable {
                             .animation(.shortSpring, value: chat.composerInput)
                             .opacity(composerOpacity)
                             .offset(y: composerOffset)
-                            .padding(.bottom, isKeyboardVisible ? s8 : s0)
+                            .padding(.bottom, global.isKeyboardPresent ? s8 : s0)
                             .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                isKeyboardVisible = newIsKeyboardVisible
+                                global.isKeyboardPresent = newIsKeyboardVisible
                             }
                             .background {
                                 GeometryReader { composerGeo in
@@ -84,7 +84,7 @@ struct ContentView: View, KeyboardReadable {
                 }
             }
             
-            if nav.activeSection != .signup {
+            if global.activeSection != .signup {
                 AFView()
                     .opacity(afOpacity)
                     .offset(y: afOffset)
@@ -177,7 +177,7 @@ struct ContentView: View, KeyboardReadable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(NavState())
+            .environmentObject(GlobalState())
             .environmentObject(AFState())
             .environmentObject(ChatState())
             .environmentObject(SignupState())

@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-struct ChatView: View, KeyboardReadable {
+struct ChatView: View {
+    @EnvironmentObject var global: GlobalState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    
-    @State private var isKeyboardVisible = false
     
     var body: some View {
         ZStack {
@@ -29,7 +28,7 @@ struct ChatView: View, KeyboardReadable {
                         }
                     }
                     .padding(.top, s240)
-                    .padding(.bottom, isKeyboardVisible ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
+                    .padding(.bottom, global.isKeyboardPresent ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
                     .rotationEffect(Angle(degrees: 180))
                 }
                 .rotationEffect(Angle(degrees: 180))

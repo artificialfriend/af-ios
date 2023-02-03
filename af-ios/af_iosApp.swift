@@ -12,7 +12,7 @@ struct af_iosApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(NavState())
+                .environmentObject(GlobalState())
                 .environmentObject(AFState())
                 .environmentObject(ChatState())
                 .environmentObject(SignupState())
