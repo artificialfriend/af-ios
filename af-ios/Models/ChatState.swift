@@ -15,7 +15,7 @@ class ChatState: ObservableObject {
     @Published var id: Double = 1
     @Published var messages: [Message] = [
 //        Message(text: "Summarize chapter 2 of wuthering heights", byAF: false, isNew: false, timestamp: Date.now),
-//        Message(text: "Chapter 2 of Wuthering Heights introduces the character of Mr. Lockwood, a tenant of Thrushcross Grange, who travels to Wuthering Heights to meet his landlord, Heathcliff. During his visit, he is treated with disdain by Heathcliff and the other residents of the house. Mr. Lockwood is also unsettled by the ghostly presence of Catherine, who he hears wandering the halls at night. The chapter sets the stage for the tumultuous relationships and events that will unfold throughout the rest of the novel.", byAF: true, isNew: false, timestamp: Date.now)
+        Message(id: 16, prompt: "", text: "Lorem ipsum dolor sit amet amet.", byAF: true, isNew: false, timestamp: Date.now)
     ]
     
     func addMessage(prompt: String, text: String, byAF: Bool, isNew: Bool) {

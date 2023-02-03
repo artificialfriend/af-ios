@@ -17,6 +17,9 @@ struct AFMessageView: View {
     @State private var bottomPadding: CGFloat = -s64
     @State private var textOpacity: Double = 0
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
+    @State private var textWidth: CGFloat = 0
+    @State private var textMinWidth: CGFloat = 0
+    @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
     
     let id: Double
     let prompt: String
@@ -30,14 +33,18 @@ struct AFMessageView: View {
                     Text(text)
                         .opacity(isNew ? textOpacity : 1)
                         .foregroundColor(.afBlack)
+                        .frame(minWidth: textMinWidth, alignment: .leading)
                     
                     if !isNew || toolbarShowing {
-                        MessageToolbarView()
-                            .opacity(isNew ? textOpacity : 1)
+                        HStack(spacing: 0) {
+                            Spacer(minLength: 0)
+
+                            MessageToolbarView()
+                        }
+                        .opacity(isNew ? textOpacity : 1)
+                        .frame(width: textWidth)
                     }
-                    
                 }
-                .frame(alignment: .trailing)
                 
                 ZStack {
                     Image("SpinnerIcon")
@@ -54,6 +61,18 @@ struct AFMessageView: View {
                 }
                 .frame(width: s16, height: s24)
             }
+            .background {
+                GeometryReader { geo in
+                    Rectangle()
+                        .fill(Color.clear)
+                        .onAppear {
+                            setTextWidth(geo: geo.size.width, isOnAppear: true)
+                        }
+                        .onChange(of: text) { _ in
+                            setTextWidth(geo: geo.size.width, isOnAppear: false)
+                        }
+                }
+            }
             .font(.p)
             .padding(.horizontal, s16)
             .padding(.vertical, s12)
@@ -66,7 +85,7 @@ struct AFMessageView: View {
             .padding(.leading, s12)
             .padding(.trailing, s64)
             
-            Spacer()
+            Spacer(minLength: 0)
         }
         .opacity(isNew ? opacity : 1)
         .padding(.top, setDynamicStyling().1)
@@ -87,7 +106,7 @@ struct AFMessageView: View {
     }
     
     func loadIn() {
-        Task { try await Task.sleep(nanoseconds: 500_000_000)
+        Task { try await Task.sleep(nanoseconds: 250_000_000)
             toggleLoading()
             generateMessage(prompt: prompt)
 
@@ -118,16 +137,16 @@ struct AFMessageView: View {
             let apiResponse = try! JSONDecoder().decode(APIResponse.self, from: data)
             
             DispatchQueue.main.async {
-                withAnimation(.shortSpringB) {
-                    text = apiResponse.response
-                }
-                
                 withAnimation(.linear1) {
                     toggleLoading()
                 }
 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
                     toolbarShowing = true
+                    
+                    withAnimation(.shortSpringB) {
+                        text = apiResponse.response
+                    }
 
                     Task { try await Task.sleep(nanoseconds: 300_000_000)
                         withAnimation(.linear2) {
@@ -152,6 +171,21 @@ struct AFMessageView: View {
         }
     }
     
+    func setTextWidth(geo: CGFloat, isOnAppear: Bool) {
+        Task { try await Task.sleep(nanoseconds: 1_000_000)
+            textWidth = geo
+            
+            if (isOnAppear && !isNew) || !isOnAppear {
+                if textWidth >= textMaxWidth - s64 {
+                    textMinWidth = textMaxWidth
+                    textWidth = textMinWidth
+                } else {
+                    textMinWidth = 184
+                }
+            }
+        }
+    }
+    
     func setDynamicStyling() -> (CGFloat, CGFloat) {
         let previousIndex = chat.messages.firstIndex(where: {$0.id == id})! - 1
         
@@ -169,14 +203,13 @@ struct AFMessageView: View {
 
 struct MessageToolbarView: View {
     @EnvironmentObject var af: AFState
+    
     @State var optionsOpen: Bool = false
     @State var optionsOpacity: Double = 0
     @State var optionsOffset: CGFloat = 112
     
     var body: some View {
         HStack(spacing: s16) {
-            Spacer()
-            
             HStack(spacing: s16) {
                 Button(action: { handleMoreTap() }) {
                     Image("MoreIcon")
@@ -226,7 +259,7 @@ struct MessageToolbarView: View {
                 optionsOpacity = 0
             }
             
-            Task { try await Task.sleep(nanoseconds: 50_000_000)
+            Task { try await Task.sleep(nanoseconds: 75_000_000)
                 withAnimation(.shortSpringC) {
                     optionsOffset = 112
                 }
@@ -240,7 +273,7 @@ struct MessageToolbarView: View {
                 optionsOffset = 0
             }
             
-            Task { try await Task.sleep(nanoseconds: 50_000_000)
+            Task { try await Task.sleep(nanoseconds: 75_000_000)
                 withAnimation(.linear2) {
                     optionsOpacity = 1
                 }
