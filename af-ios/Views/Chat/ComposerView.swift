@@ -30,7 +30,9 @@ struct ComposerView: View, KeyboardReadable {
                 .padding(.trailing, 54.5)
                 .padding(.vertical, 10.5)
                 .background(Color.afBlurryWhite)
+                //.background(Color.blue)
                 .cornerRadius(cr24)
+            
             
             ZStack {
                 Image("RandomIcon")
@@ -51,15 +53,18 @@ struct ComposerView: View, KeyboardReadable {
                 .opacity(chat.composerInput.isEmpty ? 0 : 1)
             }
             .frame(width: 37.5, height: 37.5)
-            .padding(.trailing, 3.5)
-            .padding(.bottom, 3.5)
+            .padding(.trailing, 4)
+            .padding(.bottom, 4)
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
                 .stroke(af.interface.lineColor, lineWidth: s1_5)
+                //.stroke(.red, lineWidth: s1_5)
+                .padding(.all, -0.5)
         )
-        .padding(EdgeInsets(top: s1_5, leading: s1_5, bottom: s1_5, trailing: s1_5))
+        .padding(EdgeInsets(top: 1.5, leading: 1.5, bottom: 1.5, trailing: 1.5))
         .background(Blur())
+        //.background(Color.black)
         .cornerRadius(cr24)
         .padding(.horizontal, s12)
         .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
