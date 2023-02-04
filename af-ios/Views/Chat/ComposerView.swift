@@ -32,27 +32,10 @@ struct ComposerView: View, KeyboardReadable {
                 .background(Color.afBlurryWhite)
                 .cornerRadius(cr24)
             
-            ZStack {
-                Image("RandomIcon")
-                    .foregroundColor(af.interface.medColor)
-                
-                Button(action: { handleTap(message: chat.composerInput) }) {
-                    ZStack {
-                        Circle()
-                            .fill(af.interface.userColor)
-                        
-                            Image("SendIcon")
-                                .resizable()
-                                .foregroundColor(.white)
-                                .frame(width: s20, height: s20)
-                        }
-                }
-                .buttonStyle(Spring())
-                .opacity(chat.composerInput.isEmpty ? 0 : 1)
-            }
-            .frame(width: 37.5, height: 37.5)
-            .padding(.trailing, 4)
-            .padding(.bottom, 4)
+            ComposerButtonView()
+                .frame(width: 37.5, height: 37.5)
+                .padding(.trailing, 4)
+                .padding(.bottom, 4)
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
@@ -83,13 +66,6 @@ struct ComposerView: View, KeyboardReadable {
     
     func setMessagesBottomPadding(height: CGFloat) {
         chat.messagesBottomPadding = height + s16
-    }
-    
-    func handleTap(message: String) {
-        impactMedium.impactOccurred()
-        chat.addMessage(prompt: "", text: chat.composerInput, byAF: false, isNew: true)
-        chat.composerInput = ""
-        print("button tapped")
     }
 }
 

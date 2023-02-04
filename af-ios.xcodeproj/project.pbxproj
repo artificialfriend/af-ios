@@ -21,6 +21,10 @@
 		48AA262D298EA0B60091609C /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA262C298EA0B60091609C /* TabsView.swift */; };
 		48AA262F298EA13B0091609C /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA262E298EA13B0091609C /* OptionsView.swift */; };
 		48AA2633298EA2A80091609C /* MessageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA2632298EA2A80091609C /* MessageToolbarView.swift */; };
+		48AA2636298EA4050091609C /* OptionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA2635298EA4050091609C /* OptionRowView.swift */; };
+		48AA2638298EA4D90091609C /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA2637298EA4D90091609C /* OptionView.swift */; };
+		48AA263A298EA5860091609C /* TabLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA2639298EA5860091609C /* TabLabelView.swift */; };
+		48AA263C298EA63D0091609C /* ComposerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AA263B298EA63D0091609C /* ComposerButtonView.swift */; };
 		48B5633529846AAF0077B372 /* AFMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5633429846AAF0077B372 /* AFMessageView.swift */; };
 		CE1A30D3296B0AD4003D1476 /* af_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */; };
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
@@ -50,6 +54,10 @@
 		48AA262C298EA0B60091609C /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
 		48AA262E298EA13B0091609C /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		48AA2632298EA2A80091609C /* MessageToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageToolbarView.swift; sourceTree = "<group>"; };
+		48AA2635298EA4050091609C /* OptionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionRowView.swift; sourceTree = "<group>"; };
+		48AA2637298EA4D90091609C /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
+		48AA2639298EA5860091609C /* TabLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabelView.swift; sourceTree = "<group>"; };
+		48AA263B298EA63D0091609C /* ComposerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerButtonView.swift; sourceTree = "<group>"; };
 		48B5633429846AAF0077B372 /* AFMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFMessageView.swift; sourceTree = "<group>"; };
 		CE1A30CF296B0AD4003D1476 /* af-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "af-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A30D2296B0AD4003D1476 /* af_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = af_iosApp.swift; sourceTree = "<group>"; };
@@ -91,8 +99,11 @@
 			isa = PBXGroup;
 			children = (
 				CE1A3104296B1E07003D1476 /* EditorView.swift */,
-				48AA262E298EA13B0091609C /* OptionsView.swift */,
 				48AA262C298EA0B60091609C /* TabsView.swift */,
+				48AA2639298EA5860091609C /* TabLabelView.swift */,
+				48AA262E298EA13B0091609C /* OptionsView.swift */,
+				48AA2635298EA4050091609C /* OptionRowView.swift */,
+				48AA2637298EA4D90091609C /* OptionView.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -180,6 +191,7 @@
 			children = (
 				48A3E384298047270093BDA0 /* ChatView.swift */,
 				48A3E386298095AC0093BDA0 /* ComposerView.swift */,
+				48AA263B298EA63D0091609C /* ComposerButtonView.swift */,
 				48159818298328AF00201B32 /* UserMessageView.swift */,
 				48B5633429846AAF0077B372 /* AFMessageView.swift */,
 				48AA2632298EA2A80091609C /* MessageToolbarView.swift */,
@@ -272,6 +284,7 @@
 				48331800297B48830008F61E /* SignupButtonView.swift in Sources */,
 				CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */,
 				48B5633529846AAF0077B372 /* AFMessageView.swift in Sources */,
+				48AA263A298EA5860091609C /* TabLabelView.swift in Sources */,
 				CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */,
 				48AA262D298EA0B60091609C /* TabsView.swift in Sources */,
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
@@ -289,6 +302,9 @@
 				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
 				CE1A30ED296B1A0F003D1476 /* AFAttributes.swift in Sources */,
 				489DD51A298C444F006D15A7 /* ChatState.swift in Sources */,
+				48AA2636298EA4050091609C /* OptionRowView.swift in Sources */,
+				48AA263C298EA63D0091609C /* ComposerButtonView.swift in Sources */,
+				48AA2638298EA4D90091609C /* OptionView.swift in Sources */,
 				483317FE297A1E680008F61E /* Extensions.swift in Sources */,
 				483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */,
 				489DD51E298C45A3006D15A7 /* AFState.swift in Sources */,

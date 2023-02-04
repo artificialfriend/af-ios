@@ -26,7 +26,7 @@ struct AFView: View {
                         }
                     }
                     .shadow(
-                        color: af.interface.bubbleColor.opacity(0.25),
+                        color: af.interface.bubbleColor.opacity(0.3),
                         radius: shadowRadius,
                         x: s0,
                         y: shadowRadius / 1
