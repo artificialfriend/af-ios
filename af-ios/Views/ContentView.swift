@@ -31,12 +31,12 @@ struct ContentView: View, KeyboardReadable {
             if global.activeSection == .signup {
                 SignupView()
             }
-            
+
             if global.activeSection == .chat {
                 ChatView()
                     //.opacity(chatOpacity)
             }
-            
+
             if global.activeSection != .signup {
                 GeometryReader { geo in
                     VStack(spacing: s0) {
@@ -53,9 +53,9 @@ struct ContentView: View, KeyboardReadable {
                                         }
                                 }
                             }
-                        
+
                         Spacer()
-                        
+
                         ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
                             .animation(.shortSpringC, value: chat.composerInput)
                             .opacity(composerOpacity)
@@ -83,7 +83,7 @@ struct ContentView: View, KeyboardReadable {
                     }
                 }
             }
-            
+
             if global.activeSection != .signup {
                 AFView()
                     .opacity(afOpacity)
@@ -99,7 +99,7 @@ struct ContentView: View, KeyboardReadable {
                     }
             }
         }
-        
+//        TestView()
     }
     
     

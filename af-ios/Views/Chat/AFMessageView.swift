@@ -20,6 +20,7 @@ struct AFMessageView: View {
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
+    @State private var error: Error?
     
     let id: Double
     let prompt: String
@@ -29,7 +30,7 @@ struct AFMessageView: View {
     var body: some View {
         HStack(spacing: s0) {
             ZStack {
-                VStack {
+                VStack(spacing: s8) {
                     Text(text)
                         .opacity(isNew ? textOpacity : 1)
                         .foregroundColor(.afBlack)
@@ -95,22 +96,10 @@ struct AFMessageView: View {
     
     //FUNCTIONS
     
-    //Todo: Change "text" constant to "prompt" and remove is_prompt
-    struct RequestBody: Codable {
-        let user_id: String
-        let text: String
-        let is_prompt: Bool
-    }
-    
-    struct APIResponse: Decodable {
-        let response: String
-    }
-    
     func loadIn() {
         Task { try await Task.sleep(nanoseconds: 400_000_000)
             toggleLoading()
-            generateMessage(prompt: prompt)
-
+            
             withAnimation(.loadingSpin) {
                 spinnerRotation = Angle(degrees: 360)
             }
@@ -122,34 +111,24 @@ struct AFMessageView: View {
             withAnimation(.linear1) {
                 opacity = 1
             }
-        }
-    }
-    
-    //Todo: Figure out how to move this to model
-    func generateMessage(prompt: String) {
-        let requestBody = RequestBody(user_id: "1", text: prompt, is_prompt: true)
-        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONEncoder().encode(requestBody)
-
-        URLSession.shared.dataTask(with: request) { [self] data, response, error in
-            guard let data = data else { return }
-            let apiResponse = try! JSONDecoder().decode(APIResponse.self, from: data)
             
-            DispatchQueue.main.async {
+            chat.makeAFRequest(prompt: prompt) { result in
                 withAnimation(.linear1) {
                     toggleLoading()
                 }
-
+                
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
                     toolbarShowing = true
                     
                     withAnimation(.shortSpringB) {
-                        text = apiResponse.response
+                        switch result {
+                            case .success(let data):
+                                text = data
+                            case .failure:
+                                text = "Sorry, something went wrong... Please try again."
+                            }
                     }
-
+                
                     Task { try await Task.sleep(nanoseconds: 300_000_000)
                         withAnimation(.linear2) {
                             textOpacity = 1
@@ -162,7 +141,7 @@ struct AFMessageView: View {
                     }
                 }
             }
-        }.resume()
+        }
     }
     
     func toggleLoading() {
