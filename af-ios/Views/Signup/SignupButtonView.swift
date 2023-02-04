@@ -14,7 +14,7 @@ struct SignupButtonView: View {
     
     var body: some View {
         HStack(spacing: s0) {
-            Button(action: { handleBackButtonTap() }) {
+            Button(action: { handleBackTap() }) {
                 ZStack {
                     RoundedRectangle(cornerRadius: cr16)
                         .fill(Color.afGray)
@@ -30,7 +30,7 @@ struct SignupButtonView: View {
             .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
-            Button(action: { handleButtonTap() }) {
+            Button(action: { handleTap() }) {
                 ZStack {
                     RoundedRectangle(cornerRadius: cr16)
                         .fill(Color.afBlack)
@@ -69,77 +69,30 @@ struct SignupButtonView: View {
     
     //FUNCTIONS
     
-    func changeStep() {
-        signup.afOffset = s0
+    func handleTap() {
+        impactMedium.impactOccurred()
+        transition()
 
-        switch signup.currentStep {
-            case .welcome:
-                signup.currentStep = .create
-            case .create:
-                signup.currentStep = .name
-            case .name:
-                signup.currentStep = .bootup
-            case .bootup:
-                signup.currentStep = .bootup
+        if signup.currentStep == .welcome {
+            //Put auth logic in here
+            //For transition reasons, I used the same button at each step of the signup flow, but it behaves differently at each step
+            //Once the logic is hooked up let me know and I'll adjust the transition stuff (right now I just have the loader on a timer)
+        }
+
+        if signup.currentStep == .name {
+            af.name = signup.nameFieldInput
+        }
+        
+        if signup.currentStep == .bootup {
+            //Put db logic for account creation in here
         }
     }
 
-    func fadeOut() {
-        withAnimation(.linear1) {
-            switch signup.currentStep {
-                case .welcome:
-                    signup.welcomeOpacity = 0
-                case .create:
-                    signup.createOpacity = 0
-                case .name:
-                    signup.nameOpacity = 0
-                case .bootup:
-                    signup.bootupOpacity = 0
-            }
-        }
+    func handleBackTap() {
+        impactMedium.impactOccurred()
+        transitionBack()
     }
-
-    func fadeIn() {
-        withAnimation(.afFloat){
-            signup.afOffset = -s12
-        }
-
-        withAnimation(.linear2) {
-            switch signup.currentStep {
-                case .welcome:
-                    signup.welcomeOpacity = 1
-                case .create:
-                    signup.createOpacity = 1
-                case .name:
-                    signup.nameOpacity = 1
-                case .bootup:
-                    signup.bootupOpacity = 1
-            }
-        }
-    }
-
-    func toggleButtonPresence() {
-        withAnimation(.medSpring) {
-            if signup.buttonIsDismissed == false {
-                signup.buttonOffset = s104
-                signup.buttonOpacity = 0
-            } else {
-                signup.buttonOffset = s0
-                signup.buttonOpacity = 1
-            }
-        }
-    }
-
-    func toggleLoading() {
-        if !signup.isLoading {
-            signup.isLoading = true
-            signup.spinnerRotation = Angle(degrees: 360)
-        } else {
-            signup.isLoading = false
-            signup.spinnerRotation = Angle(degrees: 0)
-        }
-    }
-
+    
     func transition() {
         if signup.currentStep == .welcome {
             signup.buttonWelcomeLabelOpacity = 0
@@ -220,29 +173,76 @@ struct SignupButtonView: View {
             }
         }
     }
+    
+    func changeStep() {
+        signup.afOffset = s0
 
-    func handleButtonTap() {
-        impactMedium.impactOccurred()
-        transition()
-
-        if signup.currentStep == .welcome {
-            //Put auth logic in here
-            //For transition reasons, I used the same button at each step of the signup flow, but it behaves differently at each step
-            //Once the logic is hooked up let me know and I'll adjust the transition stuff (right now I just have the loader on a timer)
-        }
-
-        if signup.currentStep == .name {
-            af.name = signup.nameFieldInput
-        }
-        
-        if signup.currentStep == .bootup {
-            //Put db logic for account creation in here
+        switch signup.currentStep {
+            case .welcome:
+                signup.currentStep = .create
+            case .create:
+                signup.currentStep = .name
+            case .name:
+                signup.currentStep = .bootup
+            case .bootup:
+                signup.currentStep = .bootup
         }
     }
 
-    func handleBackButtonTap() {
-        impactMedium.impactOccurred()
-        transitionBack()
+    func fadeOut() {
+        withAnimation(.linear1) {
+            switch signup.currentStep {
+                case .welcome:
+                    signup.welcomeOpacity = 0
+                case .create:
+                    signup.createOpacity = 0
+                case .name:
+                    signup.nameOpacity = 0
+                case .bootup:
+                    signup.bootupOpacity = 0
+            }
+        }
+    }
+
+    func fadeIn() {
+        withAnimation(.afFloat){
+            signup.afOffset = -s12
+        }
+
+        withAnimation(.linear2) {
+            switch signup.currentStep {
+                case .welcome:
+                    signup.welcomeOpacity = 1
+                case .create:
+                    signup.createOpacity = 1
+                case .name:
+                    signup.nameOpacity = 1
+                case .bootup:
+                    signup.bootupOpacity = 1
+            }
+        }
+    }
+
+    func toggleButtonPresence() {
+        withAnimation(.medSpring) {
+            if signup.buttonIsDismissed == false {
+                signup.buttonOffset = s104
+                signup.buttonOpacity = 0
+            } else {
+                signup.buttonOffset = s0
+                signup.buttonOpacity = 1
+            }
+        }
+    }
+
+    func toggleLoading() {
+        if !signup.isLoading {
+            signup.isLoading = true
+            signup.spinnerRotation = Angle(degrees: 360)
+        } else {
+            signup.isLoading = false
+            signup.spinnerRotation = Angle(degrees: 0)
+        }
     }
 }
 

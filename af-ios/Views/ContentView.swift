@@ -57,7 +57,7 @@ struct ContentView: View, KeyboardReadable {
                         Spacer()
                         
                         ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                            .animation(.shortSpring, value: chat.composerInput)
+                            .animation(.shortSpringC, value: chat.composerInput)
                             .opacity(composerOpacity)
                             .offset(y: composerOffset)
                             .padding(.bottom, global.isKeyboardPresent ? s8 : s0)

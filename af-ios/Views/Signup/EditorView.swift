@@ -45,17 +45,19 @@ struct TabLabelView: View {
     let feature: Feature
     
     var body: some View {
-        Button(action: {
-            signup.activeCreateTab = feature
-            impactMedium.impactOccurred()
-        }) {
+        Button(action: { handleTap() }) {
             Text(label)
                 .font(signup.activeCreateTab == feature ? .l : .s)
                 .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.interface.medColor)
                 .frame(width: s80)
-                .animation(.shortSpring, value: signup.activeCreateTab == feature)
+                .animation(.shortSpringC, value: signup.activeCreateTab == feature)
         }
         .buttonStyle(Plain())
+    }
+    
+    func handleTap() {
+        impactMedium.impactOccurred()
+        signup.activeCreateTab = feature
     }
 }
 
@@ -95,6 +97,35 @@ struct OptionRowView: View {
     let rowOptions: [Option]
     var activeOption: Option
     
+    var body: some View {
+        Text(rowLabel)
+            .font(.s)
+            .foregroundColor(.afBlack)
+            .padding(.horizontal, s12)
+            .padding(.top, s12)
+        
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: s8) {
+                ForEach(rowOptions, id: \.name) { option in
+                    Button(action: { handleTap(option: option) }) {
+                        OptionView(name: option.name, optionType: option.optionType, activeOption: activeOption)
+                    }
+                    .buttonStyle(Spring())
+                }
+            }
+            .padding(.horizontal, s12)
+            .padding(.vertical, 4)
+        }
+    }
+    
+    
+    //FUNCTIONS
+    
+    func handleTap(option: Option) {
+        impactMedium.impactOccurred()
+        setActiveOption(optionType: option.optionType, option: option)
+    }
+    
     func setActiveOption(optionType: OptionType, option: Option) {
         switch optionType {
             case .skinColor:
@@ -121,30 +152,6 @@ struct OptionRowView: View {
                 af.lashes = option
         }
     }
-    
-    var body: some View {
-        Text(rowLabel)
-            .font(.s)
-            .foregroundColor(.afBlack)
-            .padding(.horizontal, s12)
-            .padding(.top, s12)
-        
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: s8) {
-                ForEach(rowOptions, id: \.name) { option in
-                    Button(action: {
-                        setActiveOption(optionType: option.optionType, option: option)
-                        impactMedium.impactOccurred()
-                    }) {
-                        OptionView(name: option.name, optionType: option.optionType, activeOption: activeOption)
-                    }
-                    .buttonStyle(Spring())
-                }
-            }
-            .padding(.horizontal, s12)
-            .padding(.vertical, 4)
-        }
-    }
 }
 
 struct OptionView: View {
@@ -154,22 +161,6 @@ struct OptionView: View {
     let optionType: OptionType
     let width = optionWidth
     var activeOption: Option
-    
-    func setOptionElements() -> (Image, Color, Color) {
-        if optionType == .skinColor {
-            if name == "Green Skin" {
-                return (interfaces[0].afImage, interfaces[0].afColor, interfaces[0].lineColor)
-            } else if name == "Blue Skin" {
-                return (interfaces[1].afImage, interfaces[1].afColor, interfaces[1].lineColor)
-            } else if name == "Purple Skin" {
-                return (interfaces[2].afImage, interfaces[2].afColor, interfaces[2].lineColor)
-            } else if name == "Pink Skin" {
-                return (interfaces[3].afImage, interfaces[3].afColor, interfaces[3].lineColor)
-            }
-        }
-        
-        return (af.interface.afImage, af.interface.afColor, af.interface.lineColor)
-    }
     
     var body: some View {
         ZStack {
@@ -188,6 +179,22 @@ struct OptionView: View {
         )
         .frame(width: width, height: width)
         .animation(.linear(duration: 0.1), value: activeOption.name == name)
+    }
+    
+    func setOptionElements() -> (Image, Color, Color) {
+        if optionType == .skinColor {
+            if name == "Green Skin" {
+                return (interfaces[0].afImage, interfaces[0].afColor, interfaces[0].lineColor)
+            } else if name == "Blue Skin" {
+                return (interfaces[1].afImage, interfaces[1].afColor, interfaces[1].lineColor)
+            } else if name == "Purple Skin" {
+                return (interfaces[2].afImage, interfaces[2].afColor, interfaces[2].lineColor)
+            } else if name == "Pink Skin" {
+                return (interfaces[3].afImage, interfaces[3].afColor, interfaces[3].lineColor)
+            }
+        }
+        
+        return (af.interface.afImage, af.interface.afColor, af.interface.lineColor)
     }
 }
 

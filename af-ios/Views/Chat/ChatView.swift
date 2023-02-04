@@ -33,7 +33,7 @@ struct ChatView: View {
                 }
                 .rotationEffect(Angle(degrees: 180))
                 .scrollDismissesKeyboard(.interactively)
-                .animation(.shortSpring, value: chat.messagesBottomPadding)
+                .animation(.shortSpringC, value: chat.messagesBottomPadding)
             }
             .ignoresSafeArea(edges: .vertical)
         }

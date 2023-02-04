@@ -39,7 +39,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(text: $text)
+                            MessageToolbarView(text: $text, prompt: prompt)
                         }
                         .opacity(isNew ? textOpacity : 1)
                         .frame(width: textWidth)
@@ -107,7 +107,7 @@ struct AFMessageView: View {
     }
     
     func loadIn() {
-        Task { try await Task.sleep(nanoseconds: 250_000_000)
+        Task { try await Task.sleep(nanoseconds: 400_000_000)
             toggleLoading()
             generateMessage(prompt: prompt)
 
@@ -208,13 +208,16 @@ struct MessageToolbarView: View {
     @EnvironmentObject var chat: ChatState
     
     var text: Binding<String>
+    var prompt: String
     @State private var optionsOpen: Bool = false
     @State private var optionsOpacity: Double = 0
     @State private var optionsOffset: CGFloat = 112
     @State private var moreColor: Color = Color.black
+    @State private var copyColor: Color = Color.black
     @State private var copyOpacity: Double = 1
     @State private var copyRotation: Angle = Angle(degrees: 0)
-    @State private var copyColor: Color = Color.black
+    @State private var retryColor: Color = Color.black
+    @State private var retryRotation: Angle = Angle(degrees: 0)
     
     var body: some View {
         HStack(spacing: s16) {
@@ -239,10 +242,16 @@ struct MessageToolbarView: View {
                 DividerView(direction: .vertical)
                     .opacity(optionsOpacity)
                 
-                Image("RetryIcon")
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .opacity(optionsOpacity)
+                Button(action: { handleRetryTap(prompt: prompt) }) {
+                    Image("RetryIcon")
+                        .resizable()
+                        .onAppear { retryColor = af.interface.medColor }
+                        .rotationEffect(retryRotation)
+                        .foregroundColor(retryColor)
+                        .frame(width: 22, height: 22)
+                        .opacity(optionsOpacity)
+                }
+                .buttonStyle(Spring())
             }
             .offset(x: optionsOffset)
             
@@ -273,6 +282,26 @@ struct MessageToolbarView: View {
     
     //FUNCTIONS
     
+    func handleRetryTap(prompt: String) {
+        impactMedium.impactOccurred()
+        
+        withAnimation(.linear1) {
+            retryColor = af.interface.userColor
+        }
+        
+        withAnimation(.shortSpringD) {
+            retryRotation = Angle(degrees: 180)
+        }
+        
+        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+            withAnimation(.linear1) {
+                retryColor = af.interface.medColor
+            }
+            
+            retryRotation = Angle(degrees: 0)
+        }
+    }
+    
     func handleCopyTap(text: Binding<String>) {
         impactMedium.impactOccurred()
         
@@ -284,7 +313,7 @@ struct MessageToolbarView: View {
             copyOpacity = 0
         }
         
-        withAnimation(.shortSpringC) {
+        withAnimation(.shortSpringD) {
             copyRotation = Angle(degrees: 90)
         }
         
@@ -294,7 +323,7 @@ struct MessageToolbarView: View {
                 copyOpacity = 1
             }
             
-            withAnimation(.shortSpringC) {
+            withAnimation(.shortSpringD) {
                 copyRotation = Angle(degrees: 0)
             }
         }
