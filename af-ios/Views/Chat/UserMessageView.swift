@@ -85,7 +85,6 @@ struct UserMessageView: View {
             return (cr24, s0)
         }
     }
-    
 }
 
 //struct UserMessage_Previews: PreviewProvider {

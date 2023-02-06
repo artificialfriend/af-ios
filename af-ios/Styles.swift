@@ -59,6 +59,14 @@ extension Color {
     static let afSoftPink: Color = Color("afDarkPink").opacity(0.3)
     static let afLinePink: Color = Color("afDarkPink").opacity(0.1)
     static let afBubblePink: Color = Color("afBubblePink")
+    
+    static let afRed: Color = Color("afRed")
+    static let afUserRed: Color = Color("afUserRed")
+    static let afDarkRed: Color = Color("afDarkRed")
+    static let afMedRed: Color = Color("afDarkRed").opacity(0.5)
+    static let afSoftRed: Color = Color("afDarkRed").opacity(0.3)
+    static let afLineRed: Color = Color("afDarkRed").opacity(0.1)
+    static let afBubbleRed: Color = Color("afBubblePink")
 }
 
 

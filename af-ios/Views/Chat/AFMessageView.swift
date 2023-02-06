@@ -14,12 +14,14 @@ struct AFMessageView: View {
     @State private var isLoading: Bool = false
     @State private var toolbarShowing: Bool = false
     @State private var opacity: Double = 0
+    @State private var backgroundColor: Color = .white
     @State private var bottomPadding: CGFloat = -s64
     @State private var textOpacity: Double = 0
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
+    @State private var errorOccurred: Bool = false
     @State private var error: Error?
     
     let id: Double
@@ -40,7 +42,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(text: $text, prompt: prompt)
+                            MessageToolbarView(text: $text, prompt: prompt, errorOccurred: errorOccurred)
                         }
                         .opacity(isNew ? textOpacity : 1)
                         .frame(width: textWidth)
@@ -54,11 +56,6 @@ struct AFMessageView: View {
                         .frame(width: s16, height: s16)
                         .rotationEffect(spinnerRotation)
                         .opacity(isLoading ? 1 : 0)
-                        .onAppear {
-                            if isNew {
-                                loadIn()
-                            }
-                        }
                 }
                 .frame(width: s16, height: s24)
             }
@@ -78,25 +75,31 @@ struct AFMessageView: View {
             .padding(.horizontal, s16)
             .padding(.vertical, s12)
             .frame(alignment: .bottomLeading)
-            .background(af.interface.afColor)
+            .background(backgroundColor)
             .cornerRadius(s24, corners: .topRight)
             .cornerRadius(setDynamicStyling().0, corners: .topLeft)
             .cornerRadius(s24, corners: .bottomRight)
             .cornerRadius(s8, corners: .bottomLeft)
             .padding(.leading, s12)
             .padding(.trailing, s64)
+            .onAppear { backgroundColor = af.interface.afColor }
             
             Spacer(minLength: 0)
         }
         .opacity(isNew ? opacity : 1)
         .padding(.top, setDynamicStyling().1)
         .padding(.bottom, isNew ? bottomPadding : 0)
+        .onAppear {
+            if isNew {
+                loadMessage()
+            }
+        }
     }
     
     
     //FUNCTIONS
     
-    func loadIn() {
+    func loadMessage() {
         Task { try await Task.sleep(nanoseconds: 400_000_000)
             toggleLoading()
             
@@ -118,16 +121,18 @@ struct AFMessageView: View {
                 }
                 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
-                    toolbarShowing = true
-                    
                     withAnimation(.shortSpringB) {
                         switch result {
-                            case .success(let data):
-                                text = data
+                            case .success(let response):
+                                text = response
                             case .failure:
+                                errorOccurred = true
                                 text = "Sorry, something went wrong... Please try again."
-                            }
+                                backgroundColor = .afRed
+                        }
                     }
+                    
+                    toolbarShowing = true
                 
                     Task { try await Task.sleep(nanoseconds: 300_000_000)
                         withAnimation(.linear2) {

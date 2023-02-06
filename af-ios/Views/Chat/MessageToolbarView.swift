@@ -11,7 +11,7 @@ struct MessageToolbarView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     
-    var text: Binding<String>
+    @Binding var text: String
     var prompt: String
     @State private var optionsOpen: Bool = false
     @State private var optionsOpacity: Double = 0
@@ -22,62 +22,76 @@ struct MessageToolbarView: View {
     @State private var copyRotation: Angle = Angle(degrees: 0)
     @State private var retryColor: Color = Color.black
     @State private var retryRotation: Angle = Angle(degrees: 0)
+    @State private var errorRetryColor: Color = Color.black
+    @State var errorOccurred: Bool = false
     
     var body: some View {
         HStack(spacing: s16) {
-            HStack(spacing: s16) {
-                Button(action: { handleMoreTap() }) {
-                    Image("MoreIcon")
+            if !errorOccurred {
+                HStack(spacing: s16) {
+                    Button(action: { handleMoreTap() }) {
+                        Image("MoreIcon")
+                            .resizable()
+                            .onAppear { moreColor = af.interface.medColor }
+                            .foregroundColor(moreColor)
+                            .frame(width: 22, height: 22)
+                    }
+                    .buttonStyle(Spring())
+                    
+                    DividerView(direction: .vertical)
+                        .opacity(optionsOpacity)
+                    
+                    Image("AdjustIcon")
                         .resizable()
-                        .onAppear { moreColor = af.interface.medColor }
-                        .foregroundColor(moreColor)
-                        .frame(width: 22, height: 22)
-                }
-                .buttonStyle(Spring())
-                
-                DividerView(direction: .vertical)
-                    .opacity(optionsOpacity)
-                
-                Image("AdjustIcon")
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .opacity(optionsOpacity)
-                
-                DividerView(direction: .vertical)
-                    .opacity(optionsOpacity)
-                
-                Button(action: { handleRetryTap(prompt: prompt) }) {
-                    Image("RetryIcon")
-                        .resizable()
-                        .onAppear { retryColor = af.interface.medColor }
-                        .rotationEffect(retryRotation)
-                        .foregroundColor(retryColor)
                         .frame(width: 22, height: 22)
                         .opacity(optionsOpacity)
+                    
+                    DividerView(direction: .vertical)
+                        .opacity(optionsOpacity)
+                    
+                    Button(action: { handleRetryTap(prompt: prompt) }) {
+                        Image("RetryIcon")
+                            .resizable()
+                            .onAppear { retryColor = af.interface.medColor }
+                            .rotationEffect(retryRotation)
+                            .foregroundColor(retryColor)
+                            .frame(width: 22, height: 22)
+                            .opacity(optionsOpacity)
+                    }
+                    .buttonStyle(Spring())
+                }
+                .offset(x: optionsOffset)
+                
+                DividerView(direction: .vertical)
+                
+                Button(action: { handleCopyTap(text: $text) }) {
+                    ZStack {
+                        Image("CheckIcon")
+                            .resizable()
+                            .rotationEffect(Angle(degrees: 270))
+                            .opacity(1 - copyOpacity)
+                        
+                        Image("CopyIcon")
+                            .resizable()
+                            .opacity(copyOpacity)
+                    }
+                    .onAppear { copyColor = af.interface.medColor }
+                    .foregroundColor(copyColor)
+                    .rotationEffect(copyRotation)
+                    .frame(width: 22, height: 22)
                 }
                 .buttonStyle(Spring())
-            }
-            .offset(x: optionsOffset)
-            
-            DividerView(direction: .vertical)
-            
-            Button(action: { handleCopyTap(text: text) }) {
-                ZStack {
-                    Image("CheckIcon")
+            } else {
+                //Button(action: { handleErrorRetryTap(prompt: prompt) }) {
+                    Image("RetryIcon")
                         .resizable()
-                        .rotationEffect(Angle(degrees: 270))
-                        .opacity(1 - copyOpacity)
-                    
-                    Image("CopyIcon")
-                        .resizable()
-                        .opacity(copyOpacity)
-                }
-                .onAppear { copyColor = af.interface.medColor }
-                .foregroundColor(copyColor)
-                .rotationEffect(copyRotation)
-                .frame(width: 22, height: 22)
+                        .onAppear { errorRetryColor = .afMedRed }
+                        .rotationEffect(retryRotation)
+                        .foregroundColor(errorRetryColor)
+                        .frame(width: 22, height: 22)
+//                }
+//                .buttonStyle(Spring())
             }
-            .buttonStyle(Spring())
         }
         .foregroundColor(af.interface.medColor)
         .frame(height: 22)
@@ -88,22 +102,38 @@ struct MessageToolbarView: View {
     
     func handleRetryTap(prompt: String) {
         impactMedium.impactOccurred()
-        
+
         withAnimation(.linear1) {
             retryColor = af.interface.userColor
         }
-        
+
         withAnimation(.shortSpringD) {
             retryRotation = Angle(degrees: 180)
         }
         
-        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-            withAnimation(.linear1) {
-                retryColor = af.interface.medColor
+        print(prompt)
+        
+        chat.makeAFRequest(prompt: prompt) { result in
+            withAnimation(.shortSpringB) {
+                switch result {
+                    case .success(let response):
+                        text = response
+                        retryColor = af.interface.medColor
+                    case .failure:
+                        errorOccurred = true
+                        text = "Sorry, something went wrong... Please try again."
+                        //backgroundColor = .afRed
+                }
             }
-            
-            retryRotation = Angle(degrees: 0)
         }
+        
+//        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+//            withAnimation(.linear1) {
+//                retryColor = af.interface.medColor
+//            }
+//
+//            retryRotation = Angle(degrees: 0)
+//        }
     }
     
     func handleCopyTap(text: Binding<String>) {

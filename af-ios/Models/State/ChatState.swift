@@ -36,23 +36,34 @@ class ChatState: ObservableObject {
         let requestBody = RequestBody(user_id: "1", text: prompt, is_prompt: true)
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
         var request = URLRequest(url: url)
+        
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try! JSONEncoder().encode(requestBody)
 
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let call = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
-            
             let response = try! JSONDecoder().decode(ResponseBody.self, from: data)
-            
+
             DispatchQueue.main.async {
                 if error != nil {
-                    completion(.failure(error!))
+                    let error = NSError(domain: "makePostRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
+                    completion(.failure(error))
                 } else {
                     completion(.success(response.response))
                 }
             }
-        }.resume()
+        }
+        
+        call.resume()
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + 30) {
+            if call.state != .completed {
+                call.cancel()
+                let error = NSError(domain: "com.example.api", code: 2, userInfo: [NSLocalizedDescriptionKey: "API call timed out"])
+                completion(.failure(error))
+            }
+        }
     }
 }
 
