@@ -12,16 +12,17 @@ struct AFMessageView: View {
     @EnvironmentObject var chat: ChatState
     
     @State private var isLoading: Bool = false
-    @State private var toolbarShowing: Bool = false
-    @State private var opacity: Double = 0
+    @State private var toolbarIsPresent: Bool = true
+    @State private var toolbarOpacity: Double = 1
+    @State private var opacity: Double = 1
     @State private var backgroundColor: Color = .white
-    @State private var bottomPadding: CGFloat = -s64
-    @State private var textOpacity: Double = 0
+    @State private var bottomPadding: CGFloat = 0
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
+    @State private var textOpacity: Double = 1
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
-    @State private var errorOccurred: Bool = false
+    @State private var inErrorState: Bool = false
     @State private var error: Error?
     
     let id: Double
@@ -34,17 +35,17 @@ struct AFMessageView: View {
             ZStack {
                 VStack(spacing: s8) {
                     Text(text)
-                        .opacity(isNew ? textOpacity : 1)
+                        .opacity(textOpacity)
                         .foregroundColor(.afBlack)
                         .frame(minWidth: textMinWidth, alignment: .leading)
                     
-                    if !isNew || toolbarShowing {
+                    if toolbarIsPresent {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(text: $text, prompt: prompt, errorOccurred: errorOccurred)
+                            MessageToolbarView(text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, backgroundColor: $backgroundColor, prompt: prompt)
                         }
-                        .opacity(isNew ? textOpacity : 1)
+                        .opacity(toolbarOpacity)
                         .frame(width: textWidth)
                     }
                 }
@@ -88,7 +89,7 @@ struct AFMessageView: View {
         }
         .opacity(isNew ? opacity : 1)
         .padding(.top, setDynamicStyling().1)
-        .padding(.bottom, isNew ? bottomPadding : 0)
+        .padding(.bottom, bottomPadding)
         .onAppear {
             if isNew {
                 loadMessage()
@@ -100,6 +101,12 @@ struct AFMessageView: View {
     //FUNCTIONS
     
     func loadMessage() {
+        opacity = 0
+        textOpacity = 0
+        toolbarOpacity = 0
+        toolbarIsPresent = false
+        bottomPadding = -s64
+        
         Task { try await Task.sleep(nanoseconds: 400_000_000)
             toggleLoading()
             
@@ -121,22 +128,31 @@ struct AFMessageView: View {
                 }
                 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
-                    withAnimation(.shortSpringB) {
-                        switch result {
-                            case .success(let response):
+                    switch result {
+                        case .success(let response):
+                            withAnimation(.shortSpringB) {
                                 text = response
-                            case .failure:
-                                errorOccurred = true
+                            }
+                        case .failure:
+                            inErrorState = true
+                        
+                            withAnimation(.shortSpringB) {
                                 text = "Sorry, something went wrong... Please try again."
+                            }
+                        
+                            withAnimation(.linear1) {
                                 backgroundColor = .afRed
-                        }
+                            }
                     }
-                    
-                    toolbarShowing = true
+                
+                    withAnimation(.shortSpringB) {
+                        toolbarIsPresent = true
+                    }
                 
                     Task { try await Task.sleep(nanoseconds: 300_000_000)
                         withAnimation(.linear2) {
                             textOpacity = 1
+                            toolbarOpacity = 1
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 100_000_000)

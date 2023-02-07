@@ -43,15 +43,31 @@ class ChatState: ObservableObject {
 
         let call = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
-            let response = try! JSONDecoder().decode(ResponseBody.self, from: data)
-
-            DispatchQueue.main.async {
-                if error != nil {
-                    let error = NSError(domain: "makePostRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
-                    completion(.failure(error))
-                } else {
-                    completion(.success(response.response))
+//            let response = try! JSONDecoder().decode(ResponseBody.self, from: data)
+//
+//            DispatchQueue.main.async {
+//                if error != nil {
+//                    let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
+//                    completion(.failure(error))
+//                } else {
+//                    completion(.success(response.response))
+//                }
+//            }
+            
+            do {
+                let response = try JSONDecoder().decode(ResponseBody.self, from: data)
+                
+                DispatchQueue.main.async {
+                    if error != nil {
+                        let error = NSError(domain: "makePostRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(response.response))
+                    }
                 }
+            } catch {
+                let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "Request blocked by rate limit"])
+                completion(.failure(error))
             }
         }
         
@@ -59,8 +75,9 @@ class ChatState: ObservableObject {
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 30) {
             if call.state != .completed {
+                print("timed out")
                 call.cancel()
-                let error = NSError(domain: "com.example.api", code: 2, userInfo: [NSLocalizedDescriptionKey: "API call timed out"])
+                let error = NSError(domain: "com.example.api", code: 3, userInfo: [NSLocalizedDescriptionKey: "API call timed out"])
                 completion(.failure(error))
             }
         }

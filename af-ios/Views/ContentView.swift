@@ -34,7 +34,14 @@ struct ContentView: View, KeyboardReadable {
 
             if global.activeSection == .chat {
                 ChatView()
-                    //.opacity(chatOpacity)
+                    .opacity(chatOpacity)
+                    .onAppear {
+                        Task { try await Task.sleep(nanoseconds: 550_000_000)
+                            withAnimation(.linear2) {
+                                chatOpacity = 1
+                            }
+                        }
+                    }
             }
 
             if global.activeSection != .signup {
@@ -99,7 +106,7 @@ struct ContentView: View, KeyboardReadable {
                     }
             }
         }
-//        TestView()
+        .background(Color.white)
     }
     
     
