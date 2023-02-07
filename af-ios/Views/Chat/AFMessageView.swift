@@ -182,7 +182,7 @@ struct AFMessageView: View {
                     textMinWidth = textMaxWidth
                     textWidth = textMinWidth
                 } else {
-                    textMinWidth = 184
+                    textMinWidth = 76
                 }
             }
         }
