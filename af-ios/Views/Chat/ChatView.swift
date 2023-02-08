@@ -28,7 +28,7 @@ struct ChatView: View {
                         }
                     }
                     .padding(.top, s240)
-                    .padding(.bottom, global.isKeyboardPresent ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
+                    .padding(.bottom, global.keyboardIsPresent ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
                     .rotationEffect(Angle(degrees: 180))
                 }
                 .rotationEffect(Angle(degrees: 180))

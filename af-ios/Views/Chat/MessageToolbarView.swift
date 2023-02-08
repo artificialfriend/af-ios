@@ -75,6 +75,7 @@ struct MessageToolbarView: View {
     
     
     //FUNCTIONS
+    
     func toggleErrorState() {
         withAnimation(.linear1) {
             if inErrorState {

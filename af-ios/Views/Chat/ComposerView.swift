@@ -27,15 +27,17 @@ struct ComposerView: View, KeyboardReadable {
                 .lineLimit(10)
                 .accentColor(af.interface.userColor)
                 .padding(.leading, 14.5)
-                .padding(.trailing, 54.5)
+                .padding(.trailing, chat.composerTrailingPadding)
                 .padding(.vertical, 10.5)
                 .background(Color.afBlurryWhite)
                 .cornerRadius(cr24)
+                .animation(nil, value: chat.composerInput)
             
             ComposerButtonView()
                 .frame(width: 37.5, height: 37.5)
                 .padding(.trailing, 4)
                 .padding(.bottom, 4)
+                .animation(nil, value: chat.composerInput)
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
@@ -72,6 +74,7 @@ struct ComposerView: View, KeyboardReadable {
 struct ComposerView_Previews: PreviewProvider {
     static var previews: some View {
         ComposerView(safeAreaHeight: s32)
+            .environmentObject(GlobalState())
             .environmentObject(AFState())
             .environmentObject(ChatState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))

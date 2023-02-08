@@ -67,9 +67,9 @@ struct ContentView: View, KeyboardReadable {
                             .animation(.shortSpringC, value: chat.composerInput)
                             .opacity(composerOpacity)
                             .offset(y: composerOffset)
-                            .padding(.bottom, global.isKeyboardPresent ? s8 : s0)
+                            .padding(.bottom, global.keyboardIsPresent ? s8 : s0)
                             .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                global.isKeyboardPresent = newIsKeyboardVisible
+                                global.keyboardIsPresent = newIsKeyboardVisible
                             }
                             .background {
                                 GeometryReader { composerGeo in

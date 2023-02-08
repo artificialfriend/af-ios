@@ -9,7 +9,7 @@ import SwiftUI
 
 class GlobalState: ObservableObject {
     @Published var activeSection: Section = .chat
-    @Published var isKeyboardPresent: Bool = false
+    @Published var keyboardIsPresent: Bool = false
 }
 
 enum Section {

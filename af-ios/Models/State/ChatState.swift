@@ -10,12 +10,27 @@ import SwiftUI
 class ChatState: ObservableObject {
     @Published var composerInput: String = ""
     @Published var composerBottomPadding: CGFloat = s0
+    @Published var composerTrailingPadding: CGFloat = 56
     @Published var messagesBottomPadding: CGFloat = s80
     @Published var messageHeight: CGFloat = s0
     @Published var id: Double = 1
     @Published var messages: [Message] = [
 //        Message(text: "Summarize chapter 2 of wuthering heights", byAF: false, isNew: false, timestamp: Date.now),
         Message(id: 16, prompt: "", text: "Lorem ipsum dolor sit amet amet.", byAF: true, isNew: false, timestamp: Date.now)
+    ]
+    
+    @Published var randomPrompts: [String] = [
+        "Summarize chapter 1 of Wuthering Heights",
+        "Give me 3 unique ideas for an essay on the American Revolution",
+        "Write a rhyming love poem about girl named Anna",
+        "Create an outline for an essay on artificial general intelligence",
+        "Explain the laws of physics in simple language",
+        "What Greek god is most like a gemini and why?",
+        "What is Einstein famous for?",
+        "How did WW2 shape the world?",
+        "What were the main reasons that the US became a superpower?",
+        "What does mitochondria do?",
+        "How do semiconductors work?"
     ]
     
     func addMessage(prompt: String, text: String, byAF: Bool, isNew: Bool) {
@@ -43,16 +58,6 @@ class ChatState: ObservableObject {
 
         let call = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
-//            let response = try! JSONDecoder().decode(ResponseBody.self, from: data)
-//
-//            DispatchQueue.main.async {
-//                if error != nil {
-//                    let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
-//                    completion(.failure(error))
-//                } else {
-//                    completion(.success(response.response))
-//                }
-//            }
             
             do {
                 let response = try JSONDecoder().decode(ResponseBody.self, from: data)
