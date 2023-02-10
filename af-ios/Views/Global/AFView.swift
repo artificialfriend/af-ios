@@ -18,8 +18,7 @@ struct AFView: View {
                 Circle()
                     .background {
                         GeometryReader { geo in
-                            Rectangle()
-                                .fill(Color.clear)
+                            Color.clear
                                 .onAppear {
                                     shadowRadius = geo.size.width / 12
                                 }

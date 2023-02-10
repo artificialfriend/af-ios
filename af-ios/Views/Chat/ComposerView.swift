@@ -51,8 +51,7 @@ struct ComposerView: View, KeyboardReadable {
         .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
         .background {
             GeometryReader { geo in
-                Rectangle()
-                    .fill(Color.clear)
+                Color.clear
                     .onAppear {
                         setMessagesBottomPadding(height: geo.size.height)
                     }

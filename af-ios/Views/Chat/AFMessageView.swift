@@ -25,7 +25,7 @@ struct AFMessageView: View {
     @State private var inErrorState: Bool = false
     @State private var error: Error?
     
-    let id: Double
+    let id: Int
     let prompt: String
     @State var text: String
     let isNew: Bool
@@ -43,7 +43,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, backgroundColor: $backgroundColor, prompt: prompt)
+                            MessageToolbarView(id: id, prompt: prompt, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, backgroundColor: $backgroundColor)
                         }
                         .opacity(toolbarOpacity)
                         .frame(width: textWidth)
@@ -62,8 +62,7 @@ struct AFMessageView: View {
             }
             .background {
                 GeometryReader { geo in
-                    Rectangle()
-                        .fill(Color.clear)
+                    Color.clear
                         .onAppear {
                             setTextWidth(geo: geo.size.width, isOnAppear: true)
                         }
@@ -156,8 +155,9 @@ struct AFMessageView: View {
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 100_000_000)
-                            let index = chat.messages.firstIndex(where: {$0.id == id})!
-                            chat.messages[index].isNew = false
+                            chat.messages[id].isNew = false
+                            chat.messages[id].text = text
+                            chat.updateMessages()
                         }
                     }
                 }
@@ -174,14 +174,18 @@ struct AFMessageView: View {
     }
     
     func setTextWidth(geo: CGFloat, isOnAppear: Bool) {
+        textMinWidth = 76
         Task { try await Task.sleep(nanoseconds: 1_000_000)
+            
             textWidth = geo
             
             if (isOnAppear && !isNew) || !isOnAppear {
                 if textWidth >= textMaxWidth - s64 {
+                    print("hit first")
                     textMinWidth = textMaxWidth
                     textWidth = textMinWidth
                 } else {
+                    print("hit second")
                     textMinWidth = 76
                 }
             }
@@ -189,10 +193,10 @@ struct AFMessageView: View {
     }
     
     func setDynamicStyling() -> (CGFloat, CGFloat) {
-        let previousIndex = chat.messages.firstIndex(where: {$0.id == id})! - 1
+        let previousIndex = id - 1
         
         if previousIndex >= 0 {
-            if !chat.messages[previousIndex].byAF {
+            if !chat.getMessages()[previousIndex].byAF {
                 return (cr24, s8)
             } else {
                 return (cr8, s4)

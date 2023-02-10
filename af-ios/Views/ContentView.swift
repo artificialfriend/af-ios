@@ -41,6 +41,8 @@ struct ContentView: View, KeyboardReadable {
                                 chatOpacity = 1
                             }
                         }
+                        
+                        print(chat.messages)
                     }
             }
 
@@ -52,8 +54,7 @@ struct ContentView: View, KeyboardReadable {
                             .offset(y: topNavOffset)
                             .background {
                                 GeometryReader { topNavGeo in
-                                    Rectangle()
-                                        .fill(Color.clear)
+                                    Color.clear
                                         .onAppear {
                                             topNavHeight = topNavGeo.size.height
                                             topNavOffset = -topNavHeight / 2
@@ -73,8 +74,7 @@ struct ContentView: View, KeyboardReadable {
                             }
                             .background {
                                 GeometryReader { composerGeo in
-                                    Rectangle()
-                                        .fill(Color.clear)
+                                    Color.clear
                                         .onAppear {
                                             composerHeight = composerGeo.size.height
                                             composerOffset = composerHeight / 2

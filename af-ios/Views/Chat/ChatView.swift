@@ -17,7 +17,7 @@ struct ChatView: View {
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: s0) {
-                        ForEach(chat.messages) { message in
+                        ForEach(chat.getMessages()) { message in
                             if message.byAF {
                                 AFMessageView(id: message.id, prompt: message.prompt, text: message.text, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -37,6 +37,7 @@ struct ChatView: View {
             }
             .ignoresSafeArea(edges: .vertical)
         }
+        .onAppear { chat.messages = chat.getMessages() }
     }
 }
 

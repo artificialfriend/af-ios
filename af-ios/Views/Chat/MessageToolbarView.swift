@@ -11,11 +11,12 @@ struct MessageToolbarView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     
+    var id: Int
+    var prompt: String
     @Binding var text: String
     @Binding var textOpacity: Double
     @Binding var inErrorState: Bool
     @Binding var backgroundColor: Color
-    var prompt: String
     
     @State private var copyColor: Color = Color.black
     @State private var copyOpacity: Double = 1
@@ -131,12 +132,16 @@ struct MessageToolbarView: View {
                 case .success(let response):
                     withAnimation(.shortSpringB) {
                         text = response
+                        chat.messages[id].text = text
+                        chat.updateMessages()
                     }
                 case .failure:
                     inErrorState = true
                 
                     withAnimation(.shortSpringB) {
                         text = "Sorry, something went wrong... Please try again."
+                        chat.messages[id].text = text
+                        chat.updateMessages()
                     }
                 
                     withAnimation(.linear1) {

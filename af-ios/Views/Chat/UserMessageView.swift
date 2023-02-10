@@ -15,7 +15,7 @@ struct UserMessageView: View {
     @State private var opacity: Double = 0
     @State private var bottomPadding: CGFloat = -s64
     
-    let id: Double
+    let id: Int
     let text: String
     let isNew: Bool
     
@@ -64,19 +64,17 @@ struct UserMessageView: View {
         }
         
         Task { try await Task.sleep(nanoseconds: 100_000_000)
-            let index = chat.messages.firstIndex(where: {$0.id == id})!
-            chat.messages[index].isNew = false
-            
-            //Trigger response from AF
-            chat.addMessage(prompt: text, text: "", byAF: true, isNew: true)
+            chat.messages[id].isNew = false
+            chat.addMessage(prompt: text, text: "", byAF: true, isNew: true) //Trigger response from AF
+            chat.updateMessages()
         }
     }
     
     func setDynamicStyling() -> (CGFloat, CGFloat) {
-        let previousIndex = chat.messages.firstIndex(where: {$0.id == id})! - 1
+        let previousIndex = id - 1
         
         if previousIndex >= 0 {
-            if chat.messages[previousIndex].byAF {
+            if chat.getMessages()[previousIndex].byAF {
                 return (cr24, s8)
             } else {
                 return (cr8, s4)

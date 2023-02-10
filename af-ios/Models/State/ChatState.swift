@@ -13,11 +13,7 @@ class ChatState: ObservableObject {
     @Published var composerTrailingPadding: CGFloat = 56
     @Published var messagesBottomPadding: CGFloat = s80
     @Published var messageHeight: CGFloat = s0
-    @Published var id: Double = 1
-    @Published var messages: [Message] = [
-//        Message(text: "Summarize chapter 2 of wuthering heights", byAF: false, isNew: false, timestamp: Date.now),
-        Message(id: 16, prompt: "", text: "Lorem ipsum dolor sit amet amet.", byAF: true, isNew: false, timestamp: Date.now)
-    ]
+    @Published var messages: [Message] = []
     
     @Published var randomPrompts: [String] = [
         "Summarize chapter 1 of Wuthering Heights",
@@ -34,6 +30,9 @@ class ChatState: ObservableObject {
     ]
     
     func addMessage(prompt: String, text: String, byAF: Bool, isNew: Bool) {
+        let storedMessages = getMessages()
+        let id = storedMessages.count
+        
         messages.append(
             Message(
                 id: id,
@@ -44,7 +43,28 @@ class ChatState: ObservableObject {
                 timestamp: Date.now
         ))
         
-        id += 1
+        updateMessages()
+    }
+    
+    func getMessages() -> [Message] {
+        let userDefaults = UserDefaults.standard
+        
+        if let decodedMessages = userDefaults.data(forKey: "messages"),
+            let storedMessages = try? PropertyListDecoder().decode([Message].self, from: decodedMessages) {
+            return storedMessages
+        } else {
+            return []
+        }
+    }
+    
+    func updateMessages() {
+        let encoder = PropertyListEncoder()
+        
+        if let encodedMessages = try? encoder.encode(messages) {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(encodedMessages, forKey: "messages")
+            userDefaults.synchronize()
+        }
     }
     
     func makeAFRequest(prompt: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -100,12 +120,17 @@ struct ResponseBody: Decodable {
 }
 
 struct Message: Identifiable, Codable {
-    var id: Double
+    var id: Int
     var prompt: String
     var text: String
     var byAF: Bool
     var isNew: Bool = false
     var timestamp: Date
 }
+
+//let messages =
+
+//let objects = [MyObject(name: "John", age: 32), MyObject(name: "Jane", age: 28)]
+
 
 
