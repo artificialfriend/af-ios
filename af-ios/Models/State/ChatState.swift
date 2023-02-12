@@ -30,8 +30,8 @@ class ChatState: ObservableObject {
     ]
     
     func addMessage(prompt: String, text: String, byAF: Bool, isNew: Bool) {
-        let storedMessages = getMessages()
-        let id = storedMessages.count
+        getMessages()
+        let id = messages.count
         
         messages.append(
             Message(
@@ -43,24 +43,22 @@ class ChatState: ObservableObject {
                 timestamp: Date.now
         ))
         
-        updateMessages()
+        storeMessages()
     }
     
-    func getMessages() -> [Message] {
-        if let decodedMessages = UserDefaults.standard.data(forKey: "messages"),
-            let storedMessages = try? PropertyListDecoder().decode([Message].self, from: decodedMessages) {
-            return storedMessages
-        } else {
-            return []
-        }
-    }
-    
-    func updateMessages() {
+    func storeMessages() {
         let encoder = PropertyListEncoder()
         
         if let encodedMessages = try? encoder.encode(messages) {
             UserDefaults.standard.set(encodedMessages, forKey: "messages")
             UserDefaults.standard.synchronize()
+        }
+    }
+    
+    func getMessages() {
+        if let storedMessages = UserDefaults.standard.data(forKey: "messages"),
+            let decodedMessages = try? PropertyListDecoder().decode([Message].self, from: storedMessages) {
+            messages = decodedMessages
         }
     }
     

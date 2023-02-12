@@ -133,7 +133,7 @@ struct MessageToolbarView: View {
                     withAnimation(.shortSpringB) {
                         text = response
                         chat.messages[id].text = text
-                        chat.updateMessages()
+                        chat.storeMessages()
                     }
                 case .failure:
                     inErrorState = true
@@ -141,7 +141,7 @@ struct MessageToolbarView: View {
                     withAnimation(.shortSpringB) {
                         text = "Sorry, something went wrong... Please try again."
                         chat.messages[id].text = text
-                        chat.updateMessages()
+                        chat.storeMessages()
                     }
                 
                     withAnimation(.linear1) {

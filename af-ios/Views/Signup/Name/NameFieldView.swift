@@ -15,7 +15,7 @@ struct NameFieldView: View {
         ZStack {
             TextField("", text: $signup.nameFieldInput)
                 .placeholder(when: signup.nameFieldInput.isEmpty, alignment: .center) {
-                    Text("AF4096")
+                    Text(af.name)
                         .foregroundColor(af.interface.softColor)
                 }
                 .cornerRadius(cr16)

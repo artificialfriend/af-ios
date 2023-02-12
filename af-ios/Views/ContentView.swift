@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalState
+    @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
@@ -108,6 +109,7 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
+        .onAppear { af.getAF() }
     }
     
     

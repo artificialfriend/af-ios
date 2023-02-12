@@ -66,7 +66,7 @@ struct UserMessageView: View {
         Task { try await Task.sleep(nanoseconds: 100_000_000)
             chat.messages[id].isNew = false
             chat.addMessage(prompt: text, text: "", byAF: true, isNew: true) //Trigger response from AF
-            chat.updateMessages()
+            chat.storeMessages()
         }
     }
 }

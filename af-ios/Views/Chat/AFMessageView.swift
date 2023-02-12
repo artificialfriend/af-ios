@@ -157,7 +157,7 @@ struct AFMessageView: View {
                         Task { try await Task.sleep(nanoseconds: 100_000_000)
                             chat.messages[id].isNew = false
                             chat.messages[id].text = text
-                            chat.updateMessages()
+                            chat.storeMessages()
                         }
                     }
                 }
