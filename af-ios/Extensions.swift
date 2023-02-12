@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import Combine
+import AuthenticationServices
 
 extension View {
     func placeholder<Content: View>(
@@ -20,6 +21,24 @@ extension View {
             self
         }
     }
+}
+
+struct TitleModifier: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.l)
+    }
+    
+}
+
+extension View {
+    
+    func title() -> some View {
+        self
+            .font(.l)
+    }
+    
 }
 
 protocol KeyboardReadable {

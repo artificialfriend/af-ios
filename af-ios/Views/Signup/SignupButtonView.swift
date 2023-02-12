@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct SignupButtonView: View {
     @EnvironmentObject var global: GlobalState
@@ -30,39 +31,46 @@ struct SignupButtonView: View {
             .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
-            Button(action: { handleTap() }) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: cr16)
-                        .fill(Color.afBlack)
-                    
-                    HStack {
-                        Image("AppleLogo")
-                            .padding(.top, -5)
-                        Text("Sign Up With Apple")
-                    }
-                    .opacity(signup.buttonWelcomeLabelOpacity)
-                    .animation(.linear1, value: signup.isLoading)
-                    
-                    Image("SpinnerIcon")
-                        .foregroundColor(.white)
-                        .rotationEffect(signup.spinnerRotation)
-                        .animation(.loadingSpin, value: signup.isLoading)
-                        .opacity(signup.isLoading ? 1 : 0)
+            if signup.currentStep == .welcome {
+                SignInWithAppleButton(
+                    .signUp,
+                    onRequest: configure,
+                    onCompletion: handle
+                )
+            } else {
+                Button(action: { handleTap() }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: cr16)
+                            .fill(Color.afBlack)
+                        
+                        HStack {
+                            Image("AppleLogo")
+                                .padding(.top, -5)
+                            Text("Sign Up With Apple")
+                        }
+                        .opacity(signup.buttonWelcomeLabelOpacity)
                         .animation(.linear1, value: signup.isLoading)
-
-                    Text("Next")
-                        .opacity(signup.createOpacity)
-                    
-                    Text("Boot Up")
-                        .opacity(signup.nameOpacity)
+                        
+                        Image("SpinnerIcon")
+                            .foregroundColor(.white)
+                            .rotationEffect(signup.spinnerRotation)
+                            .animation(.loadingSpin, value: signup.isLoading)
+                            .opacity(signup.isLoading ? 1 : 0)
+                            .animation(.linear1, value: signup.isLoading)
+                        
+                        Text("Next")
+                            .opacity(signup.createOpacity)
+                        
+                        Text("Boot Up")
+                            .opacity(signup.nameOpacity)
+                    }
+                    .foregroundColor(.white)
                 }
-                .foregroundColor(.white)
+                .animation(.medSpring, value: signup.currentStep)
+                .buttonStyle(Spring())
             }
-            .animation(.medSpring, value: signup.currentStep)
-            .buttonStyle(Spring())
         }
         .font(.l)
-        .padding(.horizontal, s12)
         .frame(height: s64)
     }
     
@@ -243,6 +251,49 @@ struct SignupButtonView: View {
             signup.isLoading = false
             signup.spinnerRotation = Angle(degrees: 0)
         }
+    }
+    
+    func configure(_ request: ASAuthorizationAppleIDRequest) {
+        request.requestedScopes = [.fullName, .email]
+    }
+    
+    func handle(_ authResult: Result<ASAuthorization, Error>) {
+        switch authResult {
+            case .success(let auth):
+                switch auth.credential {
+                    case let appleIdCredentials as ASAuthorizationAppleIDCredential:
+                        if let appleUser = AppleUser(credentials: appleIdCredentials) {
+                            let appleUserData = try? JSONEncoder().encode(appleUser)
+                            UserDefaults.standard.setValue(appleUserData, forKey: appleUser.userId)
+                            handleTap()
+                        }
+                    default:
+                        print(auth.credential)
+                    }
+            case .failure(let error):
+                print(error)
+                signup.authErrorHasOccurred = true
+        }
+    }
+}
+
+struct AppleUser: Codable {
+    let userId: String
+    let firstName: String
+    let lastName: String
+    let email: String
+    
+    init?(credentials: ASAuthorizationAppleIDCredential) {
+        guard
+            let firstName = credentials.fullName?.givenName,
+            let lastName = credentials.fullName?.familyName,
+            let email = credentials.email
+        else {return nil}
+        
+        self.userId = credentials.user
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
     }
 }
 

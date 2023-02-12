@@ -9,6 +9,7 @@ import SwiftUI
 
 class SignupState: ObservableObject {
     @Published var currentStep: SignupStep = .welcome
+    @Published var authErrorHasOccurred: Bool = false
     @Published var activeCreateTab: Feature = .skin
     @Published var afOffset: CGFloat = 0
     @Published var afScale: Double = 0

@@ -36,7 +36,6 @@
 		CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30F6296B1BF8003D1476 /* Styles.swift */; };
 		CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3102296B1DDA003D1476 /* SignupView.swift */; };
 		CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3104296B1E07003D1476 /* EditorView.swift */; };
-		CEB954D529819AFC00C5A9E8 /* SignupWithAppleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB954D429819AFC00C5A9E8 /* SignupWithAppleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,7 +69,6 @@
 		CE1A30F6296B1BF8003D1476 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		CE1A3102296B1DDA003D1476 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		CE1A3104296B1E07003D1476 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
-		CEB954D429819AFC00C5A9E8 /* SignupWithAppleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupWithAppleView.swift; sourceTree = "<group>"; };
 		CEB954D62981AB0100C5A9E8 /* af-iosDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "af-iosDebug.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,7 +202,6 @@
 			children = (
 				CE1A3102296B1DDA003D1476 /* SignupView.swift */,
 				483317FF297B48830008F61E /* SignupButtonView.swift */,
-				CEB954D429819AFC00C5A9E8 /* SignupWithAppleView.swift */,
 				48AA2630298EA23D0091609C /* Create */,
 				48AA2631298EA27B0091609C /* Name */,
 			);
@@ -288,7 +285,6 @@
 				CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */,
 				48AA262D298EA0B60091609C /* TabsView.swift in Sources */,
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
-				CEB954D529819AFC00C5A9E8 /* SignupWithAppleView.swift in Sources */,
 				48159819298328AF00201B32 /* UserMessageView.swift in Sources */,
 				481598172981A14200201B32 /* GlobalState.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,

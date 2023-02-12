@@ -77,7 +77,7 @@ struct AFMessageView: View {
             .frame(alignment: .bottomLeading)
             .background(backgroundColor)
             .cornerRadius(s24, corners: .topRight)
-            .cornerRadius(setDynamicStyling().0, corners: .topLeft)
+            .cornerRadius(s24, corners: .topLeft)
             .cornerRadius(s24, corners: .bottomRight)
             .cornerRadius(s8, corners: .bottomLeft)
             .padding(.leading, s12)
@@ -87,7 +87,7 @@ struct AFMessageView: View {
             Spacer(minLength: 0)
         }
         .opacity(isNew ? opacity : 1)
-        .padding(.top, setDynamicStyling().1)
+        .padding(.top, s8)
         .padding(.bottom, bottomPadding)
         .onAppear {
             if isNew {
@@ -174,35 +174,17 @@ struct AFMessageView: View {
     }
     
     func setTextWidth(geo: CGFloat, isOnAppear: Bool) {
-        textMinWidth = 76
         Task { try await Task.sleep(nanoseconds: 1_000_000)
-            
             textWidth = geo
             
             if (isOnAppear && !isNew) || !isOnAppear {
                 if textWidth >= textMaxWidth - s64 {
-                    print("hit first")
                     textMinWidth = textMaxWidth
                     textWidth = textMinWidth
                 } else {
-                    print("hit second")
                     textMinWidth = 76
                 }
             }
-        }
-    }
-    
-    func setDynamicStyling() -> (CGFloat, CGFloat) {
-        let previousIndex = id - 1
-        
-        if previousIndex >= 0 {
-            if !chat.getMessages()[previousIndex].byAF {
-                return (cr24, s8)
-            } else {
-                return (cr8, s4)
-            }
-        } else {
-            return (cr24, s0)
         }
     }
 }

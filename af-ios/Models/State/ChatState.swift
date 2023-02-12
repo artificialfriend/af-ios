@@ -47,9 +47,7 @@ class ChatState: ObservableObject {
     }
     
     func getMessages() -> [Message] {
-        let userDefaults = UserDefaults.standard
-        
-        if let decodedMessages = userDefaults.data(forKey: "messages"),
+        if let decodedMessages = UserDefaults.standard.data(forKey: "messages"),
             let storedMessages = try? PropertyListDecoder().decode([Message].self, from: decodedMessages) {
             return storedMessages
         } else {
@@ -61,9 +59,8 @@ class ChatState: ObservableObject {
         let encoder = PropertyListEncoder()
         
         if let encodedMessages = try? encoder.encode(messages) {
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(encodedMessages, forKey: "messages")
-            userDefaults.synchronize()
+            UserDefaults.standard.set(encodedMessages, forKey: "messages")
+            UserDefaults.standard.synchronize()
         }
     }
     
@@ -127,10 +124,3 @@ struct Message: Identifiable, Codable {
     var isNew: Bool = false
     var timestamp: Date
 }
-
-//let messages =
-
-//let objects = [MyObject(name: "John", age: 32), MyObject(name: "Jane", age: 28)]
-
-
-

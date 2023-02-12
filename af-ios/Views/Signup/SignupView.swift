@@ -109,9 +109,18 @@ struct SignupView: View {
                 }
                 
                 if signup.buttonIsDismissed == false {
-                    SignupButtonView()
-                        .offset(y: signup.buttonOffset)
-                        .opacity(signup.buttonOpacity)
+                    VStack {
+                        SignupButtonView()
+                            .offset(y: signup.buttonOffset)
+                            .opacity(signup.buttonOpacity)
+                            .padding(.horizontal, s12)
+                        
+                        if signup.authErrorHasOccurred {
+                            Text("Error")
+                                .foregroundColor(.afUserRed)
+                        }
+                    }
+                    
                 }
             }
         }

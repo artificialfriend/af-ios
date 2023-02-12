@@ -31,7 +31,7 @@ struct UserMessageView: View {
                     .padding(.vertical, s12)
                     .frame(alignment: .trailing)
                     .background(af.interface.userColor)
-                    .cornerRadius(setDynamicStyling().0, corners: .topRight)
+                    .cornerRadius(s24, corners: .topRight)
                     .cornerRadius(s24, corners: .topLeft)
                     .cornerRadius(s8, corners: .bottomRight)
                     .cornerRadius(s24, corners: .bottomLeft)
@@ -39,7 +39,7 @@ struct UserMessageView: View {
                     .padding(.trailing, s12)
             }
             .opacity(isNew ? opacity : 1)
-            .padding(.top, setDynamicStyling().1)
+            .padding(.top, s8)
             .padding(.bottom, isNew ? bottomPadding : 0)
             .onAppear {
                 if isNew {
@@ -67,20 +67,6 @@ struct UserMessageView: View {
             chat.messages[id].isNew = false
             chat.addMessage(prompt: text, text: "", byAF: true, isNew: true) //Trigger response from AF
             chat.updateMessages()
-        }
-    }
-    
-    func setDynamicStyling() -> (CGFloat, CGFloat) {
-        let previousIndex = id - 1
-        
-        if previousIndex >= 0 {
-            if chat.getMessages()[previousIndex].byAF {
-                return (cr24, s8)
-            } else {
-                return (cr8, s4)
-            }
-        } else {
-            return (cr24, s0)
         }
     }
 }
