@@ -18,7 +18,7 @@ struct TabLabelView: View {
         Button(action: { handleTap() }) {
             Text(label)
                 .font(signup.activeCreateTab == feature ? .l : .s)
-                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.interface.medColor)
+                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.af.interface.medColor)
                 .frame(width: s80)
                 .animation(.shortSpringC, value: signup.activeCreateTab == feature)
         }

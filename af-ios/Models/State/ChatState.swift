@@ -8,6 +8,8 @@
 import SwiftUI
 
 class ChatState: ObservableObject {
+    static let shared = ChatState()
+    
     @Published var composerInput: String = ""
     @Published var composerBottomPadding: CGFloat = s0
     @Published var composerTrailingPadding: CGFloat = 56

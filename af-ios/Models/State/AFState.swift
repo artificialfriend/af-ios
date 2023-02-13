@@ -8,43 +8,36 @@
 import SwiftUI
 
 class AFState: ObservableObject {
-    @Published var id: String = ""
-    @Published var name: String = ""
-    @Published var skinColor: Option = skinColors[0]
-    @Published var freckles: Option = skinFreckles[0]
-    @Published var hairColor: Option = hairColors[0]
-    @Published var hairStyle: Option = hairStyles[0]
-    @Published var eyeColor: Option = eyeColors[0]
-    @Published var lashes: Option = eyeLashes[0]
-    @Published var interface: Interface = interfaces[0]
-    @Published var nameFieldInput: String = ""
+    static let shared = AFState()
     
     @Published var af: AF = AF(
-        id: "",
+        id: "4056",
         name: "4056",
-        skinColor: "",
-        freckles: "",
-        hairColor: "",
-        hairStyle: "",
-        eyeColor: "",
-        eyeLashes: ""
+        skinColor: skinColors[0],
+        freckles: freckles[0],
+        hairColor: hairColors[0],
+        hairStyle: hairStyles[0],
+        eyeColor: eyeColors[0],
+        eyeLashes: eyeLashes[0],
+        interface: interfaces[0]
     )
     
     func storeAF() {
-        af = AF(
-            id: name,
-            name: name,
-            skinColor: skinColor.name,
-            freckles: freckles.name,
-            hairColor: hairColor.name,
-            hairStyle: hairStyle.name,
-            eyeColor: eyeColor.name,
-            eyeLashes: lashes.name
+        let storedAF: StoredAF = StoredAF(
+            id: af.id,
+            name: af.name,
+            skinColor: af.skinColor.name,
+            freckles: af.freckles.name,
+            hairColor: af.hairColor.name,
+            hairStyle: af.hairStyle.name,
+            eyeColor: af.eyeColor.name,
+            eyeLashes: af.eyeLashes.name,
+            interface: af.interface.name
         )
         
         let encoder = PropertyListEncoder()
         
-        if let encodedAF = try? encoder.encode(af) {
+        if let encodedAF = try? encoder.encode(storedAF) {
             UserDefaults.standard.set(encodedAF, forKey: "af")
             UserDefaults.standard.synchronize()
         }
@@ -52,23 +45,33 @@ class AFState: ObservableObject {
     
     func getAF() {
         if let storedAF = UserDefaults.standard.data(forKey: "af"),
-           let decodedAF = try? PropertyListDecoder().decode(AF.self, from: storedAF) {
-            af = decodedAF
-            
-            id = af.id
-            name = af.name
-            skinColor = skinColors[ skinColors.firstIndex( where: { $0.name == af.skinColor } )! ]
-            freckles = skinFreckles[ skinFreckles.firstIndex( where: { $0.name == af.freckles } )! ]
-            hairColor = hairColors[ hairColors.firstIndex( where: { $0.name == af.hairColor } )! ]
-            hairStyle = hairStyles[ hairStyles.firstIndex( where: { $0.name == af.hairStyle } )! ]
-            eyeColor = eyeColors[ eyeColors.firstIndex( where: { $0.name == af.eyeColor } )! ]
-            lashes = eyeLashes[ eyeLashes.firstIndex( where: { $0.name == af.eyeLashes } )! ]
-            interface = interfaces[ skinColors.firstIndex( where: { $0.name == af.skinColor } )! ]
+           let decodedAF = try? PropertyListDecoder().decode(StoredAF.self, from: storedAF) {
+            af.id = decodedAF.id
+            af.name = decodedAF.name
+            af.skinColor = skinColors[ skinColors.firstIndex( where: { $0.name == decodedAF.skinColor } )! ]
+            af.freckles = freckles[ freckles.firstIndex( where: { $0.name == decodedAF.freckles } )! ]
+            af.hairColor = hairColors[ hairColors.firstIndex( where: { $0.name == decodedAF.hairColor } )! ]
+            af.hairStyle = hairStyles[ hairStyles.firstIndex( where: { $0.name == decodedAF.hairStyle } )! ]
+            af.eyeColor = eyeColors[ eyeColors.firstIndex( where: { $0.name == decodedAF.eyeColor } )! ]
+            af.eyeLashes = eyeLashes[ eyeLashes.firstIndex( where: { $0.name == decodedAF.eyeLashes } )! ]
+            af.interface = interfaces[ skinColors.firstIndex( where: { $0.name == decodedAF.skinColor } )! ]
         }
     }
 }
 
-struct AF: Codable {
+struct AF {
+    var id: String
+    var name: String
+    var skinColor: Option
+    var freckles: Option
+    var hairColor: Option
+    var hairStyle: Option
+    var eyeColor: Option
+    var eyeLashes: Option
+    var interface: Interface
+}
+
+struct StoredAF: Codable {
     var id: String
     var name: String
     var skinColor: String
@@ -77,4 +80,5 @@ struct AF: Codable {
     var hairStyle: String
     var eyeColor: String
     var eyeLashes: String
+    var interface: String
 }

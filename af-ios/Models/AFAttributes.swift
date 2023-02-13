@@ -14,9 +14,9 @@ var skinColors: [Option] = [
     Option(name: "Pink Skin", image: Image("Option"), optionType: .skinColor)
 ]
 
-var skinFreckles: [Option] = [
-    Option(name: "No Freckles", image: Image("Option"), optionType: .skinFreckles),
-    Option(name: "Freckles", image: Image("Option"), optionType: .skinFreckles)
+var freckles: [Option] = [
+    Option(name: "No Freckles", image: Image("Option"), optionType: .freckles),
+    Option(name: "Freckles", image: Image("Option"), optionType: .freckles)
 ]
 
 var hairColors: [Option] = [
@@ -108,7 +108,7 @@ enum Feature {
 
 enum OptionType {
     case skinColor
-    case skinFreckles
+    case freckles
     case hairColor
     case hairStyle
     case eyeColor

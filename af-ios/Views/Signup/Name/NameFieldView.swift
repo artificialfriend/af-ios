@@ -15,16 +15,16 @@ struct NameFieldView: View {
         ZStack {
             TextField("", text: $signup.nameFieldInput)
                 .placeholder(when: signup.nameFieldInput.isEmpty, alignment: .center) {
-                    Text(af.name)
-                        .foregroundColor(af.interface.softColor)
+                    Text(af.af.name)
+                        .foregroundColor(af.af.interface.softColor)
                 }
                 .cornerRadius(cr16)
                 .font(.l)
                 .foregroundColor(.afBlack)
                 .multilineTextAlignment(.center)
-                .accentColor(af.interface.userColor)
+                .accentColor(af.af.interface.userColor)
                 .frame(height: s56)
-                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.interface.lineColor))
+                .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.af.interface.lineColor))
             
             HStack {
                 Text("NAME")
@@ -37,7 +37,7 @@ struct NameFieldView: View {
             }
             .padding(.horizontal, s16)
             .font(.xs)
-            .foregroundColor(af.interface.softColor)
+            .foregroundColor(af.af.interface.softColor)
         }
     }
 }

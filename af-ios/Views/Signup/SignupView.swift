@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignupView: View {
+    @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
     
@@ -18,7 +19,7 @@ struct SignupView: View {
             if signup.currentStep == .welcome {
                 Image("Logomark")
                     .padding(.top, s16)
-                    .foregroundColor(af.interface.lineColor)
+                    .foregroundColor(af.af.interface.lineColor)
                     .opacity(signup.welcomeOpacity)
             }
             
@@ -97,10 +98,10 @@ struct SignupView: View {
                     VStack(spacing: s6) {
                         Text("Booting Up")
                             .font(.m)
-                            .foregroundColor(af.interface.softColor)
+                            .foregroundColor(af.af.interface.softColor)
 
                         Image("SpinnerIcon")
-                            .foregroundColor(af.interface.softColor)
+                            .foregroundColor(af.af.interface.softColor)
                             .rotationEffect(signup.spinnerRotation)
                             .animation(.loadingSpin, value: signup.isLoading)
                     }

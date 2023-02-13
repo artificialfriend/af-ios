@@ -12,6 +12,7 @@ struct ContentView: View, KeyboardReadable {
     @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    @EnvironmentObject var signup: SignupState
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
     @State private var chatOpacity: Double = 0
@@ -44,8 +45,6 @@ struct ContentView: View, KeyboardReadable {
                                 chatOpacity = 1
                             }
                         }
-                        
-                        print(chat.messages)
                     }
             }
 

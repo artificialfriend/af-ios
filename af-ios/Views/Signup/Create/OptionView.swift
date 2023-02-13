@@ -27,7 +27,7 @@ struct OptionView: View {
         .cornerRadius(cr16)
         .overlay(
             RoundedRectangle(cornerRadius: cr16)
-                .stroke(activeOption.name == name ? af.interface.userColor : setOptionElements().2, lineWidth: activeOption.name == name ? 2.5 : 2)
+                .stroke(activeOption.name == name ? af.af.interface.userColor : setOptionElements().2, lineWidth: activeOption.name == name ? 2.5 : 2)
                 .frame(width: activeOption.name == name ? width - 2.5 : width - 2, height: activeOption.name == name ? width - 2.5 : width - 2)
         )
         .frame(width: width, height: width)
@@ -47,13 +47,13 @@ struct OptionView: View {
             }
         }
         
-        return (af.interface.afImage, af.interface.afColor, af.interface.lineColor)
+        return (af.af.interface.afImage, af.af.interface.afColor, af.af.interface.lineColor)
     }
 }
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(name: skinFreckles[0].name, optionType: skinFreckles[0].optionType, activeOption: skinFreckles[0])
+        OptionView(name: freckles[0].name, optionType: freckles[0].optionType, activeOption: freckles[0])
             .environmentObject(AFState())
     }
 }

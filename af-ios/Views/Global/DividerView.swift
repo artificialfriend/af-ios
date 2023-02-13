@@ -20,12 +20,12 @@ struct DividerView: View {
     var body: some View {
         if direction == .horizontal {
             Rectangle()
-                .fill(af.interface.lineColor)
+                .fill(af.af.interface.lineColor)
                 .frame(height: s1_5)
                 .edgesIgnoringSafeArea(.horizontal)
         } else {
             Rectangle()
-                .fill(af.interface.lineColor)
+                .fill(af.af.interface.lineColor)
                 .frame(width: s1_5, height: s16)
         }
     }

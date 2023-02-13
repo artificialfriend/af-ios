@@ -30,7 +30,7 @@ struct UserMessageView: View {
                     .padding(.horizontal, s16)
                     .padding(.vertical, s12)
                     .frame(alignment: .trailing)
-                    .background(af.interface.userColor)
+                    .background(af.af.interface.userColor)
                     .cornerRadius(s24, corners: .topRight)
                     .cornerRadius(s24, corners: .topLeft)
                     .cornerRadius(s8, corners: .bottomRight)

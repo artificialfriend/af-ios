@@ -53,7 +53,7 @@ struct AFMessageView: View {
                 ZStack {
                     Image("SpinnerIcon")
                         .resizable()
-                        .foregroundColor(af.interface.medColor)
+                        .foregroundColor(af.af.interface.medColor)
                         .frame(width: s16, height: s16)
                         .rotationEffect(spinnerRotation)
                         .opacity(isLoading ? 1 : 0)
@@ -82,7 +82,7 @@ struct AFMessageView: View {
             .cornerRadius(s8, corners: .bottomLeft)
             .padding(.leading, s12)
             .padding(.trailing, s64)
-            .onAppear { backgroundColor = af.interface.afColor }
+            .onAppear { backgroundColor = af.af.interface.afColor }
             
             Spacer(minLength: 0)
         }

@@ -14,20 +14,20 @@ struct OptionsView: View {
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: s0) {
-                OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: af.skinColor)
-                OptionRowView(rowLabel: "Freckles", rowOptions: skinFreckles, activeOption: af.freckles)
+                OptionRowView(rowLabel: "Color", rowOptions: skinColors, activeOption: af.af.skinColor)
+                OptionRowView(rowLabel: "Freckles", rowOptions: freckles, activeOption: af.af.freckles)
             }
             .opacity(signup.activeCreateTab == .skin ? 1 : 0)
             
             VStack(alignment: .leading, spacing: s0) {
-                OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: af.hairColor)
-                OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: af.hairStyle)
+                OptionRowView(rowLabel: "Color", rowOptions: hairColors, activeOption: af.af.hairColor)
+                OptionRowView(rowLabel: "Style", rowOptions: hairStyles, activeOption: af.af.hairStyle)
             }
             .opacity(signup.activeCreateTab == .hair ? 1 : 0)
             
             VStack(alignment: .leading, spacing: s0) {
-                OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: af.eyeColor)
-                OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: af.lashes)
+                OptionRowView(rowLabel: "Color", rowOptions: eyeColors, activeOption: af.af.eyeColor)
+                OptionRowView(rowLabel: "Lashes", rowOptions: eyeLashes, activeOption: af.af.eyeLashes)
             }
             .opacity(signup.activeCreateTab == .eyes ? 1 : 0)
         }

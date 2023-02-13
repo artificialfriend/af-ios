@@ -9,14 +9,11 @@ import SwiftUI
 import AuthenticationServices
 
 struct SignupButtonView: View {
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var user: UserState
-    @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
     
     var body: some View {
         HStack(spacing: s0) {
-            Button(action: { handleBackTap() }) {
+            Button(action: { signup.handleBackTap() }) {
                 ZStack {
                     RoundedRectangle(cornerRadius: cr16)
                         .fill(Color.afGray)
@@ -33,9 +30,12 @@ struct SignupButtonView: View {
             .buttonStyle(Spring())
             
             if signup.currentStep == .welcome {
-                SignInWithAppleButton(.signUp, onRequest: configure, onCompletion: handle)
+                //SignInWithAppleButton(.signUp, onRequest: signup.configureAuth, onCompletion: signup.handleAuth)
+                Button(action: { signup.createAccount() {result in} } ) {
+                    Text("Button")
+                }
             } else {
-                Button(action: { handleTap() }) {
+                Button(action: { signup.handleTap() }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: cr16)
                             .fill(Color.afBlack)
@@ -70,224 +70,11 @@ struct SignupButtonView: View {
         .font(.l)
         .frame(height: s64)
     }
-    
-    
-    //FUNCTIONS
-    
-    func handleTap() {
-        impactMedium.impactOccurred()
-        transition()
-
-        if signup.currentStep == .welcome {
-            //Put auth logic in here
-            //For transition reasons, I used the same button at each step of the signup flow, but it behaves differently at each step
-            //Once the logic is hooked up let me know and I'll adjust the transition stuff (right now I just have the loader on a timer)
-        }
-
-        if signup.currentStep == .name {
-            if !signup.nameFieldInput.isEmpty {
-                af.name = signup.nameFieldInput
-            }
-            
-            user.storeUser()
-            af.storeAF()
-            
-            signup.createAccount(af: af.af, user: user.user) { result in
-                print(user.user)
-                print(af.af)
-            }
-        }
-    }
-
-    func handleBackTap() {
-        impactMedium.impactOccurred()
-        transitionBack()
-    }
-    
-    func transition() {
-        if signup.currentStep == .welcome {
-            signup.buttonWelcomeLabelOpacity = 0
-            toggleLoading()
-
-            Task { try await Task.sleep(nanoseconds: 2_000_000_000)
-                fadeOut()
-                toggleLoading()
-
-                Task { try await Task.sleep(nanoseconds: 100_000_000)
-                    changeStep()
-                    
-                    Task { try await Task.sleep(nanoseconds: 300_000_000)
-                        fadeIn()
-                    }
-                }
-            }
-        } else {
-            fadeOut()
-
-            if signup.currentStep == .name {
-                toggleButtonPresence()
-
-                Task { try await Task.sleep(nanoseconds: 400_000_000)
-                    toggleLoading()
-                }
-            }
-
-            Task { try await Task.sleep(nanoseconds: 100_000_000)
-                changeStep()
-                
-                Task { try await Task.sleep(nanoseconds: 300_000_000)
-                    fadeIn()
-                }
-            }
-        }
-
-        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-            if signup.currentStep == .bootup {
-                Task { try await Task.sleep(nanoseconds: 4_000_000_000)
-                    fadeOut()
-
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        signup.afScale = 1.1
-                    }
-
-                    Task { try await Task.sleep(nanoseconds: 500_000_000)
-                        withAnimation(.easeIn(duration: 0.3)) {
-                            signup.afScale = 0
-                        }
-
-                        Task { try await Task.sleep(nanoseconds: 200_000_000)
-                            withAnimation(.linear1) {
-                                signup.afOpacity = 0
-                            }
-                            
-                            Task { try await Task.sleep(nanoseconds: 500_000_000)
-                                global.activeSection = .chat
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    func transitionBack() {
-        if signup.currentStep == .name {
-            fadeOut()
-
-            Task { try await Task.sleep(nanoseconds: 100_000_000)
-                signup.afOffset = s0
-                signup.currentStep = .create
-                
-                Task { try await Task.sleep(nanoseconds: 300_000_000)
-                    fadeIn()
-                }
-            }
-        }
-    }
-    
-    func changeStep() {
-        signup.afOffset = s0
-
-        switch signup.currentStep {
-            case .welcome:
-                signup.currentStep = .create
-            case .create:
-                signup.currentStep = .name
-            case .name:
-                signup.currentStep = .bootup
-            case .bootup:
-                signup.currentStep = .bootup
-        }
-    }
-
-    func fadeOut() {
-        withAnimation(.linear1) {
-            switch signup.currentStep {
-                case .welcome:
-                    signup.welcomeOpacity = 0
-                case .create:
-                    signup.createOpacity = 0
-                case .name:
-                    signup.nameOpacity = 0
-                case .bootup:
-                    signup.bootupOpacity = 0
-            }
-        }
-    }
-
-    func fadeIn() {
-        withAnimation(.afFloat){
-            signup.afOffset = -s12
-        }
-
-        withAnimation(.linear2) {
-            switch signup.currentStep {
-                case .welcome:
-                    signup.welcomeOpacity = 1
-                case .create:
-                    signup.createOpacity = 1
-                case .name:
-                    signup.nameOpacity = 1
-                case .bootup:
-                    signup.bootupOpacity = 1
-            }
-        }
-    }
-
-    func toggleButtonPresence() {
-        withAnimation(.medSpring) {
-            if signup.buttonIsDismissed == false {
-                signup.buttonOffset = s104
-                signup.buttonOpacity = 0
-            } else {
-                signup.buttonOffset = s0
-                signup.buttonOpacity = 1
-            }
-        }
-    }
-
-    func toggleLoading() {
-        if !signup.isLoading {
-            signup.isLoading = true
-            signup.spinnerRotation = Angle(degrees: 360)
-        } else {
-            signup.isLoading = false
-            signup.spinnerRotation = Angle(degrees: 0)
-        }
-    }
-    
-    func configure(_ request: ASAuthorizationAppleIDRequest) {
-        request.requestedScopes = [.fullName, .email]
-    }
-    
-    func handle(_ authResult: Result<ASAuthorization, Error>) {
-        switch authResult {
-            case .success(let auth):
-                switch auth.credential {
-                    case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                        if let authValues = AuthValues(credentials: appleIdCredentials) {
-                            user.user.id = authValues.id
-                            user.user.firstName = authValues.firstName
-                            user.user.lastName = authValues.lastName
-                            user.user.email = authValues.email
-                            user.storeUser()
-                            handleTap()
-                        }
-                    default:
-                        print(auth.credential)
-                    }
-            case .failure:
-                signup.authErrorHasOccurred = true
-        }
-    }
 }
 
 struct SignupButtonView_Previews: PreviewProvider {
     static var previews: some View {
         SignupButtonView()
-            .environmentObject(GlobalState())
-            .environmentObject(UserState())
-            .environmentObject(AFState())
             .environmentObject(SignupState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }

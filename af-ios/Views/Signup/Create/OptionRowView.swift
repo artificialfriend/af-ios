@@ -43,27 +43,20 @@ struct OptionRowView: View {
     func setActiveOption(optionType: OptionType, option: Option) {
         switch optionType {
             case .skinColor:
-                af.skinColor = option
-                
-                if af.skinColor.name == "Green Skin" {
-                    af.interface = interfaces[0]
-                } else if af.skinColor.name == "Blue Skin" {
-                    af.interface = interfaces[1]
-                } else if af.skinColor.name == "Purple Skin" {
-                    af.interface = interfaces[2]
-                } else if af.skinColor.name == "Pink Skin" {
-                    af.interface = interfaces[3]
-                }
-            case .skinFreckles:
-                af.freckles = option
+            af.af.skinColor = option
+            let interfaceName = af.af.skinColor.name.components(separatedBy: " ").first
+            let interfaceIndex = interfaces.firstIndex(where: {$0.name == interfaceName})
+            af.af.interface = interfaces[interfaceIndex!]
+            case .freckles:
+            af.af.freckles = option
             case .hairColor:
-                af.hairColor = option
+            af.af.hairColor = option
             case .hairStyle:
-                af.hairStyle = option
+            af.af.hairStyle = option
             case .eyeColor:
-                af.eyeColor = option
+            af.af.eyeColor = option
             case .eyeLashes:
-                af.lashes = option
+            af.af.eyeLashes = option
         }
     }
 }

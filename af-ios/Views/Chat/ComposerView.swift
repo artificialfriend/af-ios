@@ -19,13 +19,13 @@ struct ComposerView: View, KeyboardReadable {
                 .placeholder(when: chat.composerInput.isEmpty, alignment: .leading) {
                     Text("Ask anything!")
                         .font(.pDemi)
-                        .foregroundColor(af.interface.softColor)
+                        .foregroundColor(af.af.interface.softColor)
                 }
                 .font(.p)
                 .foregroundColor(.afBlack)
                 .multilineTextAlignment(.leading)
                 .lineLimit(10)
-                .accentColor(af.interface.userColor)
+                .accentColor(af.af.interface.userColor)
                 .padding(.leading, 14.5)
                 .padding(.trailing, chat.composerTrailingPadding)
                 .padding(.vertical, 10.5)
@@ -41,7 +41,7 @@ struct ComposerView: View, KeyboardReadable {
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
-                .stroke(af.interface.lineColor, lineWidth: s1_5)
+                .stroke(af.af.interface.lineColor, lineWidth: s1_5)
                 .padding(.all, -0.5)
         )
         .padding(EdgeInsets(top: 1.5, leading: 1.5, bottom: 1.5, trailing: 1.5))

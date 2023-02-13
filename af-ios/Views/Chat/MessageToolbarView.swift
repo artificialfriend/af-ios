@@ -35,7 +35,7 @@ struct MessageToolbarView: View {
                     .rotationEffect(retryRotation)
                     .foregroundColor(retryColor)
                     .frame(width: 22, height: 22)
-                    .onAppear { retryColor = af.interface.medColor }
+                    .onAppear { retryColor = af.af.interface.medColor }
             }
             .buttonStyle(Spring())
             .disabled(retryIsDisabled)
@@ -56,7 +56,7 @@ struct MessageToolbarView: View {
                 .foregroundColor(copyColor)
                 .rotationEffect(copyRotation)
                 .frame(width: 22, height: 22)
-                .onAppear { copyColor = af.interface.medColor }
+                .onAppear { copyColor = af.af.interface.medColor }
             }
             .buttonStyle(Spring())
             .disabled(copyIsDisabled)
@@ -85,10 +85,10 @@ struct MessageToolbarView: View {
                 retryColor = .afMedRed
                 backgroundColor = .afRed
             } else {
-                copyColor = af.interface.medColor
+                copyColor = af.af.interface.medColor
                 copyIsDisabled = false
-                retryColor = af.interface.medColor
-                backgroundColor = af.interface.afColor
+                retryColor = af.af.interface.medColor
+                backgroundColor = af.af.interface.afColor
             }
         }
     }
@@ -107,7 +107,7 @@ struct MessageToolbarView: View {
         
         Task { try await Task.sleep(nanoseconds: 1_000_000)
             withAnimation(.linear1) {
-                retryColor = af.interface.userColor
+                retryColor = af.af.interface.userColor
                 textOpacity = 0.5
             }
         }
@@ -125,7 +125,7 @@ struct MessageToolbarView: View {
             
             withAnimation(.linear1) {
                 textOpacity = 0
-                retryColor = af.interface.medColor
+                retryColor = af.af.interface.medColor
             }
             
             switch result {
@@ -164,7 +164,7 @@ struct MessageToolbarView: View {
         pasteboard.string = text.wrappedValue
         
         withAnimation(.linear1) {
-            copyColor = af.interface.userColor
+            copyColor = af.af.interface.userColor
             copyOpacity = 0
         }
         
@@ -174,7 +174,7 @@ struct MessageToolbarView: View {
         
         Task { try await Task.sleep(nanoseconds: 1_000_000_000)
             withAnimation(.linear1) {
-                copyColor = af.interface.medColor
+                copyColor = af.af.interface.medColor
                 copyOpacity = 1
             }
             

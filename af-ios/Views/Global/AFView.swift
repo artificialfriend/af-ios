@@ -25,7 +25,7 @@ struct AFView: View {
                         }
                     }
                     .shadow(
-                        color: af.interface.bubbleColor.opacity(0.3),
+                        color: af.af.interface.bubbleColor.opacity(0.3),
                         radius: shadowRadius,
                         x: s0,
                         y: shadowRadius / 1
@@ -37,15 +37,15 @@ struct AFView: View {
             .compositingGroup()
             
             Circle()
-                .fill(af.interface.bubbleColor).opacity(0.3)
+                .fill(af.af.interface.bubbleColor).opacity(0.3)
                 .background(Blur())
                 .clipShape(Circle())
                 
-            af.interface.afImage
+            af.af.interface.afImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             
-            af.interface.bubbleImage
+            af.af.interface.bubbleImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }

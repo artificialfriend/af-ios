@@ -23,7 +23,7 @@ struct ComposerButtonView: View, KeyboardReadable {
         ZStack {
             Button(action: { handleRandomTap() }) {
                 Image("RandomIcon")
-                    .foregroundColor(af.interface.medColor)
+                    .foregroundColor(af.af.interface.medColor)
             }
             .opacity(randomOpacity)
             .offset(x: randomOffset)
@@ -32,7 +32,7 @@ struct ComposerButtonView: View, KeyboardReadable {
             Button(action: { handleSendTap(message: chat.composerInput) }) {
                 ZStack {
                     Circle()
-                        .fill(af.interface.userColor)
+                        .fill(af.af.interface.userColor)
                     
                         Image("SendIcon")
                             .resizable()
