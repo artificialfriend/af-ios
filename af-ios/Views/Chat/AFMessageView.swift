@@ -121,7 +121,7 @@ struct AFMessageView: View {
                 opacity = 1
             }
             
-            chat.makeAFRequest(prompt: prompt) { result in
+            chat.getAFReply(prompt: prompt) { result in
                 withAnimation(.linear1) {
                     toggleLoading()
                 }

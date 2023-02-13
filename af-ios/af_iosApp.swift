@@ -13,6 +13,7 @@ struct af_iosApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(GlobalState())
+                .environmentObject(UserState())
                 .environmentObject(AFState())
                 .environmentObject(ChatState())
                 .environmentObject(SignupState())

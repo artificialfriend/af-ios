@@ -9,7 +9,7 @@ import SwiftUI
 
 class AFState: ObservableObject {
     @Published var id: String = ""
-    @Published var name: String = "AF4096"
+    @Published var name: String = ""
     @Published var skinColor: Option = skinColors[0]
     @Published var freckles: Option = skinFreckles[0]
     @Published var hairColor: Option = hairColors[0]
@@ -19,8 +19,19 @@ class AFState: ObservableObject {
     @Published var interface: Interface = interfaces[0]
     @Published var nameFieldInput: String = ""
     
+    @Published var af: AF = AF(
+        id: "",
+        name: "4056",
+        skinColor: "",
+        freckles: "",
+        hairColor: "",
+        hairStyle: "",
+        eyeColor: "",
+        eyeLashes: ""
+    )
+    
     func storeAF() {
-        let af = AF(
+        af = AF(
             id: name,
             name: name,
             skinColor: skinColor.name,
@@ -42,22 +53,22 @@ class AFState: ObservableObject {
     func getAF() {
         if let storedAF = UserDefaults.standard.data(forKey: "af"),
            let decodedAF = try? PropertyListDecoder().decode(AF.self, from: storedAF) {
-            id = decodedAF.id
-            name = decodedAF.name
-            skinColor = skinColors[ skinColors.firstIndex( where: { $0.name == decodedAF.skinColor } )! ]
-            freckles = skinFreckles[ skinFreckles.firstIndex( where: { $0.name == decodedAF.freckles } )! ]
-            hairColor = hairColors[ hairColors.firstIndex( where: { $0.name == decodedAF.hairColor } )! ]
-            hairStyle = hairStyles[ hairStyles.firstIndex( where: { $0.name == decodedAF.hairStyle } )! ]
-            eyeColor = eyeColors[ eyeColors.firstIndex( where: { $0.name == decodedAF.eyeColor } )! ]
-            lashes = eyeLashes[ eyeLashes.firstIndex( where: { $0.name == decodedAF.eyeLashes } )! ]
-            interface = interfaces[ skinColors.firstIndex( where: { $0.name == decodedAF.skinColor } )! ]
+            af = decodedAF
             
-            print(decodedAF)
+            id = af.id
+            name = af.name
+            skinColor = skinColors[ skinColors.firstIndex( where: { $0.name == af.skinColor } )! ]
+            freckles = skinFreckles[ skinFreckles.firstIndex( where: { $0.name == af.freckles } )! ]
+            hairColor = hairColors[ hairColors.firstIndex( where: { $0.name == af.hairColor } )! ]
+            hairStyle = hairStyles[ hairStyles.firstIndex( where: { $0.name == af.hairStyle } )! ]
+            eyeColor = eyeColors[ eyeColors.firstIndex( where: { $0.name == af.eyeColor } )! ]
+            lashes = eyeLashes[ eyeLashes.firstIndex( where: { $0.name == af.eyeLashes } )! ]
+            interface = interfaces[ skinColors.firstIndex( where: { $0.name == af.skinColor } )! ]
         }
     }
 }
 
-struct AF: Identifiable, Codable {
+struct AF: Codable {
     var id: String
     var name: String
     var skinColor: String

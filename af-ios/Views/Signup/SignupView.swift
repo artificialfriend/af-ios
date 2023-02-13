@@ -56,7 +56,7 @@ struct SignupView: View {
                         .padding(.bottom, -s4)
                         .frame(width: s240)
                     
-                    Text("Just For You.")
+                    Text("just for you.")
                 }
                 .padding(.bottom, s88)
                 .padding(.top, s16)

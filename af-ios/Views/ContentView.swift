@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalState
+    @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @State private var isKeyboardVisible = false
@@ -188,6 +189,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(GlobalState())
+            .environmentObject(UserState())
             .environmentObject(AFState())
             .environmentObject(ChatState())
             .environmentObject(SignupState())

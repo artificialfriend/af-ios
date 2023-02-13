@@ -12,6 +12,7 @@
 		483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FB297A09DA0008F61E /* NameFieldView.swift */; };
 		483317FE297A1E680008F61E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FD297A1E680008F61E /* Extensions.swift */; };
 		48331800297B48830008F61E /* SignupButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FF297B48830008F61E /* SignupButtonView.swift */; };
+		488425BB299A8817008FA19E /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488425BA299A8817008FA19E /* UserState.swift */; };
 		489DD51A298C444F006D15A7 /* ChatState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD519298C444F006D15A7 /* ChatState.swift */; };
 		489DD51C298C456D006D15A7 /* SignupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51B298C456D006D15A7 /* SignupState.swift */; };
 		489DD51E298C45A3006D15A7 /* AFState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51D298C45A3006D15A7 /* AFState.swift */; };
@@ -44,6 +45,7 @@
 		483317FB297A09DA0008F61E /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
 		483317FD297A1E680008F61E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		483317FF297B48830008F61E /* SignupButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupButtonView.swift; sourceTree = "<group>"; };
+		488425BA299A8817008FA19E /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		489DD519298C444F006D15A7 /* ChatState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatState.swift; sourceTree = "<group>"; };
 		489DD51B298C456D006D15A7 /* SignupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupState.swift; sourceTree = "<group>"; };
 		489DD51D298C45A3006D15A7 /* AFState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFState.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				481598162981A14200201B32 /* GlobalState.swift */,
 				489DD51D298C45A3006D15A7 /* AFState.swift */,
+				488425BA299A8817008FA19E /* UserState.swift */,
 				489DD519298C444F006D15A7 /* ChatState.swift */,
 				489DD51B298C456D006D15A7 /* SignupState.swift */,
 			);
@@ -304,6 +307,7 @@
 				483317FE297A1E680008F61E /* Extensions.swift in Sources */,
 				483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */,
 				489DD51E298C45A3006D15A7 /* AFState.swift in Sources */,
+				488425BB299A8817008FA19E /* UserState.swift in Sources */,
 				48AA262F298EA13B0091609C /* OptionsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

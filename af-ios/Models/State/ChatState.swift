@@ -62,8 +62,8 @@ class ChatState: ObservableObject {
         }
     }
     
-    func makeAFRequest(prompt: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let requestBody = RequestBody(user_id: "1", text: prompt, is_prompt: true)
+    func getAFReply(prompt: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let requestBody = GetAFReplyRequestBody(user_id: "1", text: prompt, is_prompt: true)
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
         var request = URLRequest(url: url)
         
@@ -75,7 +75,7 @@ class ChatState: ObservableObject {
             guard let data = data else { return }
             
             do {
-                let response = try JSONDecoder().decode(ResponseBody.self, from: data)
+                let response = try JSONDecoder().decode(GetAFReplyResponseBody.self, from: data)
                 
                 DispatchQueue.main.async {
                     if error != nil {
@@ -97,22 +97,24 @@ class ChatState: ObservableObject {
             if call.state != .completed {
                 print("timed out")
                 call.cancel()
-                let error = NSError(domain: "com.example.api", code: 3, userInfo: [NSLocalizedDescriptionKey: "API call timed out"])
+                let error = NSError(domain: "makePostRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
                 completion(.failure(error))
             }
         }
     }
 }
 
-struct RequestBody: Codable {
+struct GetAFReplyRequestBody: Codable {
     let user_id: String
     let text: String
     let is_prompt: Bool
 }
 
-struct ResponseBody: Decodable {
+struct GetAFReplyResponseBody: Decodable {
     let response: String
 }
+
+
 
 struct Message: Identifiable, Codable {
     var id: Int

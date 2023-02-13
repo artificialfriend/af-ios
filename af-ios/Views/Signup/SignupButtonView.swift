@@ -10,6 +10,7 @@ import AuthenticationServices
 
 struct SignupButtonView: View {
     @EnvironmentObject var global: GlobalState
+    @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
     
@@ -31,13 +32,9 @@ struct SignupButtonView: View {
             .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
-//            if signup.currentStep == .welcome {
-//                SignInWithAppleButton(
-//                    .signUp,
-//                    onRequest: configure,
-//                    onCompletion: handle
-//                )
-//            } else {
+            if signup.currentStep == .welcome {
+                SignInWithAppleButton(.signUp, onRequest: configure, onCompletion: handle)
+            } else {
                 Button(action: { handleTap() }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: cr16)
@@ -68,7 +65,7 @@ struct SignupButtonView: View {
                 }
                 .animation(.medSpring, value: signup.currentStep)
                 .buttonStyle(Spring())
-            //}
+            }
         }
         .font(.l)
         .frame(height: s64)
@@ -92,11 +89,13 @@ struct SignupButtonView: View {
                 af.name = signup.nameFieldInput
             }
             
+            user.storeUser()
             af.storeAF()
-        }
-        
-        if signup.currentStep == .bootup {
-            //Put db logic for account creation in here
+            
+            signup.createAccount(af: af.af, user: user.user) { result in
+                print(user.user)
+                print(af.af)
+            }
         }
     }
 
@@ -266,38 +265,20 @@ struct SignupButtonView: View {
             case .success(let auth):
                 switch auth.credential {
                     case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                        if let appleUser = AppleUser(credentials: appleIdCredentials) {
-                            let appleUserData = try? JSONEncoder().encode(appleUser)
-                            UserDefaults.standard.setValue(appleUserData, forKey: appleUser.userId)
+                        if let authValues = AuthValues(credentials: appleIdCredentials) {
+                            user.user.id = authValues.id
+                            user.user.firstName = authValues.firstName
+                            user.user.lastName = authValues.lastName
+                            user.user.email = authValues.email
+                            user.storeUser()
                             handleTap()
                         }
                     default:
                         print(auth.credential)
                     }
-            case .failure(let error):
-                print(error)
+            case .failure:
                 signup.authErrorHasOccurred = true
         }
-    }
-}
-
-struct AppleUser: Codable {
-    let userId: String
-    let firstName: String
-    let lastName: String
-    let email: String
-    
-    init?(credentials: ASAuthorizationAppleIDCredential) {
-        guard
-            let firstName = credentials.fullName?.givenName,
-            let lastName = credentials.fullName?.familyName,
-            let email = credentials.email
-        else {return nil}
-        
-        self.userId = credentials.user
-        self.firstName = firstName
-        self.lastName = lastName
-        self.email = email
     }
 }
 
@@ -305,6 +286,7 @@ struct SignupButtonView_Previews: PreviewProvider {
     static var previews: some View {
         SignupButtonView()
             .environmentObject(GlobalState())
+            .environmentObject(UserState())
             .environmentObject(AFState())
             .environmentObject(SignupState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))

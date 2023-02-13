@@ -112,7 +112,7 @@ struct MessageToolbarView: View {
             }
         }
             
-        chat.makeAFRequest(prompt: prompt) { result in
+        chat.getAFReply(prompt: prompt) { result in
             retryIsDisabled = false
             
             withAnimation(.default) {
