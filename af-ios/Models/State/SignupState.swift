@@ -88,9 +88,10 @@ class SignupState: ObservableObject {
                     }
                 }
             } catch {
-                let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "No auth values received"])
+               // let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "No auth values received"])
+                print(error)
                 completion(.failure(error))
-                print("error2")
+                
             }
         }
         
