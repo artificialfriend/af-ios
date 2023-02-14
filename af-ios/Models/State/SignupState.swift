@@ -60,7 +60,7 @@ class SignupState: ObservableObject {
                 "email": user.user.email,
                 "first_name": user.user.firstName,
                 "last_name": user.user.lastName,
-                "birth_date": "2000-01-01 00:00"
+                "birth_date": "2000-01-01"
             ]
         )
         

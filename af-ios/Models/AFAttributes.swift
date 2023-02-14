@@ -29,10 +29,10 @@ var hairColors: [Option] = [
 ]
 
 var hairStyles: [Option] = [
-    Option(name: "1", image: Image("Option"), optionType: .hairStyle),
-    Option(name: "2", image: Image("Option"), optionType: .hairStyle),
-    Option(name: "3", image: Image("Option"), optionType: .hairStyle),
-    Option(name: "4", image: Image("Option"), optionType: .hairStyle)
+    Option(name: "Hairstyle 1", image: Image("Option"), optionType: .hairStyle),
+    Option(name: "Hairstyle 2", image: Image("Option"), optionType: .hairStyle),
+    Option(name: "Hairstyle 3", image: Image("Option"), optionType: .hairStyle),
+    Option(name: "Hairstyle 4", image: Image("Option"), optionType: .hairStyle)
 ]
 
 var eyeColors: [Option] = [
@@ -45,8 +45,8 @@ var eyeColors: [Option] = [
 ]
 
 var eyeLashes: [Option] = [
-    Option(name: "Short", image: Image("Option"), optionType: .eyeLashes),
-    Option(name: "Long", image: Image("Option"), optionType: .eyeLashes)
+    Option(name: "Short Eyelashes", image: Image("Option"), optionType: .eyeLashes),
+    Option(name: "Long Eyelashes", image: Image("Option"), optionType: .eyeLashes)
 ]
 
 var interfaces: [Interface] = [
