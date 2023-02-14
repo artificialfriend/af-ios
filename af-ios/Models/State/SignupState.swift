@@ -44,30 +44,35 @@ class SignupState: ObservableObject {
         self.user.storeUser()
         self.af.storeAF()
         
-        let requestBody = CreateAccountRequestBody(
-            af: [
-                "af_id": af.af.name,
-                "skin_color": af.af.skinColor.name,
-                "freckles": af.af.freckles.name,
-                "hair_color": af.af.hairColor.name,
-                "hair_style": af.af.hairStyle.name,
-                "eye_color": af.af.eyeColor.name,
-                "eye_lashes": af.af.eyeLashes.name
-            ],
-            user: [
-                "user_id": user.user.id,
-                "af_id": af.af.name,
-                "email": user.user.email,
-                "first_name": user.user.firstName,
-                "last_name": user.user.lastName,
-                "birth_date": "2000-01-01"
-            ]
+//        let requestBody = CreateAccountRequestBodyV2(
+//            af: [
+//                "af_id": af.af.name,
+//                "skin_color": af.af.skinColor.name,
+//                "freckles": af.af.freckles.name,
+//                "hair_color": af.af.hairColor.name,
+//                "hair_style": af.af.hairStyle.name,
+//                "eye_color": af.af.eyeColor.name,
+//                "eye_lashes": af.af.eyeLashes.name
+//            ],
+//            user: [
+//                "user_id": user.user.id,
+//                "af_id": af.af.name,
+//                "email": user.user.email,
+//                "first_name": user.user.firstName,
+//                "last_name": user.user.lastName,
+//                "birth_date": "2000-01-01"
+//            ]
+//        )
+        
+        let requestBody = CreateAccountRequestBodyV2(
+            af: AFRequestBody(af_id: "Klara#6", skin_color: "Caramel",freckles: "Few",hair_color: "White",hair_style: "Wavy",eye_color: "Hazel",eye_lashes: "Straight"),
+            user: UserRequestBody(user_id: "Jon#6", af_id: "Klara#6", email: "jon@snow.com", first_name: "Jon", last_name: "Snow", birth_date: "2005-05-02 1:10" )
         )
         
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/signup/")!
         var request = URLRequest(url: url)
         
-        request.httpMethod = "POST"
+        request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try! JSONEncoder().encode(requestBody)
 
@@ -317,6 +322,32 @@ class SignupState: ObservableObject {
             }
         }
     }
+}
+
+struct AFRequestBody: Codable {
+    let af_id: String
+    let skin_color: String
+    let freckles: String
+    let hair_color: String
+    let hair_style: String
+    let eye_color: String
+    let eye_lashes: String
+}
+
+
+struct UserRequestBody: Codable {
+    let user_id: String
+    let af_id: String
+    let email: String
+    let first_name: String
+    let last_name: String
+    let birth_date: String
+}
+
+
+struct CreateAccountRequestBodyV2: Codable {
+    let af: AFRequestBody
+    let user: UserRequestBody
 }
 
 struct CreateAccountRequestBody: Codable {
