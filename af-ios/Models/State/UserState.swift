@@ -59,6 +59,7 @@ struct User: Codable {
     var id: String
     var firstName: String
     var lastName: String
+    var nicknames: [String] = []
     var birthday: Date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!
     var email: String
 }

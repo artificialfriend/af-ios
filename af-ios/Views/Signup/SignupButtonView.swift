@@ -30,10 +30,10 @@ struct SignupButtonView: View {
             .buttonStyle(Spring())
             
             if signup.currentStep == .welcome {
-                //SignInWithAppleButton(.signUp, onRequest: signup.configureAuth, onCompletion: signup.handleAuth)
-                Button(action: { signup.createAccount() {result in} } ) {
-                    Text("Button")
-                }
+                SignInWithAppleButton(.signUp, onRequest: signup.configureAuth, onCompletion: signup.handleAuth)
+//                Button(action: { signup.createAccount() {result in} } ) {
+//                    Text("Button")
+//                }
             } else {
                 Button(action: { signup.handleTap() }) {
                     ZStack {

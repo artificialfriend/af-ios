@@ -44,29 +44,24 @@ class SignupState: ObservableObject {
         self.user.storeUser()
         self.af.storeAF()
         
-//        let requestBody = CreateAccountRequestBodyV2(
-//            af: [
-//                "af_id": af.af.name,
-//                "skin_color": af.af.skinColor.name,
-//                "freckles": af.af.freckles.name,
-//                "hair_color": af.af.hairColor.name,
-//                "hair_style": af.af.hairStyle.name,
-//                "eye_color": af.af.eyeColor.name,
-//                "eye_lashes": af.af.eyeLashes.name
-//            ],
-//            user: [
-//                "user_id": user.user.id,
-//                "af_id": af.af.name,
-//                "email": user.user.email,
-//                "first_name": user.user.firstName,
-//                "last_name": user.user.lastName,
-//                "birth_date": "2000-01-01"
-//            ]
-//        )
-        
-        let requestBody = CreateAccountRequestBodyV2(
-            af: AFRequestBody(af_id: "Klara#6", skin_color: "Caramel",freckles: "Few",hair_color: "White",hair_style: "Wavy",eye_color: "Hazel",eye_lashes: "Straight"),
-            user: UserRequestBody(user_id: "Jon#6", af_id: "Klara#6", email: "jon@snow.com", first_name: "Jon", last_name: "Snow", birth_date: "2005-05-02 1:10" )
+        let requestBody = CreateAccountRequestBody(
+            af: CreateAccountAF(
+                af_id: "Klara#6",
+                skin_color: "Caramel",
+                freckles: "Few",
+                hair_color: "White",
+                hair_style: "Wavy",
+                eye_color: "Hazel",
+                eye_lashes: "Straight"
+            ),
+            user: CreateAccountUser(
+                user_id: "Jon#6",
+                af_id: "Klara#6",
+                email: "jon@snow.com",
+                first_name: "Jon",
+                last_name: "Snow",
+                birth_date: "2005-05-02 1:10"
+            )
         )
         
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/signup/")!
@@ -84,19 +79,16 @@ class SignupState: ObservableObject {
                 
                 DispatchQueue.main.async {
                     if error != nil {
-                        let error = NSError(domain: "makePostRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
-                        completion(.failure(error))
                         print("error1")
+                        completion(.failure(error!))
                     } else {
-                        completion(.success(response.response))
                         print("success")
+                        completion(.success(response.response))
                     }
                 }
             } catch {
-               // let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "No auth values received"])
-                print(error)
+                print("error2")
                 completion(.failure(error))
-                
             }
         }
         
@@ -104,8 +96,9 @@ class SignupState: ObservableObject {
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 60) {
             if call.state != .completed {
+                print("error3")
                 call.cancel()
-                let error = NSError(domain: "makePostRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
+                let error = NSError(domain: "makePutRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
                 completion(.failure(error))
             }
         }
@@ -127,7 +120,6 @@ class SignupState: ObservableObject {
                             user.user.email = authValues.email
                             user.storeUser()
                             handleTap()
-                            print(user.user)
                         }
                     default:
                         print(auth.credential)
@@ -324,7 +316,16 @@ class SignupState: ObservableObject {
     }
 }
 
-struct AFRequestBody: Codable {
+struct CreateAccountRequestBody: Codable {
+    let af: CreateAccountAF
+    let user: CreateAccountUser
+}
+
+struct CreateAccountResponseBody: Decodable {
+    let response: String
+}
+
+struct CreateAccountAF: Codable {
     let af_id: String
     let skin_color: String
     let freckles: String
@@ -334,29 +335,13 @@ struct AFRequestBody: Codable {
     let eye_lashes: String
 }
 
-
-struct UserRequestBody: Codable {
+struct CreateAccountUser: Codable {
     let user_id: String
     let af_id: String
     let email: String
     let first_name: String
     let last_name: String
     let birth_date: String
-}
-
-
-struct CreateAccountRequestBodyV2: Codable {
-    let af: AFRequestBody
-    let user: UserRequestBody
-}
-
-struct CreateAccountRequestBody: Codable {
-    let af: [String: String]
-    let user: [String: String]
-}
-
-struct CreateAccountResponseBody: Decodable {
-    let response: String
 }
 
 enum SignupStep {
