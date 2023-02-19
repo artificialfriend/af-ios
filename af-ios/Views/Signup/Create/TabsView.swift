@@ -10,9 +10,9 @@ import SwiftUI
 struct TabsView: View {
     var body: some View {
         HStack(spacing: s0) {
-            TabLabelView(label: "Skin", feature: .skin)
-            TabLabelView(label: "Hair", feature: .hair)
-            TabLabelView(label: "Eyes", feature: .eyes)
+            TabLabelView(label: "Skin", traitCategory: .skin)
+            TabLabelView(label: "Hair", traitCategory: .hair)
+            TabLabelView(label: "Eyes", traitCategory: .eyes)
         }
         .frame(height: s48)
     }

@@ -29,12 +29,12 @@ struct SignupButtonView: View {
             .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
-            if signup.currentStep == .welcome {
-                SignInWithAppleButton(.signUp, onRequest: signup.configureAuth, onCompletion: signup.handleAuth)
-//                Button(action: { signup.createAccount() {result in} } ) {
-//                    Text("Button")
-//                }
-            } else {
+//            if signup.currentStep == .welcome {
+//                SignInWithAppleButton(.signUp, onRequest: signup.configureAuth, onCompletion: signup.handleAuth)
+////                Button(action: { signup.createAccount() {result in} } ) {
+////                    Text("Button")
+////                }
+//            } else {
                 Button(action: { signup.handleTap() }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: cr16)
@@ -65,7 +65,7 @@ struct SignupButtonView: View {
                 }
                 .animation(.medSpring, value: signup.currentStep)
                 .buttonStyle(Spring())
-            }
+            //}
         }
         .font(.l)
         .frame(height: s64)

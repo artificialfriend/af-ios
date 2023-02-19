@@ -12,28 +12,28 @@ struct TabLabelView: View {
     @EnvironmentObject var signup: SignupState
     
     let label: String
-    let feature: Feature
+    let traitCategory: TraitCategory
     
     var body: some View {
         Button(action: { handleTap() }) {
             Text(label)
-                .font(signup.activeCreateTab == feature ? .l : .s)
-                .foregroundColor(signup.activeCreateTab == feature ? .afBlack : af.af.interface.medColor)
+                .font(signup.activeCreateTab == traitCategory ? .l : .s)
+                .foregroundColor(signup.activeCreateTab == traitCategory ? .afBlack : af.af.interface.medColor)
                 .frame(width: s80)
-                .animation(.shortSpringC, value: signup.activeCreateTab == feature)
+                .animation(.shortSpringC, value: signup.activeCreateTab == traitCategory)
         }
         .buttonStyle(Plain())
     }
     
     func handleTap() {
         impactMedium.impactOccurred()
-        signup.activeCreateTab = feature
+        signup.activeCreateTab = traitCategory
     }
 }
 
 struct TabLabelView_Previews: PreviewProvider {
     static var previews: some View {
-        TabLabelView(label: "Skin", feature: .skin)
+        TabLabelView(label: "Skin", traitCategory: .skin)
             .environmentObject(AFState())
             .environmentObject(SignupState())
     }

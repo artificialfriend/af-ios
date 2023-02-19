@@ -17,7 +17,7 @@ class SignupState: ObservableObject {
     
     @Published var currentStep: SignupStep = .welcome
     @Published var authErrorHasOccurred: Bool = false
-    @Published var activeCreateTab: Feature = .skin
+    @Published var activeCreateTab: TraitCategory = .skin
     @Published var afOffset: CGFloat = 0
     @Published var afScale: Double = 0
     @Published var afOpacity: Double = 1
@@ -138,9 +138,15 @@ class SignupState: ObservableObject {
                 af.af.name = nameFieldInput
             }
             
-            createAccount() { result in
-                print(result)
-            }
+//            createAccount() { result in
+//                print(result)
+//            }
+            
+            af.storeAF()
+        }
+        
+        if currentStep == .create {
+            af.storeAF()
         }
     }
 

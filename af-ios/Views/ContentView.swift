@@ -32,7 +32,6 @@ struct ContentView: View, KeyboardReadable {
     var body: some View {
         ZStack {
             if global.activeSection == .signup {
-                //TestView()
                 SignupView()
             }
 

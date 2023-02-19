@@ -13,13 +13,13 @@ class AFState: ObservableObject {
     @Published var af: AF = AF(
         id: "4056",
         name: "4056",
-        skinColor: skinColors[0],
-        freckles: freckles[0],
-        hairColor: hairColors[0],
-        hairStyle: hairStyles[0],
-        eyeColor: eyeColors[0],
-        eyeLashes: eyeLashes[0],
-        interface: interfaces[0]
+        skinColor: SkinColor.green,
+        freckles: Freckles.noFreckles,
+        hairColor: HairColor.green,
+        hairStyle: HairStyle.one,
+        eyeColor: EyeColor.green,
+        eyeLashes: EyeLashes.short,
+        interface: Interface.green
     )
     
     func storeAF() {
@@ -48,13 +48,13 @@ class AFState: ObservableObject {
            let decodedAF = try? PropertyListDecoder().decode(StoredAF.self, from: storedAF) {
             af.id = decodedAF.id
             af.name = decodedAF.name
-            af.skinColor = skinColors[ skinColors.firstIndex( where: { $0.name == decodedAF.skinColor } )! ]
-            af.freckles = freckles[ freckles.firstIndex( where: { $0.name == decodedAF.freckles } )! ]
-            af.hairColor = hairColors[ hairColors.firstIndex( where: { $0.name == decodedAF.hairColor } )! ]
-            af.hairStyle = hairStyles[ hairStyles.firstIndex( where: { $0.name == decodedAF.hairStyle } )! ]
-            af.eyeColor = eyeColors[ eyeColors.firstIndex( where: { $0.name == decodedAF.eyeColor } )! ]
-            af.eyeLashes = eyeLashes[ eyeLashes.firstIndex( where: { $0.name == decodedAF.eyeLashes } )! ]
-            af.interface = interfaces[ skinColors.firstIndex( where: { $0.name == decodedAF.skinColor } )! ]
+            af.skinColor = SkinColor.allCases.first(where: { $0.name == decodedAF.skinColor })!
+            af.freckles = Freckles.allCases.first(where: { $0.name == decodedAF.freckles })!
+            af.hairColor = HairColor.allCases.first(where: { $0.name == decodedAF.hairColor })!
+            af.hairStyle = HairStyle.allCases.first(where: { $0.name == decodedAF.hairStyle })!
+            af.eyeColor = EyeColor.allCases.first(where: { $0.name == decodedAF.eyeColor })!
+            af.eyeLashes = EyeLashes.allCases.first(where: { $0.name == decodedAF.eyeLashes })!
+            af.interface = Interface.allCases.first(where: { $0.name == decodedAF.interface })!
         }
     }
 }
@@ -62,12 +62,12 @@ class AFState: ObservableObject {
 struct AF {
     var id: String
     var name: String
-    var skinColor: Option
-    var freckles: Option
-    var hairColor: Option
-    var hairStyle: Option
-    var eyeColor: Option
-    var eyeLashes: Option
+    var skinColor: SkinColor
+    var freckles: Freckles
+    var hairColor: HairColor
+    var hairStyle: HairStyle
+    var eyeColor: EyeColor
+    var eyeLashes: EyeLashes
     var interface: Interface
 }
 
