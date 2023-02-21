@@ -9,8 +9,6 @@ import SwiftUI
 import AuthenticationServices
 
 class UserState: ObservableObject {
-    static let shared = UserState()
-    
     @Published var user: User = User(
         id: "",
         firstName: "",

@@ -8,8 +8,6 @@
 import SwiftUI
 
 class GlobalState: ObservableObject {
-    static let shared = GlobalState()
-    
     @Published var activeSection: Section = .signup
     @Published var keyboardIsPresent: Bool = false
 }
