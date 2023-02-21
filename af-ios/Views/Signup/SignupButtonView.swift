@@ -10,10 +10,11 @@ import AuthenticationServices
 
 struct SignupButtonView: View {
     @EnvironmentObject var signup: SignupState
+    @EnvironmentObject var af: AFState
     
     var body: some View {
         HStack(spacing: s0) {
-            Button(action: { signup.handleBackTap() }) {
+            Button(action: { handleBackTap() }) {
                 ZStack {
                     RoundedRectangle(cornerRadius: cr16)
                         .fill(Color.afGray)
@@ -35,7 +36,7 @@ struct SignupButtonView: View {
 ////                    Text("Button")
 ////                }
 //            } else {
-                Button(action: { signup.handleTap() }) {
+            Button(action: { handleTap() }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: cr16)
                             .fill(Color.afBlack)
@@ -69,6 +70,33 @@ struct SignupButtonView: View {
         }
         .font(.l)
         .frame(height: s64)
+    }
+    
+    func handleTap() {
+        print("handleNextButtonTap:", af.af.skinColor)
+        impactMedium.impactOccurred()
+        signup.transition()
+        
+        if signup.currentStep == .name {
+            if !signup.nameFieldInput.isEmpty {
+                af.af.name = signup.nameFieldInput
+            }
+
+//            createAccount() { result in
+//                print(result)
+//            }
+
+            af.storeAF()
+        }
+        
+        if signup.currentStep == .create {
+            af.storeAF()
+        }
+    }
+    
+    func handleBackTap() {
+        impactMedium.impactOccurred()
+        signup.transitionBack()
     }
 }
 

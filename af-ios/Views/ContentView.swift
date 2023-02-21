@@ -13,6 +13,7 @@ struct ContentView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @EnvironmentObject var signup: SignupState
+    
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
     @State private var chatOpacity: Double = 0
@@ -108,7 +109,6 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
-        .onAppear { af.getAF() }
     }
     
     

@@ -23,6 +23,8 @@ class AFState: ObservableObject {
     )
     
     func storeAF() {
+        print("storeAF:", af.skinColor)
+        
         let storedAF: StoredAF = StoredAF(
             id: af.id,
             name: af.name,
@@ -55,6 +57,8 @@ class AFState: ObservableObject {
             af.eyeColor = EyeColor.allCases.first(where: { $0.name == decodedAF.eyeColor })!
             af.eyeLashes = EyeLashes.allCases.first(where: { $0.name == decodedAF.eyeLashes })!
             af.interface = Interface.allCases.first(where: { $0.name == decodedAF.interface })!
+            
+            print("getAF:", decodedAF.skinColor)
         }
     }
 }

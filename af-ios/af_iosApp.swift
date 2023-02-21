@@ -9,14 +9,21 @@ import SwiftUI
 
 @main
 struct af_iosApp: App {
+    @StateObject var global = GlobalState()
+    @StateObject var user = UserState()
+    @StateObject var af = AFState()
+    @StateObject var chat = ChatState()
+    @StateObject var signup = SignupState()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(GlobalState())
-                .environmentObject(UserState())
-                .environmentObject(AFState())
-                .environmentObject(ChatState())
-                .environmentObject(SignupState())
+                .environmentObject(global)
+                .environmentObject(user)
+                .environmentObject(af)
+                .environmentObject(chat)
+                .environmentObject(signup)
+                .onAppear { af.getAF() }
         }
     }
 }

@@ -130,6 +130,7 @@ class SignupState: ObservableObject {
     }
     
     func handleTap() {
+        print("handleNextButtonTap:", af.af.skinColor)
         impactMedium.impactOccurred()
         transition()
         
@@ -161,7 +162,7 @@ class SignupState: ObservableObject {
                 self.buttonWelcomeLabelOpacity = 0
                 self.toggleLoading()
                 
-                Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                Task { try await Task.sleep(nanoseconds: 1_000_000)
                     self.fadeOut()
                     self.toggleLoading()
                     
