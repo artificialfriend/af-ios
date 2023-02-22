@@ -120,8 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				481598162981A14200201B32 /* GlobalState.swift */,
-				489DD51D298C45A3006D15A7 /* AFState.swift */,
 				488425BA299A8817008FA19E /* UserState.swift */,
+				489DD51D298C45A3006D15A7 /* AFState.swift */,
 				489DD519298C444F006D15A7 /* ChatState.swift */,
 				489DD51B298C456D006D15A7 /* SignupState.swift */,
 			);

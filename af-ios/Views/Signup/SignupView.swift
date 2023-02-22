@@ -118,7 +118,7 @@ struct SignupView: View {
                         
                         if signup.authErrorHasOccurred {
                             Text("Error")
-                                .foregroundColor(.afUserRed)
+                                .foregroundColor(.red)
                         }
                     }
                     

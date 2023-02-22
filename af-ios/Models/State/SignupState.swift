@@ -45,7 +45,7 @@ struct CreateAccountResponseBody: Decodable {
 }
 
 struct CreateAccountAF: Codable {
-    let af_id: String
+    let name: String
     let skin_color: String
     let freckles: String
     let hair_color: String
@@ -55,12 +55,12 @@ struct CreateAccountAF: Codable {
 }
 
 struct CreateAccountUser: Codable {
-    let user_id: String
-    let af_id: String
+    let apple_user_id: String
     let email: String
-    let first_name: String
-    let last_name: String
-    let birth_date: String
+    let given_name: String
+    let family_name: String
+    let nick_name: String
+    let birthday: String
 }
 
 enum SignupStep {

@@ -32,12 +32,12 @@ struct SignupButtonView: View {
             .animation(.medSpring, value: signup.currentStep)
             .buttonStyle(Spring())
             
-//            if signup.currentStep == .welcome {
-//                SignInWithAppleButton(.signUp, onRequest: signup.configureAuth, onCompletion: signup.handleAuth)
-////                Button(action: { signup.createAccount() {result in} } ) {
-////                    Text("Button")
-////                }
-//            } else {
+            if signup.currentStep == .welcome {
+                SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
+//                Button(action: { signup.createAccount() {result in} } ) {
+//                    Text("Button")
+//                }
+            } else {
             Button(action: { handleTap() }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: cr16)
@@ -68,37 +68,37 @@ struct SignupButtonView: View {
                 }
                 .animation(.medSpring, value: signup.currentStep)
                 .buttonStyle(Spring())
-            //}
+            }
         }
         .font(.l)
         .frame(height: s64)
     }
     
     func createAccount(completion: @escaping (Result<String, Error>) -> Void) {
-        self.user.storeUser()
-        self.af.storeAF()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-DD"
         
         let requestBody = CreateAccountRequestBody(
             af: CreateAccountAF(
-                af_id: "Klara#6",
-                skin_color: "Caramel",
-                freckles: "Few",
-                hair_color: "White",
-                hair_style: "Wavy",
-                eye_color: "Hazel",
-                eye_lashes: "Straight"
+                name: af.af.name,
+                skin_color: af.af.skinColor.name,
+                freckles: af.af.freckles.name,
+                hair_color: af.af.hairColor.name,
+                hair_style: af.af.hairStyle.name,
+                eye_color: af.af.eyeColor.name,
+                eye_lashes: af.af.eyeLashes.name
             ),
             user: CreateAccountUser(
-                user_id: "Jon#6",
-                af_id: "Klara#6",
-                email: "jon@snow.com",
-                first_name: "Jon",
-                last_name: "Snow",
-                birth_date: "2005-05-02 1:10"
+                apple_user_id: user.user.appleID,
+                email: user.user.email,
+                given_name: user.user.givenName,
+                family_name: user.user.familyName,
+                nick_name: "",
+                birthday: dateFormatter.string(from: user.user.birthday)
             )
         )
         
-        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/signup/")!
+        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/signup/apple/")!
         var request = URLRequest(url: url)
         
         request.httpMethod = "PUT"
@@ -148,10 +148,10 @@ struct SignupButtonView: View {
                 switch auth.credential {
                     case let appleIdCredentials as ASAuthorizationAppleIDCredential:
                         if let authValues = AuthValues(credentials: appleIdCredentials) {
-                            user.user.id = authValues.id
-                            user.user.firstName = authValues.firstName
-                            user.user.lastName = authValues.lastName
+                            user.user.appleID = authValues.appleID
                             user.user.email = authValues.email
+                            user.user.givenName = authValues.givenName
+                            user.user.familyName = authValues.familyName
                             user.storeUser()
                             handleTap()
                         }
@@ -167,20 +167,20 @@ struct SignupButtonView: View {
         impactMedium.impactOccurred()
         transition()
         
+        if signup.currentStep == .create {
+            af.storeAF()
+        }
+        
         if signup.currentStep == .name {
             if !signup.nameFieldInput.isEmpty {
                 af.af.name = signup.nameFieldInput
             }
             
-//            createAccount() { result in
-//                print(result)
-//            }
+            af.storeAF()
             
-            af.storeAF()
-        }
-        
-        if signup.currentStep == .create {
-            af.storeAF()
+            createAccount() { result in
+                print(result)
+            }
         }
     }
 

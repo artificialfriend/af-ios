@@ -23,7 +23,17 @@ struct af_iosApp: App {
                 .environmentObject(af)
                 .environmentObject(chat)
                 .environmentObject(signup)
-                .onAppear { af.getAF() }
+                .onAppear {
+                    user.getUser()
+                    af.getAF()
+                    
+                    if UserDefaults.standard.data(forKey: "user") != nil {
+                        global.activeSection = .chat
+                    }
+                    
+                    print(user.user)
+                    print(af.af)
+                }
         }
     }
 }

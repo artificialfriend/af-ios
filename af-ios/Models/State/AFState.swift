@@ -11,6 +11,7 @@ class AFState: ObservableObject {
     @Published var af: AF = AF(
         id: "4056",
         name: "4056",
+        birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!,
         skinColor: SkinColor.green,
         freckles: Freckles.noFreckles,
         hairColor: HairColor.green,
@@ -21,9 +22,13 @@ class AFState: ObservableObject {
     )
     
     func storeAF() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-DD"
+        
         let storedAF: StoredAF = StoredAF(
             id: af.id,
             name: af.name,
+            birthday: dateFormatter.string(from: af.birthday),
             skinColor: af.skinColor.name,
             freckles: af.freckles.name,
             hairColor: af.hairColor.name,
@@ -42,17 +47,18 @@ class AFState: ObservableObject {
     }
     
     func getAF() {
-        if let storedAF = UserDefaults.standard.data(forKey: "af"),
-           let decodedAF = try? PropertyListDecoder().decode(StoredAF.self, from: storedAF) {
-            af.id = decodedAF.id
-            af.name = decodedAF.name
-            af.skinColor = SkinColor.allCases.first(where: { $0.name == decodedAF.skinColor })!
-            af.freckles = Freckles.allCases.first(where: { $0.name == decodedAF.freckles })!
-            af.hairColor = HairColor.allCases.first(where: { $0.name == decodedAF.hairColor })!
-            af.hairStyle = HairStyle.allCases.first(where: { $0.name == decodedAF.hairStyle })!
-            af.eyeColor = EyeColor.allCases.first(where: { $0.name == decodedAF.eyeColor })!
-            af.eyeLashes = EyeLashes.allCases.first(where: { $0.name == decodedAF.eyeLashes })!
-            af.interface = Interface.allCases.first(where: { $0.name == decodedAF.interface })!
+        if let encodedAF = UserDefaults.standard.data(forKey: "af"),
+           let storedAF = try? PropertyListDecoder().decode(StoredAF.self, from: encodedAF) {
+            af.id = storedAF.id
+            af.name = storedAF.name
+            af.birthday = createDateFromString(storedAF.birthday)
+            af.skinColor = SkinColor.allCases.first(where: { $0.name == storedAF.skinColor })!
+            af.freckles = Freckles.allCases.first(where: { $0.name == storedAF.freckles })!
+            af.hairColor = HairColor.allCases.first(where: { $0.name == storedAF.hairColor })!
+            af.hairStyle = HairStyle.allCases.first(where: { $0.name == storedAF.hairStyle })!
+            af.eyeColor = EyeColor.allCases.first(where: { $0.name == storedAF.eyeColor })!
+            af.eyeLashes = EyeLashes.allCases.first(where: { $0.name == storedAF.eyeLashes })!
+            af.interface = Interface.allCases.first(where: { $0.name == storedAF.interface })!
         }
     }
 }
@@ -60,6 +66,7 @@ class AFState: ObservableObject {
 struct AF {
     var id: String
     var name: String
+    var birthday: Date
     var skinColor: SkinColor
     var freckles: Freckles
     var hairColor: HairColor
@@ -72,6 +79,7 @@ struct AF {
 struct StoredAF: Codable {
     var id: String
     var name: String
+    var birthday: String
     var skinColor: String
     var freckles: String
     var hairColor: String
