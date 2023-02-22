@@ -40,8 +40,32 @@ struct CreateAccountRequestBody: Codable {
     let user: CreateAccountUser
 }
 
-struct CreateAccountResponseBody: Decodable {
-    let response: String
+struct CreateAccountResponseBody: Codable {
+    let response: CreateAccountResponse
+}
+
+struct CreateAccountResponse: Codable {
+    let user_id: Int
+    let af_id: String
+    let af: CreateAccountResponseAF
+    let apple_user_id: String
+    let email: String
+    let given_name: String
+    let family_name: String
+    let nick_name: String
+    let birthday: String
+}
+
+struct CreateAccountResponseAF: Codable {
+    let af_id: Int
+    let name: String
+    let skin_color: String
+    let freckles: String
+    let hair_color: String
+    let hair_style: String
+    let eye_color: String
+    let eye_lashes: String
+    let birthday: String
 }
 
 struct CreateAccountAF: Codable {

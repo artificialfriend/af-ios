@@ -117,11 +117,11 @@ struct SignupButtonView: View {
                         completion(.failure(error!))
                     } else {
                         print("success")
-                        completion(.success(response.response))
+                        completion(.success("Success"))
                     }
                 }
-            } catch {
-                print("error2")
+            } catch let error as NSError {
+                print("Error:", error.code)
                 completion(.failure(error))
             }
         }
@@ -158,6 +158,7 @@ struct SignupButtonView: View {
                     default:
                         print(auth.credential)
                     }
+                signup.authErrorHasOccurred = false
             case .failure:
                 signup.authErrorHasOccurred = true
         }
