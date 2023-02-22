@@ -81,19 +81,19 @@ struct SignupButtonView: View {
         let requestBody = CreateAccountRequestBody(
             af: CreateAccountAF(
                 name: af.af.name,
-                skin_color: af.af.skinColor.name,
+                skinColor: af.af.skinColor.name,
                 freckles: af.af.freckles.name,
-                hair_color: af.af.hairColor.name,
-                hair_style: af.af.hairStyle.name,
-                eye_color: af.af.eyeColor.name,
-                eye_lashes: af.af.eyeLashes.name
+                hairColor: af.af.hairColor.name,
+                hairstyle: af.af.hairstyle.name,
+                eyeColor: af.af.eyeColor.name,
+                eyelashes: af.af.eyelashes.name
             ),
             user: CreateAccountUser(
-                apple_user_id: user.user.appleID,
+                appleUserID: user.user.appleID,
                 email: user.user.email,
-                given_name: user.user.givenName,
-                family_name: user.user.familyName,
-                nick_name: "",
+                givenName: user.user.givenName,
+                familyName: user.user.familyName,
+                nicknames: "",
                 birthday: dateFormatter.string(from: user.user.birthday)
             )
         )
@@ -121,7 +121,7 @@ struct SignupButtonView: View {
                     }
                 }
             } catch let error as NSError {
-                print("Error:", error.code)
+                print("createAccount Catch Error:", error)
                 completion(.failure(error))
             }
         }

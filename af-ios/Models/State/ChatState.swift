@@ -29,18 +29,17 @@ class ChatState: ObservableObject {
         "How do semiconductors work?"
     ]
     
-    func addMessage(prompt: String, text: String, byAF: Bool, isNew: Bool) {
-        getMessages()
+    func addMessage(prompt: String, text: String, isUserMessage: Bool, isNew: Bool) {
+        //getMessages()
         let id = messages.count
         
         messages.append(
             Message(
                 id: id,
-                prompt: prompt,
                 text: text,
-                byAF: byAF,
+                isUserMessage: isUserMessage,
                 isNew: isNew,
-                timestamp: Date.now
+                createdAt: ""
         ))
         
         storeMessages()
@@ -62,8 +61,8 @@ class ChatState: ObservableObject {
         }
     }
     
-    func getAFReply(prompt: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let requestBody = GetAFReplyRequestBody(user_id: "1", text: prompt, is_prompt: true)
+    func getAFReply(prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
+        let requestBody = GetAFReplyRequestBody(userID: "1", text: prompt, isUserMessage: true)
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
         var request = URLRequest(url: url)
         
@@ -82,11 +81,10 @@ class ChatState: ObservableObject {
                         let error = NSError(domain: "makePostRequest", code: 1, userInfo: [NSLocalizedDescriptionKey: "Request returned error"])
                         completion(.failure(error))
                     } else {
-                        completion(.success(response.response))
+                        completion(.success(response))
                     }
                 }
-            } catch {
-                let error = NSError(domain: "makePostRequest", code: 2, userInfo: [NSLocalizedDescriptionKey: "Request blocked by rate limit"])
+            } catch let error as NSError {
                 completion(.failure(error))
             }
         }
@@ -95,7 +93,6 @@ class ChatState: ObservableObject {
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 30) {
             if call.state != .completed {
-                print("timed out")
                 call.cancel()
                 let error = NSError(domain: "makePostRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
                 completion(.failure(error))
@@ -105,22 +102,41 @@ class ChatState: ObservableObject {
 }
 
 struct GetAFReplyRequestBody: Codable {
-    let user_id: String
+    let userID: String
     let text: String
-    let is_prompt: Bool
+    let isUserMessage: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case userID = "user_id"
+        case text
+        case isUserMessage = "is_prompt"
+    }
 }
 
-struct GetAFReplyResponseBody: Decodable {
-    let response: String
+struct GetAFReplyResponseBody: Codable {
+    let response: [GetAFReplyMessage]
 }
 
-
+struct GetAFReplyMessage: Codable {
+    let chatID: Int
+    let userID: Int
+    let text: String
+    let isUserMessage: Bool
+    let createdAt: String
+    
+    enum CodingKeys: String, CodingKey {
+        case chatID = "chat_id"
+        case userID = "user_id"
+        case text
+        case isUserMessage = "is_prompt"
+        case createdAt = "created_at"
+    }
+}
 
 struct Message: Identifiable, Codable {
     var id: Int
-    var prompt: String
     var text: String
-    var byAF: Bool
+    var isUserMessage: Bool
     var isNew: Bool = false
-    var timestamp: Date
+    var createdAt: String
 }

@@ -89,7 +89,7 @@ struct ComposerButtonView: View, KeyboardReadable {
     
     func handleSendTap(message: String) {
         impactMedium.impactOccurred()
-        chat.addMessage(prompt: "", text: chat.composerInput, byAF: false, isNew: true)
+        chat.addMessage(prompt: "", text: chat.composerInput, isUserMessage: true, isNew: true)
         chat.storeMessages()
         chat.composerInput = ""
     }

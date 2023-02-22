@@ -25,8 +25,7 @@ struct AFMessageView: View {
     @State private var inErrorState: Bool = false
     @State private var error: Error?
     
-    let id: Int
-    let prompt: String
+    @State var id: Int
     @State var text: String
     let isNew: Bool
     
@@ -43,7 +42,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(id: id, prompt: prompt, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, backgroundColor: $backgroundColor)
+                            MessageToolbarView(id: id, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, backgroundColor: $backgroundColor)
                         }
                         .opacity(toolbarOpacity)
                         .frame(width: textWidth)
@@ -100,6 +99,10 @@ struct AFMessageView: View {
     //FUNCTIONS
     
     func loadMessage() {
+        let prompt = chat.messages[chat.messages.count - 2].text
+        var userResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: true, createdAt: "")
+        var afResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: false, createdAt: "")
+        
         opacity = 0
         textOpacity = 0
         toolbarOpacity = 0
@@ -130,7 +133,10 @@ struct AFMessageView: View {
                     switch result {
                         case .success(let response):
                             withAnimation(.shortSpringB) {
-                                text = response
+                                userResponse = response.response[0]
+                                afResponse = response.response[1]
+                                
+                                text = afResponse.text
                             }
                         case .failure:
                             inErrorState = true
@@ -155,14 +161,29 @@ struct AFMessageView: View {
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 100_000_000)
-                            chat.messages[id].isNew = false
-                            chat.messages[id].text = text
+                            updateMessages(
+                                userResponse: userResponse,
+                                afResponse: afResponse,
+                                userMessageIndex: chat.messages.count - 2,
+                                afMessageIndex: chat.messages.count - 1
+                            )
+                            
                             chat.storeMessages()
                         }
                     }
                 }
             }
         }
+    }
+    
+    func updateMessages(userResponse: GetAFReplyMessage, afResponse: GetAFReplyMessage, userMessageIndex: Int, afMessageIndex: Int) {
+        chat.messages[afMessageIndex].id = afResponse.chatID
+        chat.messages[afMessageIndex].text = afResponse.text
+        chat.messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
+        chat.messages[afMessageIndex].isNew = false
+        chat.messages[afMessageIndex].createdAt = afResponse.createdAt
+        chat.messages[userMessageIndex].id = userResponse.chatID
+        chat.messages[userMessageIndex].createdAt = userResponse.createdAt
     }
     
     func toggleLoading() {

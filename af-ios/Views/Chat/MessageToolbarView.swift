@@ -12,7 +12,6 @@ struct MessageToolbarView: View {
     @EnvironmentObject var chat: ChatState
     
     var id: Int
-    var prompt: String
     @Binding var text: String
     @Binding var textOpacity: Double
     @Binding var inErrorState: Bool
@@ -29,7 +28,7 @@ struct MessageToolbarView: View {
     
     var body: some View {
         HStack(spacing: s16) {
-            Button(action: { handleRetryTap(prompt: prompt) }) {
+            Button(action: { handleRetryTap() }) {
                 Image("RetryIcon")
                     .resizable()
                     .rotationEffect(retryRotation)
@@ -93,62 +92,66 @@ struct MessageToolbarView: View {
         }
     }
     
-    func handleRetryTap(prompt: String) {
+    func handleRetryTap() {
         impactMedium.impactOccurred()
         retryIsDisabled = true
-        
+        let prompt = chat.messages.first(where: { $0.id == id - 1 })!.text
+
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryRotation = Angle(degrees: 180)
         }
-        
+
         if inErrorState {
             inErrorState = false
         }
-        
+
         Task { try await Task.sleep(nanoseconds: 1_000_000)
             withAnimation(.linear1) {
                 retryColor = af.af.interface.userColor
                 textOpacity = 0.5
             }
         }
-            
+
         chat.getAFReply(prompt: prompt) { result in
             retryIsDisabled = false
-            
+
             withAnimation(.default) {
                 retryRotation = Angle(degrees: 360)
             }
-            
+
             withAnimation(nil) {
                 retryRotation = Angle(degrees: 0)
             }
-            
+
             withAnimation(.linear1) {
                 textOpacity = 0
                 retryColor = af.af.interface.medColor
             }
-            
+
             switch result {
                 case .success(let response):
                     withAnimation(.shortSpringB) {
-                        text = response
-                        chat.messages[id].text = text
+                        text = response.response[1].text
+                        //chat.messages[id].text = text
+                        let messageIndex = chat.messages.firstIndex(where: {$0.id == id})!
+                        chat.messages[messageIndex].text = text
+                        print(chat.messages)
                         chat.storeMessages()
                     }
                 case .failure:
                     inErrorState = true
-                
+
                     withAnimation(.shortSpringB) {
                         text = "Sorry, something went wrong... Please try again."
-                        chat.messages[id].text = text
+                        //chat.messages[id].text = text
                         chat.storeMessages()
                     }
-                
+
                     withAnimation(.linear1) {
                         backgroundColor = .afRed
                     }
             }
-            
+
             Task { try await Task.sleep(nanoseconds: 300_000_000)
                 withAnimation(.linear2) {
                     textOpacity = 1

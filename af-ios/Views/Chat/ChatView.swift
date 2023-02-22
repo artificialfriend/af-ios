@@ -18,11 +18,11 @@ struct ChatView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: s0) {
                         ForEach(chat.messages) { message in
-                            if message.byAF {
-                                AFMessageView(id: message.id, prompt: message.prompt, text: message.text, isNew: message.isNew)
+                            if message.isUserMessage {
+                                UserMessageView(id: message.id, text: message.text, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             } else {
-                                UserMessageView(id: message.id, text: message.text, isNew: message.isNew)
+                                AFMessageView(id: message.id, text: message.text, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
@@ -37,7 +37,7 @@ struct ChatView: View {
             }
             .ignoresSafeArea(edges: .vertical)
         }
-        .onAppear { chat.getMessages() }
+        //.onAppear { chat.getMessages() }
     }
 }
 

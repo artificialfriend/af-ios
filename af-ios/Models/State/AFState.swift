@@ -15,9 +15,9 @@ class AFState: ObservableObject {
         skinColor: SkinColor.green,
         freckles: Freckles.noFreckles,
         hairColor: HairColor.green,
-        hairStyle: HairStyle.one,
+        hairstyle: Hairstyle.one,
         eyeColor: EyeColor.green,
-        eyeLashes: EyeLashes.short,
+        eyelashes: Eyelashes.short,
         interface: Interface.green
     )
     
@@ -32,9 +32,9 @@ class AFState: ObservableObject {
             skinColor: af.skinColor.name,
             freckles: af.freckles.name,
             hairColor: af.hairColor.name,
-            hairStyle: af.hairStyle.name,
+            hairstyle: af.hairstyle.name,
             eyeColor: af.eyeColor.name,
-            eyeLashes: af.eyeLashes.name,
+            eyelashes: af.eyelashes.name,
             interface: af.interface.name
         )
         
@@ -55,9 +55,9 @@ class AFState: ObservableObject {
             af.skinColor = SkinColor.allCases.first(where: { $0.name == storedAF.skinColor })!
             af.freckles = Freckles.allCases.first(where: { $0.name == storedAF.freckles })!
             af.hairColor = HairColor.allCases.first(where: { $0.name == storedAF.hairColor })!
-            af.hairStyle = HairStyle.allCases.first(where: { $0.name == storedAF.hairStyle })!
+            af.hairstyle = Hairstyle.allCases.first(where: { $0.name == storedAF.hairstyle })!
             af.eyeColor = EyeColor.allCases.first(where: { $0.name == storedAF.eyeColor })!
-            af.eyeLashes = EyeLashes.allCases.first(where: { $0.name == storedAF.eyeLashes })!
+            af.eyelashes = Eyelashes.allCases.first(where: { $0.name == storedAF.eyelashes })!
             af.interface = Interface.allCases.first(where: { $0.name == storedAF.interface })!
         }
     }
@@ -70,9 +70,9 @@ struct AF {
     var skinColor: SkinColor
     var freckles: Freckles
     var hairColor: HairColor
-    var hairStyle: HairStyle
+    var hairstyle: Hairstyle
     var eyeColor: EyeColor
-    var eyeLashes: EyeLashes
+    var eyelashes: Eyelashes
     var interface: Interface
 }
 
@@ -83,8 +83,8 @@ struct StoredAF: Codable {
     var skinColor: String
     var freckles: String
     var hairColor: String
-    var hairStyle: String
+    var hairstyle: String
     var eyeColor: String
-    var eyeLashes: String
+    var eyelashes: String
     var interface: String
 }
