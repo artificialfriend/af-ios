@@ -10,6 +10,8 @@ import SwiftUI
 struct UserMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
     
     @State private var isLoaded: Bool = true
     @State private var opacity: Double = 0
@@ -64,10 +66,20 @@ struct UserMessageView: View {
         }
         
         Task { try await Task.sleep(nanoseconds: 100_000_000)
-            chat.messages[id].isNew = false
-            chat.addMessage(prompt: text, text: "", isUserMessage: false, isNew: true) //Trigger response from AF
-            chat.storeMessages()
+            //chat.messages[id].isNew = false
+            addMessage()
+            //chat.addMessage(prompt: text, text: "", isUserMessage: false, isNew: true) //Trigger response from AF
+            //chat.storeMessages()
         }
+    }
+    
+    func addMessage() {
+        let message = Message(context: managedObjectContext)
+        message.id = 1000000001
+        message.text = ""
+        message.isUserMessage = false
+        message.isNew = true
+        message.createdAt = ""
     }
 }
 

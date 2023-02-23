@@ -112,7 +112,7 @@ struct MessageToolbarView: View {
             }
         }
 
-        chat.getAFReply(prompt: prompt) { result in
+        chat.getAFReply(prompt: prompt!) { result in
             retryIsDisabled = false
 
             withAnimation(.default) {
@@ -136,7 +136,7 @@ struct MessageToolbarView: View {
                         let messageIndex = chat.messages.firstIndex(where: {$0.id == id})!
                         chat.messages[messageIndex].text = text
                         print(chat.messages)
-                        chat.storeMessages()
+                        //chat.storeMessages()
                     }
                 case .failure:
                     inErrorState = true
@@ -144,7 +144,7 @@ struct MessageToolbarView: View {
                     withAnimation(.shortSpringB) {
                         text = "Sorry, something went wrong... Please try again."
                         //chat.messages[id].text = text
-                        chat.storeMessages()
+                        //chat.storeMessages()
                     }
 
                     withAnimation(.linear1) {

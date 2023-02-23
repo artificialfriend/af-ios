@@ -11,6 +11,8 @@ struct ComposerButtonView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
     
     @State private var sendOffset: CGFloat = 44
     @State private var sendOpacity: Double = 0
@@ -29,7 +31,7 @@ struct ComposerButtonView: View, KeyboardReadable {
             .offset(x: randomOffset)
             .buttonStyle(Spring())
             
-            Button(action: { handleSendTap(message: chat.composerInput) }) {
+            Button(action: { handleSendTap() }) {
                 ZStack {
                     Circle()
                         .fill(af.af.interface.userColor)
@@ -87,11 +89,22 @@ struct ComposerButtonView: View, KeyboardReadable {
         return chat.randomPrompts[randomNumber]
     }
     
-    func handleSendTap(message: String) {
+    func handleSendTap() {
         impactMedium.impactOccurred()
-        chat.addMessage(prompt: "", text: chat.composerInput, isUserMessage: true, isNew: true)
-        chat.storeMessages()
+        addMessage()
+        //chat.addMessage(prompt: "", text: chat.composerInput, isUserMessage: true, isNew: true)
+        //chat.storeMessages()
         chat.composerInput = ""
+    }
+    
+    func addMessage() {
+        let message = Message(context: managedObjectContext)
+        message.id = 1000000000
+        message.text = chat.composerInput
+        message.isUserMessage = true
+        message.isNew = true
+        message.createdAt = ""
+        print(messages)
     }
 }
 

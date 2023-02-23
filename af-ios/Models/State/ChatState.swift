@@ -29,37 +29,37 @@ class ChatState: ObservableObject {
         "How do semiconductors work?"
     ]
     
-    func addMessage(prompt: String, text: String, isUserMessage: Bool, isNew: Bool) {
-        //getMessages()
-        let id = messages.count
-        
-        messages.append(
-            Message(
-                id: id,
-                text: text,
-                isUserMessage: isUserMessage,
-                isNew: isNew,
-                createdAt: ""
-        ))
-        
-        storeMessages()
-    }
+//    func addMessage(prompt: String, text: String, isUserMessage: Bool, isNew: Bool) {
+//        //getMessages()
+//        let id = messages.count
+//
+//        messages.append(
+//            Message(
+//                id: id,
+//                text: text,
+//                isUserMessage: isUserMessage,
+//                isNew: isNew,
+//                createdAt: ""
+//        ))
+//
+//        storeMessages()
+//    }
     
-    func storeMessages() {
-        let encoder = PropertyListEncoder()
-        
-        if let encodedMessages = try? encoder.encode(messages) {
-            UserDefaults.standard.set(encodedMessages, forKey: "messages")
-            UserDefaults.standard.synchronize()
-        }
-    }
+//    func storeMessages() {
+//        let encoder = PropertyListEncoder()
+//
+//        if let encodedMessages = try? encoder.encode(messages) {
+//            UserDefaults.standard.set(encodedMessages, forKey: "messages")
+//            UserDefaults.standard.synchronize()
+//        }
+//    }
     
-    func getMessages() {
-        if let storedMessages = UserDefaults.standard.data(forKey: "messages"),
-            let decodedMessages = try? PropertyListDecoder().decode([Message].self, from: storedMessages) {
-            messages = decodedMessages
-        }
-    }
+//    func getMessages() {
+//        if let storedMessages = UserDefaults.standard.data(forKey: "messages"),
+//            let decodedMessages = try? PropertyListDecoder().decode([Message].self, from: storedMessages) {
+//            messages = decodedMessages
+//        }
+//    }
     
     func getAFReply(prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         let requestBody = GetAFReplyRequestBody(userID: "1", text: prompt, isUserMessage: true)
@@ -118,8 +118,8 @@ struct GetAFReplyResponseBody: Codable {
 }
 
 struct GetAFReplyMessage: Codable {
-    let chatID: Int
-    let userID: Int
+    let chatID: Int32
+    let userID: Int32
     let text: String
     let isUserMessage: Bool
     let createdAt: String
@@ -133,10 +133,10 @@ struct GetAFReplyMessage: Codable {
     }
 }
 
-struct Message: Identifiable, Codable {
-    var id: Int
-    var text: String
-    var isUserMessage: Bool
-    var isNew: Bool = false
-    var createdAt: String
-}
+//struct Message: Identifiable, Codable {
+//    var id: Int
+//    var text: String
+//    var isUserMessage: Bool
+//    var isNew: Bool = false
+//    var createdAt: String
+//}

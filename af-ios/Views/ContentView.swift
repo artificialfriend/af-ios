@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
+
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
@@ -183,14 +186,17 @@ struct ContentView: View, KeyboardReadable {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(GlobalState())
-            .environmentObject(UserState())
-            .environmentObject(AFState())
-            .environmentObject(ChatState())
-            .environmentObject(SignupState())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    let persistenceController = PersistenceController.shared
+//    
+//    static var previews: some View {
+//        ContentView()
+//            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//            .environmentObject(GlobalState())
+//            .environmentObject(UserState())
+//            .environmentObject(AFState())
+//            .environmentObject(ChatState())
+//            .environmentObject(SignupState())
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+//    }
+//}

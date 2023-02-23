@@ -1,5 +1,5 @@
 //
-//  af_iosApp.swift
+//  AFApp.swift
 //  af-ios
 //
 //  Created by Ashutosh Narang on 08/01/23.
@@ -8,16 +8,18 @@
 import SwiftUI
 
 @main
-struct af_iosApp: App {
+struct AFApp: App {
     @StateObject var global = GlobalState()
     @StateObject var user = UserState()
     @StateObject var af = AFState()
     @StateObject var chat = ChatState()
     @StateObject var signup = SignupState()
+    let persistenceController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(global)
                 .environmentObject(user)
                 .environmentObject(af)

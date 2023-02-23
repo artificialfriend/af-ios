@@ -11,18 +11,20 @@ struct ChatView: View {
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
     
     var body: some View {
         ZStack {
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: s0) {
-                        ForEach(chat.messages) { message in
+                        ForEach(messages) { message in
                             if message.isUserMessage {
-                                UserMessageView(id: message.id, text: message.text, isNew: message.isNew)
+                                UserMessageView(id: Int(message.id), text: message.text!, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             } else {
-                                AFMessageView(id: message.id, text: message.text, isNew: message.isNew)
+                                AFMessageView(id: Int(message.id), text: message.text!, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }

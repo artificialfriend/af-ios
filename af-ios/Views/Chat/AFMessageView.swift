@@ -10,6 +10,8 @@ import SwiftUI
 struct AFMessageView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
     
     @State private var isLoading: Bool = false
     @State private var toolbarIsPresent: Bool = true
@@ -99,7 +101,7 @@ struct AFMessageView: View {
     //FUNCTIONS
     
     func loadMessage() {
-        let prompt = chat.messages[chat.messages.count - 2].text
+        let prompt = messages[messages.count - 1].text
         var userResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: true, createdAt: "")
         var afResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: false, createdAt: "")
         
@@ -124,7 +126,7 @@ struct AFMessageView: View {
                 opacity = 1
             }
             
-            chat.getAFReply(prompt: prompt) { result in
+            chat.getAFReply(prompt: prompt!) { result in
                 withAnimation(.linear1) {
                     toggleLoading()
                 }
@@ -164,11 +166,11 @@ struct AFMessageView: View {
                             updateMessages(
                                 userResponse: userResponse,
                                 afResponse: afResponse,
-                                userMessageIndex: chat.messages.count - 2,
-                                afMessageIndex: chat.messages.count - 1
+                                userMessageIndex: chat.messages.count - 1,
+                                afMessageIndex: chat.messages.count
                             )
                             
-                            chat.storeMessages()
+                            //chat.storeMessages()
                         }
                     }
                 }
@@ -177,13 +179,21 @@ struct AFMessageView: View {
     }
     
     func updateMessages(userResponse: GetAFReplyMessage, afResponse: GetAFReplyMessage, userMessageIndex: Int, afMessageIndex: Int) {
-        chat.messages[afMessageIndex].id = afResponse.chatID
-        chat.messages[afMessageIndex].text = afResponse.text
-        chat.messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
-        chat.messages[afMessageIndex].isNew = false
-        chat.messages[afMessageIndex].createdAt = afResponse.createdAt
-        chat.messages[userMessageIndex].id = userResponse.chatID
-        chat.messages[userMessageIndex].createdAt = userResponse.createdAt
+        messages[afMessageIndex].id = afResponse.chatID
+        messages[afMessageIndex].text = afResponse.text
+        messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
+        messages[afMessageIndex].isNew = false
+        messages[afMessageIndex].createdAt = afResponse.createdAt
+        messages[userMessageIndex].id = userResponse.chatID
+        messages[userMessageIndex].createdAt = userResponse.createdAt
+        
+//        chat.messages[afMessageIndex].id = afResponse.chatID
+//        chat.messages[afMessageIndex].text = afResponse.text
+//        chat.messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
+//        chat.messages[afMessageIndex].isNew = false
+//        chat.messages[afMessageIndex].createdAt = afResponse.createdAt
+//        chat.messages[userMessageIndex].id = userResponse.chatID
+//        chat.messages[userMessageIndex].createdAt = userResponse.createdAt
     }
     
     func toggleLoading() {
