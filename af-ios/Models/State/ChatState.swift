@@ -13,6 +13,7 @@ class ChatState: ObservableObject {
     @Published var composerTrailingPadding: CGFloat = 56
     @Published var messagesBottomPadding: CGFloat = s80
     @Published var messageHeight: CGFloat = s0
+    @Published var currentSortID: Int32 = 0
     @Published var messages: [Message] = []
     
     @Published var randomPrompts: [String] = [
@@ -28,38 +29,6 @@ class ChatState: ObservableObject {
         "What does mitochondria do?",
         "How do semiconductors work?"
     ]
-    
-//    func addMessage(prompt: String, text: String, isUserMessage: Bool, isNew: Bool) {
-//        //getMessages()
-//        let id = messages.count
-//
-//        messages.append(
-//            Message(
-//                id: id,
-//                text: text,
-//                isUserMessage: isUserMessage,
-//                isNew: isNew,
-//                createdAt: ""
-//        ))
-//
-//        storeMessages()
-//    }
-    
-//    func storeMessages() {
-//        let encoder = PropertyListEncoder()
-//
-//        if let encodedMessages = try? encoder.encode(messages) {
-//            UserDefaults.standard.set(encodedMessages, forKey: "messages")
-//            UserDefaults.standard.synchronize()
-//        }
-//    }
-    
-//    func getMessages() {
-//        if let storedMessages = UserDefaults.standard.data(forKey: "messages"),
-//            let decodedMessages = try? PropertyListDecoder().decode([Message].self, from: storedMessages) {
-//            messages = decodedMessages
-//        }
-//    }
     
     func getAFReply(prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         let requestBody = GetAFReplyRequestBody(userID: "1", text: prompt, isUserMessage: true)

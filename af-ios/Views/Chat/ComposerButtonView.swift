@@ -12,7 +12,7 @@ struct ComposerButtonView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     
     @State private var sendOffset: CGFloat = 44
     @State private var sendOpacity: Double = 0
@@ -92,19 +92,16 @@ struct ComposerButtonView: View, KeyboardReadable {
     func handleSendTap() {
         impactMedium.impactOccurred()
         addMessage()
-        //chat.addMessage(prompt: "", text: chat.composerInput, isUserMessage: true, isNew: true)
-        //chat.storeMessages()
         chat.composerInput = ""
     }
     
     func addMessage() {
         let message = Message(context: managedObjectContext)
-        message.id = 1000000000
+        message.sortID = chat.currentSortID
         message.text = chat.composerInput
         message.isUserMessage = true
-        message.isNew = true
-        message.createdAt = ""
-        print(messages)
+        message.createdAt = Date.now
+        chat.currentSortID += 1
     }
 }
 

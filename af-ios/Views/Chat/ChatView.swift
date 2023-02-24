@@ -12,7 +12,7 @@ struct ChatView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     
     var body: some View {
         ZStack {
@@ -21,10 +21,10 @@ struct ChatView: View {
                     VStack(spacing: s0) {
                         ForEach(messages) { message in
                             if message.isUserMessage {
-                                UserMessageView(id: Int(message.id), text: message.text!, isNew: message.isNew)
+                                UserMessageView(text: message.text!, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             } else {
-                                AFMessageView(id: Int(message.id), text: message.text!, isNew: message.isNew)
+                                AFMessageView(chatID: message.chatID, text: message.text!, isNew: message.isNew)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }

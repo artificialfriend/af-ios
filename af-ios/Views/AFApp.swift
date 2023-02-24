@@ -33,8 +33,9 @@ struct AFApp: App {
                         global.activeSection = .chat
                     }
                     
-                    print(user.user)
-                    print(af.af)
+//                    print(user.user)
+//                    print(af.af)
+                    
                 }
         }
     }

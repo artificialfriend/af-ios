@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)]) var messages: FetchedResults<Message>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
 
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var user: UserState
@@ -112,6 +112,9 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
+        .onAppear {
+            chat.currentSortID = Int32(messages.count - 1)
+        }
     }
     
     

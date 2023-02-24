@@ -8,7 +8,7 @@
 import SwiftUI
 
 class GlobalState: ObservableObject {
-    @Published var activeSection: Section = .signup
+    @Published var activeSection: Section = .chat
     @Published var keyboardIsPresent: Bool = false
 }
 

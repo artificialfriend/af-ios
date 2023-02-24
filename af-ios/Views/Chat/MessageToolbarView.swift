@@ -10,8 +10,10 @@ import SwiftUI
 struct MessageToolbarView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     
-    var id: Int
+    @Binding var chatID: Int32
     @Binding var text: String
     @Binding var textOpacity: Double
     @Binding var inErrorState: Bool
@@ -95,7 +97,7 @@ struct MessageToolbarView: View {
     func handleRetryTap() {
         impactMedium.impactOccurred()
         retryIsDisabled = true
-        let prompt = chat.messages.first(where: { $0.id == id - 1 })!.text
+        let prompt = messages.first(where: { $0.chatID == chatID - 1 })!.text
 
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryRotation = Angle(degrees: 180)
@@ -132,20 +134,18 @@ struct MessageToolbarView: View {
                 case .success(let response):
                     withAnimation(.shortSpringB) {
                         text = response.response[1].text
-                        //chat.messages[id].text = text
-                        let messageIndex = chat.messages.firstIndex(where: {$0.id == id})!
-                        chat.messages[messageIndex].text = text
-                        print(chat.messages)
-                        //chat.storeMessages()
                     }
+                    messages.first(where: { $0.chatID == chatID })!.text = text
+                    PersistenceController.shared.save()
                 case .failure:
                     inErrorState = true
 
                     withAnimation(.shortSpringB) {
                         text = "Sorry, something went wrong... Please try again."
-                        //chat.messages[id].text = text
-                        //chat.storeMessages()
                     }
+                    
+                    messages.first(where: { $0.chatID == chatID })!.text = text
+                    PersistenceController.shared.save()
 
                     withAnimation(.linear1) {
                         backgroundColor = .afRed
