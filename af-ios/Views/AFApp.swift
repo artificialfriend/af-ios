@@ -30,7 +30,7 @@ struct AFApp: App {
                     af.getAF()
                     
                     if UserDefaults.standard.data(forKey: "user") != nil {
-                        global.activeSection = .chat
+                        global.activeSection = .signup
                     }
                     
 //                    print(user.user)
