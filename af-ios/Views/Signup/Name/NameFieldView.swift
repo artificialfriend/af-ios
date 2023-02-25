@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NameFieldView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     @Binding var input: String
     @Binding var charLimit: Int
     
@@ -46,7 +46,7 @@ struct NameFieldView: View {
 //struct NameFieldView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NameFieldView(input: $input, charLimit: $charLimit)
-//            .environmentObject(AFState())
+//            .environmentObject(AFOO())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }
 //}

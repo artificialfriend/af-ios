@@ -10,8 +10,8 @@ import SwiftUI
 struct UserMessageView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
-    @EnvironmentObject var af: AFState
-    @EnvironmentObject var chat: ChatState
+    @EnvironmentObject var af: AFOO
+    @EnvironmentObject var chat: ChatOO
     @State private var isLoaded: Bool = true
     @State private var opacity: Double = 0
     @State private var bottomPadding: CGFloat = -s64
@@ -60,7 +60,7 @@ struct UserMessageView: View {
         }
         
         Task { try await Task.sleep(nanoseconds: 100_000_000)
-            chat.addMessage(managedObjectContext: managedObjectContext)
+            chat.addMessage(text: "", isUserMessage: false, managedObjectContext: managedObjectContext)
         }
     }
 }
@@ -68,8 +68,8 @@ struct UserMessageView: View {
 //struct UserMessage_Previews: PreviewProvider {
 //    static var previews: some View {
 //        UserMessageView(id: "Summarize chapter 2", text: "Summarize chapter 2")
-//            .environmentObject(AFState())
-//            .environmentObject(ChatState())
+//            .environmentObject(AFOO())
+//            .environmentObject(ChatOO())
 //            .environmentObject(MessagesState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }

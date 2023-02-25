@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-let traitInstanceWidth = (UIScreen.main.bounds.width - s48) / 4.25
-
 struct TraitInstanceView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     let instance: any TraitInstance
-    let width = traitInstanceWidth
+    let width: CGFloat = (UIScreen.main.bounds.width - s48) / 4.25
     var activeInstance: any TraitInstance
     
     var body: some View {
@@ -47,6 +45,6 @@ struct TraitInstanceView: View {
 struct TraitInstanceView_Previews: PreviewProvider {
     static var previews: some View {
         TraitInstanceView(instance: SkinColor.green, activeInstance: SkinColor.green)
-            .environmentObject(AFState())
+            .environmentObject(AFOO())
     }
 }

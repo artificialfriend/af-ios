@@ -1,5 +1,5 @@
 //
-//  UserState.swift
+//  UserOO.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-13.
@@ -8,7 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 
-class UserState: ObservableObject {
+class UserOO: ObservableObject {
     @Published var user: User = User(
         id: "",
         appleID: "",

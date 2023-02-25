@@ -10,14 +10,17 @@ import SwiftUI
 struct ComposerButtonView: View, KeyboardReadable {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var af: AFState
-    @EnvironmentObject var chat: ChatState
+    @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var af: AFOO
+    @EnvironmentObject var chat: ChatOO
     @State private var sendOpacity: Double = 0
     @State private var randomOffset: CGFloat = 0
     @State private var randomOpacity: Double = 1
     @State private var randomIsPresent: Bool = true
     @State private var isRandomPrompt: Bool = false
+    @Binding var input: String
+    @Binding var trailingPadding: CGFloat
+    @Binding var randomPrompts: [String]
     
     var body: some View {
         ZStack {
@@ -42,69 +45,60 @@ struct ComposerButtonView: View, KeyboardReadable {
             }
             .opacity(sendOpacity)
             .buttonStyle(Spring())
-            .onChange(of: chat.composerInput.isEmpty) { _ in
+            .onChange(of: input.isEmpty) { _ in
                 toggleSend()
             }
         }
-        .onChange(of: chat.composerInput.isEmpty) { _ in
+        .onChange(of: input.isEmpty) { _ in
             resetRandom()
         }
     }
     
     func resetRandom() {
-        if chat.composerInput.isEmpty && isRandomPrompt {
+        if input.isEmpty && isRandomPrompt {
             isRandomPrompt = false
             withAnimation(.shortSpringE) { randomOffset = 0 }
-            chat.composerTrailingPadding = s56
+            trailingPadding = s56
         }
     }
     
     func toggleSend() {
-        if chat.composerInput.isEmpty {
+        if input.isEmpty {
             withAnimation(.linear0_5) { sendOpacity = 0 }
         } else {
             withAnimation(.linear0_5) { sendOpacity = 1 }
                 
             if isRandomPrompt {
                 withAnimation(.shortSpringE) { randomOffset = -s40 }
-                chat.composerTrailingPadding = s88
+                trailingPadding = s88
             }
         }
     }
     
     func handleRandomTap() {
         impactMedium.impactOccurred()
-        chat.composerInput = getRandomPrompt()
+        input = getRandomPrompt()
         isRandomPrompt = true
     }
     
     func getRandomPrompt() -> String {
-        let range = chat.randomPrompts.count - 1
+        let range = randomPrompts.count - 1
         let randomNumber = Int( arc4random_uniform( UInt32(range) ) )
-        return chat.randomPrompts[randomNumber]
+        return randomPrompts[randomNumber]
     }
     
     func handleSendTap() {
         impactMedium.impactOccurred()
-        addMessage()
-        chat.composerInput = ""
-    }
-    
-    func addMessage() {
-        let message = Message(context: managedObjectContext)
-        message.sortID = chat.currentSortID
-        message.text = chat.composerInput
-        message.isUserMessage = true
-        message.createdAt = Date.now
-        chat.currentSortID += 1
+        chat.addMessage(text: input, isUserMessage: true, managedObjectContext: managedObjectContext)
+        input = ""
     }
 }
 
-struct ComposerButtonView_Previews: PreviewProvider {
-    static var previews: some View {
-        ComposerButtonView()
-            .environmentObject(GlobalState())
-            .environmentObject(AFState())
-            .environmentObject(ChatState())
-    }
-}
+//struct ComposerButtonView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ComposerButtonView()
+//            .environmentObject(GlobalOO())
+//            .environmentObject(AFOO())
+//            .environmentObject(ChatOO())
+//    }
+//}

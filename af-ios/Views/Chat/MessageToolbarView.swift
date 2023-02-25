@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MessageToolbarView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    @EnvironmentObject var af: AFState
-    @EnvironmentObject var chat: ChatState
+    @EnvironmentObject var af: AFOO
+    @EnvironmentObject var chat: ChatOO
     @Binding var chatID: Int32
     @Binding var text: String
     @Binding var textOpacity: Double
@@ -189,7 +189,7 @@ struct MessageToolbarView: View {
 //    
 //    static var previews: some View {
 //        MessageToolbarView(text: $previewText, prompt: "")
-//            .environmentObject(AFState())
-//            .environmentObject(ChatState())
+//            .environmentObject(AFOO())
+//            .environmentObject(ChatOO())
 //    }
 //}

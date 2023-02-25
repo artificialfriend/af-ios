@@ -13,7 +13,7 @@ enum Direction {
 }
 
 struct DividerView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     let direction: Direction
     
     var body: some View {
@@ -33,7 +33,7 @@ struct DividerView: View {
 struct DividerView_Previews: PreviewProvider {
     static var previews: some View {
         DividerView(direction: .horizontal)
-            .environmentObject(AFState())
+            .environmentObject(AFOO())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

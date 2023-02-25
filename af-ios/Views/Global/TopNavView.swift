@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TopNavView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     let safeAreaHeight: CGFloat
     
     var body: some View {
@@ -44,7 +44,7 @@ struct TopNavView: View {
 struct TopNavView_Previews: PreviewProvider {
     static var previews: some View {
         TopNavView(safeAreaHeight: s32)
-            .environmentObject(AFState())
+            .environmentObject(AFOO())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

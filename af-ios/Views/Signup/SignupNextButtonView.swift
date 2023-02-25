@@ -9,9 +9,9 @@ import SwiftUI
 import AuthenticationServices
 
 struct SignupNextButtonView: View {
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var user: UserState
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var user: UserOO
+    @EnvironmentObject var af: AFOO
     @Binding var createOpacity: Double
     @Binding var nameOpacity: Double
     @Binding var buttonWelcomeLabelOpacity: Double

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabLabelView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     @Binding var activeTab: TraitCategory
     let label: String
     let traitCategory: TraitCategory
@@ -33,6 +33,6 @@ struct TabLabelView: View {
 //struct TabLabelView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TabLabelView(label: "Skin", traitCategory: .skin, activeTab: $activeTab)
-//            .environmentObject(AFState())
+//            .environmentObject(AFOO())
 //    }
 //}

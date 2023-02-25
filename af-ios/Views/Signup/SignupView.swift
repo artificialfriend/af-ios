@@ -9,9 +9,9 @@ import SwiftUI
 import AuthenticationServices
 
 struct SignupView: View {
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var user: UserState
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var user: UserOO
+    @EnvironmentObject var af: AFOO
     @FocusState private var keyboardFocused: Bool
     @State private var currentStep: SignupStep = .welcome
     @State private var authErrorHasOccurred: Bool = false
@@ -469,7 +469,7 @@ struct SignupView: View {
 struct SignupView_Previews: PreviewProvider {
     static var previews: some View {
         SignupView()
-            .environmentObject(AFState())
+            .environmentObject(AFOO())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

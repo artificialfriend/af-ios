@@ -10,10 +10,10 @@ import SwiftUI
 struct ContentView: View, KeyboardReadable {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var user: UserState
-    @EnvironmentObject var af: AFState
-    @EnvironmentObject var chat: ChatState
+    @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var user: UserOO
+    @EnvironmentObject var af: AFOO
+    @EnvironmentObject var chat: ChatOO
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
     @State private var chatOpacity: Double = 0
@@ -29,6 +29,9 @@ struct ContentView: View, KeyboardReadable {
     @State private var afScale: CGFloat = 0
     @State private var afOpacity: Double = 0
     @State private var afOffset: CGFloat = 0
+    @State private var composerInput: String = ""
+    @State private var composerBottomPadding: CGFloat = s0
+    @State private var composerTrailingPadding: CGFloat = 56
     
     var body: some View {
         ZStack {
@@ -40,8 +43,6 @@ struct ContentView: View, KeyboardReadable {
                 ChatView()
                     .opacity(chatOpacity)
                     .onAppear {
-                        chat.currentSortID = Int32(messages.count - 1)
-                        
                         Task { try await Task.sleep(nanoseconds: 550_000_000)
                             withAnimation(.linear2) {
                                 chatOpacity = 1
@@ -69,7 +70,7 @@ struct ContentView: View, KeyboardReadable {
                         Spacer()
 
                         ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                            .animation(.shortSpringC, value: chat.composerInput)
+//                            .animation(.shortSpringC, value: composerInput)
                             .opacity(composerOpacity)
                             .offset(y: composerOffset)
                             .padding(.bottom, global.keyboardIsPresent ? s8 : s0)
@@ -191,10 +192,10 @@ struct ContentView: View, KeyboardReadable {
 //    static var previews: some View {
 //        ContentView()
 //            .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//            .environmentObject(GlobalState())
-//            .environmentObject(UserState())
-//            .environmentObject(AFState())
-//            .environmentObject(ChatState())
+//            .environmentObject(GlobalOO())
+//            .environmentObject(UserOO())
+//            .environmentObject(AFOO())
+//            .environmentObject(ChatOO())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }
 //}

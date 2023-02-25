@@ -1,5 +1,5 @@
 //
-//  AFState.swift
+//  AFOO.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-02.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class AFState: ObservableObject {
+class AFOO: ObservableObject {
     @Published var af: AF = AF(
         id: "4056",
         name: "4056",

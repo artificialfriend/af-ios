@@ -9,10 +9,10 @@ import SwiftUI
 
 @main
 struct AFApp: App {
-    @StateObject var global = GlobalState()
-    @StateObject var user = UserState()
-    @StateObject var af = AFState()
-    @StateObject var chat = ChatState()
+    @StateObject var global = GlobalOO()
+    @StateObject var user = UserOO()
+    @StateObject var af = AFOO()
+    @StateObject var chat = ChatOO()
     let persistenceController = PersistenceController.shared
     
     var body: some Scene {

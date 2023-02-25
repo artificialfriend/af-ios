@@ -9,8 +9,9 @@ import SwiftUI
 
 struct AFMessageView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    @EnvironmentObject var af: AFState
-    @EnvironmentObject var chat: ChatState
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @EnvironmentObject var af: AFOO
+    @EnvironmentObject var chat: ChatOO
     @State private var isLoading: Bool = false
     @State private var toolbarIsPresent: Bool = true
     @State private var toolbarOpacity: Double = 1
@@ -159,6 +160,8 @@ struct AFMessageView: View {
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 100_000_000)
+                            chatID = afResponse.chatID
+                            
                             updateMessages(
                                 userResponse: userResponse,
                                 afResponse: afResponse,
@@ -175,7 +178,6 @@ struct AFMessageView: View {
     func updateMessages(userResponse: GetAFReplyMessage, afResponse: GetAFReplyMessage, userMessageIndex: Int, afMessageIndex: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-        chatID = afResponse.chatID
         messages[afMessageIndex].chatID = afResponse.chatID
         messages[afMessageIndex].text = afResponse.text
         messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
@@ -214,8 +216,8 @@ struct AFMessageView: View {
 //struct AFMessageView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        AFMessageView(id: "Heathcliffe is a bad guy but he also loves that girl.", text: "Heathcliffe is a bad guy but he also loves that girl.")
-//            .environmentObject(AFState())
-//            .environmentObject(ChatState())
+//            .environmentObject(AFOO())
+//            .environmentObject(ChatOO())
 //            .environmentObject(MessagesState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }

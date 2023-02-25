@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ChatView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    @EnvironmentObject var global: GlobalState
-    @EnvironmentObject var af: AFState
-    @EnvironmentObject var chat: ChatState
+    @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var af: AFOO
+    @EnvironmentObject var chat: ChatOO
     
     var body: some View {
         ZStack {
@@ -38,14 +38,15 @@ struct ChatView: View {
             }
             .ignoresSafeArea(edges: .vertical)
         }
+        .onAppear { chat.currentSortID = Int32(messages.count - 1) }
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(AFState())
-            .environmentObject(ChatState())
+            .environmentObject(AFOO())
+            .environmentObject(ChatOO())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

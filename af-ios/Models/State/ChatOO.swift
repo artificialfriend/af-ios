@@ -1,5 +1,5 @@
 //
-//  ChatState.swift
+//  ChatOO.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-02.
@@ -8,27 +8,9 @@
 import SwiftUI
 import CoreData
 
-class ChatState: ObservableObject {
-    @Published var composerInput: String = ""
-    @Published var composerBottomPadding: CGFloat = s0
-    @Published var composerTrailingPadding: CGFloat = 56
+class ChatOO: ObservableObject {
     @Published var messagesBottomPadding: CGFloat = s80
-    @Published var messageHeight: CGFloat = s0
     @Published var currentSortID: Int32 = 0
-    
-    @Published var randomPrompts: [String] = [
-        "Summarize chapter 1 of Wuthering Heights",
-        "Give me 3 unique ideas for an essay on the American Revolution",
-        "Write a rhyming love poem about girl named Anna",
-        "Create an outline for an essay on artificial general intelligence",
-        "Explain the laws of physics in simple language",
-        "What Greek god is most like a gemini and why?",
-        "What is Einstein famous for?",
-        "How did WW2 shape the world?",
-        "What were the main reasons that the US became a superpower?",
-        "What does mitochondria do?",
-        "How do semiconductors work?"
-    ]
     
     func getAFReply(prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         let requestBody = GetAFReplyRequestBody(userID: "1", text: prompt, isUserMessage: true)
@@ -69,10 +51,11 @@ class ChatState: ObservableObject {
         }
     }
     
-    func addMessage(managedObjectContext: NSManagedObjectContext) {
+    func addMessage(text: String, isUserMessage: Bool, managedObjectContext: NSManagedObjectContext) {
         let message = Message(context: managedObjectContext)
         message.sortID = currentSortID
-        message.isUserMessage = false
+        message.text = text
+        message.isUserMessage = isUserMessage
         message.createdAt = Date.now
         currentSortID += 1
     }

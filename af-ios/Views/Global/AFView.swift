@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AFView: View {
-    @EnvironmentObject var af: AFState
-    @State var shadowRadius = UIScreen.main.bounds.width * 0.075
+    @EnvironmentObject var af: AFOO
+    @State private var shadowRadius = UIScreen.main.bounds.width * 0.075
     
     var body: some View {
         ZStack {
@@ -56,7 +56,7 @@ struct AFView: View {
 struct AFView_Previews: PreviewProvider {
     static var previews: some View {
         AFView()
-            .environmentObject(AFState())
+            .environmentObject(AFOO())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }

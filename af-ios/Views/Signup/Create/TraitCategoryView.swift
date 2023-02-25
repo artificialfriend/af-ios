@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TraitCategoryView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     @Binding var activeTab: TraitCategory
     
     var body: some View {
@@ -39,6 +39,6 @@ struct TraitCategoryView: View {
 //struct TraitCategoryView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TraitCategoryView(activeTab: $activeTab)
-//            .environmentObject(AFState())
+//            .environmentObject(AFOO())
 //    }
 //}

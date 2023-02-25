@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TraitInstanceRowView: View {
-    @EnvironmentObject var af: AFState
+    @EnvironmentObject var af: AFOO
     let label: String
     var activeInstance: any TraitInstance
     
@@ -100,6 +100,6 @@ struct TraitInstanceRowView: View {
 struct TraitInstanceRowView_Previews: PreviewProvider {
     static var previews: some View {
         TraitInstanceRowView(label: "Label", activeInstance: SkinColor.green)
-            .environmentObject(AFState())
+            .environmentObject(AFOO())
     }
 }
