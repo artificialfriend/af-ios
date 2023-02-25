@@ -34,7 +34,6 @@
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
 		CE1A30DA296B0AD6003D1476 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D9296B0AD6003D1476 /* Preview Assets.xcassets */; };
-		CE1A30ED296B1A0F003D1476 /* Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30EC296B1A0F003D1476 /* Traits.swift */; };
 		CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30EF296B1AA5003D1476 /* AFView.swift */; };
 		CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30F2296B1B48003D1476 /* DividerView.swift */; };
 		CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30F6296B1BF8003D1476 /* Styles.swift */; };
@@ -71,7 +70,6 @@
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CE1A30D6296B0AD6003D1476 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1A30D9296B0AD6003D1476 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		CE1A30EC296B1A0F003D1476 /* Traits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Traits.swift; sourceTree = "<group>"; };
 		CE1A30EF296B1AA5003D1476 /* AFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFView.swift; sourceTree = "<group>"; };
 		CE1A30F2296B1B48003D1476 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		CE1A30F6296B1BF8003D1476 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
@@ -122,7 +120,7 @@
 			path = Name;
 			sourceTree = "<group>";
 		};
-		48AA2634298EA3620091609C /* State */ = {
+		48AA2634298EA3620091609C /* Observable Objects */ = {
 			isa = PBXGroup;
 			children = (
 				481598162981A14200201B32 /* GlobalOO.swift */,
@@ -131,7 +129,7 @@
 				489DD519298C444F006D15A7 /* ChatOO.swift */,
 				489DD51B298C456D006D15A7 /* SignupOO.swift */,
 			);
-			path = State;
+			path = "Observable Objects";
 			sourceTree = "<group>";
 		};
 		CE1A30C6296B0AD4003D1476 = {
@@ -154,7 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				CE1A30EE296B1A93003D1476 /* Views */,
-				CE1A30E5296B1945003D1476 /* Models */,
+				48AA2634298EA3620091609C /* Observable Objects */,
+				48047DAB29A6E04600C457FB /* MessagesModel.xcdatamodeld */,
 				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
 				483317FD297A1E680008F61E /* Extensions.swift */,
 				48047DED29A6E90500C457FB /* PersistenceController.swift */,
@@ -171,16 +170,6 @@
 				CE1A30D9296B0AD6003D1476 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		CE1A30E5296B1945003D1476 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				48AA2634298EA3620091609C /* State */,
-				CE1A30EC296B1A0F003D1476 /* Traits.swift */,
-				48047DAB29A6E04600C457FB /* MessagesModel.xcdatamodeld */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		CE1A30EE296B1A93003D1476 /* Views */ = {
@@ -311,7 +300,6 @@
 				CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */,
 				48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */,
 				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
-				CE1A30ED296B1A0F003D1476 /* Traits.swift in Sources */,
 				489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */,
 				48AA2636298EA4050091609C /* TraitInstanceRowView.swift in Sources */,
 				48AA263C298EA63D0091609C /* ComposerButtonView.swift in Sources */,
