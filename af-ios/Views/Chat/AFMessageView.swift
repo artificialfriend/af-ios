@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct AFMessageView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    
     @State private var isLoading: Bool = false
     @State private var toolbarIsPresent: Bool = true
     @State private var toolbarOpacity: Double = 1
@@ -26,7 +24,6 @@ struct AFMessageView: View {
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
     @State private var inErrorState: Bool = false
     @State private var error: Error?
-    
     @State var chatID: Int32
     @State var text: String
     let isNew: Bool
@@ -104,7 +101,6 @@ struct AFMessageView: View {
         let prompt = messages[messages.count - 2].text!
         var userResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: true, createdAt: "")
         var afResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: false, createdAt: "")
-        
         opacity = 0
         textOpacity = 0
         toolbarOpacity = 0

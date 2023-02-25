@@ -10,11 +10,13 @@ import SwiftUI
 struct NameFieldView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
+    @Binding var input: String
+    @Binding var charLimit: Int
     
     var body: some View {
         ZStack {
-            TextField("", text: $signup.nameFieldInput)
-                .placeholder(when: signup.nameFieldInput.isEmpty, alignment: .center) {
+            TextField("", text: $input)
+                .placeholder(when: input.isEmpty, alignment: .center) {
                     Text(af.af.name)
                         .foregroundColor(af.af.interface.softColor)
                 }
@@ -31,8 +33,8 @@ struct NameFieldView: View {
                 
                 Spacer()
                 
-                Text(String(signup.nameFieldCharLimit - signup.nameFieldInput.count))
-                    .opacity(signup.nameFieldCharLimit - signup.nameFieldInput.count <= 5 ? 1 : 0)
+                Text(String(charLimit - input.count))
+                    .opacity(charLimit - input.count <= 5 ? 1 : 0)
                     .multilineTextAlignment(.trailing)
             }
             .padding(.horizontal, s16)
@@ -42,11 +44,11 @@ struct NameFieldView: View {
     }
 }
 
-struct NameFieldView_Previews: PreviewProvider {
-    static var previews: some View {
-        NameFieldView()
-            .environmentObject(AFState())
-            .environmentObject(SignupState())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}
+//struct NameFieldView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NameFieldView(input: $input, charLimit: $charLimit)
+//            .environmentObject(AFState())
+//            .environmentObject(SignupState())
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+//    }
+//}

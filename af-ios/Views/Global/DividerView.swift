@@ -14,7 +14,6 @@ enum Direction {
 
 struct DividerView: View {
     @EnvironmentObject var af: AFState
-    
     let direction: Direction
     
     var body: some View {

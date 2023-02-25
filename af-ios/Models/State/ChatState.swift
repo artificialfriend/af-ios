@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 class ChatState: ObservableObject {
     @Published var composerInput: String = ""
@@ -14,7 +15,6 @@ class ChatState: ObservableObject {
     @Published var messagesBottomPadding: CGFloat = s80
     @Published var messageHeight: CGFloat = s0
     @Published var currentSortID: Int32 = 0
-    @Published var messages: [Message] = []
     
     @Published var randomPrompts: [String] = [
         "Summarize chapter 1 of Wuthering Heights",
@@ -68,6 +68,14 @@ class ChatState: ObservableObject {
             }
         }
     }
+    
+    func addMessage(managedObjectContext: NSManagedObjectContext) {
+        let message = Message(context: managedObjectContext)
+        message.sortID = currentSortID
+        message.isUserMessage = false
+        message.createdAt = Date.now
+        currentSortID += 1
+    }
 }
 
 struct GetAFReplyRequestBody: Codable {
@@ -101,11 +109,3 @@ struct GetAFReplyMessage: Codable {
         case createdAt = "created_at"
     }
 }
-
-//struct Message: Identifiable, Codable {
-//    var id: Int
-//    var text: String
-//    var isUserMessage: Bool
-//    var isNew: Bool = false
-//    var createdAt: String
-//}

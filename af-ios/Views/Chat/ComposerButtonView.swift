@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct ComposerButtonView: View, KeyboardReadable {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    
-    @State private var sendOffset: CGFloat = 44
     @State private var sendOpacity: Double = 0
     @State private var randomOffset: CGFloat = 0
     @State private var randomOpacity: Double = 1
@@ -43,7 +41,6 @@ struct ComposerButtonView: View, KeyboardReadable {
                     }
             }
             .opacity(sendOpacity)
-            //.offset(x: sendOffset)
             .buttonStyle(Spring())
             .onChange(of: chat.composerInput.isEmpty) { _ in
                 toggleSend()
@@ -58,21 +55,19 @@ struct ComposerButtonView: View, KeyboardReadable {
         if chat.composerInput.isEmpty && isRandomPrompt {
             isRandomPrompt = false
             withAnimation(.shortSpringE) { randomOffset = 0 }
-            chat.composerTrailingPadding = 56
+            chat.composerTrailingPadding = s56
         }
     }
     
     func toggleSend() {
         if chat.composerInput.isEmpty {
             withAnimation(.linear0_5) { sendOpacity = 0 }
-            withAnimation(.shortSpringE) { sendOffset = 44 }
         } else {
             withAnimation(.linear0_5) { sendOpacity = 1 }
-            withAnimation(.shortSpringE) { sendOffset = 0 }
                 
             if isRandomPrompt {
-                withAnimation(.shortSpringE) { randomOffset = -40 }
-                chat.composerTrailingPadding = 88
+                withAnimation(.shortSpringE) { randomOffset = -s40 }
+                chat.composerTrailingPadding = s88
             }
         }
     }

@@ -9,30 +9,6 @@ import SwiftUI
 import AuthenticationServices
 
 class SignupState: ObservableObject {
-    @Published var currentStep: SignupStep = .welcome
-    @Published var authErrorHasOccurred: Bool = false
-    @Published var activeCreateTab: TraitCategory = .skin
-    @Published var afOffset: CGFloat = 0
-    @Published var afScale: Double = 0
-    @Published var afOpacity: Double = 1
-    @Published var welcomeOpacity: Double = 0
-    @Published var createOpacity: Double = 0
-    @Published var nameOpacity: Double = 0
-    @Published var bootupOpacity: Double = 0
-    @Published var buttonOffset: CGFloat = 104
-    @Published var buttonOpacity: CGFloat = 0
-    @Published var buttonIsDismissed: Bool = false
-    @Published var buttonWelcomeLabelOpacity: CGFloat = 1
-    @Published var isLoading: Bool = false
-    @Published var spinnerRotation: Angle = Angle(degrees: 0)
-    @Published var nameFieldCharLimit: Int = 12
-    @Published var nameFieldInput = "" {
-        didSet {
-            if nameFieldInput.count > nameFieldCharLimit && oldValue.count <= nameFieldCharLimit {
-                nameFieldInput = oldValue
-            }
-        }
-    }
 }
 
 struct CreateAccountRequestBody: Codable {
@@ -46,7 +22,7 @@ struct CreateAccountResponseBody: Codable {
 
 struct CreateAccountResponse: Codable {
     let user_id: Int
-    let af_id: String
+    let af_id: Int
     let af: CreateAccountResponseAF
     let apple_user_id: String
     let email: String
@@ -69,7 +45,7 @@ struct CreateAccountResponse: Codable {
 }
 
 struct CreateAccountResponseAF: Codable {
-    let afID: Int
+    let af_id: Int
     let name: String
     let skin_color: String
     let freckles: String

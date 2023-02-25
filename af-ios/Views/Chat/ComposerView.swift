@@ -10,7 +10,6 @@ import SwiftUI
 struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    
     let safeAreaHeight: CGFloat
     
     var body: some View {

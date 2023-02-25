@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct MessageToolbarView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    
     @Binding var chatID: Int32
     @Binding var text: String
     @Binding var textOpacity: Double
     @Binding var inErrorState: Bool
     @Binding var backgroundColor: Color
-    
     @State private var copyColor: Color = Color.black
     @State private var copyOpacity: Double = 1
     @State private var copyRotation: Angle = Angle(degrees: 0)
@@ -162,7 +159,6 @@ struct MessageToolbarView: View {
     
     func handleCopyTap(text: Binding<String>) {
         impactMedium.impactOccurred()
-        
         let pasteboard = UIPasteboard.general
         pasteboard.string = text.wrappedValue
         

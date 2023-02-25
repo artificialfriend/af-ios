@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct TabsView: View {
+    @Binding var activeTab: TraitCategory
+    
     var body: some View {
         HStack(spacing: s0) {
-            TabLabelView(label: "Skin", traitCategory: .skin)
-            TabLabelView(label: "Hair", traitCategory: .hair)
-            TabLabelView(label: "Eyes", traitCategory: .eyes)
+            TabLabelView(activeTab: $activeTab, label: "Skin", traitCategory: .skin)
+            TabLabelView(activeTab: $activeTab, label: "Hair", traitCategory: .hair)
+            TabLabelView(activeTab: $activeTab, label: "Eyes", traitCategory: .eyes)
         }
         .frame(height: s48)
     }
 }
 
-struct TabsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TabsView()
-            .environmentObject(AFState())
-            .environmentObject(SignupState())
-    }
-}
+//struct TabsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TabsView(activeTab: $activeTab)
+//            .environmentObject(AFState())
+//            .environmentObject(SignupState())
+//    }
+//}

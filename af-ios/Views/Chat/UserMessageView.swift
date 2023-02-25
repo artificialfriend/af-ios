@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct UserMessageView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-    
     @State private var isLoaded: Bool = true
     @State private var opacity: Double = 0
     @State private var bottomPadding: CGFloat = -s64
-    
-    //let id: Int
     let text: String
     let isNew: Bool
     
@@ -51,9 +48,6 @@ struct UserMessageView: View {
         }
     }
     
-    
-    //FUNCTIONS
-    
     func loadIn() {
         isLoaded = true
         
@@ -66,16 +60,8 @@ struct UserMessageView: View {
         }
         
         Task { try await Task.sleep(nanoseconds: 100_000_000)
-            addMessage()
+            chat.addMessage(managedObjectContext: managedObjectContext)
         }
-    }
-    
-    func addMessage() {
-        let message = Message(context: managedObjectContext)
-        message.sortID = chat.currentSortID
-        message.isUserMessage = false
-        message.createdAt = Date.now
-        chat.currentSortID += 1
     }
 }
 

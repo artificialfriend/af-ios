@@ -10,36 +10,37 @@ import SwiftUI
 struct TraitCategoryView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
+    @Binding var activeTab: TraitCategory
     
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: s0) {
-                TraitInstanceRowView(traitLabel: "Color", activeTraitInstance: af.af.skinColor)
-                TraitInstanceRowView(traitLabel: "Freckles", activeTraitInstance: af.af.freckles)
+                TraitInstanceRowView(label: "Color", activeInstance: af.af.skinColor)
+                TraitInstanceRowView(label: "Freckles", activeInstance: af.af.freckles)
             }
-            .opacity(signup.activeCreateTab == .skin ? 1 : 0)
+            .opacity(activeTab == .skin ? 1 : 0)
             
             VStack(alignment: .leading, spacing: s0) {
-                TraitInstanceRowView(traitLabel: "Color", activeTraitInstance: af.af.hairColor)
-                TraitInstanceRowView(traitLabel: "Style", activeTraitInstance: af.af.hairstyle)
+                TraitInstanceRowView(label: "Color", activeInstance: af.af.hairColor)
+                TraitInstanceRowView(label: "Style", activeInstance: af.af.hairstyle)
             }
-            .opacity(signup.activeCreateTab == .hair ? 1 : 0)
+            .opacity(activeTab == .hair ? 1 : 0)
             
             VStack(alignment: .leading, spacing: s0) {
-                TraitInstanceRowView(traitLabel: "Color", activeTraitInstance: af.af.eyeColor)
-                TraitInstanceRowView(traitLabel: "Lashes", activeTraitInstance: af.af.eyelashes)
+                TraitInstanceRowView(label: "Color", activeInstance: af.af.eyeColor)
+                TraitInstanceRowView(label: "Lashes", activeInstance: af.af.eyelashes)
             }
-            .opacity(signup.activeCreateTab == .eyes ? 1 : 0)
+            .opacity(activeTab == .eyes ? 1 : 0)
         }
         .padding(.top, s4)
         .padding(.bottom, s24)
     }
 }
 
-struct TraitCategoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        TraitCategoryView()
-            .environmentObject(AFState())
-            .environmentObject(SignupState())
-    }
-}
+//struct TraitCategoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TraitCategoryView(activeTab: $activeTab)
+//            .environmentObject(AFState())
+//            .environmentObject(SignupState())
+//    }
+//}

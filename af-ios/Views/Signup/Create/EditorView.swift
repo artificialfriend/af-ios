@@ -9,22 +9,24 @@ import SwiftUI
 import UIKit
 
 struct EditorView: View {
+    @Binding var activeTab: TraitCategory
+    
     var body: some View {
         VStack(spacing: s0) {
             DividerView(direction: .horizontal)
-            TabsView()
+            TabsView(activeTab: $activeTab)
             DividerView(direction: .horizontal)
-            TraitCategoryView()
+            TraitCategoryView(activeTab: $activeTab)
             DividerView(direction: .horizontal)
         }
     }
 }
 
-struct EditorView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditorView()
-            .environmentObject(AFState())
-            .environmentObject(SignupState())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}
+//struct EditorView_Previews: PreviewProvider {
+//    @State private var activeTab = TraitCategory.skin
+//    
+//    static var previews: some View {
+//        EditorView(activeTab: $activeTab)
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+//    }
+//}

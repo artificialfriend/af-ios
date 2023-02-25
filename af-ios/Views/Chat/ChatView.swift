@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct ChatView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
     
     var body: some View {
         ZStack {
@@ -39,7 +38,6 @@ struct ChatView: View {
             }
             .ignoresSafeArea(edges: .vertical)
         }
-        //.onAppear { chat.getMessages() }
     }
 }
 

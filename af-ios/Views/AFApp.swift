@@ -13,7 +13,6 @@ struct AFApp: App {
     @StateObject var user = UserState()
     @StateObject var af = AFState()
     @StateObject var chat = ChatState()
-    @StateObject var signup = SignupState()
     let persistenceController = PersistenceController.shared
     
     var body: some Scene {
@@ -24,18 +23,13 @@ struct AFApp: App {
                 .environmentObject(user)
                 .environmentObject(af)
                 .environmentObject(chat)
-                .environmentObject(signup)
                 .onAppear {
                     user.getUser()
                     af.getAF()
                     
                     if UserDefaults.standard.data(forKey: "user") != nil {
-                        global.activeSection = .signup
+                        global.activeSection = .chat
                     }
-                    
-//                    print(user.user)
-//                    print(af.af)
-                    
                 }
         }
     }

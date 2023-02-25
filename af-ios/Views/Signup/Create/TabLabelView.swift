@@ -10,31 +10,31 @@ import SwiftUI
 struct TabLabelView: View {
     @EnvironmentObject var af: AFState
     @EnvironmentObject var signup: SignupState
-    
+    @Binding var activeTab: TraitCategory
     let label: String
     let traitCategory: TraitCategory
     
     var body: some View {
         Button(action: { handleTap() }) {
             Text(label)
-                .font(signup.activeCreateTab == traitCategory ? .l : .s)
-                .foregroundColor(signup.activeCreateTab == traitCategory ? .afBlack : af.af.interface.medColor)
+                .font(activeTab == traitCategory ? .l : .s)
+                .foregroundColor(activeTab == traitCategory ? .afBlack : af.af.interface.medColor)
                 .frame(width: s80)
-                .animation(.shortSpringC, value: signup.activeCreateTab == traitCategory)
+                .animation(.shortSpringC, value: activeTab == traitCategory)
         }
         .buttonStyle(Plain())
     }
     
     func handleTap() {
         impactMedium.impactOccurred()
-        signup.activeCreateTab = traitCategory
+        activeTab = traitCategory
     }
 }
 
-struct TabLabelView_Previews: PreviewProvider {
-    static var previews: some View {
-        TabLabelView(label: "Skin", traitCategory: .skin)
-            .environmentObject(AFState())
-            .environmentObject(SignupState())
-    }
-}
+//struct TabLabelView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TabLabelView(label: "Skin", traitCategory: .skin, activeTab: $activeTab)
+//            .environmentObject(AFState())
+//            .environmentObject(SignupState())
+//    }
+//}

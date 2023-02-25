@@ -9,12 +9,11 @@ import SwiftUI
 
 struct TraitInstanceRowView: View {
     @EnvironmentObject var af: AFState
-    
-    let traitLabel: String
-    var activeTraitInstance: any TraitInstance
+    let label: String
+    var activeInstance: any TraitInstance
     
     var body: some View {
-        Text(traitLabel)
+        Text(label)
             .font(.s)
             .foregroundColor(.afBlack)
             .padding(.horizontal, s12)
@@ -22,45 +21,45 @@ struct TraitInstanceRowView: View {
         
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: s8) {
-                if activeTraitInstance.trait == .skinColor {
+                if activeInstance.trait == .skinColor {
                     ForEach(SkinColor.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(traitInstance: traitInstance, activeTraitInstance: activeTraitInstance)
+                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
                         .buttonStyle(Spring())
                     }
-                } else if activeTraitInstance.trait == .freckles {
+                } else if activeInstance.trait == .freckles {
                     ForEach(Freckles.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(traitInstance: traitInstance, activeTraitInstance: activeTraitInstance)
+                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
                         .buttonStyle(Spring())
                     }
-                } else if activeTraitInstance.trait == .hairColor {
+                } else if activeInstance.trait == .hairColor {
                     ForEach(HairColor.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(traitInstance: traitInstance, activeTraitInstance: activeTraitInstance)
+                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
                         .buttonStyle(Spring())
                     }
-                } else if activeTraitInstance.trait == .hairstyle {
+                } else if activeInstance.trait == .hairstyle {
                     ForEach(Hairstyle.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(traitInstance: traitInstance, activeTraitInstance: activeTraitInstance)
+                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
                         .buttonStyle(Spring())
                     }
-                } else if activeTraitInstance.trait == .eyeColor {
+                } else if activeInstance.trait == .eyeColor {
                     ForEach(EyeColor.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(traitInstance: traitInstance, activeTraitInstance: activeTraitInstance)
+                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
                         .buttonStyle(Spring())
                     }
-                } else if activeTraitInstance.trait == .eyelashes {
+                } else if activeInstance.trait == .eyelashes {
                     ForEach(Eyelashes.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(traitInstance: traitInstance, activeTraitInstance: activeTraitInstance)
+                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
                         .buttonStyle(Spring())
                     }
@@ -73,25 +72,25 @@ struct TraitInstanceRowView: View {
     
     func handleTap(traitInstance: any TraitInstance) {
         impactMedium.impactOccurred()
-        setActiveTraitInstance(traitInstance: traitInstance)
+        setActiveInstance(to: traitInstance)
     }
     
-    func setActiveTraitInstance(traitInstance: any TraitInstance) {
-        switch traitInstance.trait {
+    func setActiveInstance(to instance: any TraitInstance) {
+        switch instance.trait {
         case .skinColor:
-            af.af.skinColor = traitInstance as! SkinColor
-            af.af.interface = Interface.allCases.first(where: { $0.name == traitInstance.name })!
+            af.af.skinColor = instance as! SkinColor
+            af.af.interface = Interface.allCases.first(where: { $0.name == instance.name })!
             af.storeAF()
         case .freckles:
-            af.af.freckles = traitInstance as! Freckles
+            af.af.freckles = instance as! Freckles
         case .hairColor:
-            af.af.hairColor = traitInstance as! HairColor
+            af.af.hairColor = instance as! HairColor
         case .hairstyle:
-            af.af.hairstyle = traitInstance as! Hairstyle
+            af.af.hairstyle = instance as! Hairstyle
         case .eyeColor:
-            af.af.eyeColor = traitInstance as! EyeColor
+            af.af.eyeColor = instance as! EyeColor
         case .eyelashes:
-            af.af.eyelashes = traitInstance as! Eyelashes
+            af.af.eyelashes = instance as! Eyelashes
         case .interface:
             return
         }
@@ -100,7 +99,7 @@ struct TraitInstanceRowView: View {
 
 struct TraitInstanceRowView_Previews: PreviewProvider {
     static var previews: some View {
-        TraitInstanceRowView(traitLabel: "Label", activeTraitInstance: SkinColor.green)
+        TraitInstanceRowView(label: "Label", activeInstance: SkinColor.green)
             .environmentObject(AFState())
     }
 }

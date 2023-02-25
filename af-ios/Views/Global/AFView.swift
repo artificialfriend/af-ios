@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AFView: View {
     @EnvironmentObject var af: AFState
-    
     @State var shadowRadius = UIScreen.main.bounds.width * 0.075
     
     var body: some View {

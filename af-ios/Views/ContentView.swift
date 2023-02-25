@@ -10,13 +10,10 @@ import SwiftUI
 struct ContentView: View, KeyboardReadable {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
-
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
     @EnvironmentObject var chat: ChatState
-    @EnvironmentObject var signup: SignupState
-    
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
     @State private var chatOpacity: Double = 0
@@ -43,6 +40,8 @@ struct ContentView: View, KeyboardReadable {
                 ChatView()
                     .opacity(chatOpacity)
                     .onAppear {
+                        chat.currentSortID = Int32(messages.count - 1)
+                        
                         Task { try await Task.sleep(nanoseconds: 550_000_000)
                             withAnimation(.linear2) {
                                 chatOpacity = 1
@@ -112,9 +111,6 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
-        .onAppear {
-            chat.currentSortID = Int32(messages.count - 1)
-        }
     }
     
     
@@ -199,7 +195,6 @@ struct ContentView: View, KeyboardReadable {
 //            .environmentObject(UserState())
 //            .environmentObject(AFState())
 //            .environmentObject(ChatState())
-//            .environmentObject(SignupState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }
 //}
