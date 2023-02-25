@@ -24,6 +24,5 @@ struct TabsView: View {
 //    static var previews: some View {
 //        TabsView(activeTab: $activeTab)
 //            .environmentObject(AFState())
-//            .environmentObject(SignupState())
 //    }
 //}

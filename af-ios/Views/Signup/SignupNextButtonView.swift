@@ -12,7 +12,6 @@ struct SignupNextButtonView: View {
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
-    @EnvironmentObject var signup: SignupState
     @Binding var createOpacity: Double
     @Binding var nameOpacity: Double
     @Binding var buttonWelcomeLabelOpacity: Double
@@ -53,7 +52,6 @@ struct SignupNextButtonView: View {
 //struct SignupButtonView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        SignupNextButtonView()
-//            .environmentObject(SignupState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }
 //}

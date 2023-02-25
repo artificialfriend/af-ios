@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TraitCategoryView: View {
     @EnvironmentObject var af: AFState
-    @EnvironmentObject var signup: SignupState
     @Binding var activeTab: TraitCategory
     
     var body: some View {
@@ -41,6 +40,5 @@ struct TraitCategoryView: View {
 //    static var previews: some View {
 //        TraitCategoryView(activeTab: $activeTab)
 //            .environmentObject(AFState())
-//            .environmentObject(SignupState())
 //    }
 //}

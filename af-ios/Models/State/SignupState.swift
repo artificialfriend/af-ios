@@ -8,9 +8,6 @@
 import SwiftUI
 import AuthenticationServices
 
-class SignupState: ObservableObject {
-}
-
 struct CreateAccountRequestBody: Codable {
     let af: CreateAccountAF
     let user: CreateAccountUser

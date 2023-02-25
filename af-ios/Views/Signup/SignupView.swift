@@ -12,7 +12,6 @@ struct SignupView: View {
     @EnvironmentObject var global: GlobalState
     @EnvironmentObject var user: UserState
     @EnvironmentObject var af: AFState
-    @EnvironmentObject var signup: SignupState
     @FocusState private var keyboardFocused: Bool
     @State private var currentStep: SignupStep = .welcome
     @State private var authErrorHasOccurred: Bool = false
@@ -471,7 +470,6 @@ struct SignupView_Previews: PreviewProvider {
     static var previews: some View {
         SignupView()
             .environmentObject(AFState())
-            .environmentObject(SignupState())
             .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
     }
 }
