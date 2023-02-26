@@ -144,7 +144,7 @@ struct SignupView: View {
 //                            if currentStep == .welcome {
 //                                SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
 //                            } else {
-                                Button(action: { handleTap() }) {
+                                Button(action: { handleNextTap() }) {
                                     SignupNextButtonView(
                                         createOpacity: $createOpacity,
                                         nameOpacity: $nameOpacity,
@@ -255,7 +255,7 @@ struct SignupView: View {
                             user.user.givenName = authValues.givenName
                             user.user.familyName = authValues.familyName
                             user.storeUser()
-                            handleTap()
+                            handleNextTap()
                         }
                     default:
                         print(auth.credential)
@@ -266,7 +266,7 @@ struct SignupView: View {
         }
     }
     
-    func handleTap() {
+    func handleNextTap() {
         impactMedium.impactOccurred()
         transition()
         

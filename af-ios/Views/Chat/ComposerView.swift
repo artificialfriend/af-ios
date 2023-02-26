@@ -11,8 +11,9 @@ struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var input: String = ""
-    @State private var trailingPadding: CGFloat = s56
-    @State private var randomPrompts: [String] = [
+    @State private var placeholderText: String = "Ask anything!"
+    @State private var trailingPadding: CGFloat = s96
+    @State private var shufflePrompts: [String] = [
         "Summarize chapter 1 of Wuthering Heights",
         "Give me 3 unique ideas for an essay on the American Revolution",
         "Write a rhyming love poem about girl named Anna",
@@ -31,7 +32,7 @@ struct ComposerView: View, KeyboardReadable {
         ZStack(alignment: .bottomTrailing) {
             TextField("", text: $input, axis: .vertical)
                 .placeholder(when: input.isEmpty, alignment: .leading) {
-                    Text("Ask anything!")
+                    Text(placeholderText)
                         .font(.pDemi)
                         .foregroundColor(af.af.interface.softColor)
                 }
@@ -47,10 +48,10 @@ struct ComposerView: View, KeyboardReadable {
                 .cornerRadius(cr24)
                 .animation(nil, value: input)
             
-            ComposerButtonView(input: $input, trailingPadding: $trailingPadding, randomPrompts: $randomPrompts)
-                .frame(width: 37.5, height: 37.5)
-                .padding(.trailing, 4)
-                .padding(.bottom, 4)
+            ComposerButtonsView(input: $input, placeholderText: $placeholderText, composerTrailingPadding: $trailingPadding, shufflePrompts: $shufflePrompts)
+                .frame(height: 37.5)
+                .padding(.trailing, s4)
+                .padding(.bottom, s4)
                 .animation(nil, value: input)
         }
         .overlay(
