@@ -32,7 +32,7 @@ struct AFMessageView: View {
     var body: some View {
         HStack(spacing: s0) {
             ZStack {
-                VStack(spacing: s8) {
+                VStack(spacing: s12) {
                     Text(text)
                         .opacity(textOpacity)
                         .foregroundColor(.afBlack)
@@ -42,7 +42,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(chatID: $chatID, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, backgroundColor: $backgroundColor)
+                            MessageToolbarView(chatID: $chatID, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, bgColor: $backgroundColor)
                         }
                         .opacity(toolbarOpacity)
                         .frame(width: textWidth)
@@ -96,7 +96,7 @@ struct AFMessageView: View {
     }
     
     
-    //FUNCTIONS
+    //FUNCTIONS------------------------------------------------//
     
     func loadMessage() {
         let prompt = messages[messages.count - 2].text!

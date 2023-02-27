@@ -25,6 +25,7 @@ extension Font {
 
 extension Color {
     static let afBlack: Color = Color("afBlack")
+    static let afMedBlack: Color = Color("afBlack").opacity(0.8)
     static let afBlurryWhite: Color = Color.white.opacity(0.8)
     static let afGray: Color = Color("afGray")
     

@@ -27,6 +27,8 @@ struct ChatView: View {
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
+                        
+                        NicknamesMessageView()
                     }
                     .padding(.top, s240)
                     .padding(.bottom, global.keyboardIsPresent ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)

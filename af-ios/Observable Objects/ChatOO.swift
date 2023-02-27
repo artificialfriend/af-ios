@@ -92,3 +92,29 @@ struct GetAFReplyMessage: Codable {
         case createdAt = "created_at"
     }
 }
+
+enum AdjustOption {
+    case shorter
+    case longer
+    case simple
+    case detailed
+    case friendly
+    case professional
+    
+    var name: String {
+        switch self {
+        case .shorter:
+            return "Shorter"
+        case .longer:
+            return "Longer"
+        case .simple:
+            return "Simple"
+        case .detailed:
+            return "Detailed"
+        case .friendly:
+            return "Friendly"
+        case .professional:
+            return "Professional"
+        }
+    }
+}
