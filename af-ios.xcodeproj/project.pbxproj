@@ -35,6 +35,7 @@
 		48D921B029AD1EDD00C3D0DA /* AdjustPanelLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */; };
 		48D921B229AD302900C3D0DA /* NicknamesMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921B129AD302900C3D0DA /* NicknamesMessageView.swift */; };
 		48D921B429AD34B600C3D0DA /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921B329AD34B600C3D0DA /* NicknameView.swift */; };
+		48D921B629AD7C9300C3D0DA /* NicknameMessageSaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921B529AD7C9300C3D0DA /* NicknameMessageSaveButtonView.swift */; };
 		CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D2296B0AD4003D1476 /* AFApp.swift */; };
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
@@ -75,6 +76,7 @@
 		48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustPanelLabelView.swift; sourceTree = "<group>"; };
 		48D921B129AD302900C3D0DA /* NicknamesMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknamesMessageView.swift; sourceTree = "<group>"; };
 		48D921B329AD34B600C3D0DA /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
+		48D921B529AD7C9300C3D0DA /* NicknameMessageSaveButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameMessageSaveButtonView.swift; sourceTree = "<group>"; };
 		CE1A30CF296B0AD4003D1476 /* af-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "af-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A30D2296B0AD4003D1476 /* AFApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFApp.swift; sourceTree = "<group>"; };
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				48159818298328AF00201B32 /* UserMessageView.swift */,
 				48B5633429846AAF0077B372 /* AFMessageView.swift */,
 				48D921B129AD302900C3D0DA /* NicknamesMessageView.swift */,
+				48D921B529AD7C9300C3D0DA /* NicknameMessageSaveButtonView.swift */,
 				48D921B329AD34B600C3D0DA /* NicknameView.swift */,
 				48AA2632298EA2A80091609C /* MessageToolbarView.swift */,
 				48D921AD29AD1DF400C3D0DA /* AdjustPanelView.swift */,
@@ -305,6 +308,7 @@
 				48D921B029AD1EDD00C3D0DA /* AdjustPanelLabelView.swift in Sources */,
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
 				48159819298328AF00201B32 /* UserMessageView.swift in Sources */,
+				48D921B629AD7C9300C3D0DA /* NicknameMessageSaveButtonView.swift in Sources */,
 				48047DAD29A6E04600C457FB /* MessagesModel.xcdatamodeld in Sources */,
 				48D921B229AD302900C3D0DA /* NicknamesMessageView.swift in Sources */,
 				481598172981A14200201B32 /* GlobalOO.swift in Sources */,

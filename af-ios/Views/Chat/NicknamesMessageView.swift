@@ -8,38 +8,58 @@
 import SwiftUI
 
 struct NicknamesMessageView: View {
+    @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     
     var body: some View {
         HStack(spacing: s0) {
-            VStack{
-                NicknameView(nickname: "bro")
+            VStack(alignment: .leading) {
+                HStack {
+                    NicknameView(nickname: .sis)
+                    NicknameView(nickname: .bro)
+                    NicknameView(nickname: .girl)
+                    NicknameView(nickname: .man)
+                }
+                
+                HStack {
+                    NicknameView(nickname: .maam)
+                    NicknameView(nickname: .sir)
+                    NicknameView(nickname: .bestie)
+                }
+                
+                HStack {
+                    NicknameView(nickname: .pal)
+                    NicknameView(nickname: .buddy)
+                    NicknameView(nickname: .champ)
+                }
+                
+                HStack {
+                    NicknameView(nickname: .dudette)
+                    NicknameView(nickname: .dude)
+                }
+                
+                HStack {
+                    NicknameView(nickname: .ms(user.user.familyName))
+                    NicknameView(nickname: .mr(user.user.familyName))
+                }
+                
+                HStack {
+                    NicknameView(nickname: .queen)
+                    NicknameView(nickname: .king)
+                }
+                .padding(.bottom, s8)
+                
+                NicknameMessageSaveButtonView()
             }
-//            .background {
-//                GeometryReader { geo in
-//                    Color.clear
-//                        .onAppear {
-//                            setTextWidth(geo: geo.size.width, isOnAppear: true)
-//                        }
-//                        .onChange(of: text) { _ in
-//                            setTextWidth(geo: geo.size.width, isOnAppear: false)
-//                        }
-//                }
-//            }
-            .font(.p)
             .padding(.horizontal, s16)
             .padding(.vertical, s12)
-            .frame(alignment: .bottomLeading)
-            .background(af.af.interface.afColor)//backgroundColor)
+            .background(af.af.interface.afColor)
             .cornerRadius(s24, corners: .topRight)
             .cornerRadius(s24, corners: .topLeft)
             .cornerRadius(s24, corners: .bottomRight)
             .cornerRadius(s8, corners: .bottomLeft)
             .padding(.leading, s12)
             .padding(.trailing, s64)
-            //.onAppear { backgroundColor = af.af.interface.afColor }
-            
-            Spacer(minLength: 0)
         }
         //.opacity(isNew ? opacity : 1)
         .padding(.top, s8)
