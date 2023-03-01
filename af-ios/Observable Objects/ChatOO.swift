@@ -59,6 +59,18 @@ class ChatOO: ObservableObject {
         message.createdAt = Date.now
         currentSortID += 1
     }
+    
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        let utcDateString = formatter.string(from: date)
+        let utcDate = formatter.date(from: utcDateString)
+        formatter.dateFormat = "MMM. d"
+        formatter.timeZone = TimeZone.current
+        let localDate = formatter.string(from: utcDate!)
+        return localDate
+    }
 }
 
 struct GetAFReplyRequestBody: Codable {

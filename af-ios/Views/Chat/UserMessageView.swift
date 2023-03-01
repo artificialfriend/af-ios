@@ -38,7 +38,6 @@ struct UserMessageView: View {
                     .padding(.trailing, s12)
             }
             .opacity(isNew ? opacity : 1)
-            .padding(.top, s8)
             .padding(.bottom, isNew ? bottomPadding : 0)
             .onAppear {
                 if isNew {

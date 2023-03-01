@@ -86,7 +86,6 @@ struct AFMessageView: View {
             Spacer(minLength: 0)
         }
         .opacity(isNew ? opacity : 1)
-        .padding(.top, s8)
         .padding(.bottom, bottomPadding)
         .onAppear {
             if isNew {
@@ -178,6 +177,7 @@ struct AFMessageView: View {
     func updateMessages(userResponse: GetAFReplyMessage, afResponse: GetAFReplyMessage, userMessageIndex: Int, afMessageIndex: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         messages[afMessageIndex].chatID = afResponse.chatID
         messages[afMessageIndex].text = afResponse.text
         messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
