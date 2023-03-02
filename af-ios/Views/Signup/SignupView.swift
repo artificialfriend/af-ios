@@ -112,7 +112,7 @@ struct SignupView: View {
             
             if currentStep == .create {
                 EditorView(activeTab: $activeEditorTab)
-                    .padding(.top, s32)
+                    .padding(.top, s16)
                     .padding(.bottom, s12)
                     .opacity(createOpacity)
             }
@@ -457,7 +457,7 @@ struct SignupView: View {
             afOffset = -s12
         }
         
-        Task { try await Task.sleep(nanoseconds: 1_500_000_000)
+        Task { try await Task.sleep(nanoseconds: 1_000)//1_500_000_000)
             withAnimation(.medSpring) {
                 buttonOffset = 0
                 buttonOpacity = 1

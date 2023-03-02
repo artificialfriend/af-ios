@@ -13,11 +13,12 @@ struct EditorView: View {
     
     var body: some View {
         VStack(spacing: s0) {
-            DividerView(direction: .horizontal)
-            TabsView(activeTab: $activeTab)
-            DividerView(direction: .horizontal)
+            //DividerView(direction: .horizontal)
+            //TabsView(activeTab: $activeTab)
+            //DividerView(direction: .horizontal)
             TraitCategoryView(activeTab: $activeTab)
-            DividerView(direction: .horizontal)
+            //DividerView(direction: .horizontal)
+            Spacer()
         }
     }
 }

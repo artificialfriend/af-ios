@@ -15,24 +15,26 @@ struct TraitCategoryView: View {
         ZStack {
             VStack(alignment: .leading, spacing: s0) {
                 TraitInstanceRowView(label: "Color", activeInstance: af.af.skinColor)
-                TraitInstanceRowView(label: "Freckles", activeInstance: af.af.freckles)
+                TraitInstanceRowView(label: "Hair", activeInstance: af.af.hairstyle)
+                //TraitInstanceRowView(label: "Eyelashes", activeInstance: af.af.eyelashes)
+                //TraitInstanceRowView(label: "Freckles", activeInstance: af.af.freckles)
             }
-            .opacity(activeTab == .skin ? 1 : 0)
-            
-            VStack(alignment: .leading, spacing: s0) {
-                TraitInstanceRowView(label: "Color", activeInstance: af.af.hairColor)
-                TraitInstanceRowView(label: "Style", activeInstance: af.af.hairstyle)
-            }
-            .opacity(activeTab == .hair ? 1 : 0)
-            
-            VStack(alignment: .leading, spacing: s0) {
-                TraitInstanceRowView(label: "Color", activeInstance: af.af.eyeColor)
-                TraitInstanceRowView(label: "Lashes", activeInstance: af.af.eyelashes)
-            }
-            .opacity(activeTab == .eyes ? 1 : 0)
+//            .opacity(activeTab == .skin ? 1 : 0)
+//
+//            VStack(alignment: .leading, spacing: s0) {
+//                TraitInstanceRowView(label: "Color", activeInstance: af.af.hairColor)
+//                TraitInstanceRowView(label: "Style", activeInstance: af.af.hairstyle)
+//            }
+//            .opacity(activeTab == .hair ? 1 : 0)
+//
+//            VStack(alignment: .leading, spacing: s0) {
+//                TraitInstanceRowView(label: "Color", activeInstance: af.af.eyeColor)
+//                TraitInstanceRowView(label: "Lashes", activeInstance: af.af.eyelashes)
+//            }
+//            .opacity(activeTab == .eyes ? 1 : 0)
         }
         .padding(.top, s4)
-        .padding(.bottom, s24)
+        .padding(.bottom, s16)
     }
 }
 
