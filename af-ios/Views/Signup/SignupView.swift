@@ -109,7 +109,7 @@ struct SignupView: View {
             
             if currentStep == .create {
                 EditorView(activeTab: $activeEditorTab)
-                    .padding(.top, s16)
+                    .padding(.top, s8)
                     .padding(.bottom, s12)
                     .opacity(createOpacity)
             }
@@ -138,11 +138,11 @@ struct SignupView: View {
                         .disabled(buttonsAreDisabled)
                         .buttonStyle(Spring())
                         
-                        if currentStep == .welcome {
-                            SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
-                                .cornerRadius(cr16)
-                        } else {
-                        Button(action: { handleNextTap() }) {
+//                        if currentStep == .welcome {
+//                            SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
+//                                .cornerRadius(cr16)
+//                        } else {
+                            Button(action: { handleNextTap() }) {
                                 SignupNextButtonView(
                                     createOpacity: $createOpacity,
                                     nameOpacity: $nameOpacity,
@@ -153,7 +153,7 @@ struct SignupView: View {
                             }
                             .disabled(buttonsAreDisabled)
                             .buttonStyle(Spring())
-                        }
+                        //}
                     }
                     .frame(height: s64)
                     .offset(y: buttonOffset)
@@ -277,6 +277,7 @@ struct SignupView: View {
                         }
                     default:
                         print(auth.credential)
+                        handleNextTap()
                     }
             
                 if authErrorHasOccurred { toggleError() }
