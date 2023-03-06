@@ -41,38 +41,18 @@ struct AFView: View {
                 .background(Blur())
                 .clipShape(Circle())
                 
-            //af.af.interface.afImage
-            setAFImage()
+            af.af.image.neutral
+            //setAFImage()
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             
-            af.af.interface.bubbleImage
+            af.af.bubble.image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
         //.animation(.linear(duration: 0.5), value: af.af.skinColor)
         .frame(maxWidth: 400)
         .aspectRatio(contentMode: .fit)
-    }
-    
-    func setAFImage() -> Image {
-        if af.af.skinColor == .green && af.af.hairstyle == .one { return TraitInstanceImage.green1.image }
-        else if af.af.skinColor == .green && af.af.hairstyle == .two { return TraitInstanceImage.green2.image }
-        else if af.af.skinColor == .green && af.af.hairstyle == .three { return TraitInstanceImage.green3.image }
-        else if af.af.skinColor == .green && af.af.hairstyle == .four { return TraitInstanceImage.green4.image }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .one { return TraitInstanceImage.blue1.image }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .two { return TraitInstanceImage.blue2.image }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .three { return TraitInstanceImage.blue3.image }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .four { return TraitInstanceImage.blue4.image }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .one { return TraitInstanceImage.purple1.image }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .two { return TraitInstanceImage.purple2.image }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .three { return TraitInstanceImage.purple3.image }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .four { return TraitInstanceImage.purple4.image }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .one { return TraitInstanceImage.pink1.image }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .two { return TraitInstanceImage.pink2.image }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .three { return TraitInstanceImage.pink3.image }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .four { return TraitInstanceImage.pink4.image }
-        else { return TraitInstanceImage.green1.image }
     }
 }
 

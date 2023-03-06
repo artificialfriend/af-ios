@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct NameFieldView: View {
     @EnvironmentObject var af: AFOO
@@ -26,12 +27,15 @@ struct NameFieldView: View {
                 .accentColor(af.af.interface.userColor)
                 .frame(height: s56)
                 .overlay(RoundedRectangle(cornerRadius: cr16).stroke(lineWidth: 2).foregroundColor(af.af.interface.lineColor))
+                .onReceive(Just(input)) { _ in limitInput(charLimit) }
             
             HStack {
+                //LABEL
                 Text("NAME")
                 
                 Spacer()
                 
+                //CHARACTER COUNTDOWN
                 Text(String(charLimit - input.count))
                     .opacity(charLimit - input.count <= 5 ? 1 : 0)
                     .multilineTextAlignment(.trailing)
@@ -39,6 +43,12 @@ struct NameFieldView: View {
             .padding(.horizontal, s16)
             .font(.xs)
             .foregroundColor(af.af.interface.softColor)
+        }
+    }
+    
+    func limitInput(_ upper: Int) {
+        if input.count > upper {
+            input = String(input.prefix(upper))
         }
     }
 }

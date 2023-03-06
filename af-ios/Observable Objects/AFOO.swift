@@ -10,14 +10,16 @@ import SwiftUI
 class AFOO: ObservableObject {
     @Published var af: AF = AF(
         id: "4056",
-        name: "4056",
+        name: "AF4056",
         birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!,
         skinColor: SkinColor.blue,
         freckles: Freckles.noFreckles,
-        hairColor: HairColor.green,
-        hairstyle: Hairstyle.two,
-        eyeColor: EyeColor.green,
+        hairColor: HairColor.blue,
+        hairstyle: Hairstyle.one,
+        eyeColor: EyeColor.blue,
         eyelashes: Eyelashes.short,
+        image: AFImage.blue1,
+        bubble: Bubble.blue,
         interface: Interface.blue
     )
     
@@ -35,6 +37,8 @@ class AFOO: ObservableObject {
             hairstyle: af.hairstyle.name,
             eyeColor: af.eyeColor.name,
             eyelashes: af.eyelashes.name,
+            image: af.image.name,
+            bubble: af.bubble.name,
             interface: af.interface.name
         )
         
@@ -58,6 +62,8 @@ class AFOO: ObservableObject {
             af.hairstyle = Hairstyle.allCases.first(where: { $0.name == storedAF.hairstyle })!
             af.eyeColor = EyeColor.allCases.first(where: { $0.name == storedAF.eyeColor })!
             af.eyelashes = Eyelashes.allCases.first(where: { $0.name == storedAF.eyelashes })!
+            af.image = AFImage.allCases.first(where: { $0.name == storedAF.image })!
+            af.bubble = Bubble.allCases.first(where: { $0.name == storedAF.bubble })!
             af.interface = Interface.allCases.first(where: { $0.name == storedAF.interface })!
         }
     }
@@ -73,6 +79,8 @@ struct AF {
     var hairstyle: Hairstyle
     var eyeColor: EyeColor
     var eyelashes: Eyelashes
+    var image: AFImage
+    var bubble: Bubble
     var interface: Interface
 }
 
@@ -86,6 +94,8 @@ struct StoredAF: Codable {
     var hairstyle: String
     var eyeColor: String
     var eyelashes: String
+    var image: String
+    var bubble: String
     var interface: String
 }
 
@@ -107,6 +117,8 @@ enum Trait {
     case hairstyle
     case eyeColor
     case eyelashes
+    case image
+    case bubble
     case interface
 }
 
@@ -130,19 +142,6 @@ enum SkinColor: TraitInstance {
             return "Purple"
         case .pink:
             return "Pink"
-        }
-    }
-    
-    var image: Image {
-        switch self {
-        case .green:
-            return Image("Green1Short")
-        case .blue:
-            return Image("Blue1Short")
-        case .purple:
-            return Image("Purple1Short")
-        case .pink:
-            return Image("Pink1Short")
         }
     }
 }
@@ -251,6 +250,177 @@ enum Eyelashes: TraitInstance {
             return "Short"
         case .long:
             return "Long"
+        }
+    }
+}
+
+enum AFImage: TraitInstance {
+    case green1
+    case green2
+    case green3
+    case green4
+    case blue1
+    case blue2
+    case blue3
+    case blue4
+    case purple1
+    case purple2
+    case purple3
+    case purple4
+    case pink1
+    case pink2
+    case pink3
+    case pink4
+    
+    var trait: Trait {
+        return .image
+    }
+    
+    var name: String {
+        switch self {
+        case .green1:
+            return "Green 1"
+        case .green2:
+            return "Green 2"
+        case .green3:
+            return "Green 3"
+        case .green4:
+            return "Green 4"
+        case .blue1:
+            return "Blue 1"
+        case .blue2:
+            return "Blue 2"
+        case .blue3:
+            return "Blue 3"
+        case .blue4:
+            return "Blue 4"
+        case .purple1:
+            return "Purple 1"
+        case .purple2:
+            return "Purple 2"
+        case .purple3:
+            return "Purple 3"
+        case .purple4:
+            return "Purple 4"
+        case .pink1:
+            return "Pink 1"
+        case .pink2:
+            return "Pink 2"
+        case .pink3:
+            return "Pink 3"
+        case .pink4:
+            return "Pink 4"
+        }
+    }
+    
+    var neutral: Image {
+        switch self {
+        case .green1:
+            return Image("Green1AF")
+        case .green2:
+            return Image("Green2AF")
+        case .green3:
+            return Image("Green3AF")
+        case .green4:
+            return Image("Green4AF")
+        case .blue1:
+            return Image("Blue1AF")
+        case .blue2:
+            return Image("Blue2AF")
+        case .blue3:
+            return Image("Blue3AF")
+        case .blue4:
+            return Image("Blue4AF")
+        case .purple1:
+            return Image("Purple1AF")
+        case .purple2:
+            return Image("Purple2AF")
+        case .purple3:
+            return Image("Purple3AF")
+        case .purple4:
+            return Image("Purple4AF")
+        case .pink1:
+            return Image("Pink1AF")
+        case .pink2:
+            return Image("Pink2AF")
+        case .pink3:
+            return Image("Pink3AF")
+        case .pink4:
+            return Image("Pink4AF")
+        }
+    }
+        
+    var sleeping: Image {
+        switch self {
+        case .green1:
+            return Image("Green1AF")
+        case .green2:
+            return Image("Green2AF")
+        case .green3:
+            return Image("Green3AF")
+        case .green4:
+            return Image("Green4AF")
+        case .blue1:
+            return Image("Blue1AF")
+        case .blue2:
+            return Image("Blue2AF")
+        case .blue3:
+            return Image("Blue3AF")
+        case .blue4:
+            return Image("Blue4AF")
+        case .purple1:
+            return Image("Purple1AF")
+        case .purple2:
+            return Image("Purple2AF")
+        case .purple3:
+            return Image("Purple3AF")
+        case .purple4:
+            return Image("Purple4AF")
+        case .pink1:
+            return Image("Pink1AF")
+        case .pink2:
+            return Image("Pink2AF")
+        case .pink3:
+            return Image("Pink3AF")
+        case .pink4:
+            return Image("Pink4AF")
+        }
+    }
+}
+
+enum Bubble: TraitInstance {
+    case green
+    case blue
+    case purple
+    case pink
+    
+    var trait: Trait {
+        return .bubble
+    }
+    
+    var name: String {
+        switch self {
+        case .green:
+            return "Green"
+        case .blue:
+            return "Blue"
+        case .purple:
+            return "Purple"
+        case .pink:
+            return "Pink"
+        }
+    }
+    
+    var image: Image {
+        switch self {
+        case .green:
+            return Image("GreenBubble")
+        case .blue:
+            return Image("BlueBubble")
+        case .purple:
+            return Image("PurpleBubble")
+        case .pink:
+            return Image("PinkBubble")
         }
     }
 }
@@ -368,55 +538,21 @@ enum Interface: TraitInstance {
             return .afBubblePink
         }
     }
-    
-    var afImage: Image {
-        switch self {
-        case .green:
-            return Image("GreenAF")
-        case .blue:
-            return Image("BlueAF")
-        case .purple:
-            return Image("PurpleAF")
-        case .pink:
-            return Image("PinkAF")
-        }
-    }
-    
-    var bubbleImage: Image {
-        switch self {
-        case .green:
-            return Image("GreenBubble")
-        case .blue:
-            return Image("BlueBubble")
-        case .purple:
-            return Image("PurpleBubble")
-        case .pink:
-            return Image("PinkBubble")
-        }
-    }
 }
-
-//protocol TraitInstanceImage: CaseIterable {
-//    var trait: Trait { get }
-//    var name: String { get }
-//}
 
 enum TraitInstanceImage {
     case green1
     case green2
     case green3
     case green4
-    
     case blue1
     case blue2
     case blue3
     case blue4
-    
     case purple1
     case purple2
     case purple3
     case purple4
-    
     case pink1
     case pink2
     case pink3

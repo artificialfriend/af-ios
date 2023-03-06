@@ -33,7 +33,7 @@ struct ChatView: View {
         }
         .onAppear {
             chat.currentSortID = Int32(messages.count - 1)
-            if messages.count == 0 { addDummyMessages() }
+            //if messages.count == 0 { addDummyMessages() }
         }
     }
     

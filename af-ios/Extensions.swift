@@ -24,21 +24,17 @@ extension View {
 }
 
 struct TitleModifier: ViewModifier {
-    
     func body(content: Content) -> some View {
         content
             .font(.l)
     }
-    
 }
 
 extension View {
-    
     func title() -> some View {
         self
             .font(.l)
     }
-    
 }
 
 protocol KeyboardReadable {

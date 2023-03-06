@@ -101,8 +101,8 @@ struct ContentView: View, KeyboardReadable {
                     .opacity(afOpacity)
                     .offset(y: afOffset)
                     .scaleEffect(afScale)
-                    .frame(width: s80, height: s80)
-                    .position(x: UIScreen.main.bounds.width - s48, y: topNavHeight + s48)
+                    .frame(width: s104, height: s104)
+                    .position(x: UIScreen.main.bounds.width - 52, y: topNavHeight + 52)
                     .ignoresSafeArea(edges: .vertical)
                     .onAppear {
                         withAnimation(.afFloatSmall){

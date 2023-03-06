@@ -27,7 +27,7 @@ struct AFApp: App {
                     user.getUser()
                     af.getAF()
                     
-                    if UserDefaults.standard.data(forKey: "user") != nil {
+                    if UserDefaults.standard.data(forKey: "af") != nil {
                         global.activeSection = .chat
                     }
                 }

@@ -16,6 +16,7 @@ struct SignupView: View {
     @State private var currentStep: SignupStep = .welcome
     @State private var authErrorHasOccurred: Bool = false
     @State private var activeEditorTab: TraitCategory = .skin
+    @State private var logoOpacity: Double = 1
     @State private var afOffset: CGFloat = 0
     @State private var afScale: Double = 0
     @State private var afOpacity: Double = 1
@@ -25,18 +26,15 @@ struct SignupView: View {
     @State private var bootupOpacity: Double = 0
     @State private var buttonOffset: CGFloat = 104
     @State private var buttonOpacity: Double = 0
-    @State private var buttonIsDismissed: Bool = false
+    @State private var buttonIsPresent: Bool = false
     @State private var buttonWelcomeLabelOpacity: Double = 1
+    @State private var buttonsAreDisabled: Bool = false
     @State private var isLoading: Bool = false
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
+    @State private var errorOpacity: Double = 0
+    @State private var errorOffset: CGFloat = -s24
     @State private var nameFieldCharLimit: Int = 12
-    @State private var nameFieldInput: String = "" {
-        didSet {
-            if nameFieldInput.count > nameFieldCharLimit && oldValue.count <= nameFieldCharLimit {
-                nameFieldInput = oldValue
-            }
-        }
-    }
+    @State private var nameFieldInput: String = ""
     
     var body: some View {
         VStack(spacing: 0) {
@@ -44,7 +42,7 @@ struct SignupView: View {
                 Image("Logomark")
                     .padding(.top, s16)
                     .foregroundColor(af.af.interface.lineColor)
-                    .opacity(welcomeOpacity)
+                    .opacity(logoOpacity)
             }
             
             if currentStep == .welcome || currentStep == .bootup {
@@ -73,7 +71,6 @@ struct SignupView: View {
                 .animation(.longSpring, value: currentStep)
                 .offset(y: afOffset)
                 .opacity(afOpacity)
-                .onAppear { appearAF() }
             
             if currentStep == .welcome {
                 VStack(spacing: 0) {
@@ -133,44 +130,65 @@ struct SignupView: View {
                     .opacity(bootupOpacity)
                 }
                 
-                if buttonIsDismissed == false {
-                    VStack {
-                        HStack(spacing: s0) {
-                            Button(action: { handleBackTap() }) {
-                                SignupBackButtonView(currentSignupStep: $currentStep)
-                            }
-                            .buttonStyle(Spring())
-                            
-//                            if currentStep == .welcome {
-//                                SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
-//                            } else {
-                                Button(action: { handleNextTap() }) {
-                                    SignupNextButtonView(
-                                        createOpacity: $createOpacity,
-                                        nameOpacity: $nameOpacity,
-                                        buttonWelcomeLabelOpacity: $buttonWelcomeLabelOpacity,
-                                        isLoading: $isLoading,
-                                        spinnerRotation: $spinnerRotation
-                                    )
-                                }
-                                .buttonStyle(Spring())
-                            //}
+                VStack(spacing: 0) {
+                    HStack(spacing: s0) {
+                        Button(action: { handleBackTap() }) {
+                            SignupBackButtonView(currentSignupStep: $currentStep)
                         }
-                        .frame(height: s64)
-                        .offset(y: buttonOffset)
-                        .opacity(buttonOpacity)
-                        .padding(.horizontal, s12)
-                        .animation(.medSpring, value: currentStep)
+                        .disabled(buttonsAreDisabled)
+                        .buttonStyle(Spring())
                         
-                        if authErrorHasOccurred {
-                            Text("Error")
-                                .foregroundColor(.red)
+                        if currentStep == .welcome {
+                            SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
+                                .cornerRadius(cr16)
+                        } else {
+                        Button(action: { handleNextTap() }) {
+                                SignupNextButtonView(
+                                    createOpacity: $createOpacity,
+                                    nameOpacity: $nameOpacity,
+                                    buttonWelcomeLabelOpacity: $buttonWelcomeLabelOpacity,
+                                    isLoading: $isLoading,
+                                    spinnerRotation: $spinnerRotation
+                                )
+                            }
+                            .disabled(buttonsAreDisabled)
+                            .buttonStyle(Spring())
                         }
                     }
+                    .frame(height: s64)
+                    .offset(y: buttonOffset)
+                    .opacity(buttonOpacity)
+                    .padding(.horizontal, s12)
+                    .animation(.medSpring, value: currentStep)
+                    .animation(.shortSpringB, value: authErrorHasOccurred)
+                }
+                
+                if authErrorHasOccurred {
+                    Text("Signup failed... Please try again.")
+                        .font(.p)
+                        .foregroundColor(.red)
+                        .opacity(errorOpacity)
+                        .padding(.top, s12)
+                        .animation(.shortSpringB, value: authErrorHasOccurred)
                 }
             }
         }
+        .animation(.shortSpringB, value: authErrorHasOccurred)
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onAppear {
+            //IF IN A PREVIOUS SESSION, THE USER SIGNED UP BUT DIDN'T FINISH CREATING THEIR AF,
+            //START THEIR NEXT SESSION ON THE CREATE STEP.
+            if user.user.appleID != "" {
+                currentStep = .create
+                buttonWelcomeLabelOpacity = 0
+                
+                Task { try await Task.sleep(nanoseconds: 500_000_000)
+                    fadeIn()
+                }
+            }
+            
+            loadIn()
+        }
     }
     
     
@@ -260,9 +278,10 @@ struct SignupView: View {
                     default:
                         print(auth.credential)
                     }
-                authErrorHasOccurred = false
+            
+                if authErrorHasOccurred { toggleError() }
             case .failure:
-                authErrorHasOccurred = true
+                if !authErrorHasOccurred { toggleError() }
         }
     }
     
@@ -270,20 +289,13 @@ struct SignupView: View {
         impactMedium.impactOccurred()
         transition()
         
-        if currentStep == .create {
-            af.storeAF()
-        }
-        
+        //IF BUTTON IS TAPPED WHILE ON THE NAME STEP, STORE AF IN USER DEFAULTS
         if currentStep == .name {
             if !nameFieldInput.isEmpty {
                 af.af.name = nameFieldInput
             }
             
             af.storeAF()
-            
-            createAccount() { result in
-                print(result)
-            }
         }
     }
 
@@ -293,11 +305,13 @@ struct SignupView: View {
     }
     
     func transition() {
+        toggleButtonsAreDisabled()
+        
         if currentStep == .welcome {
             buttonWelcomeLabelOpacity = 0
             toggleLoading()
             
-            Task { try await Task.sleep(nanoseconds: 1_000_000)
+            Task { try await Task.sleep(nanoseconds: 1_000_000_000)
                 fadeOut()
                 toggleLoading()
                 
@@ -306,49 +320,29 @@ struct SignupView: View {
                     
                     Task { try await Task.sleep(nanoseconds: 300_000_000)
                         fadeIn()
+                        toggleButtonsAreDisabled()
                     }
                 }
             }
         } else {
             fadeOut()
-            
-            if currentStep == .name {
-                toggleButtonPresence()
-                
-                Task { try await Task.sleep(nanoseconds: 400_000_000)
-                    toggleLoading()
-                }
-            }
+            if currentStep == .name { toggleButtonPresence() }
             
             Task { try await Task.sleep(nanoseconds: 100_000_000)
                 changeStep()
                 
                 Task { try await Task.sleep(nanoseconds: 300_000_000)
                     fadeIn()
-                }
-            }
-        }
-        
-        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-            if currentStep == .bootup {
-                Task { try await Task.sleep(nanoseconds: 4_000_000_000)
-                    fadeOut()
+                    toggleButtonsAreDisabled()
                     
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        afScale = 1.1
-                    }
-                    
-                    Task { try await Task.sleep(nanoseconds: 500_000_000)
-                        withAnimation(.easeIn(duration: 0.3)) {
-                            afScale = 0
-                        }
+                    if currentStep == .bootup {
+                        toggleLoading()
                         
-                        Task { try await Task.sleep(nanoseconds: 200_000_000)
-                            withAnimation(.linear1) {
-                                afOpacity = 0
-                            }
-                            
-                            Task { try await Task.sleep(nanoseconds: 500_000_000)
+                        Task { try await Task.sleep(nanoseconds: 3_000_000_000)
+                            fadeOut()
+                            dismissAF()
+                                    
+                            Task { try await Task.sleep(nanoseconds: 1_000_000_000)
                                 changeStep()
                             }
                         }
@@ -363,18 +357,27 @@ struct SignupView: View {
             fadeOut()
             
             Task { try await Task.sleep(nanoseconds: 100_000_000)
-                afOffset = s0
                 currentStep = .create
                 
                 Task { try await Task.sleep(nanoseconds: 300_000_000)
-                    fadeIn()
+                    fadeIn(shouldResetAFFloat: false)
                 }
             }
         }
     }
     
+    func toggleButtonsAreDisabled() {
+        if buttonsAreDisabled {
+            buttonsAreDisabled = false
+        } else {
+            buttonsAreDisabled = true
+        }
+    }
+    
     func changeStep() {
-        self.afOffset = s0
+        if currentStep != .create {
+            self.afOffset = s0
+        }
         
         switch currentStep {
         case .welcome:
@@ -403,9 +406,11 @@ struct SignupView: View {
         }
     }
 
-    func fadeIn() {
-        withAnimation(.afFloat){
-            afOffset = -s12
+    func fadeIn(shouldResetAFFloat: Bool = true) {
+        if shouldResetAFFloat {
+            if currentStep != .name {
+                startAFFloating()
+            }
         }
         
         withAnimation(.linear2) {
@@ -424,14 +429,17 @@ struct SignupView: View {
 
     func toggleButtonPresence() {
         withAnimation(.medSpring) {
-            if buttonIsDismissed == false {
+            if buttonIsPresent {
                 buttonOffset = s104
                 buttonOpacity = 0
+                buttonIsPresent = false
             } else {
-                buttonOffset = s0
+                buttonOffset = 0
                 buttonOpacity = 1
+                buttonIsPresent = true
             }
         }
+        
     }
 
     func toggleLoading() {
@@ -444,23 +452,61 @@ struct SignupView: View {
         }
     }
     
-    func appearAF() {
-        withAnimation(.medSpring) {
-            afScale = 1
+    func toggleError() {
+        if authErrorHasOccurred {
+            buttonOffset = 0
+            errorOpacity = 0
+            authErrorHasOccurred = false
+        } else {
+            buttonOffset = -36
+            
+            Task { try await Task.sleep(nanoseconds: 100_000_000)
+                withAnimation(.linear2) {
+                    errorOpacity = 1
+                }
+            }
+            
+            authErrorHasOccurred = true
         }
-
-        withAnimation(.linear5) {
-            welcomeOpacity = 1
-        }
-        
+    }
+    
+    func startAFFloating() {
         withAnimation(.afFloat){
             afOffset = -s12
         }
+    }
+    
+    func dismissAF() {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            afScale = 1.1
+        }
         
-        Task { try await Task.sleep(nanoseconds: 1_000)//1_500_000_000)
+        Task { try await Task.sleep(nanoseconds: 500_000_000)
+            withAnimation(.easeIn(duration: 0.3)) {
+                afScale = 0
+            }
+            
+            Task { try await Task.sleep(nanoseconds: 200_000_000)
+                withAnimation(.linear1) {
+                    afOpacity = 0
+                }
+            }
+        }
+    }
+    
+    func loadIn() {
+        Task { try await Task.sleep(nanoseconds: 500_000_000)
             withAnimation(.medSpring) {
-                buttonOffset = 0
-                buttonOpacity = 1
+                afScale = 1
+            }
+            
+            startAFFloating()
+            toggleButtonPresence()
+            
+            Task { try await Task.sleep(nanoseconds: 100_000_000)
+                withAnimation(.linear(duration: 0.3)) {
+                    welcomeOpacity = 1
+                }
             }
         }
     }
