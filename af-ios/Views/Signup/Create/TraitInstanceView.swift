@@ -15,7 +15,7 @@ struct TraitInstanceView: View {
     
     var body: some View {
         ZStack {
-            setTraitInstanceImg(instance: instance).neutral
+            setTraitInstanceImg(instance: instance).image
                 .resizable()
                 .frame(width: width * 1.05, height: width * 1.05)
                 .frame(width: width, height: width)

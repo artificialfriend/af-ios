@@ -23,12 +23,21 @@ struct AFApp: App {
                 .environmentObject(user)
                 .environmentObject(af)
                 .environmentObject(chat)
+                .preferredColorScheme(.light)
+                //INITIALIZE
                 .onAppear {
                     user.getUser()
                     af.getAF()
+                    if af.af.name == "" { af.setFactoryName() }
                     
+                    //IF THE USER HAS ALREADY GONE THROUGH ONBOARDING, OPEN TO CHAT
                     if UserDefaults.standard.data(forKey: "af") != nil {
+                        af.setExpression(to: .sleeping)
                         global.activeSection = .chat
+                        
+                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                        }
                     }
                 }
         }

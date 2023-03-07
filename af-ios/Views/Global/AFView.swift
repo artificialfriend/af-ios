@@ -41,8 +41,7 @@ struct AFView: View {
                 .background(Blur())
                 .clipShape(Circle())
                 
-            af.af.image.neutral
-            //setAFImage()
+            af.af.image.image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             
@@ -50,7 +49,6 @@ struct AFView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
-        //.animation(.linear(duration: 0.5), value: af.af.skinColor)
         .frame(maxWidth: 400)
         .aspectRatio(contentMode: .fit)
     }

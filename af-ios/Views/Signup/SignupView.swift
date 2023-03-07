@@ -29,6 +29,7 @@ struct SignupView: View {
     @State private var buttonIsPresent: Bool = false
     @State private var buttonWelcomeLabelOpacity: Double = 1
     @State private var buttonsAreDisabled: Bool = false
+    @State private var siwaButtonOpacity: Double = 1
     @State private var isLoading: Bool = false
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
     @State private var errorOpacity: Double = 0
@@ -138,22 +139,25 @@ struct SignupView: View {
                         .disabled(buttonsAreDisabled)
                         .buttonStyle(Spring())
                         
-//                        if currentStep == .welcome {
-//                            SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
-//                                .cornerRadius(cr16)
-//                        } else {
+                        ZStack {
                             Button(action: { handleNextTap() }) {
-                                SignupNextButtonView(
-                                    createOpacity: $createOpacity,
-                                    nameOpacity: $nameOpacity,
-                                    buttonWelcomeLabelOpacity: $buttonWelcomeLabelOpacity,
-                                    isLoading: $isLoading,
-                                    spinnerRotation: $spinnerRotation
-                                )
+                                    SignupNextButtonView(
+                                        createOpacity: $createOpacity,
+                                        nameOpacity: $nameOpacity,
+                                        buttonWelcomeLabelOpacity: $buttonWelcomeLabelOpacity,
+                                        isLoading: $isLoading,
+                                        spinnerRotation: $spinnerRotation
+                                    )
+                                }
+                                .disabled(buttonsAreDisabled)
+                                .buttonStyle(Spring())
+                            
+                            if currentStep == .welcome {
+                                SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
+                                    .cornerRadius(cr16)
+                                    .opacity(siwaButtonOpacity)
                             }
-                            .disabled(buttonsAreDisabled)
-                            .buttonStyle(Spring())
-                        //}
+                        }
                     }
                     .frame(height: s64)
                     .offset(y: buttonOffset)
@@ -181,7 +185,7 @@ struct SignupView: View {
             if user.user.appleID != "" {
                 currentStep = .create
                 buttonWelcomeLabelOpacity = 0
-                
+
                 Task { try await Task.sleep(nanoseconds: 500_000_000)
                     fadeIn()
                 }
@@ -263,6 +267,10 @@ struct SignupView: View {
     }
     
     func handleAuth(_ authResult: Result<ASAuthorization, Error>) {
+        
+        toggleLoading()
+        if !authErrorHasOccurred { toggleError() }
+        
         switch authResult {
             case .success(let auth):
                 switch auth.credential {
@@ -273,16 +281,17 @@ struct SignupView: View {
                             user.user.givenName = authValues.givenName
                             user.user.familyName = authValues.familyName
                             user.storeUser()
+                            if authErrorHasOccurred { toggleError() }
+                            siwaButtonOpacity = 0
                             handleNextTap()
                         }
                     default:
                         print(auth.credential)
-                        handleNextTap()
                     }
-            
-                if authErrorHasOccurred { toggleError() }
+                toggleLoading()
             case .failure:
-                if !authErrorHasOccurred { toggleError() }
+                siwaButtonOpacity = 1
+                toggleLoading()
         }
     }
     
@@ -344,7 +353,12 @@ struct SignupView: View {
                             dismissAF()
                                     
                             Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+                                af.setExpression(to: .happy)
                                 changeStep()
+                                
+                                Task { try await Task.sleep(nanoseconds: 3_000_000_000)
+                                    withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                                }
                             }
                         }
                     }

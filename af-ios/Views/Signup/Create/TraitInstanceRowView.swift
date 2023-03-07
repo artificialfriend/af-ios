@@ -79,6 +79,8 @@ struct TraitInstanceRowView: View {
         switch instance.trait {
         case .skinColor:
             af.af.skinColor = instance as! SkinColor
+            af.af.hairColor = HairColor.allCases.first(where: { $0.name == instance.name })!
+            af.af.eyeColor = EyeColor.allCases.first(where: { $0.name == instance.name })!
             af.af.bubble = Bubble.allCases.first(where: { $0.name == instance.name })!
             af.af.interface = Interface.allCases.first(where: { $0.name == instance.name })!
         case .freckles:
@@ -99,27 +101,7 @@ struct TraitInstanceRowView: View {
             return
         }
         
-        setAFImage()
-    }
-    
-    func setAFImage() {
-        if af.af.skinColor == .green && af.af.hairstyle == .one { af.af.image = .green1 }
-        else if af.af.skinColor == .green && af.af.hairstyle == .two { af.af.image = .green2 }
-        else if af.af.skinColor == .green && af.af.hairstyle == .three { af.af.image = .green3 }
-        else if af.af.skinColor == .green && af.af.hairstyle == .four { af.af.image = .green4 }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .one { af.af.image = .blue1 }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .two { af.af.image = .blue2 }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .three { af.af.image = .blue3 }
-        else if af.af.skinColor == .blue && af.af.hairstyle == .four { af.af.image = .blue4 }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .one { af.af.image = .purple1 }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .two { af.af.image = .purple2 }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .three { af.af.image = .purple3 }
-        else if af.af.skinColor == .purple && af.af.hairstyle == .four { af.af.image = .purple4 }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .one { af.af.image = .pink1 }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .two { af.af.image = .pink2 }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .three { af.af.image = .pink3 }
-        else if af.af.skinColor == .pink && af.af.hairstyle == .four { af.af.image = .pink4 }
-        else { af.af.image = .blue1 }
+        af.setExpression(to: .neutral)
     }
 }
 
