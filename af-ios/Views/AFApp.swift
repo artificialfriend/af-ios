@@ -30,6 +30,7 @@ struct AFApp: App {
                     af.getAF()
                     if af.af.name == "" { af.setFactoryName() }
                     
+                    
                     //IF THE USER HAS ALREADY GONE THROUGH ONBOARDING, OPEN TO CHAT
                     if UserDefaults.standard.data(forKey: "af") != nil {
                         af.setExpression(to: .sleeping)

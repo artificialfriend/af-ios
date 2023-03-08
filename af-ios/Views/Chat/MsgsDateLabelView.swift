@@ -1,5 +1,5 @@
 //
-//  MessagesDateLabelView.swift
+//  MsgsDateLabelView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-03-01.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MessagesDateLabelView: View {
+struct MsgsDateLabelView: View {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var label: String = ""
@@ -37,8 +37,8 @@ struct MessagesDateLabelView: View {
     }
 }
 
-//struct MessagesDateLabelView_Previews: PreviewProvider {
+//struct MsgsDateLabelView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MessagesDateLabelView()
+//        MsgsDateLabelView()
 //    }
 //}

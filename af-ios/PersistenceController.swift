@@ -16,11 +16,11 @@ struct PersistenceController {
         let controller = PersistenceController(inMemory: true)
 
         for _ in 0..<10 {
-            let message = Message(context: controller.container.viewContext)
-            message.sortID = 1000000000
-            message.text = "Testing, testing"
-            message.isUserMessage = true
-            message.createdAt = Date.now
+            let msg = Message(context: controller.container.viewContext)
+            msg.msgID = 1000000000
+            msg.text = "Testing, testing"
+            msg.isUserMsg = true
+            msg.createdAt = Date.now
         }
 
         return controller

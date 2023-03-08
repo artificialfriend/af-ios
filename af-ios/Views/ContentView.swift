@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View, KeyboardReadable {
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO

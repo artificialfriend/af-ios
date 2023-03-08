@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
@@ -19,71 +19,73 @@ struct ChatView: View {
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: s0) {
-                        createMessagesView()
+                        createMsgsView()
                     }
                     .padding(.top, s240)
-                    .padding(.bottom, global.keyboardIsPresent ? chat.messagesBottomPadding + s8 : chat.messagesBottomPadding)
+                    .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
                     .rotationEffect(Angle(degrees: 180))
                 }
                 .rotationEffect(Angle(degrees: 180))
                 .scrollDismissesKeyboard(.interactively)
-                .animation(.shortSpringC, value: chat.messagesBottomPadding)
+                .animation(.shortSpringC, value: chat.msgsBottomPadding)
             }
-            .ignoresSafeArea(edges: .vertical)
+            
         }
+        .ignoresSafeArea(edges: .vertical)
         .onAppear {
-            chat.currentSortID = Int32(messages.count - 1)
-            //if messages.count == 0 { addDummyMessages() }
+            print(msgs.count)
+            if msgs.count > 0 { chat.currentMsgID = msgs[msgs.count - 1].msgID + 1 }
+            print(chat.currentMsgID)
         }
     }
     
-    @ViewBuilder func createMessagesView() -> some View {
+    @ViewBuilder func createMsgsView() -> some View {
         //TODO: Figure out why this is getting called so many times
-        let dateMessageGroups = createDateMessageGroups()
-        MessagesView(uniqueDates: dateMessageGroups.0, dateMessageGroups: dateMessageGroups.1)
+        let dateMsgGroups = createDateMsgGroups()
+        MsgsView(uniqueDates: dateMsgGroups.0, dateMsgGroups: dateMsgGroups.1)
     }
     
-    func createDateMessageGroups() -> ([String], [String: [Message]]) {
+    func createDateMsgGroups() -> ([String], [String: [Message]]) {
         let uniqueDates = findUniqueDates()
-        var dateMessageGroups: [String: [Message]] = [:]
+        var dateMsgGroups: [String: [Message]] = [:]
         
         for date in uniqueDates {
-            var messagesFromDate: [Message] = []
+            var msgsFromDate: [Message] = []
             
-            for message in messages {
-                let messageDate = chat.formatDate(message.createdAt!)
+            for msg in msgs {
+                let msgDate = chat.formatDate(msg.createdAt!)
                 
-                if messageDate == date {
-                    messagesFromDate.append(message)
+                if msgDate == date {
+                    msgsFromDate.append(msg)
                 }
             }
             
-            dateMessageGroups[date] = messagesFromDate
+            dateMsgGroups[date] = msgsFromDate
         }
         
-        return (uniqueDates, dateMessageGroups)
+        return (uniqueDates, dateMsgGroups)
     }
     
     func findUniqueDates() -> [String] {
         var uniqueDates: [String] = []
         
-        if messages.count != 0 {
-            let firstDate = chat.formatDate(messages[0].createdAt!)
+        if msgs.count != 0 {
+            let firstDate = chat.formatDate(msgs[0].createdAt!)
             uniqueDates.append(firstDate)
         }
         
-        for message in messages {
-            let messageDate = chat.formatDate(message.createdAt!)
+        for msg in msgs {
+            let msgDate = chat.formatDate(msg.createdAt!)
             
             for date in uniqueDates {
                 var isNew = true
                 
-                if messageDate == date {
+                if msgDate == date {
                     isNew = false
                 }
                 
                 if isNew && uniqueDates.firstIndex(of: date) == uniqueDates.count - 1 {
-                    uniqueDates.append(messageDate)
+                    uniqueDates.append(msgDate)
                 }
             }
         }
@@ -91,78 +93,78 @@ struct ChatView: View {
         return uniqueDates
     }
     
-    func addDummyMessages() {
-        addMessage(
+    func addDummyMsgs() {
+        addMsg(
             text: "What is Einstein famous for?",
-            isUserMessage: true,
+            isUserMsg: true,
             isNew: false,
             createdAt: "2023-01-14T12:30:11.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "Einstein is famous for his theory of relativity, which revolutionized modern physics and is considered one of the most important scientific discoveries of the 20th century. He also developed the equation E=mc2, which describes the relationship between mass and energy.",
-            isUserMessage: false,
+            isUserMsg: false,
             isNew: false,
             createdAt: "2023-01-14T12:30:11.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "What does mitochondria do?",
-            isUserMessage: true,
+            isUserMsg: true,
             isNew: false,
             createdAt: "2023-02-27T08:02:33.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "Mitochondria are the powerhouses of the cell, responsible for converting energy from food into a form that cells can use. They are found in the cytoplasm of all eukaryotic cells and are essential for the production of energy in the form of ATP. Mitochondria also play a role in other cellular processes, such as metabolism, cell signaling, and apoptosis.",
-            isUserMessage: false,
+            isUserMsg: false,
             isNew: false,
             createdAt: "2023-02-27T08:02:33.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "Write a rhyming love poem for a girl named anna",
-            isUserMessage: true,
+            isUserMsg: true,
             isNew: false,
             createdAt: "2023-02-27T14:55:01.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "Anna, my love, I'd like to say,\nYour beauty is here to stay.\nYour eyes, your lips, your hair,\nYour beauty is beyond compare.",
-            isUserMessage: false,
+            isUserMsg: false,
             isNew: false,
             createdAt: "2023-02-27T14:55:01.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "Who founded microsoft?",
-            isUserMessage: true,
+            isUserMsg: true,
             isNew: false,
             createdAt: "2023-02-28T20:09:33.000000"
         )
         
-        addMessage(
+        addMsg(
             text: "Microsoft was founded by Bill Gates and Paul Allen in 1975.",
-            isUserMessage: false,
+            isUserMsg: false,
             isNew: false,
             createdAt: "2023-02-28T20:09:33.000000"
         )
         
         PersistenceController.shared.save()
         
-        func addMessage(text: String, isUserMessage: Bool, isNew: Bool, createdAt: String) {
+        func addMsg(text: String, isUserMsg: Bool, isNew: Bool, createdAt: String) {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
             formatter.timeZone = TimeZone(identifier: "UTC")
             let date = formatter.date(from: createdAt)
             
-            let message = Message(context: managedObjectContext)
-            message.sortID = chat.currentSortID
-            message.text = text
-            message.isUserMessage = isUserMessage
-            message.isNew = false
-            message.createdAt = date
-            chat.currentSortID += 1
+            let msg = Message(context: managedObjectContext)
+            msg.msgID = chat.currentMsgID
+            msg.text = text
+            msg.isUserMsg = isUserMsg
+            msg.isNew = false
+            msg.createdAt = date
+            chat.currentMsgID += 1
         }
     }
 }

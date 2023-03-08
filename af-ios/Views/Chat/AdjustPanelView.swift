@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct AdjustPanelView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
+    @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    @Binding var chatID: Int32
+    @Binding var msgID: Int32
     @Binding var retryBtnColor: Color
     @Binding var retryBtnIsDisabled: Bool
     @Binding var retryBtnRotation: Angle
@@ -29,8 +30,8 @@ struct AdjustPanelView: View {
             AdjustPanelLabelView(label: "Change Length")
             
             HStack(spacing: s4) {
-                Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelButtonView(adjustOption: .shorter) }
-                Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelButtonView(adjustOption: .longer) }
+                Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelBtnView(adjustOption: .shorter) }
+                Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelBtnView(adjustOption: .longer) }
             }
             .padding(.bottom, s16)
             
@@ -38,13 +39,13 @@ struct AdjustPanelView: View {
             
             VStack(spacing: s4) {
                 HStack(spacing: s4) {
-                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelButtonView(adjustOption: .simple) }
-                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelButtonView(adjustOption: .detailed) }
+                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelBtnView(adjustOption: .simple) }
+                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelBtnView(adjustOption: .detailed) }
                 }
                 
                 HStack(spacing: s4) {
-                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelButtonView(adjustOption: .friendly) }
-                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelButtonView(adjustOption: .professional) }
+                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelBtnView(adjustOption: .friendly) }
+                    Button(action: { handleAdjustPanelBtnTap() }) { AdjustPanelBtnView(adjustOption: .professional) }
                 }
             }
         }
@@ -56,7 +57,7 @@ struct AdjustPanelView: View {
         retryBtnIsDisabled = true
 //        adjustBtnIsDisabled = true
 //        adjustBtnColor = af.af.interface.medColor.opacity(0.5)
-        let prompt = messages.first(where: { $0.chatID == chatID - 1 })!.text
+        let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
 
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryBtnRotation = Angle(degrees: 180)
@@ -73,10 +74,8 @@ struct AdjustPanelView: View {
             }
         }
 
-        chat.getAFReply(prompt: prompt!) { result in
+        chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
             retryBtnIsDisabled = false
-//            adjustBtnIsDisabled = false
-//            adjustBtnColor = af.af.interface.medColor
 
             withAnimation(.default) {
                 retryBtnRotation = Angle(degrees: 360)
@@ -94,9 +93,9 @@ struct AdjustPanelView: View {
             switch result {
                 case .success(let response):
                     withAnimation(.shortSpringB) {
-                        msgText = response.response[1].text
+                        msgText = response.response.text
                     }
-                    messages.first(where: { $0.chatID == chatID })!.text = msgText
+                    msgs.first(where: { $0.msgID == msgID })!.text = msgText
                     PersistenceController.shared.save()
                 case .failure:
                     msgInErrorState = true
@@ -105,7 +104,7 @@ struct AdjustPanelView: View {
                         msgText = "Sorry, something went wrong... Please try again."
                     }
                     
-                    messages.first(where: { $0.chatID == chatID })!.text = msgText
+                    msgs.first(where: { $0.msgID == msgID })!.text = msgText
                     PersistenceController.shared.save()
 
                     withAnimation(.linear1) {

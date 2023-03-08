@@ -134,14 +134,14 @@ struct SignupView: View {
                 VStack(spacing: 0) {
                     HStack(spacing: s0) {
                         Button(action: { handleBackTap() }) {
-                            SignupBackButtonView(currentSignupStep: $currentStep)
+                            SignupBackBtnView(currentSignupStep: $currentStep)
                         }
                         .disabled(buttonsAreDisabled)
                         .buttonStyle(Spring())
                         
                         ZStack {
                             Button(action: { handleNextTap() }) {
-                                    SignupNextButtonView(
+                                    SignupNextBtnView(
                                         createOpacity: $createOpacity,
                                         nameOpacity: $nameOpacity,
                                         buttonWelcomeLabelOpacity: $buttonWelcomeLabelOpacity,

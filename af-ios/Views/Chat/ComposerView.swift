@@ -48,7 +48,7 @@ struct ComposerView: View, KeyboardReadable {
                 .cornerRadius(cr24)
                 .animation(nil, value: input)
             
-            ComposerButtonsView(input: $input, placeholderText: $placeholderText, composerTrailingPadding: $trailingPadding, shufflePrompts: $shufflePrompts)
+            ComposerBtnsView(input: $input, placeholderText: $placeholderText, composerTrailingPadding: $trailingPadding, shufflePrompts: $shufflePrompts)
                 .frame(height: 37.5)
                 .padding(.trailing, s4)
                 .padding(.bottom, s4)
@@ -68,17 +68,17 @@ struct ComposerView: View, KeyboardReadable {
             GeometryReader { geo in
                 Color.clear
                     .onAppear {
-                        setMessagesBottomPadding(height: geo.size.height)
+                        setMsgsBottomPadding(height: geo.size.height)
                     }
                     .onChange(of: geo.size.height, perform: { _ in
-                        setMessagesBottomPadding(height: geo.size.height)
+                        setMsgsBottomPadding(height: geo.size.height)
                     })
             }
         }
     }
     
-    func setMessagesBottomPadding(height: CGFloat) {
-        chat.messagesBottomPadding = height + s16
+    func setMsgsBottomPadding(height: CGFloat) {
+        chat.msgsBottomPadding = height + s16
     }
 }
 

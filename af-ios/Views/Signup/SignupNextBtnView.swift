@@ -1,5 +1,5 @@
 //
-//  SignupNextButtonView.swift
+//  SignupNextBtnView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-01-20.
@@ -8,7 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 
-struct SignupNextButtonView: View {
+struct SignupNextBtnView: View {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO

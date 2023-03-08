@@ -1,5 +1,5 @@
 //
-//  UserMessageView.swift
+//  UserMsgView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-01-26.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct UserMessageView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+struct UserMsgView: View {
+    //@FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var isLoaded: Bool = true
     @State private var opacity: Double = 0
-    @State private var bottomPadding: CGFloat = -s64
+    @State private var msgHeight: CGFloat = 0
     let text: String
     let isNew: Bool
     
@@ -38,10 +38,22 @@ struct UserMessageView: View {
                     .padding(.trailing, s12)
             }
             .opacity(isNew ? opacity : 1)
-            .padding(.bottom, isNew ? bottomPadding : 0)
+            .background {
+                GeometryReader { geo in
+                    Color.clear
+                        .onAppear {
+                            if isNew {
+                                msgHeight = geo.size.height + s8
+                                chat.msgsBottomPadding -= msgHeight
+                            }
+                        }
+                }
+            }
             .onAppear {
                 if isNew {
-                    loadIn()
+                    Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+                        loadIn()
+                    }
                 }
             }
         }
@@ -50,26 +62,26 @@ struct UserMessageView: View {
     func loadIn() {
         isLoaded = true
         
-        withAnimation(.shortSpringA) {
-            bottomPadding = s0
+        withAnimation(.longSpring) {//.shortSpringA) {
+            chat.msgsBottomPadding += msgHeight
         }
 
         withAnimation(.linear1) {
             opacity = 1
         }
         
-        Task { try await Task.sleep(nanoseconds: 100_000_000)
-            chat.addMessage(text: "", isUserMessage: false, managedObjectContext: managedObjectContext)
+        Task { try await Task.sleep(nanoseconds: 2_000_000_000)//100_000_000)
+            chat.addMsg(text: "", isUserMsg: false, managedObjectContext: managedObjectContext)
         }
     }
 }
 
-//struct UserMessage_Previews: PreviewProvider {
+//struct UserMsg_Previews: PreviewProvider {
 //    static var previews: some View {
-//        UserMessageView(id: "Summarize chapter 2", text: "Summarize chapter 2")
+//        UserMsgView(id: "Summarize chapter 2", text: "Summarize chapter 2")
 //            .environmentObject(AFOO())
 //            .environmentObject(ChatOO())
-//            .environmentObject(MessagesState())
+//            .environmentObject(MsgsState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }
 //}

@@ -10,7 +10,7 @@ import AuthenticationServices
 
 class UserOO: ObservableObject {
     @Published var user: User = User(
-        id: "",
+        id: 1, //TODO: Change to actual userID
         appleID: "",
         email: "",
         givenName: "",
@@ -109,7 +109,7 @@ struct AuthValues: Codable {
 }
 
 struct User {
-    var id: String
+    var id: Int
     var appleID: String
     var email: String
     var givenName: String
@@ -119,7 +119,7 @@ struct User {
 }
 
 struct StoredUser: Codable {
-    var id: String
+    var id: Int
     var appleID: String
     var email: String
     var givenName: String

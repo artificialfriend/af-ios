@@ -1,5 +1,5 @@
 //
-//  NicknamesMessageView.swift
+//  NicknamesMsgView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-27.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NicknamesMessageView: View {
+struct NicknamesMsgView: View {
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     
@@ -49,7 +49,7 @@ struct NicknamesMessageView: View {
                 }
                 .padding(.bottom, s8)
                 
-                NicknameMessageSaveButtonView()
+                NicknameMsgSaveBtnView()
             }
             .padding(.horizontal, s16)
             .padding(.vertical, s12)
@@ -66,14 +66,14 @@ struct NicknamesMessageView: View {
         .padding(.bottom, 0)//bottomPadding)
 //        .onAppear {
 //            if isNew {
-//                loadMessage()
+//                loadMsg()
 //            }
 //        }
     }
 }
 
-//struct NicknamesMessageView_Previews: PreviewProvider {
+//struct NicknamesMsgView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        NicknamesMessageView()
+//        NicknamesMsgView()
 //    }
 //}

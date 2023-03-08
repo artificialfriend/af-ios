@@ -9,12 +9,13 @@ import SwiftUI
 import CoreData
 
 class ChatOO: ObservableObject {
-    @Published var messagesBottomPadding: CGFloat = s80
-    @Published var currentSortID: Int32 = 0
+    @Published var msgsBottomPadding: CGFloat = s80
+    @Published var currentMsgID: Int32 = 0
     
-    func getAFReply(prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
-        let requestBody = GetAFReplyRequestBody(userID: "1", text: prompt, isUserMessage: true)
-        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/")!
+    func getAFReply(userID: Int, prompt: String, behavior: String?, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
+        //TODO: Change userID to actual userID
+        let requestBody = GetAFReplyRequestBody(userID: userID, text: prompt, behavior: behavior ?? "")
+        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/turbo")!
         var request = URLRequest(url: url)
         
         request.httpMethod = "POST"
@@ -51,13 +52,13 @@ class ChatOO: ObservableObject {
         }
     }
     
-    func addMessage(text: String, isUserMessage: Bool, managedObjectContext: NSManagedObjectContext) {
-        let message = Message(context: managedObjectContext)
-        message.sortID = currentSortID
-        message.text = text
-        message.isUserMessage = isUserMessage
-        message.createdAt = Date.now
-        currentSortID += 1
+    func addMsg(text: String, isUserMsg: Bool, managedObjectContext: NSManagedObjectContext) {
+        let msg = Message(context: managedObjectContext)
+        msg.msgID = currentMsgID
+        msg.text = text
+        msg.isUserMsg = isUserMsg
+        msg.createdAt = Date.now
+        currentMsgID += 1
     }
     
     func formatDate(_ date: Date) -> String {
@@ -74,33 +75,31 @@ class ChatOO: ObservableObject {
 }
 
 struct GetAFReplyRequestBody: Codable {
-    let userID: String
+    let userID: Int
     let text: String
-    let isUserMessage: Bool
+    let behavior: String
     
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
         case text
-        case isUserMessage = "is_prompt"
+        case behavior = "behaviour"
     }
 }
 
 struct GetAFReplyResponseBody: Codable {
-    let response: [GetAFReplyMessage]
+    let response: GetAFReplyMsg
 }
 
-struct GetAFReplyMessage: Codable {
-    let chatID: Int32
+struct GetAFReplyMsg: Codable {
     let userID: Int32
     let text: String
-    let isUserMessage: Bool
+    let isUserMsg: Bool
     let createdAt: String
     
     enum CodingKeys: String, CodingKey {
-        case chatID = "chat_id"
         case userID = "user_id"
         case text
-        case isUserMessage = "is_prompt"
+        case isUserMsg = "is_prompt"
         case createdAt = "created_at"
     }
 }
@@ -113,7 +112,7 @@ enum AdjustOption {
     case friendly
     case professional
     
-    var name: String {
+    var string: String {
         switch self {
         case .shorter:
             return "Shorter"

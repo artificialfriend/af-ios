@@ -1,5 +1,5 @@
 //
-//  NicknameMessageSaveButtonView.swift
+//  NicknameMsgSaveBtnView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-27.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NicknameMessageSaveButtonView: View {
+struct NicknameMsgSaveBtnView: View {
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @State private var isDisabled: Bool = false
@@ -51,8 +51,8 @@ struct NicknameMessageSaveButtonView: View {
     }
 }
 
-//struct NicknameMessageSaveButtonView_Previews: PreviewProvider {
+//struct NicknameMsgSaveButtonView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        NicknameMessageSaveButtonView()
+//        NicknameMsgSaveButtonView()
 //    }
 //}

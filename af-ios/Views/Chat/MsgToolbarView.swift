@@ -1,5 +1,5 @@
 //
-//  MessageToolbarView.swift
+//  MsgToolbarView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-04.
@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct MessageToolbarView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+struct MsgToolbarView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
+    @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    @Binding var chatID: Int32
+    @Binding var msgID: Int32
     @Binding var text: String
     @Binding var textOpacity: Double
     @Binding var inErrorState: Bool
@@ -33,7 +34,7 @@ struct MessageToolbarView: View {
             //ADJUST PANEL
             if adjustPanelIsPresent {
                 AdjustPanelView(
-                    chatID: $chatID,
+                    msgID: $msgID,
                     retryBtnColor: $retryBtnColor,
                     retryBtnIsDisabled: $retryBtnIsDisabled,
                     retryBtnRotation: $retryBtnRotation,
@@ -152,7 +153,7 @@ struct MessageToolbarView: View {
         retryBtnIsDisabled = true
 //        adjustBtnIsDisabled = true
 //        adjustBtnColor = af.af.interface.medColor.opacity(0.5)
-        let prompt = messages.first(where: { $0.chatID == chatID - 1 })!.text
+        let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
 
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryBtnRotation = Angle(degrees: 180)
@@ -169,10 +170,8 @@ struct MessageToolbarView: View {
             }
         }
 
-        chat.getAFReply(prompt: prompt!) { result in
+        chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
             retryBtnIsDisabled = false
-//            adjustBtnIsDisabled = false
-//            adjustBtnColor = af.af.interface.medColor
 
             withAnimation(.default) {
                 retryBtnRotation = Angle(degrees: 360)
@@ -190,9 +189,9 @@ struct MessageToolbarView: View {
             switch result {
                 case .success(let response):
                     withAnimation(.shortSpringB) {
-                        text = response.response[1].text
+                        text = response.response.text
                     }
-                    messages.first(where: { $0.chatID == chatID })!.text = text
+                    msgs.first(where: { $0.msgID == msgID })!.text = text
                     PersistenceController.shared.save()
                 case .failure:
                     inErrorState = true
@@ -200,8 +199,8 @@ struct MessageToolbarView: View {
                     withAnimation(.shortSpringB) {
                         text = "Sorry, something went wrong... Please try again."
                     }
-                    
-                    messages.first(where: { $0.chatID == chatID })!.text = text
+
+                    msgs.first(where: { $0.msgID == msgID })!.text = text
                     PersistenceController.shared.save()
 
                     withAnimation(.linear1) {
@@ -244,11 +243,11 @@ struct MessageToolbarView: View {
     }
 }
 
-//struct MessageToolbarView_Previews: PreviewProvider {
-//    @State var previewText: String = "Message text"
+//struct MsgToolbarView_Previews: PreviewProvider {
+//    @State var previewText: String = "Msg text"
 //    
 //    static var previews: some View {
-//        MessageToolbarView(text: $previewText, prompt: "")
+//        MsgToolbarView(text: $previewText, prompt: "")
 //            .environmentObject(AFOO())
 //            .environmentObject(ChatOO())
 //    }

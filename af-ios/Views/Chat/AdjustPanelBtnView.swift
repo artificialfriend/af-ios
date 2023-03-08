@@ -1,5 +1,5 @@
 //
-//  AdjustPanelButtonView.swift
+//  AdjustPanelBtnView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-27.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct AdjustPanelButtonView: View {
+struct AdjustPanelBtnView: View {
     @EnvironmentObject var af: AFOO
     let adjustOption: AdjustOption
     
     var body: some View {
         HStack {
             Spacer()
-            Text(adjustOption.name)
+            Text(adjustOption.string)
                 .font(.s)
                 .textCase(.uppercase)
                 .foregroundColor(.afMedBlack)

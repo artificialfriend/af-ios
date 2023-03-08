@@ -1,5 +1,5 @@
 //
-//  AFMessageView.swift
+//  AFMsgView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-01-27.
@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct AFMessageView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+struct AFMsgView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
+    @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var isLoading: Bool = false
@@ -25,7 +26,7 @@ struct AFMessageView: View {
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
     @State private var inErrorState: Bool = false
     @State private var error: Error?
-    @State var chatID: Int32
+    @State var msgID: Int32
     @State var text: String
     let isNew: Bool
     
@@ -42,7 +43,7 @@ struct AFMessageView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MessageToolbarView(chatID: $chatID, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, bgColor: $backgroundColor)
+                            MsgToolbarView(msgID: $msgID, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, bgColor: $backgroundColor)
                         }
                         .opacity(toolbarOpacity)
                         .frame(width: textWidth)
@@ -89,7 +90,7 @@ struct AFMessageView: View {
         .padding(.bottom, bottomPadding)
         .onAppear {
             if isNew {
-                loadMessage()
+                loadMsg()
             }
         }
     }
@@ -97,15 +98,14 @@ struct AFMessageView: View {
     
     //FUNCTIONS------------------------------------------------//
     
-    func loadMessage() {
-        let prompt = messages[messages.count - 2].text!
-        var userResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: true, createdAt: "")
-        var afResponse: GetAFReplyMessage = GetAFReplyMessage(chatID: 1, userID: 1, text: "", isUserMessage: false, createdAt: "")
+    func loadMsg() {
+        let prompt = msgs.first(where: { $0.msgID == msgID - 1})!.text!
+        var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1, text: "", isUserMsg: false, createdAt: "")
         opacity = 0
         textOpacity = 0
         toolbarOpacity = 0
         toolbarIsPresent = false
-        bottomPadding = -s64
+        bottomPadding = -s72
         
         Task { try await Task.sleep(nanoseconds: 400_000_000)
             toggleLoading()
@@ -122,7 +122,7 @@ struct AFMessageView: View {
                 opacity = 1
             }
             
-            chat.getAFReply(prompt: prompt) { result in
+            chat.getAFReply(userID: user.user.id, prompt: prompt, behavior: "") { result in
                 withAnimation(.linear1) {
                     toggleLoading()
                 }
@@ -131,10 +131,8 @@ struct AFMessageView: View {
                     switch result {
                         case .success(let response):
                             withAnimation(.shortSpringB) {
-                                userResponse = response.response[0]
-                                afResponse = response.response[1]
-                                
-                                text = afResponse.text
+                                responseMsg = response.response
+                                text = responseMsg.text
                             }
                         case .failure:
                             inErrorState = true
@@ -159,14 +157,7 @@ struct AFMessageView: View {
                         }
                         
                         Task { try await Task.sleep(nanoseconds: 100_000_000)
-                            chatID = afResponse.chatID
-                            
-                            updateMessages(
-                                userResponse: userResponse,
-                                afResponse: afResponse,
-                                userMessageIndex: messages.count - 2,
-                                afMessageIndex: messages.count - 1
-                            )
+                            updateMsg()
                         }
                     }
                 }
@@ -174,18 +165,11 @@ struct AFMessageView: View {
         }
     }
     
-    func updateMessages(userResponse: GetAFReplyMessage, afResponse: GetAFReplyMessage, userMessageIndex: Int, afMessageIndex: Int) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        messages[afMessageIndex].chatID = afResponse.chatID
-        messages[afMessageIndex].text = afResponse.text
-        messages[afMessageIndex].isUserMessage = afResponse.isUserMessage
-        messages[afMessageIndex].isNew = false
-        messages[afMessageIndex].createdAt = dateFormatter.date(from: afResponse.createdAt)
-        messages[userMessageIndex].chatID = userResponse.chatID
-        messages[userMessageIndex].isNew = false
-        messages[userMessageIndex].createdAt = dateFormatter.date(from: userResponse.createdAt)
+    func updateMsg() {
+        let msgIndex = msgs.firstIndex(where: { $0.msgID == msgID })!
+        msgs[msgIndex].text = text
+        msgs[msgIndex].isNew = false
+        msgs[msgIndex - 1].isNew = false
         PersistenceController.shared.save()
     }
     
@@ -213,12 +197,12 @@ struct AFMessageView: View {
     }
 }
 
-//struct AFMessageView_Previews: PreviewProvider {
+//struct AFMsgView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        AFMessageView(id: "Heathcliffe is a bad guy but he also loves that girl.", text: "Heathcliffe is a bad guy but he also loves that girl.")
+//        AFMsgView(id: "Heathcliffe is a bad guy but he also loves that girl.", text: "Heathcliffe is a bad guy but he also loves that girl.")
 //            .environmentObject(AFOO())
 //            .environmentObject(ChatOO())
-//            .environmentObject(MessagesState())
+//            .environmentObject(MsgsState())
 //            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
 //    }
 //}

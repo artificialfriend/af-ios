@@ -1,5 +1,5 @@
 //
-//  ComposerButtonsView.swift
+//  ComposerBtnsView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-04.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ComposerButtonsView: View, KeyboardReadable {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.sortID)]) var messages: FetchedResults<Message>
+struct ComposerBtnsView: View, KeyboardReadable {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
@@ -95,7 +95,7 @@ struct ComposerButtonsView: View, KeyboardReadable {
     
     func handleSendBtnTap() {
         impactMedium.impactOccurred()
-        chat.addMessage(text: input, isUserMessage: true, managedObjectContext: managedObjectContext)
+        chat.addMsg(text: input, isUserMsg: true, managedObjectContext: managedObjectContext)
         input = ""
     }
     

@@ -1,5 +1,5 @@
 //
-//  SignupBackButtonView.swift
+//  SignupBackBtnView.swift
 //  af-ios
 //
 //  Created by Cam Crain on 2023-02-24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SignupBackButtonView: View {
+struct SignupBackBtnView: View {
     @Binding var currentSignupStep: SignupStep
     
     var body: some View {
