@@ -16,9 +16,8 @@ struct AFMsgView: View {
     @State private var isLoading: Bool = false
     @State private var toolbarIsPresent: Bool = true
     @State private var toolbarOpacity: Double = 1
-    @State private var opacity: Double = 1
+    @State private var opacity: Double = 0
     @State private var backgroundColor: Color = .white
-    @State private var bottomPadding: CGFloat = 0
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
     @State private var textOpacity: Double = 1
     @State private var textWidth: CGFloat = 0
@@ -87,7 +86,6 @@ struct AFMsgView: View {
             Spacer(minLength: 0)
         }
         .opacity(isNew ? opacity : 1)
-        .padding(.bottom, bottomPadding)
         .onAppear {
             if isNew {
                 loadMsg()
@@ -101,21 +99,16 @@ struct AFMsgView: View {
     func loadMsg() {
         let prompt = msgs.first(where: { $0.msgID == msgID - 1})!.text!
         var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1, text: "", isUserMsg: false, createdAt: "")
-        opacity = 0
         textOpacity = 0
         toolbarOpacity = 0
         toolbarIsPresent = false
-        bottomPadding = -s72
         
-        Task { try await Task.sleep(nanoseconds: 400_000_000)
+        Task { try await Task.sleep(nanoseconds: 200_000_000)
             toggleLoading()
+            chat.msgsBottomPadding += 47.33 + 8
             
             withAnimation(.loadingSpin) {
                 spinnerRotation = Angle(degrees: 360)
-            }
-
-            withAnimation(.shortSpringA) {
-                bottomPadding = s0
             }
 
             withAnimation(.linear1) {
@@ -128,6 +121,8 @@ struct AFMsgView: View {
                 }
                 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
+                    impactMedium.impactOccurred()
+                    
                     switch result {
                         case .success(let response):
                             withAnimation(.shortSpringB) {

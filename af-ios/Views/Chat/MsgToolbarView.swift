@@ -171,6 +171,7 @@ struct MsgToolbarView: View {
         }
 
         chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
+            impactMedium.impactOccurred()
             retryBtnIsDisabled = false
 
             withAnimation(.default) {

@@ -11,6 +11,9 @@ import CoreData
 class ChatOO: ObservableObject {
     @Published var msgsBottomPadding: CGFloat = s80
     @Published var currentMsgID: Int32 = 0
+    @Published var currentMsgHeight: CGFloat = 0
+    @Published var dateMsgGroups: [String: [Message]] = [:]
+    @Published var uniqueMsgDates: [String] = []
     
     func getAFReply(userID: Int, prompt: String, behavior: String?, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
@@ -59,6 +62,19 @@ class ChatOO: ObservableObject {
         msg.isUserMsg = isUserMsg
         msg.createdAt = Date.now
         currentMsgID += 1
+        
+        DispatchQueue.main.async {
+            Task { try await Task.sleep(nanoseconds: 1_000_000)
+                self.msgsBottomPadding -= 47.33 + 8
+                let date = self.formatDate(Date.now)
+                if self.dateMsgGroups.contains(where: {$0.key == date}) {
+                    self.dateMsgGroups[date]!.append(msg)
+                } else {
+                    self.uniqueMsgDates.append(date)
+                    self.dateMsgGroups[date] = [msg]
+                }
+            }
+        }
     }
     
     func formatDate(_ date: Date) -> String {

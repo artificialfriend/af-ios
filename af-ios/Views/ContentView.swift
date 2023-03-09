@@ -105,9 +105,14 @@ struct ContentView: View, KeyboardReadable {
                     .position(x: UIScreen.main.bounds.width - 52, y: topNavHeight + 52)
                     .ignoresSafeArea(edges: .vertical)
                     .onAppear {
-                        withAnimation(.afFloatSmall){
-                            afOffset = s6
+                        af.setExpression(to: .sleeping)
+                        
+                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
                         }
+//                        withAnimation(.afFloatSmall){
+//                            afOffset = s6
+//                        }
                     }
             }
         }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MsgsView: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var currentDate: String = ""
@@ -31,6 +32,7 @@ struct MsgsView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
+                    .animation(.longSpring, value: msgs.count)
                 }
             }
         }

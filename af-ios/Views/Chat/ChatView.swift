@@ -14,12 +14,51 @@ struct ChatView: View {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     
+    
     var body: some View {
         ZStack {
+//            VStack {
+//                ForEach(msgs) { msg in
+//                    if msg.isUserMsg && msg.isNew {
+//                        UserMsgView(text: msg.text!, isNew: false)
+//                            .fixedSize(horizontal: false, vertical: true)
+//                            .background {
+//                                GeometryReader { geo in
+//                                    Color.clear
+//                                        .onAppear {
+//                                            chat.currentMsgHeight = geo.size.height
+//                                            print(chat.currentMsgHeight)
+//                                        }
+//                                }
+//                            }
+//                    }
+////                    } else {
+////                        AFMsgView(msgID: msg.msgID, text: msg.text!, isNew: false)
+////                            .fixedSize(horizontal: false, vertical: true)
+////                    }
+//                }
+//            }
+            
             GeometryReader { geo in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: s0) {
-                        createMsgsView()
+                        ForEach(chat.uniqueMsgDates, id: \.self) { date in
+                            MsgsDateLabelView(date: date)
+                                .padding(.bottom, s8)
+                                .padding(.top, s32)
+                            
+                            VStack {
+                                ForEach(chat.dateMsgGroups[date]!) { msg in
+                                    if msg.isUserMsg {
+                                        UserMsgView(text: msg.text!, isNew: msg.isNew)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    } else {
+                                        AFMsgView(msgID: msg.msgID, text: msg.text!, isNew: msg.isNew)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                }
+                            }
+                        }
                     }
                     .padding(.top, s240)
                     .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
@@ -27,15 +66,17 @@ struct ChatView: View {
                 }
                 .rotationEffect(Angle(degrees: 180))
                 .scrollDismissesKeyboard(.interactively)
-                .animation(.shortSpringC, value: chat.msgsBottomPadding)
+                .animation(.shortSpringF, value: chat.msgsBottomPadding)
             }
+            .background(Color.white)
+            
             
         }
         .ignoresSafeArea(edges: .vertical)
         .onAppear {
-            print(msgs.count)
             if msgs.count > 0 { chat.currentMsgID = msgs[msgs.count - 1].msgID + 1 }
-            print(chat.currentMsgID)
+            chat.uniqueMsgDates = createDateMsgGroups().0
+            chat.dateMsgGroups = createDateMsgGroups().1
         }
     }
     
@@ -45,7 +86,10 @@ struct ChatView: View {
         MsgsView(uniqueDates: dateMsgGroups.0, dateMsgGroups: dateMsgGroups.1)
     }
     
+    
+    
     func createDateMsgGroups() -> ([String], [String: [Message]]) {
+        print("hit")
         let uniqueDates = findUniqueDates()
         var dateMsgGroups: [String: [Message]] = [:]
         
