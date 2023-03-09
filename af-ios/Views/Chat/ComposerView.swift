@@ -75,7 +75,7 @@ struct ComposerView: View, KeyboardReadable {
                     })
             }
         }
-        .animation(.shortSpringF, value: input)
+        .animation(.shortSpringD, value: input)
     }
     
     func setMsgsBottomPadding(height: CGFloat) {

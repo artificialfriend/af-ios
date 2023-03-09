@@ -20,11 +20,11 @@ struct ContentView: View, KeyboardReadable {
     @State private var topNavIsPresent: Bool = false
     @State private var topNavHeight: CGFloat = 0
     @State private var topNavOffset: CGFloat = 0
-    @State private var topNavOpacity: Double = 0
+    @State private var topNavOpacity: Double = 1
     @State private var composerIsPresent: Bool = false
     @State private var composerHeight: CGFloat = 0
     @State private var composerOffset: CGFloat = 0
-    @State private var composerOpacity: Double = 0
+    @State private var composerOpacity: Double = 1
     @State private var afIsPresent: Bool = false
     @State private var afScale: CGFloat = 0
     @State private var afOpacity: Double = 0
@@ -43,12 +43,9 @@ struct ContentView: View, KeyboardReadable {
                 ChatView()
                     .opacity(chatOpacity)
                     .onAppear {
-                        Task { try await Task.sleep(nanoseconds: 550_000_000)
-                            withAnimation(.linear2) {
-                                chatOpacity = 1
-                            }
-                        }
+                        withAnimation(.linear2.delay(0)) { chatOpacity = 1 }
                     }
+                    
             }
 
             if global.activeSection != .signup {
@@ -62,7 +59,11 @@ struct ContentView: View, KeyboardReadable {
                                     Color.clear
                                         .onAppear {
                                             topNavHeight = topNavGeo.size.height
-                                            topNavOffset = -topNavHeight / 2
+                                            
+                                            if !user.signupIsComplete {
+                                                topNavOffset = -topNavHeight / 2
+                                                topNavOpacity = 0
+                                            }
                                         }
                                 }
                             }
@@ -70,7 +71,6 @@ struct ContentView: View, KeyboardReadable {
                         Spacer()
 
                         ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-//                            .animation(.shortSpringC, value: composerInput)
                             .opacity(composerOpacity)
                             .offset(y: composerOffset)
                             .padding(.bottom, global.keyboardIsPresent ? s8 : s0)
@@ -82,7 +82,11 @@ struct ContentView: View, KeyboardReadable {
                                     Color.clear
                                         .onAppear {
                                             composerHeight = composerGeo.size.height
-                                            composerOffset = composerHeight / 2
+                                            
+                                            if !user.signupIsComplete {
+                                                composerOffset = composerHeight / 2
+                                                composerOpacity = 0
+                                            }
                                         }
                                 }
                             }
@@ -90,9 +94,7 @@ struct ContentView: View, KeyboardReadable {
                     .ignoresSafeArea(edges: .vertical)
                 }
                 .onAppear {
-                    Task { try await Task.sleep(nanoseconds: 500_000_000)
-                        transitionFromSignupToChat()
-                    }
+                    if !user.signupIsComplete { transitionFromSignupToChat() }
                 }
             }
 
@@ -105,14 +107,13 @@ struct ContentView: View, KeyboardReadable {
                     .position(x: UIScreen.main.bounds.width - 52, y: topNavHeight + 52)
                     .ignoresSafeArea(edges: .vertical)
                     .onAppear {
-                        af.setExpression(to: .sleeping)
-                        
-                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
-                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                        Task { try await Task.sleep(nanoseconds: 750_000_000)
+                            toggleAF()
+//                            af.setExpression(to: .happy)
+//                            withAnimation(.linear5.delay(1.5)) { af.setExpression(to: .neutral) }
                         }
-//                        withAnimation(.afFloatSmall){
-//                            afOffset = s6
-//                        }
+                        
+
                     }
             }
         }
@@ -125,68 +126,35 @@ struct ContentView: View, KeyboardReadable {
     func transitionFromSignupToChat() {
         toggleTopNav()
         toggleComposer()
-        toggleAF()
     }
     
     func toggleTopNav() {
         if composerIsPresent {
-            withAnimation(.shortSpringD) {
-                topNavOffset = topNavHeight / 2
-            }
-            
-            withAnimation(.linear2) {
-                topNavOpacity = 0
-            }
+            withAnimation(.shortSpringD) { topNavOffset = topNavHeight / 2 }
+            withAnimation(.linear2) { topNavOpacity = 0 }
         } else {
-            withAnimation(.shortSpringD) {
-                topNavOffset = 0
-            }
-            
-            withAnimation(.linear2) {
-                topNavOpacity = 1
-            }
+            withAnimation(.shortSpringD) { topNavOffset = 0 }
+            withAnimation(.linear2) { topNavOpacity = 1 }
         }
     }
     
     func toggleComposer() {
         if composerIsPresent {
-            withAnimation(.shortSpringD) {
-                composerOffset = composerHeight / 2
-            }
-            
-            withAnimation(.linear1) {
-                composerOpacity = 0
-            }
+            withAnimation(.shortSpringD) { composerOffset = composerHeight / 2 }
+            withAnimation(.linear1) { composerOpacity = 0 }
         } else {
-            withAnimation(.shortSpringD) {
-                composerOffset = 0
-            }
-            
-            withAnimation(.linear2) {
-                composerOpacity = 1
-            }
+            withAnimation(.shortSpringD) { composerOffset = 0 }
+            withAnimation(.linear2) { composerOpacity = 1 }
         }
     }
     
     func toggleAF() {
         if afIsPresent {
-            withAnimation(.shortSpringD) {
-                afScale = 0
-            }
-            
-            Task { try await Task.sleep(nanoseconds: 25_000_000)
-                withAnimation(.linear1) {
-                    afOpacity = 0
-                }
-            }
+            withAnimation(.shortSpringD) { afScale = 0 }
+            withAnimation(.linear1.delay(0.025)) { afOpacity = 0 }
         } else {
-            withAnimation(.shortSpringD) {
-                afScale = 1
-            }
-            
-            withAnimation(.linear1) {
-                afOpacity = 1
-            }
+            withAnimation(.shortSpringF) { afScale = 1 }
+            withAnimation(.linear1) { afOpacity = 1 }
         }
     }
 }

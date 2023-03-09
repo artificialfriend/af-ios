@@ -103,9 +103,7 @@ struct MsgToolbarView: View {
             copyBtnColor = af.af.interface.medColor
             
             Task { try await Task.sleep(nanoseconds: 100_000)
-                if inErrorState {
-                    toggleErrorState()
-                }
+                if inErrorState { toggleErrorState() }
             }
         }
         .onChange(of: inErrorState) { _ in
@@ -163,11 +161,9 @@ struct MsgToolbarView: View {
             inErrorState = false
         }
 
-        Task { try await Task.sleep(nanoseconds: 1_000_000)
-            withAnimation(.linear1) {
-                retryBtnColor = af.af.interface.userColor
-                textOpacity = 0.5
-            }
+       withAnimation(.linear1.delay(0.001)) {
+            retryBtnColor = af.af.interface.userColor
+            textOpacity = 0.5
         }
 
         chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
@@ -209,10 +205,8 @@ struct MsgToolbarView: View {
                     }
             }
 
-            Task { try await Task.sleep(nanoseconds: 300_000_000)
-                withAnimation(.linear2) {
-                    textOpacity = 1
-                }
+            withAnimation(.linear2.delay(0.3)) {
+                textOpacity = 1
             }
         }
     }

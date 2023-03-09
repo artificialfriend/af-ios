@@ -66,12 +66,10 @@ struct AdjustPanelView: View {
         if msgInErrorState {
             msgInErrorState = false
         }
-
-        Task { try await Task.sleep(nanoseconds: 1_000_000)
-            withAnimation(.linear1) {
-                retryBtnColor = af.af.interface.userColor
-                msgTextOpacity = 0.5
-            }
+        
+        withAnimation(.linear1.delay(0.001)) {
+            retryBtnColor = af.af.interface.userColor
+            msgTextOpacity = 0.5
         }
 
         chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
@@ -111,11 +109,9 @@ struct AdjustPanelView: View {
                         msgBGColor = .afRed
                     }
             }
-
-            Task { try await Task.sleep(nanoseconds: 300_000_000)
-                withAnimation(.linear2) {
-                    msgTextOpacity = 1
-                }
+            
+            withAnimation(.linear2.delay(0.3)) {
+                msgTextOpacity = 1
             }
         }
     }

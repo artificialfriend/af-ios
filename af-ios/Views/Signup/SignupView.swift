@@ -301,10 +301,7 @@ struct SignupView: View {
         
         //IF BUTTON IS TAPPED WHILE ON THE NAME STEP, STORE AF IN USER DEFAULTS
         if currentStep == .name {
-            if !nameFieldInput.isEmpty {
-                af.af.name = nameFieldInput
-            }
-            
+            if !nameFieldInput.isEmpty { af.af.name = nameFieldInput }
             af.storeAF()
         }
     }
@@ -352,7 +349,7 @@ struct SignupView: View {
                             fadeOut()
                             dismissAF()
                                     
-                            Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+                            Task { try await Task.sleep(nanoseconds: 1_500_000_000)
                                 af.setExpression(to: .happy)
                                 changeStep()
                                 
@@ -390,43 +387,29 @@ struct SignupView: View {
     }
     
     func changeStep() {
-        if currentStep != .create {
-            self.afOffset = s0
-        }
+        if currentStep != .create { self.afOffset = s0 }
         
         switch currentStep {
-        case .welcome:
-            currentStep = .create
-        case .create:
-            currentStep = .name
-        case .name:
-            currentStep = .bootup
-        case .bootup:
-            global.activeSection = .chat
+        case .welcome: currentStep = .create
+        case .create: currentStep = .name
+        case .name: currentStep = .bootup
+        case .bootup: global.activeSection = .chat
         }
     }
 
     func fadeOut() {
         withAnimation(.linear1) {
             switch currentStep {
-            case .welcome:
-                welcomeOpacity = 0
-            case .create:
-                createOpacity = 0
-            case .name:
-                nameOpacity = 0
-            case .bootup:
-                bootupOpacity = 0
+            case .welcome: welcomeOpacity = 0
+            case .create: createOpacity = 0
+            case .name: nameOpacity = 0
+            case .bootup: bootupOpacity = 0
             }
         }
     }
 
     func fadeIn(shouldResetAFFloat: Bool = true) {
-        if shouldResetAFFloat {
-            if currentStep != .name {
-                startAFFloating()
-            }
-        }
+        if shouldResetAFFloat && currentStep != .name { startAFFloating() }
         
         withAnimation(.linear2) {
             switch currentStep {
@@ -474,54 +457,36 @@ struct SignupView: View {
             authErrorHasOccurred = false
         } else {
             buttonOffset = -36
-            
-            Task { try await Task.sleep(nanoseconds: 100_000_000)
-                withAnimation(.linear2) {
-                    errorOpacity = 1
-                }
-            }
-            
+            withAnimation(.linear2.delay(0.1)) { errorOpacity = 1 }
             authErrorHasOccurred = true
         }
     }
     
     func startAFFloating() {
-        withAnimation(.afFloat){
-            afOffset = -s12
-        }
+        withAnimation(.afFloat){ afOffset = -s12 }
     }
     
     func dismissAF() {
-        withAnimation(.easeInOut(duration: 0.5)) {
-            afScale = 1.1
-        }
+        withAnimation(.easeInOut(duration: 0.5)) { afScale = 1.1 }
         
         Task { try await Task.sleep(nanoseconds: 500_000_000)
-            withAnimation(.easeIn(duration: 0.3)) {
-                afScale = 0
-            }
+            withAnimation(.easeIn(duration: 0.3)) { afScale = 0 }
             
             Task { try await Task.sleep(nanoseconds: 200_000_000)
-                withAnimation(.linear1) {
-                    afOpacity = 0
-                }
+                withAnimation(.linear1) { afOpacity = 0 }
             }
         }
     }
     
     func loadIn() {
         Task { try await Task.sleep(nanoseconds: 500_000_000)
-            withAnimation(.medSpring) {
-                afScale = 1
-            }
+            withAnimation(.medSpring) { afScale = 1 }
             
             startAFFloating()
             toggleButtonPresence()
             
             Task { try await Task.sleep(nanoseconds: 100_000_000)
-                withAnimation(.linear(duration: 0.3)) {
-                    welcomeOpacity = 1
-                }
+                withAnimation(.linear(duration: 0.3)) { welcomeOpacity = 1 }
             }
         }
     }

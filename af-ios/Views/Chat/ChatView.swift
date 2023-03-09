@@ -13,7 +13,7 @@ struct ChatView: View {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    
+    @State private var animation: Animation = .linear0
     
     var body: some View {
         ZStack {
@@ -63,30 +63,24 @@ struct ChatView: View {
                     .padding(.top, s240)
                     .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
                     .rotationEffect(Angle(degrees: 180))
+                    
                 }
                 .rotationEffect(Angle(degrees: 180))
                 .scrollDismissesKeyboard(.interactively)
-                .animation(.shortSpringF, value: chat.msgsBottomPadding)
+                .animation(animation, value: chat.msgsBottomPadding)
             }
             .background(Color.white)
-            
-            
         }
         .ignoresSafeArea(edges: .vertical)
         .onAppear {
             if msgs.count > 0 { chat.currentMsgID = msgs[msgs.count - 1].msgID + 1 }
             chat.uniqueMsgDates = createDateMsgGroups().0
             chat.dateMsgGroups = createDateMsgGroups().1
+            Task { try await Task.sleep(nanoseconds: 100_000_000)
+                animation = .shortSpringD
+            }
         }
     }
-    
-    @ViewBuilder func createMsgsView() -> some View {
-        //TODO: Figure out why this is getting called so many times
-        let dateMsgGroups = createDateMsgGroups()
-        MsgsView(uniqueDates: dateMsgGroups.0, dateMsgGroups: dateMsgGroups.1)
-    }
-    
-    
     
     func createDateMsgGroups() -> ([String], [String: [Message]]) {
         print("hit")

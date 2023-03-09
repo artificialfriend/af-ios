@@ -63,7 +63,9 @@ struct AFMsgView: View {
                 GeometryReader { geo in
                     Color.clear
                         .onAppear {
-                            setTextWidth(geo: geo.size.width, isOnAppear: true)
+                            Task { try await Task.sleep(nanoseconds: 100_000)
+                                setTextWidth(geo: geo.size.width, isOnAppear: true)
+                            }
                         }
                         .onChange(of: text) { _ in
                             setTextWidth(geo: geo.size.width, isOnAppear: false)
