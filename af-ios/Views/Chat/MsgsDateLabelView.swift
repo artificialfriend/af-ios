@@ -15,7 +15,7 @@ struct MsgsDateLabelView: View {
     
     var body: some View {
         Text(label)
-            .font(.xs)
+            .font(.twelveBold)
             .textCase(.uppercase)
             .foregroundColor(af.af.interface.darkColor)
             .opacity(0.3)

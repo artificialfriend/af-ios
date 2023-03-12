@@ -19,7 +19,7 @@ class UserOO: ObservableObject {
         birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!
     )
     
-    @Published var signupIsComplete: Bool = false
+    @Published var signupIsComplete: Bool = true
     
     func storeUser() {
         let dateFormatter = DateFormatter()

@@ -563,6 +563,19 @@ enum Interface: TraitInstance {
         }
     }
     
+    var afColor2: Color {
+        switch self {
+        case .green:
+            return .afGreen2
+        case .blue:
+            return .afBlue2
+        case .purple:
+            return .afPurple2
+        case .pink:
+            return .afPink2
+        }
+    }
+    
     var userColor: Color {
         switch self {
         case .green:

@@ -23,10 +23,12 @@ struct AFMsgView: View {
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
-    @State private var inErrorState: Bool = false
     @State private var error: Error?
-    @State var msgID: Int32
+    @State var id: Int32
     @State var text: String
+    @State var length: String
+    @State var style: String
+    @State var inErrorState: Bool
     let isNew: Bool
     
     var body: some View {
@@ -42,7 +44,7 @@ struct AFMsgView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MsgToolbarView(msgID: $msgID, text: $text, textOpacity: $textOpacity, inErrorState: $inErrorState, bgColor: $backgroundColor)
+                            MsgToolbarView(msgID: $id, msgText: $text, msgLength: $length, msgStyle: $style, msgTextOpacity: $textOpacity, msgBGColor: $backgroundColor, msgInErrorState: $inErrorState)
                         }
                         .opacity(toolbarOpacity)
                         .frame(width: textWidth)
@@ -99,7 +101,7 @@ struct AFMsgView: View {
     //FUNCTIONS------------------------------------------------//
     
     func loadMsg() {
-        let prompt = msgs.first(where: { $0.msgID == msgID - 1})!.text!
+        let prompt = msgs.first(where: { $0.msgID == id - 1})!.text!
         var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1, text: "", isUserMsg: false, createdAt: "")
         textOpacity = 0
         toolbarOpacity = 0
@@ -163,7 +165,7 @@ struct AFMsgView: View {
     }
     
     func updateMsg() {
-        let msgIndex = msgs.firstIndex(where: { $0.msgID == msgID })!
+        let msgIndex = msgs.firstIndex(where: { $0.msgID == id })!
         msgs[msgIndex].text = text
         msgs[msgIndex].isNew = false
         msgs[msgIndex - 1].isNew = false

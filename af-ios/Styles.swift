@@ -15,9 +15,12 @@ extension Font {
     static let l: Font = Font.custom("AvenirNext-Bold", size: 18)
     static let m: Font = Font.custom("AvenirNext-Bold", size: 17)
     static let s: Font = Font.custom("AvenirNext-Bold", size: 15)
-    static let xs: Font = Font.custom("AvenirNext-Bold", size: 12)
+    static let sDemi: Font = Font.custom("AvenirNext-DemiBold", size: 15)
     static let p: Font = Font.custom("AvenirNext-Medium", size: 17)
     static let pDemi: Font = Font.custom("AvenirNext-DemiBold", size: 17)
+    static let fourteenBold: Font = Font.custom("AvenirNext-Bold", size: 14)
+    static let thirteenBold: Font = Font.custom("AvenirNext-Bold", size: 13)
+    static let twelveBold: Font = Font.custom("AvenirNext-Bold", size: 12)
 }
 
 
@@ -30,6 +33,7 @@ extension Color {
     static let afGray: Color = Color("afGray")
     
     static let afGreen: Color = Color("afGreen")
+    static let afGreen2: Color = Color("afGreen2")
     static let afUserGreen: Color = Color("afUserGreen")
     static let afDarkGreen: Color = Color("afDarkGreen")
     static let afMedGreen: Color = Color("afDarkGreen").opacity(0.5)
@@ -38,6 +42,7 @@ extension Color {
     static let afBubbleGreen: Color = Color("afBubbleGreen")
     
     static let afBlue: Color = Color("afBlue")
+    static let afBlue2: Color = Color("afBlue2")
     static let afUserBlue: Color = Color("afUserBlue")
     static let afDarkBlue: Color = Color("afDarkBlue")
     static let afMedBlue: Color = Color("afDarkBlue").opacity(0.5)
@@ -46,6 +51,7 @@ extension Color {
     static let afBubbleBlue: Color = Color("afBubbleBlue")
     
     static let afPurple: Color = Color("afPurple")
+    static let afPurple2: Color = Color("afPurple2")
     static let afUserPurple: Color = Color("afUserPurple")
     static let afDarkPurple: Color = Color("afDarkPurple")
     static let afMedPurple: Color = Color("afDarkPurple").opacity(0.5)
@@ -54,6 +60,7 @@ extension Color {
     static let afBubblePurple: Color = Color("afBubblePurple")
     
     static let afPink: Color = Color("afPink")
+    static let afPink2: Color = Color("afPink2")
     static let afUserPink: Color = Color("afUserPink")
     static let afDarkPink: Color = Color("afDarkPink")
     static let afMedPink: Color = Color("afDarkPink").opacity(0.5)
@@ -62,6 +69,7 @@ extension Color {
     static let afBubblePink: Color = Color("afBubblePink")
     
     static let afRed: Color = Color("afRed")
+    static let afRed2: Color = Color("afRed2")
     static let afUserRed: Color = Color("afUserRed")
     static let afDarkRed: Color = Color("afDarkRed")
     static let afMedRed: Color = Color("afDarkRed").opacity(0.5)
@@ -117,6 +125,7 @@ extension Animation {
     static let shortSpringD: Animation = Animation.spring(response: 0.3, dampingFraction: 0.7, blendDuration: 0.1)
     static let shortSpringE: Animation = Animation.spring(response: 0.1, dampingFraction: 0.8, blendDuration: 0.1)
     static let shortSpringF: Animation = Animation.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0.1)
+    static let shortSpringG: Animation = Animation.spring(response: 0.25, dampingFraction: 0.7, blendDuration: 0.1)
     static let linear5: Animation = Animation.linear(duration: 0.5)
     static let linear2: Animation = Animation.linear(duration: 0.2)
     static let linear1: Animation = Animation.linear(duration: 0.1)

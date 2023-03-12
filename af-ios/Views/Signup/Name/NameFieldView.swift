@@ -41,7 +41,7 @@ struct NameFieldView: View {
                     .multilineTextAlignment(.trailing)
             }
             .padding(.horizontal, s16)
-            .font(.xs)
+            .font(.twelveBold)
             .foregroundColor(af.af.interface.softColor)
         }
     }

@@ -53,8 +53,15 @@ struct ChatView: View {
                                         UserMsgView(text: msg.text!, isNew: msg.isNew)
                                             .fixedSize(horizontal: false, vertical: true)
                                     } else {
-                                        AFMsgView(msgID: msg.msgID, text: msg.text!, isNew: msg.isNew)
-                                            .fixedSize(horizontal: false, vertical: true)
+                                        AFMsgView(
+                                            id: msg.msgID,
+                                            text: msg.text!,
+                                            length: msg.length!,
+                                            style: msg.style!,
+                                            inErrorState: msg.inErrorState,
+                                            isNew: msg.isNew
+                                        )
+                                        .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
                             }
@@ -77,13 +84,12 @@ struct ChatView: View {
             chat.uniqueMsgDates = createDateMsgGroups().0
             chat.dateMsgGroups = createDateMsgGroups().1
             Task { try await Task.sleep(nanoseconds: 100_000_000)
-                animation = .shortSpringD
+                animation = .shortSpringG
             }
         }
     }
     
     func createDateMsgGroups() -> ([String], [String: [Message]]) {
-        print("hit")
         let uniqueDates = findUniqueDates()
         var dateMsgGroups: [String: [Message]] = [:]
         

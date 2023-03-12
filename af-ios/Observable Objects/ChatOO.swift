@@ -46,7 +46,7 @@ class ChatOO: ObservableObject {
         
         call.resume()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 30) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
             if call.state != .completed {
                 call.cancel()
                 let error = NSError(domain: "makePostRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
@@ -121,25 +121,28 @@ struct GetAFReplyMsg: Codable {
 }
 
 enum AdjustOption {
-    case shorter
-    case longer
+    case short
+    case medium
+    case long
     case simple
-    case detailed
-    case friendly
+    case academic
+    case casual
     case professional
     
     var string: String {
         switch self {
-        case .shorter:
-            return "Shorter"
-        case .longer:
-            return "Longer"
+        case .short:
+            return "Short"
+        case .medium:
+            return "Medium"
+        case .long:
+            return "Long"
         case .simple:
             return "Simple"
-        case .detailed:
-            return "Detailed"
-        case .friendly:
-            return "Friendly"
+        case .academic:
+            return "Academic"
+        case .casual:
+            return "Casual"
         case .professional:
             return "Professional"
         }
