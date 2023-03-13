@@ -13,6 +13,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
+    @State private var lastRandomNumber: Int = 0
     @State private var shuffleBtnOpacity: Double = 1
     @State private var shuffleBtnIsPresent: Bool = true
     @State private var isShufflePrompt: Bool = false
@@ -155,7 +156,13 @@ struct ComposerBtnsView: View, KeyboardReadable {
     
     func getShufflePrompt() -> String {
         let range = shufflePrompts.count - 1
-        let randomNumber = Int( arc4random_uniform( UInt32(range) ) )
+        var randomNumber = Int( arc4random_uniform( UInt32(range) ) )
+        
+        while lastRandomNumber == randomNumber {
+            randomNumber = Int( arc4random_uniform( UInt32(range) ) )
+        }
+        
+        lastRandomNumber = randomNumber
         return shufflePrompts[randomNumber]
     }
     
