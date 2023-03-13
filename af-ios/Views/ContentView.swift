@@ -70,7 +70,7 @@ struct ContentView: View, KeyboardReadable {
 
                         Spacer()
 
-                        ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
+                        ComposerView(input: $chat.composerInput, safeAreaHeight: geo.safeAreaInsets.bottom)
                             .opacity(composerOpacity)
                             .offset(y: composerOffset)
                             .padding(.bottom, global.keyboardIsPresent ? s8 : s0)

@@ -19,14 +19,14 @@ struct AdjustPanelBtnView: View {
                 Text(adjustOption.string)
                     .font(.fourteenBold)
                     .foregroundColor(isActive ? .white : .afBlack)
-                    .animation(.linear1, value: isActive)
+                    .animation(nil, value: isActive)
                 Spacer()
             }
             .frame(height: 36)
             .background(
                 RoundedRectangle(cornerRadius: s8)
                     .fill(isActive ? af.af.interface.userColor : af.af.interface.afColor2)
-                    .animation(.linear1, value: isActive)
+                    .animation(nil, value: isActive)
                     //.stroke(af.af.interface.lineColor, lineWidth: s1_5)
                     .cornerRadius(adjustOption == .short || adjustOption == .simple ? 18 : cr8, corners: .topLeft)
                     .cornerRadius(adjustOption == .long || adjustOption == .academic ? 18 : cr8, corners: .topRight)

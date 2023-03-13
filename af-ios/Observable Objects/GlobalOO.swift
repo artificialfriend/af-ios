@@ -10,6 +10,7 @@ import SwiftUI
 class GlobalOO: ObservableObject {
     @Published var activeSection: Section = .chat
     @Published var keyboardIsPresent: Bool = false
+    @Published var topNavHeight: CGFloat = 0
 }
 
 enum Section {

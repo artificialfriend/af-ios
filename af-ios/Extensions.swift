@@ -10,6 +10,13 @@ import UIKit
 import Combine
 import AuthenticationServices
 
+extension UIScrollView {
+  open override var clipsToBounds: Bool {
+    get { false }
+    set { }
+  }
+}
+
 extension View {
     func placeholder<Content: View>(
         when shouldShow: Bool,

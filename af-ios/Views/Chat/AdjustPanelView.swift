@@ -175,7 +175,6 @@ struct AdjustPanelView: View {
     func handleAdjustPanelBtnTap(option: AdjustOption) {
         impactMedium.impactOccurred()
         retryBtnIsDisabled = true
-        closePanel()
         let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
         if msgInErrorState { msgInErrorState = false }
         
@@ -189,6 +188,10 @@ struct AdjustPanelView: View {
         
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryBtnRotation = Angle(degrees: 180)
+        }
+        
+        Task { try await Task.sleep(nanoseconds: 500_000_000)
+            closePanel()
         }
         
         Task { try await Task.sleep(nanoseconds: 10_000_000)

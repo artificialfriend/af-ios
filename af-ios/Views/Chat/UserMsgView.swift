@@ -24,6 +24,7 @@ struct UserMsgView: View {
                 .padding(.horizontal, s16)
                 .padding(.vertical, s12)
                 .frame(alignment: .trailing)
+                .frame(minWidth: 48)
                 .background(af.af.interface.userColor)
                 .cornerRadius(s24, corners: .topRight)
                 .cornerRadius(s24, corners: .topLeft)
@@ -39,10 +40,7 @@ struct UserMsgView: View {
     
     func loadIn() {
         chat.msgsBottomPadding += 47.33 + 8
-        
-        Task { try await Task.sleep(nanoseconds: 300_000_000)
-            chat.addMsg(text: "", isUserMsg: false, managedObjectContext: managedObjectContext)
-        }
+        chat.addMsg(text: "", isUserMsg: false, managedObjectContext: managedObjectContext)
     }
 }
 

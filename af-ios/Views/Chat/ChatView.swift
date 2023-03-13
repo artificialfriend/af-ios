@@ -17,64 +17,74 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-//            VStack {
-//                ForEach(msgs) { msg in
-//                    if msg.isUserMsg && msg.isNew {
-//                        UserMsgView(text: msg.text!, isNew: false)
-//                            .fixedSize(horizontal: false, vertical: true)
-//                            .background {
-//                                GeometryReader { geo in
-//                                    Color.clear
-//                                        .onAppear {
-//                                            chat.currentMsgHeight = geo.size.height
-//                                            print(chat.currentMsgHeight)
-//                                        }
-//                                }
-//                            }
-//                    }
-////                    } else {
-////                        AFMsgView(msgID: msg.msgID, text: msg.text!, isNew: false)
-////                            .fixedSize(horizontal: false, vertical: true)
-////                    }
-//                }
-//            }
-            
             GeometryReader { geo in
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: s0) {
-                        ForEach(chat.uniqueMsgDates, id: \.self) { date in
-                            MsgsDateLabelView(date: date)
-                                .padding(.bottom, s8)
-                                .padding(.top, s32)
-                            
-                            VStack {
-                                ForEach(chat.dateMsgGroups[date]!) { msg in
-                                    if msg.isUserMsg {
-                                        UserMsgView(text: msg.text!, isNew: msg.isNew)
+                ScrollViewReader { scrollView in
+                    ScrollView(.vertical, showsIndicators: false) {
+                        LazyVStack(spacing: s0) {
+                            ForEach(chat.uniqueMsgDates, id: \.self) { date in
+                                MsgsDateLabelView(date: date)
+                                    .padding(.bottom, s8)
+                                    .padding(.top, s32)
+                                
+                                VStack {
+                                    ForEach(chat.dateMsgGroups[date]!) { msg in
+                                        if msg.isUserMsg {
+                                            UserMsgView(
+                                                text: msg.text!,
+                                                isNew: msg.isNew
+                                            )
+                                            .id(msg.msgID)
                                             .fixedSize(horizontal: false, vertical: true)
-                                    } else {
-                                        AFMsgView(
-                                            id: msg.msgID,
-                                            text: msg.text!,
-                                            length: msg.length!,
-                                            style: msg.style!,
-                                            inErrorState: msg.inErrorState,
-                                            isNew: msg.isNew
-                                        )
-                                        .fixedSize(horizontal: false, vertical: true)
+                                        } else {
+                                            AFMsgView(
+                                                id: msg.msgID,
+                                                text: msg.text!,
+                                                length: msg.length!,
+                                                style: msg.style!,
+                                                inErrorState: msg.inErrorState,
+                                                isNew: msg.isNew
+                                            )
+                                            .id(msg.msgID)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                        }
                                     }
                                 }
                             }
                         }
+                        .padding(.top, s240)
+                        .id("MsgHistory")
+                        .onChange(of: msgs.last?.text) { _ in
+                            if !msgs.last!.isUserMsg {
+                                Task { try await Task.sleep(nanoseconds: 400_000_000)
+                                    let dateIndex = chat.uniqueMsgDates.count - 1
+                                    let date = chat.uniqueMsgDates[dateIndex]
+                                    let msgIndex = chat.dateMsgGroups[date]!.count - 1
+                                    let msgID = chat.dateMsgGroups[date]![msgIndex].msgID
+
+                                    withAnimation {
+                                        scrollView.scrollTo(msgID - 1, anchor: .bottom)
+                                    }
+                                }
+                            }
+                        }
+                        .onChange(of: chat.composerInput.isEmpty) { _ in
+                            withAnimation {
+                                scrollView.scrollTo("MsgHistory", anchor: .top)
+                            }
+                        }
+                        .onChange(of: global.keyboardIsPresent) { _ in
+                            withAnimation {
+                                scrollView.scrollTo("MsgHistory", anchor: .top)
+                            }
+                        }
+                        .rotationEffect(Angle(degrees: 180))
                     }
-                    .padding(.top, s240)
-                    .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
                     .rotationEffect(Angle(degrees: 180))
-                    
+                    .scrollDismissesKeyboard(.interactively)
+                    .animation(animation, value: chat.msgsBottomPadding)
                 }
-                .rotationEffect(Angle(degrees: 180))
-                .scrollDismissesKeyboard(.interactively)
-                .animation(animation, value: chat.msgsBottomPadding)
+                .padding(.top, global.topNavHeight + s8)
+                .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
             }
             .background(Color.white)
         }
@@ -83,6 +93,7 @@ struct ChatView: View {
             if msgs.count > 0 { chat.currentMsgID = msgs[msgs.count - 1].msgID + 1 }
             chat.uniqueMsgDates = createDateMsgGroups().0
             chat.dateMsgGroups = createDateMsgGroups().1
+            
             Task { try await Task.sleep(nanoseconds: 100_000_000)
                 animation = .shortSpringG
             }

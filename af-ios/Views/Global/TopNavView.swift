@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TopNavView: View {
+    @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     let safeAreaHeight: CGFloat
     
@@ -38,6 +39,12 @@ struct TopNavView: View {
             DividerView(direction: .horizontal)
         }
         .background(Blur())
+        .background {
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear { global.topNavHeight = geo.size.height }
+            }
+        }
     }
 }
 

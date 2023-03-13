@@ -36,6 +36,8 @@ struct MsgToolbarView: View {
     @Binding var msgLength: String
     @Binding var msgStyle: String
     @Binding var msgTextOpacity: Double
+    @Binding var msgTextWidth: CGFloat
+    @Binding var msgTextMaxWidth: CGFloat
     @Binding var msgBGColor: Color
     @Binding var msgInErrorState: Bool
     
@@ -76,7 +78,7 @@ struct MsgToolbarView: View {
                     setActiveMsgLength()
                 }
                 .onChange(of: msgStyle) { _ in
-                    setActiveMsgLength()
+                    setActiveMsgStyle()
                 }
             }
             
@@ -84,17 +86,20 @@ struct MsgToolbarView: View {
             HStack(spacing: s12) {
                 Spacer(minLength: 0)
                 
-                //ADJUST BUTTON
-                Button(action: { handleAdjustBtnTap() }) {
-                    Image("AdjustIcon")
-                        .resizable()
-                        .foregroundColor(adjustBtnColor)
-                        .frame(width: 22, height: 22)
+                //ONLY SHOW ADJUST BUTTON ON LONG RESPONSES
+                if msgTextWidth == msgTextMaxWidth {
+                    //ADJUST BUTTON
+                    Button(action: { handleAdjustBtnTap() }) {
+                        Image("AdjustIcon")
+                            .resizable()
+                            .foregroundColor(adjustBtnColor)
+                            .frame(width: 22, height: 22)
+                    }
+                    .buttonStyle(Spring())
+                    .disabled(adjustBtnIsDisabled)
+                    
+                    DividerView(direction: .vertical)
                 }
-                .buttonStyle(Spring())
-                .disabled(adjustBtnIsDisabled)
-                
-                DividerView(direction: .vertical)
                 
                 //RETRY BUTTON
                 Button(action: { handleRetryBtnTap() }) {

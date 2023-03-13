@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 class ChatOO: ObservableObject {
+    @Published var composerInput: String = ""
     @Published var msgsBottomPadding: CGFloat = s80
     @Published var currentMsgID: Int32 = 0
     @Published var currentMsgHeight: CGFloat = 0
@@ -46,7 +47,7 @@ class ChatOO: ObservableObject {
         
         call.resume()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 30) {
             if call.state != .completed {
                 call.cancel()
                 let error = NSError(domain: "makePostRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])

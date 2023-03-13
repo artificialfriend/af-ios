@@ -44,7 +44,17 @@ struct AFMsgView: View {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
-                            MsgToolbarView(msgID: $id, msgText: $text, msgLength: $length, msgStyle: $style, msgTextOpacity: $textOpacity, msgBGColor: $backgroundColor, msgInErrorState: $inErrorState)
+                            MsgToolbarView(
+                                msgID: $id,
+                                msgText: $text,
+                                msgLength: $length,
+                                msgStyle: $style,
+                                msgTextOpacity: $textOpacity,
+                                msgTextWidth: $textWidth,
+                                msgTextMaxWidth: $textMaxWidth,
+                                msgBGColor: $backgroundColor,
+                                msgInErrorState: $inErrorState
+                            )
                         }
                         .opacity(toolbarOpacity)
                         .frame(width: textWidth)
@@ -66,11 +76,11 @@ struct AFMsgView: View {
                     Color.clear
                         .onAppear {
                             Task { try await Task.sleep(nanoseconds: 100_000)
-                                setTextWidth(geo: geo.size.width, isOnAppear: true)
+                                setTextWidth(to: geo.size.width, isOnAppear: true)
                             }
                         }
                         .onChange(of: text) { _ in
-                            setTextWidth(geo: geo.size.width, isOnAppear: false)
+                            setTextWidth(to: geo.size.width, isOnAppear: false)
                         }
                 }
             }
@@ -107,7 +117,7 @@ struct AFMsgView: View {
         toolbarOpacity = 0
         toolbarIsPresent = false
         
-        Task { try await Task.sleep(nanoseconds: 200_000_000)
+        Task { try await Task.sleep(nanoseconds: 500_000_000)
             toggleLoading()
             chat.msgsBottomPadding += 47.33 + 8
             
@@ -135,6 +145,8 @@ struct AFMsgView: View {
                             }
                         case .failure:
                             inErrorState = true
+                            msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
+                            PersistenceController.shared.save()
                         
                             withAnimation(.shortSpringB) {
                                 text = "Sorry, something went wrong... Please try again."
@@ -144,6 +156,8 @@ struct AFMsgView: View {
                                 backgroundColor = .afRed
                             }
                     }
+                    
+                    updateMsg()
                 
                     withAnimation(.shortSpringB) {
                         toolbarIsPresent = true
@@ -155,9 +169,9 @@ struct AFMsgView: View {
                             toolbarOpacity = 1
                         }
                         
-                        Task { try await Task.sleep(nanoseconds: 100_000_000)
-                            updateMsg()
-                        }
+//                        Task { try await Task.sleep(nanoseconds: 100_000_000)
+//                            updateMsg()
+//                        }
                     }
                 }
             }
@@ -180,9 +194,9 @@ struct AFMsgView: View {
         }
     }
     
-    func setTextWidth(geo: CGFloat, isOnAppear: Bool) {
+    func setTextWidth(to width: CGFloat, isOnAppear: Bool) {
         Task { try await Task.sleep(nanoseconds: 1_000_000)
-            textWidth = geo
+            textWidth = width
             
             if (isOnAppear && !isNew) || !isOnAppear {
                 if textWidth >= textMaxWidth - s64 {

@@ -10,7 +10,7 @@ import SwiftUI
 struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    @State private var input: String = ""
+    //@State private var input: String = ""
     @State private var placeholderText: String = "Ask anything!"
     @State private var trailingPadding: CGFloat = s96
     @State private var shufflePrompts: [String] = [
@@ -26,6 +26,7 @@ struct ComposerView: View, KeyboardReadable {
         "What does mitochondria do?",
         "How do semiconductors work?"
     ]
+    @Binding var input: String
     let safeAreaHeight: CGFloat
     
     var body: some View {

@@ -207,13 +207,13 @@
 				48D921B929B017C000C3D0DA /* MsgsDateLabelView.swift */,
 				48159818298328AF00201B32 /* UserMsgView.swift */,
 				48B5633429846AAF0077B372 /* AFMsgView.swift */,
-				48D921B129AD302900C3D0DA /* NicknamesMsgView.swift */,
-				48D921B529AD7C9300C3D0DA /* NicknameMsgSaveBtnView.swift */,
-				48D921B329AD34B600C3D0DA /* NicknameView.swift */,
 				48AA2632298EA2A80091609C /* MsgToolbarView.swift */,
 				48D921AD29AD1DF400C3D0DA /* AdjustPanelView.swift */,
 				48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */,
 				48D921AB29AD1BEC00C3D0DA /* AdjustPanelBtnView.swift */,
+				48D921B129AD302900C3D0DA /* NicknamesMsgView.swift */,
+				48D921B529AD7C9300C3D0DA /* NicknameMsgSaveBtnView.swift */,
+				48D921B329AD34B600C3D0DA /* NicknameView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
