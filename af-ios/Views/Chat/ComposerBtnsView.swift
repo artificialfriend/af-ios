@@ -19,7 +19,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @State private var isShufflePrompt: Bool = false
     @State private var recordBtnOpacity: Double = 1
     @State private var stopRecordBtnOpacity: Double = 0
-    @State private var stopRecordBtnScale: CGFloat = 1
+    @State private var stopRecordBtnScale: CGFloat = 0
     @State private var sendBtnOpacity: Double = 0
     @Binding var input: String
     @Binding var placeholderText: String
@@ -112,7 +112,11 @@ struct ComposerBtnsView: View, KeyboardReadable {
             placeholderText = "I'm listening!"
         }
         
-        withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+        withAnimation(.easeOut2) {
+            stopRecordBtnScale = 1
+        }
+        
+        withAnimation(.easeInOut(duration: 1).delay(0.2).repeatForever(autoreverses: true)) {
             stopRecordBtnScale = 0.9
         }
     }
@@ -127,7 +131,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
             placeholderText = "Ask anything!"
         }
         
-        stopRecordBtnScale = 1
+        stopRecordBtnScale = 0
     }
     
     func handleShuffleBtnTap() {
