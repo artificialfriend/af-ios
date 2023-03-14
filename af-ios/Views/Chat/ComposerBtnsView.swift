@@ -112,12 +112,14 @@ struct ComposerBtnsView: View, KeyboardReadable {
             placeholderText = "I'm listening!"
         }
         
-        withAnimation(.easeOut2) {
+        withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0.1)) {
             stopRecordBtnScale = 1
         }
         
-        withAnimation(.easeInOut(duration: 1).delay(0.2).repeatForever(autoreverses: true)) {
-            stopRecordBtnScale = 0.9
+        Task { try await Task.sleep(nanoseconds: 300_000_000)
+            withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                stopRecordBtnScale = 0.9
+            }
         }
     }
     

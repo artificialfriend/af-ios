@@ -10,15 +10,15 @@ import SwiftUI
 class AFOO: ObservableObject {
     @Published var af: AF = AF(
         id: "",
-        name: "Guppy",
+        name: "Ivy",
         birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!,
         skinColor: SkinColor.green,
         freckles: Freckles.noFreckles,
         hairColor: HairColor.green,
-        hairstyle: Hairstyle.two,
+        hairstyle: Hairstyle.four,
         eyeColor: EyeColor.green,
         eyelashes: Eyelashes.short,
-        image: AFImage.green2,
+        image: AFImage.green4,
         bubble: Bubble.green,
         interface: Interface.green
     )
