@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Blue3AFSleeping.png",
+      "filename" : "Blue3AFThinking.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Blue3AFSleeping@2x.png",
+      "filename" : "Blue3AFThinking@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Blue3AFSleeping@3x.png",
+      "filename" : "Blue3AFThinking@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

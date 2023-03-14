@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Pink4AFSleeping.png",
+      "filename" : "Pink4AFThinking.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Pink4AFSleeping@2x.png",
+      "filename" : "Pink4AFThinking@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Pink4AFSleeping@3x.png",
+      "filename" : "Pink4AFThinking@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

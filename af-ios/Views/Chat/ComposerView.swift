@@ -15,17 +15,36 @@ struct ComposerView: View, KeyboardReadable {
     @State private var placeholderText: String = "Ask anything!"
     @State private var trailingPadding: CGFloat = s96
     @State private var shufflePrompts: [String] = [
-        "Summarize chapter 1 of Wuthering Heights",
-        "Give me 3 unique ideas for an essay on the American Revolution",
-        "Write a rhyming love poem about girl named Anna",
-        "Create an outline for an essay on artificial general intelligence",
-        "Explain the laws of physics in simple language",
-        "What Greek god is most like a gemini and why?",
-        "What is Einstein famous for?",
-        "How did WW2 shape the world?",
-        "What were the main reasons that the US became a superpower?",
-        "What does mitochondria do?",
-        "How do semiconductors work?"
+        "Summarize season 3 of Succession",
+        "Give me some quirky caption ideas for an Instagram post about my vacation in Mexico City",
+        "How long ago did the big bang happen?",
+        "What are some synonyms for \"optimistic\"?",
+        "Explain the theory of evolution in simple terms, include examples",
+        "What can I make for dinner with chicken and broccoli?",
+        "What's a good park that isn't usually crowded in SF?",
+        "What caused the financial crash in 2008?",
+        "How many calories are in a big mac?",
+        "What's a hidden gem vegan restaurant in Brooklyn?",
+        "How old was Turing when he died?",
+        "What's another novel like Klara and the Sun?",
+        "Draft an email to my professor letting him know I won't be at Tuesdays lab because I have a doctor's appointment",
+        "Hit me with some motivational quotes",
+        "What's the word for a turn of phrase?",
+        "How often am I supposed to get my eyes checked?",
+        "Give me some unique first date ideas",
+        "Where is Rihanna from?",
+        "How long should I wait to run after eating?",
+        "Why is my car making a squealing sound?",
+        "What are the main tenets of stoicism?"
+//        "Write a rhyming love poem about girl named Anna",
+//        "Create an outline for an essay on artificial general intelligence",
+//        "Explain the laws of physics in simple language",
+//        "What Greek god is most like a gemini and why?",
+//        "What is Einstein famous for?",
+//        "How did WW2 shape the world?",
+//        "What were the main reasons that the US became a superpower?",
+//        "What does mitochondria do?",
+//        "How do semiconductors work?"
     ]
     @Binding var input: String
     let safeAreaHeight: CGFloat

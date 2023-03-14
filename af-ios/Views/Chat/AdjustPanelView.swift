@@ -177,6 +177,7 @@ struct AdjustPanelView: View {
         retryBtnIsDisabled = true
         let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
         if msgInErrorState { msgInErrorState = false }
+        withAnimation(.linear5) { af.setExpression(to: .thinking) }
         
         if option == .short || option == .medium || option == .long {
             msgLength = option.string
@@ -225,6 +226,7 @@ struct AdjustPanelView: View {
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
                     msgs.first(where: { $0.msgID == msgID })!.inErrorState = msgInErrorState
                     PersistenceController.shared.save()
+                    withAnimation(.linear5) { af.setExpression(to: .neutral) }
                 case .failure:
                     msgInErrorState = true
                 
@@ -245,9 +247,14 @@ struct AdjustPanelView: View {
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
                     msgs.first(where: { $0.msgID == msgID })!.inErrorState = msgInErrorState
                     PersistenceController.shared.save()
-
-                    withAnimation(.linear1) {
-                        msgBGColor = .afRed
+                    withAnimation(.linear1) { msgBGColor = .afRed }
+                
+                    DispatchQueue.main.async {
+                        withAnimation(.linear5) { af.setExpression(to: .sweating) }
+                        
+                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                        }
                     }
             }
             

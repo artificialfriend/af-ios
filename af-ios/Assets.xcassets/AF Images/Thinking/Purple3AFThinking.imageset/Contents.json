@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Purple3AFSleeping.png",
+      "filename" : "Purple3AFThinking.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Purple3AFSleeping@2x.png",
+      "filename" : "Purple3AFThinking@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Purple3AFSleeping@3x.png",
+      "filename" : "Purple3AFThinking@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

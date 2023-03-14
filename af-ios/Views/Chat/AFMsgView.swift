@@ -148,6 +148,11 @@ struct AFMsgView: View {
                         }
                         
                         withAnimation(.linear1) { backgroundColor = .afRed }
+                        withAnimation(.linear5) { af.setExpression(to: .sweating) }
+                        
+                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                        }
                     }
                     
                     updateMsg()

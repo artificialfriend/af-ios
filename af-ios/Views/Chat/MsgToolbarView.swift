@@ -188,6 +188,7 @@ struct MsgToolbarView: View {
         retryBtnIsDisabled = true
         if msgInErrorState { msgInErrorState = false }
         let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
+        withAnimation(.linear5) { af.setExpression(to: .thinking) }
 
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryBtnRotation = Angle(degrees: 180)
@@ -224,6 +225,7 @@ struct MsgToolbarView: View {
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
                     msgs.first(where: { $0.msgID == msgID })!.inErrorState = msgInErrorState
                     PersistenceController.shared.save()
+                    withAnimation(.linear5) { af.setExpression(to: .neutral) }
                 case .failure:
                     msgInErrorState = true
                     if adjustPanelIsPresent { handleAdjustBtnTap() }
@@ -235,9 +237,14 @@ struct MsgToolbarView: View {
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
                     msgs.first(where: { $0.msgID == msgID })!.inErrorState = msgInErrorState
                     PersistenceController.shared.save()
-
-                    withAnimation(.linear1) {
-                        msgBGColor = .afRed
+                    withAnimation(.linear1) { msgBGColor = .afRed }
+                
+                    DispatchQueue.main.async {
+                        withAnimation(.linear5) { af.setExpression(to: .sweating) }
+                        
+                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                        }
                     }
             }
 

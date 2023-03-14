@@ -13,12 +13,13 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    @State private var lastRandomNumber: Int = 0
+    @State private var recentRandomNumbers: [Int] = []
     @State private var shuffleBtnOpacity: Double = 1
     @State private var shuffleBtnIsPresent: Bool = true
     @State private var isShufflePrompt: Bool = false
     @State private var recordBtnOpacity: Double = 1
     @State private var stopRecordBtnOpacity: Double = 0
+    @State private var stopRecordBtnScale: CGFloat = 1
     @State private var sendBtnOpacity: Double = 0
     @Binding var input: String
     @Binding var placeholderText: String
@@ -54,6 +55,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
                     ZStack {
                         Circle()
                             .fill(Color.afUserRed)
+                            .scaleEffect(stopRecordBtnScale)
                         
                             Image("StopIcon")
                                 .resizable()
@@ -97,9 +99,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
     func handleSendBtnTap() {
         impactMedium.impactOccurred()
         chat.addMsg(text: input, isUserMsg: true, managedObjectContext: managedObjectContext)
-        //Task { try await Task.sleep(nanoseconds: 100_000_000)
-            input = ""
-        //}
+        input = ""
     }
     
     func handleRecordBtnTap() {
@@ -110,6 +110,10 @@ struct ComposerBtnsView: View, KeyboardReadable {
             recordBtnOpacity = 0
             shuffleBtnOpacity = 0
             placeholderText = "I'm listening!"
+        }
+        
+        withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+            stopRecordBtnScale = 0.9
         }
     }
     
@@ -122,6 +126,8 @@ struct ComposerBtnsView: View, KeyboardReadable {
             shuffleBtnOpacity = 1
             placeholderText = "Ask anything!"
         }
+        
+        stopRecordBtnScale = 1
     }
     
     func handleShuffleBtnTap() {
@@ -158,13 +164,18 @@ struct ComposerBtnsView: View, KeyboardReadable {
     
     func getShufflePrompt() -> String {
         let range = shufflePrompts.count - 1
-        var randomNumber = Int( arc4random_uniform( UInt32(range) ) )
+        var randomNumber = Int.random(in: 0...range)
         
-        while lastRandomNumber == randomNumber {
-            randomNumber = Int( arc4random_uniform( UInt32(range) ) )
+        while recentRandomNumbers.contains(randomNumber) {
+            randomNumber = Int.random(in: 0...range)
         }
         
-        lastRandomNumber = randomNumber
+        recentRandomNumbers.append(randomNumber)
+        
+        if recentRandomNumbers.count > 10 {
+            recentRandomNumbers.removeFirst()
+        }
+        
         return shufflePrompts[randomNumber]
     }
 }

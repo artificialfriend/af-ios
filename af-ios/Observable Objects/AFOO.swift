@@ -10,17 +10,17 @@ import SwiftUI
 class AFOO: ObservableObject {
     @Published var af: AF = AF(
         id: "",
-        name: "",
+        name: "Guppy",
         birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!,
-        skinColor: SkinColor.blue,
+        skinColor: SkinColor.green,
         freckles: Freckles.noFreckles,
-        hairColor: HairColor.blue,
-        hairstyle: Hairstyle.one,
-        eyeColor: EyeColor.blue,
+        hairColor: HairColor.green,
+        hairstyle: Hairstyle.two,
+        eyeColor: EyeColor.green,
         eyelashes: Eyelashes.short,
-        image: AFImage.blue1,
-        bubble: Bubble.blue,
-        interface: Interface.blue
+        image: AFImage.green2,
+        bubble: Bubble.green,
+        interface: Interface.green
     )
     
     func storeAF() {
@@ -143,6 +143,23 @@ class AFOO: ObservableObject {
             else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Thinking }
             else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Thinking }
             else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Thinking }
+        } else if expression == .sweating {
+            if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Sweating }
+            else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Sweating }
+            else if af.skinColor == .green && af.hairstyle == .three { af.image = AFImage.green3Sweating }
+            else if af.skinColor == .green && af.hairstyle == .four { af.image = AFImage.green4Sweating }
+            else if af.skinColor == .blue && af.hairstyle == .one { af.image = AFImage.blue1Sweating }
+            else if af.skinColor == .blue && af.hairstyle == .two { af.image = AFImage.blue2Sweating }
+            else if af.skinColor == .blue && af.hairstyle == .three { af.image = AFImage.blue3Sweating }
+            else if af.skinColor == .blue && af.hairstyle == .four { af.image = AFImage.blue4Sweating }
+            else if af.skinColor == .purple && af.hairstyle == .one { af.image = AFImage.purple1Sweating }
+            else if af.skinColor == .purple && af.hairstyle == .two { af.image = AFImage.purple2Sweating }
+            else if af.skinColor == .purple && af.hairstyle == .three { af.image = AFImage.purple3Sweating }
+            else if af.skinColor == .purple && af.hairstyle == .four { af.image = AFImage.purple4Sweating }
+            else if af.skinColor == .pink && af.hairstyle == .one { af.image = AFImage.pink1Sweating }
+            else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Sweating }
+            else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Sweating }
+            else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Sweating }
         }
     }
 }
@@ -337,6 +354,7 @@ enum Expression {
     case sleeping
     case happy
     case thinking
+    case sweating
     
     var name: String {
         switch self {
@@ -344,6 +362,7 @@ enum Expression {
         case .sleeping: return "Sleeping"
         case .happy: return "Happy"
         case .thinking: return "Thinking"
+        case .sweating: return "Sweating"
         }
     }
 }
@@ -413,6 +432,22 @@ enum AFImage: TraitInstance {
     case pink2Thinking
     case pink3Thinking
     case pink4Thinking
+    case green1Sweating
+    case green2Sweating
+    case green3Sweating
+    case green4Sweating
+    case blue1Sweating
+    case blue2Sweating
+    case blue3Sweating
+    case blue4Sweating
+    case purple1Sweating
+    case purple2Sweating
+    case purple3Sweating
+    case purple4Sweating
+    case pink1Sweating
+    case pink2Sweating
+    case pink3Sweating
+    case pink4Sweating
     
     var trait: Trait {
         return .image
@@ -484,6 +519,22 @@ enum AFImage: TraitInstance {
         case .pink2Thinking: return "Pink 2 Thinking"
         case .pink3Thinking: return "Pink 3 Thinking"
         case .pink4Thinking: return "Pink 4 Thinking"
+        case .green1Sweating: return "Green 1 Sweating"
+        case .green2Sweating: return "Green 2 Sweating"
+        case .green3Sweating: return "Green 3 Sweating"
+        case .green4Sweating: return "Green 4 Sweating"
+        case .blue1Sweating: return "Blue 1 Sweating"
+        case .blue2Sweating: return "Blue 2 Sweating"
+        case .blue3Sweating: return "Blue 3 Sweating"
+        case .blue4Sweating: return "Blue 4 Sweating"
+        case .purple1Sweating: return "Purple 1 Sweating"
+        case .purple2Sweating: return "Purple 2 Sweating"
+        case .purple3Sweating: return "Purple 3 Sweating"
+        case .purple4Sweating: return "Purple 4 Sweating"
+        case .pink1Sweating: return "Pink 1 Sweating"
+        case .pink2Sweating: return "Pink 2 Sweating"
+        case .pink3Sweating: return "Pink 3 Sweating"
+        case .pink4Sweating: return "Pink 4 Sweating"
         }
     }
     
@@ -553,6 +604,22 @@ enum AFImage: TraitInstance {
         case .pink2Thinking: return Image("Pink2AFThinking")
         case .pink3Thinking: return Image("Pink3AFThinking")
         case .pink4Thinking: return Image("Pink4AFThinking")
+        case .green1Sweating: return Image("Green1AFSweating")
+        case .green2Sweating: return Image("Green2AFSweating")
+        case .green3Sweating: return Image("Green3AFSweating")
+        case .green4Sweating: return Image("Green4AFSweating")
+        case .blue1Sweating: return Image("Blue1AFSweating")
+        case .blue2Sweating: return Image("Blue2AFSweating")
+        case .blue3Sweating: return Image("Blue3AFSweating")
+        case .blue4Sweating: return Image("Blue4AFSweating")
+        case .purple1Sweating: return Image("Purple1AFSweating")
+        case .purple2Sweating: return Image("Purple2AFSweating")
+        case .purple3Sweating: return Image("Purple3AFSweating")
+        case .purple4Sweating: return Image("Purple4AFSweating")
+        case .pink1Sweating: return Image("Pink1AFSweating")
+        case .pink2Sweating: return Image("Pink2AFSweating")
+        case .pink3Sweating: return Image("Pink3AFSweating")
+        case .pink4Sweating: return Image("Pink4AFSweating")
         }
     }
 }
