@@ -15,11 +15,11 @@ struct AFMsgView: View {
     @EnvironmentObject var chat: ChatOO
     @State private var isLoading: Bool = false
     @State private var toolbarIsPresent: Bool = true
-    @State private var toolbarOpacity: Double = 1
+    @State private var toolbarOpacity: Double = 0
     @State private var opacity: Double = 0
     @State private var backgroundColor: Color = .white
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
-    @State private var textOpacity: Double = 1
+    @State private var textOpacity: Double = 0
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
@@ -36,7 +36,7 @@ struct AFMsgView: View {
             ZStack {
                 VStack(spacing: s12) {
                     Text(text)
-                        .opacity(textOpacity)
+                        .opacity(isNew ? textOpacity : 1)
                         .foregroundColor(.afBlack)
                         .frame(minWidth: textMinWidth, alignment: .leading)
                     
@@ -56,7 +56,7 @@ struct AFMsgView: View {
                                 msgInErrorState: $inErrorState
                             )
                         }
-                        .opacity(toolbarOpacity)
+                        .opacity(isNew ? toolbarOpacity : 1)
                         .frame(width: textWidth)
                     }
                 }
@@ -116,65 +116,49 @@ struct AFMsgView: View {
         textOpacity = 0
         toolbarOpacity = 0
         toolbarIsPresent = false
+        toggleLoading()
         
-        Task { try await Task.sleep(nanoseconds: 500_000_000)
-            toggleLoading()
-            chat.msgsBottomPadding += 47.33 + 8
-            
-            withAnimation(.loadingSpin) {
-                spinnerRotation = Angle(degrees: 360)
-            }
-
-            withAnimation(.linear1) {
-                opacity = 1
-            }
-            
+        //Task { try await Task.sleep(nanoseconds: 100_000_000)
+        chat.msgsBottomPadding += 47.33 + 8
+        withAnimation(.linear5) { af.setExpression(to: .thinking) }
+        withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
+        withAnimation(.linear1) { opacity = 1 }
+        
             chat.getAFReply(userID: user.user.id, prompt: prompt, behavior: "") { result in
-                withAnimation(.linear1) {
-                    toggleLoading()
-                }
+                withAnimation(.linear1) { toggleLoading() }
                 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)
                     impactMedium.impactOccurred()
                     
                     switch result {
-                        case .success(let response):
-                            withAnimation(.shortSpringB) {
-                                responseMsg = response.response
-                                text = responseMsg.text
-                            }
-                        case .failure:
-                            inErrorState = true
-                            msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
-                            PersistenceController.shared.save()
+                    case .success(let response):
+                        withAnimation(.shortSpringB) {
+                            responseMsg = response.response
+                            text = responseMsg.text
+                        }
                         
-                            withAnimation(.shortSpringB) {
-                                text = "Sorry, something went wrong... Please try again."
-                            }
+                        withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                    case .failure:
+                        inErrorState = true
+                        msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
+                        PersistenceController.shared.save()
                         
-                            withAnimation(.linear1) {
-                                backgroundColor = .afRed
-                            }
+                        withAnimation(.shortSpringB) {
+                            text = "Sorry, something went wrong... Please try again."
+                        }
+                        
+                        withAnimation(.linear1) { backgroundColor = .afRed }
                     }
                     
                     updateMsg()
-                
-                    withAnimation(.shortSpringB) {
-                        toolbarIsPresent = true
-                    }
-                
-                    Task { try await Task.sleep(nanoseconds: 300_000_000)
-                        withAnimation(.linear2) {
-                            textOpacity = 1
-                            toolbarOpacity = 1
-                        }
-                        
-//                        Task { try await Task.sleep(nanoseconds: 100_000_000)
-//                            updateMsg()
-//                        }
+                    withAnimation(.shortSpringB) { toolbarIsPresent = true }
+                    
+                    withAnimation(.linear2.delay(0.3)) {
+                        textOpacity = 1
+                        toolbarOpacity = 1
                     }
                 }
-            }
+           // }
         }
     }
     

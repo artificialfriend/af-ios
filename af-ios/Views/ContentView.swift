@@ -43,7 +43,7 @@ struct ContentView: View, KeyboardReadable {
                 ChatView()
                     .opacity(chatOpacity)
                     .onAppear {
-                        withAnimation(.linear2.delay(0)) { chatOpacity = 1 }
+                        withAnimation(.linear2) { chatOpacity = 1 }
                     }
                     
             }
@@ -109,8 +109,6 @@ struct ContentView: View, KeyboardReadable {
                     .onAppear {
                         Task { try await Task.sleep(nanoseconds: 750_000_000)
                             toggleAF()
-//                            af.setExpression(to: .happy)
-//                            withAnimation(.linear5.delay(1.5)) { af.setExpression(to: .neutral) }
                         }
                         
 

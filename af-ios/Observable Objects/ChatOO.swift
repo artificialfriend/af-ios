@@ -15,6 +15,8 @@ class ChatOO: ObservableObject {
     @Published var currentMsgHeight: CGFloat = 0
     @Published var dateMsgGroups: [String: [Message]] = [:]
     @Published var uniqueMsgDates: [String] = []
+    @Published var dummyMsgs: [Message] = []
+    @Published var currentUserMsgHeight: CGFloat = 0
     
     func getAFReply(userID: Int, prompt: String, behavior: String?, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
@@ -64,9 +66,14 @@ class ChatOO: ObservableObject {
         msg.createdAt = Date.now
         currentMsgID += 1
         
+        if msg.isUserMsg && msg.isNew {
+            dummyMsgs = []
+            dummyMsgs.append(msg)
+        }
+        
         DispatchQueue.main.async {
-            Task { try await Task.sleep(nanoseconds: 1_000_000)
-                self.msgsBottomPadding -= 47.33 + 8
+            Task { try await Task.sleep(nanoseconds: 50_000_000)
+                self.msgsBottomPadding -= msg.isUserMsg ? self.currentUserMsgHeight + 8 : 47.33 + 8
                 let date = self.formatDate(Date.now)
                 if self.dateMsgGroups.contains(where: {$0.key == date}) {
                     self.dateMsgGroups[date]!.append(msg)

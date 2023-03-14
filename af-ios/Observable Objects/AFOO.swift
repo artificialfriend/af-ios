@@ -126,6 +126,23 @@ class AFOO: ObservableObject {
             else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Happy }
             else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Happy }
             else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Happy }
+        } else if expression == .thinking {
+            if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Thinking }
+            else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Thinking }
+            else if af.skinColor == .green && af.hairstyle == .three { af.image = AFImage.green3Thinking }
+            else if af.skinColor == .green && af.hairstyle == .four { af.image = AFImage.green4Thinking }
+            else if af.skinColor == .blue && af.hairstyle == .one { af.image = AFImage.blue1Thinking }
+            else if af.skinColor == .blue && af.hairstyle == .two { af.image = AFImage.blue2Thinking }
+            else if af.skinColor == .blue && af.hairstyle == .three { af.image = AFImage.blue3Thinking }
+            else if af.skinColor == .blue && af.hairstyle == .four { af.image = AFImage.blue4Thinking }
+            else if af.skinColor == .purple && af.hairstyle == .one { af.image = AFImage.purple1Thinking }
+            else if af.skinColor == .purple && af.hairstyle == .two { af.image = AFImage.purple2Thinking }
+            else if af.skinColor == .purple && af.hairstyle == .three { af.image = AFImage.purple3Thinking }
+            else if af.skinColor == .purple && af.hairstyle == .four { af.image = AFImage.purple4Thinking }
+            else if af.skinColor == .pink && af.hairstyle == .one { af.image = AFImage.pink1Thinking }
+            else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Thinking }
+            else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Thinking }
+            else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Thinking }
         }
     }
 }
@@ -319,12 +336,14 @@ enum Expression {
     case neutral
     case sleeping
     case happy
+    case thinking
     
     var name: String {
         switch self {
         case .neutral: return "Neutral"
         case .sleeping: return "Sleeping"
         case .happy: return "Happy"
+        case .thinking: return "Thinking"
         }
     }
 }
@@ -378,6 +397,22 @@ enum AFImage: TraitInstance {
     case pink2Happy
     case pink3Happy
     case pink4Happy
+    case green1Thinking
+    case green2Thinking
+    case green3Thinking
+    case green4Thinking
+    case blue1Thinking
+    case blue2Thinking
+    case blue3Thinking
+    case blue4Thinking
+    case purple1Thinking
+    case purple2Thinking
+    case purple3Thinking
+    case purple4Thinking
+    case pink1Thinking
+    case pink2Thinking
+    case pink3Thinking
+    case pink4Thinking
     
     var trait: Trait {
         return .image
@@ -433,6 +468,22 @@ enum AFImage: TraitInstance {
         case .pink2Happy: return "Pink 2 Happy"
         case .pink3Happy: return "Pink 3 Happy"
         case .pink4Happy: return "Pink 4 Happy"
+        case .green1Thinking: return "Green 1 Thinking"
+        case .green2Thinking: return "Green 2 Thinking"
+        case .green3Thinking: return "Green 3 Thinking"
+        case .green4Thinking: return "Green 4 Thinking"
+        case .blue1Thinking: return "Blue 1 Thinking"
+        case .blue2Thinking: return "Blue 2 Thinking"
+        case .blue3Thinking: return "Blue 3 Thinking"
+        case .blue4Thinking: return "Blue 4 Thinking"
+        case .purple1Thinking: return "Purple 1 Thinking"
+        case .purple2Thinking: return "Purple 2 Thinking"
+        case .purple3Thinking: return "Purple 3 Thinking"
+        case .purple4Thinking: return "Purple 4 Thinking"
+        case .pink1Thinking: return "Pink 1 Thinking"
+        case .pink2Thinking: return "Pink 2 Thinking"
+        case .pink3Thinking: return "Pink 3 Thinking"
+        case .pink4Thinking: return "Pink 4 Thinking"
         }
     }
     
@@ -486,6 +537,22 @@ enum AFImage: TraitInstance {
         case .pink2Happy: return Image("Pink2AFHappy")
         case .pink3Happy: return Image("Pink3AFHappy")
         case .pink4Happy: return Image("Pink4AFHappy")
+        case .green1Thinking: return Image("Green1AFThinking")
+        case .green2Thinking: return Image("Green2AFThinking")
+        case .green3Thinking: return Image("Green3AFThinking")
+        case .green4Thinking: return Image("Green4AFThinking")
+        case .blue1Thinking: return Image("Blue1AFThinking")
+        case .blue2Thinking: return Image("Blue2AFThinking")
+        case .blue3Thinking: return Image("Blue3AFThinking")
+        case .blue4Thinking: return Image("Blue4AFThinking")
+        case .purple1Thinking: return Image("Purple1AFThinking")
+        case .purple2Thinking: return Image("Purple2AFThinking")
+        case .purple3Thinking: return Image("Purple3AFThinking")
+        case .purple4Thinking: return Image("Purple4AFThinking")
+        case .pink1Thinking: return Image("Pink1AFThinking")
+        case .pink2Thinking: return Image("Pink2AFThinking")
+        case .pink3Thinking: return Image("Pink3AFThinking")
+        case .pink4Thinking: return Image("Pink4AFThinking")
         }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ComposerView: View, KeyboardReadable {
+    @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     //@State private var input: String = ""
@@ -71,16 +72,23 @@ struct ComposerView: View, KeyboardReadable {
                     .onAppear {
                         setMsgsBottomPadding(height: geo.size.height)
                     }
-                    .onChange(of: geo.size.height, perform: { _ in
-                        setMsgsBottomPadding(height: geo.size.height)
-                    })
+                    .onChange(of: global.keyboardIsPresent) { _ in
+                        if global.keyboardIsPresent {
+                            setMsgsBottomPadding(height: geo.size.height - 32)
+                        } else {
+                            setMsgsBottomPadding(height: geo.size.height)
+                        }
+                    }
+//                    .onChange(of: geo.size.height) { _ in
+//                        setMsgsBottomPadding(height: geo.size.height)
+//                    }
             }
         }
         .animation(.shortSpringG, value: input)
     }
     
     func setMsgsBottomPadding(height: CGFloat) {
-        chat.msgsBottomPadding = height + s16
+        chat.msgsBottomPadding = height + 16
     }
 }
 

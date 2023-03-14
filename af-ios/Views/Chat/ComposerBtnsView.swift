@@ -97,7 +97,9 @@ struct ComposerBtnsView: View, KeyboardReadable {
     func handleSendBtnTap() {
         impactMedium.impactOccurred()
         chat.addMsg(text: input, isUserMsg: true, managedObjectContext: managedObjectContext)
-        input = ""
+        //Task { try await Task.sleep(nanoseconds: 100_000_000)
+            input = ""
+        //}
     }
     
     func handleRecordBtnTap() {
@@ -165,8 +167,6 @@ struct ComposerBtnsView: View, KeyboardReadable {
         lastRandomNumber = randomNumber
         return shufflePrompts[randomNumber]
     }
-    
-    
 }
 
 //struct ComposerButtonView_Previews: PreviewProvider {

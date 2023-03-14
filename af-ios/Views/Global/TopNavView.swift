@@ -17,6 +17,7 @@ struct TopNavView: View {
             VStack {
                 HStack(spacing: s0) {
                     Image("MenuIcon")
+                        .opacity(0)
                         .foregroundColor(af.af.interface.medColor)
                     
                     Spacer()
@@ -28,6 +29,7 @@ struct TopNavView: View {
                     Spacer()
                     
                     Image("DocsIcon")
+                        .opacity(0)
                         .foregroundColor(af.af.interface.medColor)
                 }
                 .padding(.top, safeAreaHeight + s12)

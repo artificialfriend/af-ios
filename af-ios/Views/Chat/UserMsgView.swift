@@ -39,8 +39,11 @@ struct UserMsgView: View {
     }
     
     func loadIn() {
-        chat.msgsBottomPadding += 47.33 + 8
-        chat.addMsg(text: "", isUserMsg: false, managedObjectContext: managedObjectContext)
+        chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
+        
+        Task { try await Task.sleep(nanoseconds: 400_000_000)
+            chat.addMsg(text: "", isUserMsg: false, managedObjectContext: managedObjectContext)
+        }
     }
 }
 
