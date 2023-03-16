@@ -133,7 +133,7 @@ extension Animation {
     static let linear0: Animation = Animation.linear(duration: 0)
     static let easeIn2: Animation = Animation.easeIn(duration: 0.2)
     static let easeOut2: Animation = Animation.easeInOut(duration: 0.3)
-    static let loadingSpin: Animation = Animation.linear(duration: 1).repeatForever(autoreverses: false)
+    static let loadingSpin: Animation = Animation.linear(duration: 0.75).repeatForever(autoreverses: false)
     static let afFloat: Animation = Animation.easeInOut(duration: 4).repeatForever(autoreverses: true)
     static let afFloatSmall: Animation = Animation.easeInOut(duration: 3).repeatForever(autoreverses: true)
 }

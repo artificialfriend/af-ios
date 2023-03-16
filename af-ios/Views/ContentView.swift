@@ -32,6 +32,7 @@ struct ContentView: View, KeyboardReadable {
     @State private var composerInput: String = ""
     @State private var composerBottomPadding: CGFloat = s0
     @State private var composerTrailingPadding: CGFloat = 56
+    @State private var composerIsDisabled: Bool = false
     
     var body: some View {
         ZStack {
@@ -71,9 +72,11 @@ struct ContentView: View, KeyboardReadable {
                         Spacer()
 
                         ComposerView(input: $chat.composerInput, safeAreaHeight: geo.safeAreaInsets.bottom)
-                            .opacity(composerOpacity)
+                            .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
+                            .animation(.linear1, value: chat.composerIsDisabled)
                             .offset(y: composerOffset)
                             .padding(.bottom, global.keyboardIsPresent ? s8 : s0)
+                            .disabled(chat.composerIsDisabled)
                             .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                                 global.keyboardIsPresent = newIsKeyboardVisible
                             }
@@ -110,8 +113,6 @@ struct ContentView: View, KeyboardReadable {
                         Task { try await Task.sleep(nanoseconds: 750_000_000)
                             toggleAF()
                         }
-                        
-
                     }
             }
         }

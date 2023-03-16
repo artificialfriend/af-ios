@@ -42,7 +42,12 @@ struct UserMsgView: View {
         chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
         
         Task { try await Task.sleep(nanoseconds: 400_000_000)
-            chat.addMsg(text: "", isUserMsg: false, managedObjectContext: managedObjectContext)
+//            if chat.onboardingChatStep == 2 {
+//                chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: true, hasToolbar: false, managedObjectContext: managedObjectContext)
+//                //chat.onboardingChatStep += 1
+//            } else {
+                chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: false, hasToolbar: true, managedObjectContext: managedObjectContext)
+            //}
         }
     }
 }

@@ -30,6 +30,8 @@ struct AFMsgView: View {
     @State var style: String
     @State var inErrorState: Bool
     let isNew: Bool
+    let isPremade: Bool
+    let hasToolbar: Bool
     
     var body: some View {
         HStack(spacing: s0) {
@@ -40,7 +42,7 @@ struct AFMsgView: View {
                         .foregroundColor(.afBlack)
                         .frame(minWidth: textMinWidth, alignment: .leading)
                     
-                    if toolbarIsPresent {
+                    if hasToolbar && toolbarIsPresent {
                         HStack(spacing: 0) {
                             Spacer(minLength: 0)
 
@@ -102,13 +104,41 @@ struct AFMsgView: View {
         .opacity(isNew ? opacity : 1)
         .onAppear {
             if isNew {
-                loadMsg()
+                if isPremade { fakeLoadMsg() }
+                else { loadMsg() }
             }
         }
     }
     
     
     //FUNCTIONS------------------------------------------------//
+    func fakeLoadMsg() {
+        let onboardingMsgs: [String] = [
+            "Hi \(user.user.givenName), I'm your new assistant! I'm here to make your life easier however I can.",
+            "Before we get started, a couple quick questions:\n\nFirst, what's your birthday?",
+            "Ah, 29, a great age!\n\nSecond, which of these terms are you cool with me calling you?\n\n(Tap the ones you like then save)"
+        ]
+        textOpacity = 0
+        toggleLoading()
+        chat.msgsBottomPadding += 47.33 + 8
+        //withAnimation(.linear5) { af.setExpression(to: .thinking) }
+        withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
+        withAnimation(.linear1) { opacity = 1 }
+        
+        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+            withAnimation(.linear1) { toggleLoading() }
+            
+            Task { try await Task.sleep(nanoseconds: 200_000_000)
+                withAnimation(.shortSpringB) {
+                    text = onboardingMsgs[chat.onboardingChatStep]
+                }
+                
+                //updateMsg()
+                withAnimation(.linear2.delay(0.3)) { textOpacity = 1 }
+                chat.onboardingChatStep += 1
+            }
+        }
+    }
     
     func loadMsg() {
         let prompt = msgs.first(where: { $0.msgID == id - 1})!.text!
@@ -117,53 +147,51 @@ struct AFMsgView: View {
         toolbarOpacity = 0
         toolbarIsPresent = false
         toggleLoading()
-        
-        //Task { try await Task.sleep(nanoseconds: 100_000_000)
         chat.msgsBottomPadding += 47.33 + 8
         withAnimation(.linear5) { af.setExpression(to: .thinking) }
         withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
         withAnimation(.linear1) { opacity = 1 }
         
-            chat.getAFReply(userID: user.user.id, prompt: prompt, behavior: "") { result in
-                withAnimation(.linear1) { toggleLoading() }
+        chat.getAFReply(userID: user.user.id, prompt: prompt, behavior: "") { result in
+            withAnimation(.linear1) { toggleLoading() }
+            
+            Task { try await Task.sleep(nanoseconds: 200_000_000)
+                impactMedium.impactOccurred()
                 
-                Task { try await Task.sleep(nanoseconds: 200_000_000)
-                    impactMedium.impactOccurred()
-                    
-                    switch result {
-                    case .success(let response):
-                        withAnimation(.shortSpringB) {
-                            responseMsg = response.response
-                            text = responseMsg.text
-                        }
-                        
-                        withAnimation(.linear5) { af.setExpression(to: .neutral) }
-                    case .failure:
-                        inErrorState = true
-                        msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
-                        PersistenceController.shared.save()
-                        
-                        withAnimation(.shortSpringB) {
-                            text = "Sorry, something went wrong... Please try again."
-                        }
-                        
-                        withAnimation(.linear1) { backgroundColor = .afRed }
-                        withAnimation(.linear5) { af.setExpression(to: .sweating) }
-                        
-                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
-                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
-                        }
+                switch result {
+                case .success(let response):
+                    withAnimation(.shortSpringG) {
+                        responseMsg = response.response
+                        text = responseMsg.text
                     }
                     
-                    updateMsg()
-                    withAnimation(.shortSpringB) { toolbarIsPresent = true }
+                    withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                case .failure:
+                    inErrorState = true
+                    msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
+                    PersistenceController.shared.save()
                     
-                    withAnimation(.linear2.delay(0.3)) {
-                        textOpacity = 1
-                        toolbarOpacity = 1
+                    withAnimation(.shortSpringG) {
+                        text = "Sorry, something went wrong... Please try again."
+                    }
+                    
+                    withAnimation(.linear1) { backgroundColor = .afRed }
+                    withAnimation(.linear5) { af.setExpression(to: .sweating) }
+                    
+                    Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                        withAnimation(.linear5) { af.setExpression(to: .neutral) }
                     }
                 }
-           // }
+                
+                //TODO: Reenable after onboarding chat is finished
+                //updateMsg()
+                withAnimation(.shortSpringB) { toolbarIsPresent = true }
+                
+                withAnimation(.linear2.delay(0.3)) {
+                    textOpacity = 1
+                    toolbarOpacity = 1
+                }
+            }
         }
     }
     
@@ -171,7 +199,7 @@ struct AFMsgView: View {
         let msgIndex = msgs.firstIndex(where: { $0.msgID == id })!
         msgs[msgIndex].text = text
         msgs[msgIndex].isNew = false
-        msgs[msgIndex - 1].isNew = false
+        if !isPremade { msgs[msgIndex - 1].isNew = false }
         PersistenceController.shared.save()
     }
     

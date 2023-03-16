@@ -12,15 +12,15 @@ class AFOO: ObservableObject {
         id: "",
         name: "Ivy",
         birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1))!,
-        skinColor: SkinColor.green,
+        skinColor: SkinColor.blue,
         freckles: Freckles.noFreckles,
-        hairColor: HairColor.green,
-        hairstyle: Hairstyle.four,
-        eyeColor: EyeColor.green,
+        hairColor: HairColor.blue,
+        hairstyle: Hairstyle.one,
+        eyeColor: EyeColor.blue,
         eyelashes: Eyelashes.short,
-        image: AFImage.green4,
-        bubble: Bubble.green,
-        interface: Interface.green
+        image: AFImage.blue1,
+        bubble: Bubble.blue,
+        interface: Interface.blue
     )
     
     func storeAF() {

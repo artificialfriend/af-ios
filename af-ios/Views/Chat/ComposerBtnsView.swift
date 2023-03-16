@@ -33,12 +33,14 @@ struct ComposerBtnsView: View, KeyboardReadable {
                 Image("ShuffleIcon")
                     .foregroundColor(af.af.interface.medColor)
             }
-            .opacity(shuffleBtnOpacity)
+            .opacity(chat.shuffleBtnIsHidden ? 0 : shuffleBtnOpacity)
+            .animation(.linear1, value: chat.shuffleBtnIsHidden)
             .padding(.trailing, s12)
             .buttonStyle(Spring())
             
             DividerView(direction: .vertical)
-                .opacity(recordBtnOpacity)
+                .opacity(chat.shuffleBtnIsHidden ? 0 : recordBtnOpacity)
+                .animation(.linear1, value: chat.shuffleBtnIsHidden)
                 .padding(.trailing, s4)
             
             ZStack {
@@ -98,7 +100,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
     
     func handleSendBtnTap() {
         impactMedium.impactOccurred()
-        chat.addMsg(text: input, isUserMsg: true, managedObjectContext: managedObjectContext)
+        chat.addMsg(text: input, isUserMsg: true, isNew: true, isPremade: false, hasToolbar: false, managedObjectContext: managedObjectContext)
         input = ""
     }
     

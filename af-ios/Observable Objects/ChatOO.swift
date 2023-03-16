@@ -17,6 +17,9 @@ class ChatOO: ObservableObject {
     @Published var uniqueMsgDates: [String] = []
     @Published var dummyMsgs: [Message] = []
     @Published var currentUserMsgHeight: CGFloat = 0
+    @Published var onboardingChatStep: Int = 0
+    @Published var composerIsDisabled: Bool = false
+    @Published var shuffleBtnIsHidden: Bool = false
     
     func getAFReply(userID: Int, prompt: String, behavior: String?, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
@@ -58,11 +61,21 @@ class ChatOO: ObservableObject {
         }
     }
     
-    func addMsg(text: String, isUserMsg: Bool, managedObjectContext: NSManagedObjectContext) {
+    func addMsg(
+        text: String,
+        isUserMsg: Bool,
+        isNew: Bool,
+        isPremade: Bool,
+        hasToolbar: Bool,
+        managedObjectContext: NSManagedObjectContext
+    ) {
         let msg = Message(context: managedObjectContext)
         msg.msgID = currentMsgID
         msg.text = text
         msg.isUserMsg = isUserMsg
+        msg.isNew = isNew
+        msg.isPremade = isPremade
+        msg.hasToolbar = hasToolbar
         msg.createdAt = Date.now
         currentMsgID += 1
         
@@ -73,7 +86,9 @@ class ChatOO: ObservableObject {
         
         DispatchQueue.main.async {
             Task { try await Task.sleep(nanoseconds: 50_000_000)
-                self.msgsBottomPadding -= msg.isUserMsg ? self.currentUserMsgHeight + 8 : 47.33 + 8
+                if msg.isNew {
+                    self.msgsBottomPadding -= msg.isUserMsg ? self.currentUserMsgHeight + 8 : 47.33 + 8
+                }
                 let date = self.formatDate(Date.now)
                 if self.dateMsgGroups.contains(where: {$0.key == date}) {
                     self.dateMsgGroups[date]!.append(msg)
