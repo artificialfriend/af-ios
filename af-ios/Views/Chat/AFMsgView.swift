@@ -19,7 +19,7 @@ struct AFMsgView: View {
     @State private var opacity: Double = 0
     @State private var backgroundColor: Color = .white
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
-    @State private var textOpacity: Double = 0
+    @State private var textOpacity: Double = 1
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
@@ -38,7 +38,7 @@ struct AFMsgView: View {
             ZStack {
                 VStack(spacing: s12) {
                     Text(text)
-                        .opacity(isNew ? textOpacity : 1)
+                        .opacity(textOpacity)
                         .foregroundColor(.afBlack)
                         .frame(minWidth: textMinWidth, alignment: .leading)
                     
@@ -103,7 +103,9 @@ struct AFMsgView: View {
         }
         .opacity(isNew ? opacity : 1)
         .onAppear {
-            if isNew { loadMsg() }
+            if isNew {
+                loadMsg()
+            }
         }
     }
     
