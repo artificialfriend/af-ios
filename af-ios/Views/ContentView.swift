@@ -157,17 +157,3 @@ struct ContentView: View, KeyboardReadable {
         }
     }
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    let persistenceController = PersistenceController.shared
-//    
-//    static var previews: some View {
-//        ContentView()
-//            .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//            .environmentObject(GlobalOO())
-//            .environmentObject(UserOO())
-//            .environmentObject(AFOO())
-//            .environmentObject(ChatOO())
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

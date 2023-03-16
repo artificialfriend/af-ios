@@ -52,11 +52,3 @@ struct NameFieldView: View {
         }
     }
 }
-
-//struct NameFieldView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NameFieldView(input: $input, charLimit: $charLimit)
-//            .environmentObject(AFOO())
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

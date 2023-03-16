@@ -49,11 +49,3 @@ struct TopNavView: View {
         }
     }
 }
-
-struct TopNavView_Previews: PreviewProvider {
-    static var previews: some View {
-        TopNavView(safeAreaHeight: s32)
-            .environmentObject(AFOO())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}

@@ -18,9 +18,3 @@ struct AdjustPanelLabelView: View {
             .padding(.bottom, s8)
     }
 }
-
-//struct AdjustPanelLabelView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AdjustPanelLabelView()
-//    }
-//}

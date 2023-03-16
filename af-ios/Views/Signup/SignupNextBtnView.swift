@@ -36,10 +36,3 @@ struct SignupNextBtnView: View {
         .foregroundColor(.white)
     }
 }
-
-//struct SignupButtonView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignupNextButtonView()
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

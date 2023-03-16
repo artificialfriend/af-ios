@@ -164,12 +164,3 @@ struct ChatView: View {
         return uniqueDates
     }
 }
-
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(AFOO())
-            .environmentObject(ChatOO())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}

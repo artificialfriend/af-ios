@@ -24,9 +24,3 @@ struct SignupBackBtnView: View {
         .opacity(currentSignupStep == .name || currentSignupStep == .bootup ? 1 : 0)
     }
 }
-
-//struct SignupBackButtonView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignupBackButtonView(currentSignupStep: $currentSignupStep)
-//    }
-//}

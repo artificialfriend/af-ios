@@ -124,54 +124,6 @@ struct AdjustPanelView: View {
         }
     }
     
-//    func updateMsg() {
-//        let msgIndex = msgs.firstIndex(where: { $0.msgID == msgID })!
-//        msgs[msgIndex].length = text
-//        msgs[msgIndex].isNew = false
-//        msgs[msgIndex - 1].isNew = false
-//        PersistenceController.shared.save()
-//    }
-    
-//    func toggleBtnIsActive(option: AdjustOption) {
-//
-//        switch option {
-//        case .short:
-//            shortBtnIsActive = true
-//            mediumBtnIsActive = false
-//            longBtnIsActive = false
-//        case .medium:
-//            mediumBtnIsActive = true
-//            shortBtnIsActive = false
-//            longBtnIsActive = false
-//        case .long:
-//            longBtnIsActive = true
-//            shortBtnIsActive = false
-//            mediumBtnIsActive = false
-//        case .simple:
-//            simpleBtnIsActive = true
-//            academicBtnIsActive = false
-//            casualBtnIsActive = false
-//            professionalBtnIsActive = false
-//        case .academic:
-//            academicBtnIsActive = true
-//            simpleBtnIsActive = false
-//            casualBtnIsActive = false
-//            professionalBtnIsActive = false
-//        case .casual:
-//            casualBtnIsActive = true
-//            simpleBtnIsActive = false
-//            academicBtnIsActive = false
-//            professionalBtnIsActive = false
-//        case .professional:
-//            professionalBtnIsActive = true
-//            simpleBtnIsActive = false
-//            academicBtnIsActive = false
-//            casualBtnIsActive = false
-//        }
-//
-//        //msgs.first(where: { $0.msgID == msgID })!.length = msgLength.string
-//    }
-    
     func handleAdjustPanelBtnTap(option: AdjustOption) {
         impactMedium.impactOccurred()
         retryBtnIsDisabled = true
@@ -265,9 +217,3 @@ struct AdjustPanelView: View {
         }
     }
 }
-
-//struct AdjustPanelView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AdjustPanelView()
-//    }
-//}

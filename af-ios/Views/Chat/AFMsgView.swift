@@ -197,13 +197,3 @@ struct AFMsgView: View {
         }
     }
 }
-
-//struct AFMsgView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AFMsgView(id: "Heathcliffe is a bad guy but he also loves that girl.", text: "Heathcliffe is a bad guy but he also loves that girl.")
-//            .environmentObject(AFOO())
-//            .environmentObject(ChatOO())
-//            .environmentObject(MsgsState())
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

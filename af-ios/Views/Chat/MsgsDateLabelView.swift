@@ -36,9 +36,3 @@ struct MsgsDateLabelView: View {
         }
     }
 }
-
-//struct MsgsDateLabelView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MsgsDateLabelView()
-//    }
-//}

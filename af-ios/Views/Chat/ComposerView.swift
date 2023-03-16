@@ -98,13 +98,3 @@ struct ComposerView: View, KeyboardReadable {
         chat.msgsBottomPadding = height + 16
     }
 }
-
-//struct ComposerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ComposerView(safeAreaHeight: s32)
-//            .environmentObject(GlobalOO())
-//            .environmentObject(AFOO())
-//            .environmentObject(ChatOO())
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

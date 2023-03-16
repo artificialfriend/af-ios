@@ -66,10 +66,3 @@ struct TraitInstanceRowView: View {
         af.setExpression(to: .neutral)
     }
 }
-
-struct TraitInstanceRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        TraitInstanceRowView(label: "Label", activeInstance: SkinColor.green)
-            .environmentObject(AFOO())
-    }
-}

@@ -42,22 +42,7 @@ struct UserMsgView: View {
         chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
         
         Task { try await Task.sleep(nanoseconds: 400_000_000)
-//            if chat.onboardingChatStep == 2 {
-//                chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: true, hasToolbar: false, managedObjectContext: managedObjectContext)
-//                //chat.onboardingChatStep += 1
-//            } else {
-                chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: false, hasToolbar: true, managedObjectContext: managedObjectContext)
-            //}
+            chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: false, hasToolbar: true, managedObjectContext: managedObjectContext)
         }
     }
 }
-
-//struct UserMsg_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserMsgView(id: "Summarize chapter 2", text: "Summarize chapter 2")
-//            .environmentObject(AFOO())
-//            .environmentObject(ChatOO())
-//            .environmentObject(MsgsState())
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

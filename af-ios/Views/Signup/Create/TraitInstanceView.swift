@@ -81,10 +81,3 @@ struct TraitInstanceView: View {
         return .blue1
     }
 }
-
-struct TraitInstanceView_Previews: PreviewProvider {
-    static var previews: some View {
-        TraitInstanceView(instance: SkinColor.green, activeInstance: SkinColor.green)
-            .environmentObject(AFOO())
-    }
-}

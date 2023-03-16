@@ -16,12 +16,3 @@ struct EditorView: View {
         }
     }
 }
-
-//struct EditorView_Previews: PreviewProvider {
-//    @State private var activeTab = TraitCategory.skin
-//    
-//    static var previews: some View {
-//        EditorView(activeTab: $activeTab)
-//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-//    }
-//}

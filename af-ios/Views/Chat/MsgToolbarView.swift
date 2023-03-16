@@ -343,13 +343,3 @@ struct MsgToolbarView: View {
         }
     }
 }
-
-//struct MsgToolbarView_Previews: PreviewProvider {
-//    @State var previewText: String = "Msg text"
-//    
-//    static var previews: some View {
-//        MsgToolbarView(text: $previewText, prompt: "")
-//            .environmentObject(AFOO())
-//            .environmentObject(ChatOO())
-//    }
-//}

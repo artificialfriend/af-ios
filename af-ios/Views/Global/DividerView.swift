@@ -29,11 +29,3 @@ struct DividerView: View {
         }
     }
 }
-
-struct DividerView_Previews: PreviewProvider {
-    static var previews: some View {
-        DividerView(direction: .horizontal)
-            .environmentObject(AFOO())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}

@@ -187,12 +187,3 @@ struct ComposerBtnsView: View, KeyboardReadable {
         return shufflePrompts[randomNumber]
     }
 }
-
-//struct ComposerButtonView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ComposerButtonView()
-//            .environmentObject(GlobalOO())
-//            .environmentObject(AFOO())
-//            .environmentObject(ChatOO())
-//    }
-//}

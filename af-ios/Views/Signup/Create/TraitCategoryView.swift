@@ -21,10 +21,3 @@ struct TraitCategoryView: View {
         .padding(.bottom, s16)
     }
 }
-
-//struct TraitCategoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TraitCategoryView(activeTab: $activeTab)
-//            .environmentObject(AFOO())
-//    }
-//}

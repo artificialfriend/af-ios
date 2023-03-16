@@ -325,11 +325,3 @@ struct SignupView: View {
         }
     }
 }
-
-struct SignupView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignupView()
-            .environmentObject(AFOO())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-    }
-}
