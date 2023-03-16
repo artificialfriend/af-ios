@@ -28,36 +28,8 @@ struct TraitInstanceRowView: View {
                         }
                         .buttonStyle(Spring())
                     }
-                } else if activeInstance.trait == .freckles {
-                    ForEach(Freckles.allCases, id: \.self) { traitInstance in
-                        Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
-                        }
-                        .buttonStyle(Spring())
-                    }
-                } else if activeInstance.trait == .hairColor {
-                    ForEach(HairColor.allCases, id: \.self) { traitInstance in
-                        Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
-                        }
-                        .buttonStyle(Spring())
-                    }
-                } else if activeInstance.trait == .hairstyle {
+                } else {
                     ForEach(Hairstyle.allCases, id: \.self) { traitInstance in
-                        Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
-                        }
-                        .buttonStyle(Spring())
-                    }
-                } else if activeInstance.trait == .eyeColor {
-                    ForEach(EyeColor.allCases, id: \.self) { traitInstance in
-                        Button(action: { handleTap(traitInstance: traitInstance) }) {
-                            TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
-                        }
-                        .buttonStyle(Spring())
-                    }
-                } else if activeInstance.trait == .eyelashes {
-                    ForEach(Eyelashes.allCases, id: \.self) { traitInstance in
                         Button(action: { handleTap(traitInstance: traitInstance) }) {
                             TraitInstanceView(instance: traitInstance, activeInstance: activeInstance)
                         }
@@ -79,20 +51,10 @@ struct TraitInstanceRowView: View {
         switch instance.trait {
         case .skinColor:
             af.af.skinColor = instance as! SkinColor
-            af.af.hairColor = HairColor.allCases.first(where: { $0.name == instance.name })!
-            af.af.eyeColor = EyeColor.allCases.first(where: { $0.name == instance.name })!
             af.af.bubble = Bubble.allCases.first(where: { $0.name == instance.name })!
             af.af.interface = Interface.allCases.first(where: { $0.name == instance.name })!
-        case .freckles:
-            af.af.freckles = instance as! Freckles
-        case .hairColor:
-            af.af.hairColor = instance as! HairColor
         case .hairstyle:
             af.af.hairstyle = instance as! Hairstyle
-        case .eyeColor:
-            af.af.eyeColor = instance as! EyeColor
-        case .eyelashes:
-            af.af.eyelashes = instance as! Eyelashes
         case .image:
             return
         case .bubble:

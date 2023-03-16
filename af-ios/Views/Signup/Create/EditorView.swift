@@ -9,15 +9,9 @@ import SwiftUI
 import UIKit
 
 struct EditorView: View {
-    @Binding var activeTab: TraitCategory
-    
     var body: some View {
         VStack(spacing: s0) {
-            //DividerView(direction: .horizontal)
-            //TabsView(activeTab: $activeTab)
-            //DividerView(direction: .horizontal)
-            TraitCategoryView(activeTab: $activeTab)
-            //DividerView(direction: .horizontal)
+            TraitCategoryView()
             Spacer()
         }
     }

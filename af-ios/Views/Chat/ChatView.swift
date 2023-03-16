@@ -23,7 +23,6 @@ struct ChatView: View {
                 VStack {
                     ForEach(chat.dummyMsgs, id: \.self) { msg in
                         UserMsgView(text: msg.text!, isNew: false)
-                        //.padding(.leading, s16)
                         .background {
                             GeometryReader { geo in
                                 Color.clear
@@ -110,28 +109,10 @@ struct ChatView: View {
                 .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
             }
             .background(Color.white)
-            //.opacity(0)
         }
         .ignoresSafeArea(edges: .vertical)
         .onAppear {
             if msgs.count > 0 { chat.currentMsgID = msgs[msgs.count - 1].msgID + 1 }
-            
-//            if !user.signupIsComplete {
-//                chat.composerIsDisabled = true
-//                chat.shuffleBtnIsHidden = true
-//                
-//                Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-//                    chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: true, hasToolbar: false, managedObjectContext: managedObjectContext)
-//                    
-//                    Task { try await Task.sleep(nanoseconds: 4_000_000_000)
-//                        chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: true, hasToolbar: false, managedObjectContext: managedObjectContext)
-//                        Task { try await Task.sleep(nanoseconds: 1_200_000_000)
-//                            chat.composerIsDisabled = false
-//                        }
-//                    }
-//                }
-//            }
-            
             chat.uniqueMsgDates = createDateMsgGroups().0
             chat.dateMsgGroups = createDateMsgGroups().1
             
@@ -139,12 +120,6 @@ struct ChatView: View {
                 animation = .shortSpringG
             }
         }
-//        .onChange(of: chat.onboardingChatStep) { _ in
-//            if !user.signupIsComplete && chat.onboardingChatStep == 2 {
-//                chat.composerIsDisabled = true
-//                chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: true, hasToolbar: false, managedObjectContext: managedObjectContext)
-//            }
-//        }
     }
     
     func createDateMsgGroups() -> ([String], [String: [Message]]) {

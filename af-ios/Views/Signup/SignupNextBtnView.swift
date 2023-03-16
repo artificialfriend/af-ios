@@ -14,7 +14,7 @@ struct SignupNextBtnView: View {
     @EnvironmentObject var af: AFOO
     @Binding var createOpacity: Double
     @Binding var nameOpacity: Double
-    @Binding var buttonWelcomeLabelOpacity: Double
+    @Binding var welcomeLabelOpacity: Double
     @Binding var isLoading: Bool
     @Binding var spinnerRotation: Angle
     
@@ -23,20 +23,8 @@ struct SignupNextBtnView: View {
             RoundedRectangle(cornerRadius: cr16)
                 .fill(Color.afBlack)
             
-            HStack {
-                Image("AppleLogo")
-                    .padding(.top, -5)
-                Text("Sign Up With Apple")
-            }
-            .opacity(buttonWelcomeLabelOpacity)
-            .animation(.linear1, value: isLoading)
-            
-            Image("SpinnerIcon")
-                .foregroundColor(.white)
-                .rotationEffect(spinnerRotation)
-                .animation(.loadingSpin, value: isLoading)
-                .opacity(isLoading ? 1 : 0)
-                .animation(.linear1, value: isLoading)
+            Text("Get Started")
+                .opacity(welcomeLabelOpacity)
             
             Text("Next")
                 .opacity(createOpacity)

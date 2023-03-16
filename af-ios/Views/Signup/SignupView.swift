@@ -14,8 +14,6 @@ struct SignupView: View {
     @EnvironmentObject var af: AFOO
     @FocusState private var keyboardFocused: Bool
     @State private var currentStep: SignupStep = .welcome
-    @State private var authErrorHasOccurred: Bool = false
-    @State private var activeEditorTab: TraitCategory = .skin
     @State private var logoOpacity: Double = 1
     @State private var afOffset: CGFloat = 0
     @State private var afScale: Double = 0
@@ -29,11 +27,8 @@ struct SignupView: View {
     @State private var buttonIsPresent: Bool = false
     @State private var buttonWelcomeLabelOpacity: Double = 1
     @State private var buttonsAreDisabled: Bool = false
-    @State private var siwaButtonOpacity: Double = 1
     @State private var isLoading: Bool = false
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
-    @State private var errorOpacity: Double = 0
-    @State private var errorOffset: CGFloat = -s24
     @State private var nameFieldCharLimit: Int = 12
     @State private var nameFieldInput: String = ""
     
@@ -109,7 +104,7 @@ struct SignupView: View {
             }
             
             if currentStep == .create {
-                EditorView(activeTab: $activeEditorTab)
+                EditorView()
                     .padding(.top, s8)
                     .padding(.bottom, s12)
                     .opacity(createOpacity)
@@ -139,161 +134,32 @@ struct SignupView: View {
                         .disabled(buttonsAreDisabled)
                         .buttonStyle(Spring())
                         
-                        ZStack {
-                            Button(action: { handleNextTap() }) {
-                                    SignupNextBtnView(
-                                        createOpacity: $createOpacity,
-                                        nameOpacity: $nameOpacity,
-                                        buttonWelcomeLabelOpacity: $buttonWelcomeLabelOpacity,
-                                        isLoading: $isLoading,
-                                        spinnerRotation: $spinnerRotation
-                                    )
-                                }
-                                .disabled(buttonsAreDisabled)
-                                .buttonStyle(Spring())
-                            
-                            if currentStep == .welcome {
-                                SignInWithAppleButton(.signUp, onRequest: configureAuth, onCompletion: handleAuth)
-                                    .cornerRadius(cr16)
-                                    .opacity(siwaButtonOpacity)
-                            }
+                        Button(action: { handleNextTap() }) {
+                            SignupNextBtnView(
+                                createOpacity: $createOpacity,
+                                nameOpacity: $nameOpacity,
+                                welcomeLabelOpacity: $buttonWelcomeLabelOpacity,
+                                isLoading: $isLoading,
+                                spinnerRotation: $spinnerRotation
+                            )
                         }
+                        .disabled(buttonsAreDisabled)
+                        .buttonStyle(Spring())
                     }
                     .frame(height: s64)
                     .offset(y: buttonOffset)
                     .opacity(buttonOpacity)
                     .padding(.horizontal, s12)
                     .animation(.medSpring, value: currentStep)
-                    .animation(.shortSpringB, value: authErrorHasOccurred)
-                }
-                
-                if authErrorHasOccurred {
-                    Text("Signup failed... Please try again.")
-                        .font(.p)
-                        .foregroundColor(.red)
-                        .opacity(errorOpacity)
-                        .padding(.top, s12)
-                        .animation(.shortSpringB, value: authErrorHasOccurred)
                 }
             }
         }
-        .animation(.shortSpringB, value: authErrorHasOccurred)
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .onAppear {
-            //IF IN A PREVIOUS SESSION, THE USER SIGNED UP BUT DIDN'T FINISH CREATING THEIR AF,
-            //START THEIR NEXT SESSION ON THE CREATE STEP.
-            if user.user.appleID != "" {
-                currentStep = .create
-                buttonWelcomeLabelOpacity = 0
-
-                Task { try await Task.sleep(nanoseconds: 500_000_000)
-                    fadeIn()
-                }
-            }
-            
-            loadIn()
-        }
+        .onAppear { loadIn() }
     }
     
     
     //FUNCTIONS
-    
-    func createAccount(completion: @escaping (Result<String, Error>) -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-DD"
-        
-        let requestBody = CreateAccountRequestBody(
-            af: CreateAccountAF(
-                name: af.af.name,
-                skinColor: af.af.skinColor.name,
-                freckles: af.af.freckles.name,
-                hairColor: af.af.hairColor.name,
-                hairstyle: af.af.hairstyle.name,
-                eyeColor: af.af.eyeColor.name,
-                eyelashes: af.af.eyelashes.name
-            ),
-            user: CreateAccountUser(
-                appleUserID: user.user.appleID,
-                email: user.user.email,
-                givenName: user.user.givenName,
-                familyName: user.user.familyName,
-                nicknames: "",
-                birthday: dateFormatter.string(from: user.user.birthday)
-            )
-        )
-        
-        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/signup/apple/")!
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "PUT"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONEncoder().encode(requestBody)
-
-        let call = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
-            
-            do {
-                let response = try JSONDecoder().decode(CreateAccountResponseBody.self, from: data)
-                
-                DispatchQueue.main.async {
-                    if error != nil {
-                        print("error1")
-                        completion(.failure(error!))
-                    } else {
-                        print(response.response)
-                        completion(.success("Success"))
-                    }
-                }
-            } catch let error as NSError {
-                print("createAccount Catch Error:", error)
-                completion(.failure(error))
-            }
-        }
-        
-        call.resume()
-        
-        DispatchQueue.global().asyncAfter(deadline: .now() + 60) {
-            if call.state != .completed {
-                print("error3")
-                call.cancel()
-                let error = NSError(domain: "makePutRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func configureAuth(_ request: ASAuthorizationAppleIDRequest) {
-        request.requestedScopes = [.fullName, .email]
-    }
-    
-    func handleAuth(_ authResult: Result<ASAuthorization, Error>) {
-        
-        toggleLoading()
-        if !authErrorHasOccurred { toggleError() }
-        
-        switch authResult {
-            case .success(let auth):
-                switch auth.credential {
-                    case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                        if let authValues = AuthValues(credentials: appleIdCredentials) {
-                            user.user.appleID = authValues.appleID
-                            user.user.email = authValues.email
-                            user.user.givenName = authValues.givenName
-                            user.user.familyName = authValues.familyName
-                            user.storeUser()
-                            if authErrorHasOccurred { toggleError() }
-                            siwaButtonOpacity = 0
-                            handleNextTap()
-                        }
-                    default:
-                        print(auth.credential)
-                    }
-                toggleLoading()
-            case .failure:
-                siwaButtonOpacity = 1
-                toggleLoading()
-        }
-    }
     
     func handleNextTap() {
         impactMedium.impactOccurred()
@@ -313,49 +179,29 @@ struct SignupView: View {
     
     func transition() {
         toggleButtonsAreDisabled()
+        fadeOut()
+        if currentStep == .name { toggleButtonPresence() }
         
-        if currentStep == .welcome {
-            buttonWelcomeLabelOpacity = 0
-            toggleLoading()
+        Task { try await Task.sleep(nanoseconds: 100_000_000)
+            changeStep()
             
-            Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-                fadeOut()
-                toggleLoading()
+            Task { try await Task.sleep(nanoseconds: 300_000_000)
+                fadeIn()
+                toggleButtonsAreDisabled()
                 
-                Task { try await Task.sleep(nanoseconds: 100_000_000)
-                    changeStep()
+                if currentStep == .bootup {
+                    toggleLoading()
                     
-                    Task { try await Task.sleep(nanoseconds: 300_000_000)
-                        fadeIn()
-                        toggleButtonsAreDisabled()
-                    }
-                }
-            }
-        } else {
-            fadeOut()
-            if currentStep == .name { toggleButtonPresence() }
-            
-            Task { try await Task.sleep(nanoseconds: 100_000_000)
-                changeStep()
-                
-                Task { try await Task.sleep(nanoseconds: 300_000_000)
-                    fadeIn()
-                    toggleButtonsAreDisabled()
-                    
-                    if currentStep == .bootup {
-                        toggleLoading()
-                        
-                        Task { try await Task.sleep(nanoseconds: 3_000_000_000)
-                            fadeOut()
-                            dismissAF()
-                                    
-                            Task { try await Task.sleep(nanoseconds: 1_500_000_000)
-                                af.setExpression(to: .happy)
-                                changeStep()
+                    Task { try await Task.sleep(nanoseconds: 3_000_000_000)
+                        fadeOut()
+                        dismissAF()
                                 
-                                Task { try await Task.sleep(nanoseconds: 3_000_000_000)
-                                    withAnimation(.linear5) { af.setExpression(to: .neutral) }
-                                }
+                        Task { try await Task.sleep(nanoseconds: 1_500_000_000)
+                            af.setExpression(to: .happy)
+                            changeStep()
+                            
+                            Task { try await Task.sleep(nanoseconds: 3_000_000_000)
+                                withAnimation(.linear5) { af.setExpression(to: .neutral) }
                             }
                         }
                     }
@@ -400,7 +246,7 @@ struct SignupView: View {
     func fadeOut() {
         withAnimation(.linear1) {
             switch currentStep {
-            case .welcome: welcomeOpacity = 0
+            case .welcome: welcomeOpacity = 0; buttonWelcomeLabelOpacity = 0
             case .create: createOpacity = 0
             case .name: nameOpacity = 0
             case .bootup: bootupOpacity = 0
@@ -447,18 +293,6 @@ struct SignupView: View {
         } else {
             isLoading = false
             spinnerRotation = Angle(degrees: 0)
-        }
-    }
-    
-    func toggleError() {
-        if authErrorHasOccurred {
-            buttonOffset = 0
-            errorOpacity = 0
-            authErrorHasOccurred = false
-        } else {
-            buttonOffset = -36
-            withAnimation(.linear2.delay(0.1)) { errorOpacity = 1 }
-            authErrorHasOccurred = true
         }
     }
     

@@ -103,42 +103,12 @@ struct AFMsgView: View {
         }
         .opacity(isNew ? opacity : 1)
         .onAppear {
-            if isNew {
-                if isPremade { fakeLoadMsg() }
-                else { loadMsg() }
-            }
+            if isNew { loadMsg() }
         }
     }
     
     
     //FUNCTIONS------------------------------------------------//
-    func fakeLoadMsg() {
-        let onboardingMsgs: [String] = [
-            "Hi \(user.user.givenName), I'm your new assistant! I'm here to make your life easier however I can.",
-            "Before we get started, a couple quick questions:\n\nFirst, what's your birthday?",
-            "Ah, 29, a great age!\n\nSecond, which of these terms are you cool with me calling you?\n\n(Tap the ones you like then save)"
-        ]
-        textOpacity = 0
-        toggleLoading()
-        chat.msgsBottomPadding += 47.33 + 8
-        //withAnimation(.linear5) { af.setExpression(to: .thinking) }
-        withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
-        withAnimation(.linear1) { opacity = 1 }
-        
-        Task { try await Task.sleep(nanoseconds: 1_000_000_000)
-            withAnimation(.linear1) { toggleLoading() }
-            
-            Task { try await Task.sleep(nanoseconds: 200_000_000)
-                withAnimation(.shortSpringB) {
-                    text = onboardingMsgs[chat.onboardingChatStep]
-                }
-                
-                //updateMsg()
-                withAnimation(.linear2.delay(0.3)) { textOpacity = 1 }
-                chat.onboardingChatStep += 1
-            }
-        }
-    }
     
     func loadMsg() {
         let prompt = msgs.first(where: { $0.msgID == id - 1})!.text!
@@ -183,8 +153,7 @@ struct AFMsgView: View {
                     }
                 }
                 
-                //TODO: Reenable after onboarding chat is finished
-                //updateMsg()
+                updateMsg()
                 withAnimation(.shortSpringB) { toolbarIsPresent = true }
                 
                 withAnimation(.linear2.delay(0.3)) {

@@ -10,7 +10,6 @@ import SwiftUI
 struct AFView: View {
     @EnvironmentObject var af: AFOO
     @State private var shadowRadius = UIScreen.main.bounds.width * 0.075
-    @State private var afImage: TraitInstanceImage = .green1
     
     var body: some View {
         ZStack {

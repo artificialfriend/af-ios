@@ -36,15 +36,6 @@ struct ComposerView: View, KeyboardReadable {
         "How long should I wait to run after eating?",
         "Why is my car making a squealing sound?",
         "What are the main tenets of stoicism?"
-//        "Write a rhyming love poem about girl named Anna",
-//        "Create an outline for an essay on artificial general intelligence",
-//        "Explain the laws of physics in simple language",
-//        "What Greek god is most like a gemini and why?",
-//        "What is Einstein famous for?",
-//        "How did WW2 shape the world?",
-//        "What were the main reasons that the US became a superpower?",
-//        "What does mitochondria do?",
-//        "How do semiconductors work?"
     ]
     @Binding var input: String
     let safeAreaHeight: CGFloat
@@ -98,9 +89,6 @@ struct ComposerView: View, KeyboardReadable {
                             setMsgsBottomPadding(height: geo.size.height)
                         }
                     }
-//                    .onChange(of: geo.size.height) { _ in
-//                        setMsgsBottomPadding(height: geo.size.height)
-//                    }
             }
         }
         .animation(.shortSpringG, value: input)
