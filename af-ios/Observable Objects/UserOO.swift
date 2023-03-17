@@ -8,8 +8,10 @@
 import SwiftUI
 
 class UserOO: ObservableObject {
-    @Published var user: User = User(id: 1)
-    @Published var signupIsComplete: Bool = false
+    @Published var user: User = User(
+        id: 1,
+        signupIsComplete: false
+    )
     
     func storeUser() {
         let encoder = PropertyListEncoder()
@@ -24,10 +26,12 @@ class UserOO: ObservableObject {
         if let encodedUser = UserDefaults.standard.data(forKey: "user"),
             let storedUser = try? PropertyListDecoder().decode(User.self, from: encodedUser) {
             user.id = storedUser.id
+            user.signupIsComplete = storedUser.signupIsComplete
         }
     }
 }
 
 struct User: Codable {
     var id: Int
+    var signupIsComplete: Bool
 }

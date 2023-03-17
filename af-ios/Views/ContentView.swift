@@ -61,7 +61,7 @@ struct ContentView: View, KeyboardReadable {
                                         .onAppear {
                                             topNavHeight = topNavGeo.size.height
                                             
-                                            if !user.signupIsComplete {
+                                            if !user.user.signupIsComplete {
                                                 topNavOffset = -topNavHeight / 2
                                                 topNavOpacity = 0
                                             }
@@ -86,7 +86,7 @@ struct ContentView: View, KeyboardReadable {
                                         .onAppear {
                                             composerHeight = composerGeo.size.height
                                             
-                                            if !user.signupIsComplete {
+                                            if !user.user.signupIsComplete {
                                                 composerOffset = composerHeight / 2
                                                 composerOpacity = 0
                                             }
@@ -97,7 +97,7 @@ struct ContentView: View, KeyboardReadable {
                     .ignoresSafeArea(edges: .vertical)
                 }
                 .onAppear {
-                    if !user.signupIsComplete { transitionFromSignupToChat() }
+                    if !user.user.signupIsComplete { transitionFromSignupToChat() }
                 }
             }
 
@@ -114,6 +114,20 @@ struct ContentView: View, KeyboardReadable {
                             toggleAF()
                         }
                     }
+                    .onLongPressGesture(perform: {
+                        afScale = 0
+                        afOpacity = 0
+                        UserDefaults.standard.removeObject(forKey: "af")
+                        UserDefaults.standard.removeObject(forKey: "user")
+                        global.activeSection = .signup
+                            
+                        Task { try await Task.sleep(nanoseconds: 500_000_000)
+                            clearMessages()
+                            chat.dateMsgGroups = [:]
+                            chat.uniqueMsgDates = []
+                            PersistenceController.shared.save()
+                        }
+                    })
             }
         }
         .background(Color.white)
@@ -121,6 +135,12 @@ struct ContentView: View, KeyboardReadable {
     
     
     //FUNCTIONS
+    
+    func clearMessages() {
+        for msg in msgs {
+            managedObjectContext.delete(msg)
+        }
+    }
     
     func transitionFromSignupToChat() {
         toggleTopNav()

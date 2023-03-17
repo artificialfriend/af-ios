@@ -14,12 +14,12 @@ struct AFMsgView: View {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var isLoading: Bool = false
-    @State private var toolbarIsPresent: Bool = true
+    @State private var toolbarIsPresent: Bool = false
     @State private var toolbarOpacity: Double = 0
     @State private var opacity: Double = 0
     @State private var backgroundColor: Color = .white
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
-    @State private var textOpacity: Double = 1
+    @State private var textOpacity: Double = 0
     @State private var textWidth: CGFloat = 0
     @State private var textMinWidth: CGFloat = 0
     @State private var textMaxWidth: CGFloat = UIScreen.main.bounds.width - 108
@@ -58,7 +58,7 @@ struct AFMsgView: View {
                                 msgInErrorState: $inErrorState
                             )
                         }
-                        .opacity(isNew ? toolbarOpacity : 1)
+                        .opacity(toolbarOpacity)
                         .frame(width: textWidth)
                     }
                 }
@@ -105,6 +105,10 @@ struct AFMsgView: View {
         .onAppear {
             if isNew {
                 loadMsg()
+            } else {
+                textOpacity = 1
+                toolbarOpacity = 1
+                toolbarIsPresent = true
             }
         }
     }
@@ -115,9 +119,6 @@ struct AFMsgView: View {
     func loadMsg() {
         let prompt = msgs.first(where: { $0.msgID == id - 1})!.text!
         var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1, text: "", isUserMsg: false, createdAt: "")
-        textOpacity = 0
-        toolbarOpacity = 0
-        toolbarIsPresent = false
         toggleLoading()
         chat.msgsBottomPadding += 47.33 + 8
         withAnimation(.linear5) { af.setExpression(to: .thinking) }

@@ -202,6 +202,8 @@ struct SignupView: View {
                             
                             Task { try await Task.sleep(nanoseconds: 3_000_000_000)
                                 withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                                user.user.signupIsComplete = true
+                                user.storeUser()
                             }
                         }
                     }
