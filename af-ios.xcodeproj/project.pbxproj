@@ -32,6 +32,7 @@
 		48D921AE29AD1DF400C3D0DA /* AdjustPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921AD29AD1DF400C3D0DA /* AdjustPanelView.swift */; };
 		48D921B029AD1EDD00C3D0DA /* AdjustPanelLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */; };
 		48D921BA29B017C000C3D0DA /* MsgsDateLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921B929B017C000C3D0DA /* MsgsDateLabelView.swift */; };
+		48E2BE6429C624DF00952CEA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */; };
 		CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D2296B0AD4003D1476 /* AFApp.swift */; };
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		48047DAC29A6E04600C457FB /* MessagesModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MessagesModel.xcdatamodel; sourceTree = "<group>"; };
 		48047DED29A6E90500C457FB /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		48047DF129A997B200C457FB /* SignupBackBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupBackBtnView.swift; sourceTree = "<group>"; };
+		4813647D29C55EE400621428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		481598162981A14200201B32 /* GlobalOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalOO.swift; sourceTree = "<group>"; };
 		48159818298328AF00201B32 /* UserMsgView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMsgView.swift; sourceTree = "<group>"; };
 		483317FB297A09DA0008F61E /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		48D921AD29AD1DF400C3D0DA /* AdjustPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustPanelView.swift; sourceTree = "<group>"; };
 		48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustPanelLabelView.swift; sourceTree = "<group>"; };
 		48D921B929B017C000C3D0DA /* MsgsDateLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgsDateLabelView.swift; sourceTree = "<group>"; };
+		48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		CE1A30CF296B0AD4003D1476 /* af-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "af-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A30D2296B0AD4003D1476 /* AFApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFApp.swift; sourceTree = "<group>"; };
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -153,6 +156,8 @@
 		CE1A30D1296B0AD4003D1476 /* af-ios */ = {
 			isa = PBXGroup;
 			children = (
+				4813647D29C55EE400621428 /* Info.plist */,
+				48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */,
 				CE1A30EE296B1A93003D1476 /* Views */,
 				48AA2634298EA3620091609C /* Observable Objects */,
 				48047DAB29A6E04600C457FB /* MessagesModel.xcdatamodeld */,
@@ -273,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48E2BE6429C624DF00952CEA /* Launch Screen.storyboard in Resources */,
 				CE1A30DA296B0AD6003D1476 /* Preview Assets.xcassets in Resources */,
 				CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */,
 			);
@@ -449,10 +455,11 @@
 				DEVELOPMENT_TEAM = LWU8H3RDTV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "af-ios/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -483,10 +490,11 @@
 				DEVELOPMENT_TEAM = LWU8H3RDTV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "af-ios/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

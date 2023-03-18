@@ -22,6 +22,8 @@ struct AdjustPanelView: View {
     @Binding var isPresent: Bool
     @Binding var opacity: Double
     @Binding var adjustBtnColor: Color
+    @Binding var adjustBtnTopKnobOffset: CGFloat
+    @Binding var adjustBtnBottomKnobOffset: CGFloat
     @Binding var retryBtnColor: Color
     @Binding var retryBtnIsDisabled: Bool
     @Binding var retryBtnRotation: Angle
@@ -115,11 +117,16 @@ struct AdjustPanelView: View {
         if isPresent {
             withAnimation(.linear1) {
                 opacity = 0
+            }
+            
+            withAnimation(.linear1.delay(0.1)) {
                 adjustBtnColor = af.af.interface.medColor
             }
             
             withAnimation(.shortSpringG.delay(0.1)) {
                 isPresent = false
+                adjustBtnTopKnobOffset = 0
+                adjustBtnBottomKnobOffset = 0
             }
         }
     }
@@ -172,7 +179,7 @@ struct AdjustPanelView: View {
 
             switch result {
                 case .success(let response):
-                    withAnimation(.shortSpringB.delay(0.1)) {
+                    withAnimation(.shortSpringG.delay(0.1)) {
                         msgText = response.response.text
                     }
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
@@ -192,7 +199,7 @@ struct AdjustPanelView: View {
                         }
                     }
                 
-                    withAnimation(.shortSpringB.delay(0.1)) {
+                    withAnimation(.shortSpringG.delay(0.1)) {
                         msgText = "Sorry, something went wrong... Please try again."
                     }
                     

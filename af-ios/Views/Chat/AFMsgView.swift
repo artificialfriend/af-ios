@@ -157,7 +157,7 @@ struct AFMsgView: View {
                 }
                 
                 updateMsg()
-                withAnimation(.shortSpringB) { toolbarIsPresent = true }
+                withAnimation(.shortSpringG) { toolbarIsPresent = true }
                 
                 withAnimation(.linear2.delay(0.3)) {
                     textOpacity = 1

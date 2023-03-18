@@ -13,6 +13,8 @@ struct MsgToolbarView: View {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var adjustBtnColor: Color = Color.black
+    @State private var adjustBtnTopKnobOffset: CGFloat = 0
+    @State private var adjustBtnBottomKnobOffset: CGFloat = 0
     @State private var adjustBtnIsDisabled: Bool = false
     @State private var adjustPanelIsPresent: Bool = false
     @State private var adjustPanelOpacity: Double = 0
@@ -56,6 +58,8 @@ struct MsgToolbarView: View {
                     isPresent: $adjustPanelIsPresent,
                     opacity: $adjustPanelOpacity,
                     adjustBtnColor: $adjustBtnColor,
+                    adjustBtnTopKnobOffset: $adjustBtnTopKnobOffset,
+                    adjustBtnBottomKnobOffset: $adjustBtnBottomKnobOffset,
                     retryBtnColor: $retryBtnColor,
                     retryBtnIsDisabled: $retryBtnIsDisabled,
                     retryBtnRotation: $retryBtnRotation,
@@ -90,10 +94,21 @@ struct MsgToolbarView: View {
                 if msgTextWidth == msgTextMaxWidth {
                     //ADJUST BUTTON
                     Button(action: { handleAdjustBtnTap() }) {
-                        Image("AdjustIcon")
-                            .resizable()
-                            .foregroundColor(adjustBtnColor)
-                            .frame(width: 22, height: 22)
+                        ZStack {
+                            Image("AdjustBaseIcon")
+                                .resizable()
+                            
+                            Image("AdjustTopKnobIcon")
+                                .resizable()
+                                .offset(x: adjustBtnTopKnobOffset)
+                            
+                            Image("AdjustBottomKnobIcon")
+                                .resizable()
+                                .offset(x: adjustBtnBottomKnobOffset)
+                        }
+                        .foregroundColor(adjustBtnColor)
+                        .frame(width: 22, height: 22)
+                        
                     }
                     .buttonStyle(Spring())
                     .disabled(adjustBtnIsDisabled)
@@ -158,15 +173,22 @@ struct MsgToolbarView: View {
         if adjustPanelIsPresent {
             withAnimation(.linear1) {
                 adjustPanelOpacity = 0
+            }
+            
+            withAnimation(.linear.delay(0.1)) {
                 adjustBtnColor = af.af.interface.medColor
             }
             
             withAnimation(.shortSpringG.delay(0.1)) {
                 adjustPanelIsPresent = false
+                adjustBtnTopKnobOffset = 0
+                adjustBtnBottomKnobOffset = 0
             }
         } else {
             withAnimation(.shortSpringG) {
                 adjustPanelIsPresent = true
+                adjustBtnTopKnobOffset = -6.5
+                adjustBtnBottomKnobOffset = 6.5
             }
             
             withAnimation(.linear1) {
@@ -177,9 +199,9 @@ struct MsgToolbarView: View {
                 adjustPanelOpacity = 1
             }
             
-            Task { try await Task.sleep(nanoseconds: 20_000_000_000)
-                if adjustPanelIsPresent { handleAdjustBtnTap() }
-            }
+//            Task { try await Task.sleep(nanoseconds: 20_000_000_000)
+//                if adjustPanelIsPresent { handleAdjustBtnTap() }
+//            }
         }
     }
     
@@ -219,7 +241,7 @@ struct MsgToolbarView: View {
 
             switch result {
                 case .success(let response):
-                    withAnimation(.shortSpringB.delay(0.1)) {
+                    withAnimation(.shortSpringG.delay(0.1)) {
                         msgText = response.response.text
                     }
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
@@ -230,7 +252,7 @@ struct MsgToolbarView: View {
                     msgInErrorState = true
                     if adjustPanelIsPresent { handleAdjustBtnTap() }
                 
-                    withAnimation(.shortSpringB.delay(0.1)) {
+                    withAnimation(.shortSpringG.delay(0.1)) {
                         msgText = "Sorry, something went wrong... Please try again."
                     }
                     
