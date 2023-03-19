@@ -173,9 +173,6 @@ struct MsgToolbarView: View {
         if adjustPanelIsPresent {
             withAnimation(.linear1) {
                 adjustPanelOpacity = 0
-            }
-            
-            withAnimation(.linear.delay(0.1)) {
                 adjustBtnColor = af.af.interface.medColor
             }
             
