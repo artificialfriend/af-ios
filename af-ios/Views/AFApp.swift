@@ -13,16 +13,19 @@ struct AFApp: App {
     @StateObject var user = UserOO()
     @StateObject var af = AFOO()
     @StateObject var chat = ChatOO()
+    @StateObject var speechRecognizer = SpeechRecognizer()
     let persistenceController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
+            //TestView()
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(global)
                 .environmentObject(user)
                 .environmentObject(af)
                 .environmentObject(chat)
+                .environmentObject(speechRecognizer)
                 .preferredColorScheme(.light)
                 //INITIALIZE
                 .onAppear {

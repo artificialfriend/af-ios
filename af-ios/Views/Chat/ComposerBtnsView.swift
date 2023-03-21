@@ -11,17 +11,20 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
+    //@StateObject var speechRecognizer = SpeechRecognizer()
     @State private var recentRandomNumbers: [Int] = []
     @State private var shuffleBtnOpacity: Double = 1
     @State private var shuffleBtnIsPresent: Bool = true
     @State private var isShufflePrompt: Bool = false
+    @State private var isRecording: Bool = false
     @State private var recordBtnOpacity: Double = 1
     @State private var stopRecordBtnOpacity: Double = 0
+    @State private var stopRecordBtnIconOpacity: Double = 0
     @State private var stopRecordBtnScale: CGFloat = 0
     @State private var sendBtnOpacity: Double = 0
-    @Binding var input: String
     @Binding var placeholderText: String
     @Binding var composerTrailingPadding: CGFloat
     @Binding var shufflePrompts: [String]
@@ -53,23 +56,32 @@ struct ComposerBtnsView: View, KeyboardReadable {
                 .buttonStyle(Spring())
                 
                 //STOP RECORDING BUTTON
-                Button(action: { handleStopRecordBtnTap() }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.afUserRed)
-                            .scaleEffect(stopRecordBtnScale)
-                        
-                            Image("StopIcon")
-                                .resizable()
-                                .foregroundColor(.white)
-                                .frame(width: s20, height: s20)
-                        }
+                if isRecording {
+                    RecordBtnView(
+                        isRecording: $isRecording,
+                        opacity: $stopRecordBtnOpacity,
+                        scale: $stopRecordBtnScale,
+                        iconOpacity: $stopRecordBtnIconOpacity,
+                        recordBtnOpacity: $recordBtnOpacity,
+                        shuffleBtnOpacity: $shuffleBtnOpacity,
+                        placeholderText: $placeholderText,
+                        composerTrailingPadding: $composerTrailingPadding
+                    )
                 }
-                .opacity(stopRecordBtnOpacity)
-                .buttonStyle(Spring())
-                .onChange(of: input.isEmpty) { _ in
-                    toggleSendButtonPresence()
-                }
+//                Button(action: { handleStopRecordBtnTap() }) {
+//                    ZStack {
+//                        Circle()
+//                            .fill(Color.afUserRed)
+//                            .scaleEffect(stopRecordBtnScale)
+//
+//                            Image("StopIcon")
+//                                .resizable()
+//                                .foregroundColor(.white)
+//                                .frame(width: s20, height: s20)
+//                        }
+//                }
+//                .opacity(stopRecordBtnOpacity)
+//                .buttonStyle(Spring())
                 
                 //SEND BUTTON
                 Button(action: { handleSendBtnTap() }) {
@@ -85,12 +97,19 @@ struct ComposerBtnsView: View, KeyboardReadable {
                 }
                 .opacity(sendBtnOpacity)
                 .buttonStyle(Spring())
-                .onChange(of: input.isEmpty) { _ in
-                    toggleSendButtonPresence()
+                .onChange(of: chat.composerInput.isEmpty) { _ in
+                    if !isRecording {
+                        toggleSendButtonPresence()
+                    }
+                }
+                .onChange(of: isRecording) { _ in
+                    if !isRecording {
+                        toggleSendButtonPresence()
+                    }
                 }
             }
         }
-        .onChange(of: input.isEmpty) { _ in
+        .onChange(of: chat.composerInput.isEmpty) { _ in
             resetShuffleButton()
         }
     }
@@ -100,22 +119,38 @@ struct ComposerBtnsView: View, KeyboardReadable {
     
     func handleSendBtnTap() {
         impactMedium.impactOccurred()
-        chat.addMsg(text: input, isUserMsg: true, isNew: true, isPremade: false, hasToolbar: false, managedObjectContext: managedObjectContext)
-        input = ""
+        
+        chat.addMsg(
+            text: chat.composerInput,
+            isUserMsg: true,
+            isNew: true,
+            isPremade: false,
+            hasToolbar: false,
+            managedObjectContext: managedObjectContext
+        )
+        
+        chat.composerInput = ""
     }
     
     func handleRecordBtnTap() {
         impactMedium.impactOccurred()
+        isRecording = true
+        if !user.user.permissionsRequested { return }
         
         withAnimation(.linear0_5) {
             stopRecordBtnOpacity = 1
             recordBtnOpacity = 0
             shuffleBtnOpacity = 0
+            composerTrailingPadding = s56
             placeholderText = "I'm listening!"
         }
         
         withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0.1)) {
             stopRecordBtnScale = 1
+        }
+        
+        withAnimation(.linear2.delay(0.1)) {
+            stopRecordBtnIconOpacity = 1
         }
         
         Task { try await Task.sleep(nanoseconds: 300_000_000)
@@ -125,33 +160,34 @@ struct ComposerBtnsView: View, KeyboardReadable {
         }
     }
     
-    func handleStopRecordBtnTap() {
-        impactMedium.impactOccurred()
-        
-        withAnimation(.linear0_5) {
-            stopRecordBtnOpacity = 0
-            recordBtnOpacity = 1
-            shuffleBtnOpacity = 1
-            placeholderText = "Ask anything!"
-        }
-        
-        stopRecordBtnScale = 0
-    }
+//    func handleStopRecordBtnTap() {
+//        impactMedium.impactOccurred()
+//        //speechRecognizer.stopTranscribing()
+//
+//        withAnimation(.linear0_5) {
+//            stopRecordBtnOpacity = 0
+//            recordBtnOpacity = 1
+//            shuffleBtnOpacity = 1
+//            placeholderText = "Ask anything!"
+//        }
+//
+//        stopRecordBtnScale = 0
+//    }
     
     func handleShuffleBtnTap() {
         impactMedium.impactOccurred()
-        input = getShufflePrompt()
+        chat.composerInput = getShufflePrompt()
         isShufflePrompt = true
     }
     
     func resetShuffleButton() {
-        if input.isEmpty && isShufflePrompt {
+        if chat.composerInput.isEmpty && isShufflePrompt {
             isShufflePrompt = false
         }
     }
     
     func toggleSendButtonPresence() {
-        if input.isEmpty {
+        if chat.composerInput.isEmpty {
             withAnimation(.linear0_5) {
                 sendBtnOpacity = 0
                 recordBtnOpacity = 1
@@ -159,12 +195,16 @@ struct ComposerBtnsView: View, KeyboardReadable {
                 composerTrailingPadding = s96
             }
         } else {
-            withAnimation(.linear0_5) {
+            if isRecording {
                 sendBtnOpacity = 1
-                recordBtnOpacity = 0
-                if !isShufflePrompt {
-                    shuffleBtnOpacity = 0
-                    composerTrailingPadding = s56
+            } else {
+                withAnimation(.linear0_5) {
+                    sendBtnOpacity = 1
+                    recordBtnOpacity = 0
+                    if !isShufflePrompt {
+                        shuffleBtnOpacity = 0
+                        composerTrailingPadding = s56
+                    }
                 }
             }
         }

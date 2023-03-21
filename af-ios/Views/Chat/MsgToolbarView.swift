@@ -36,7 +36,7 @@ struct MsgToolbarView: View {
     @Binding var msgID: Int32
     @Binding var msgText: String
     @Binding var msgLength: String
-    @Binding var msgStyle: String
+    @Binding var msgTone: String
     @Binding var msgTextOpacity: Double
     @Binding var msgTextWidth: CGFloat
     @Binding var msgTextMaxWidth: CGFloat
@@ -51,7 +51,7 @@ struct MsgToolbarView: View {
                     msgID: $msgID,
                     msgText: $msgText,
                     msgLength: $msgLength,
-                    msgStyle: $msgStyle,
+                    msgTone: $msgTone,
                     msgTextOpacity: $msgTextOpacity,
                     msgBGColor: $msgBGColor,
                     msgInErrorState: $msgInErrorState,
@@ -76,13 +76,13 @@ struct MsgToolbarView: View {
                 .opacity(adjustPanelOpacity)
                 .onAppear {
                     setActiveMsgLength()
-                    setActiveMsgStyle()
+                    setActivemsgTone()
                 }
                 .onChange(of: msgLength) { _ in
                     setActiveMsgLength()
                 }
-                .onChange(of: msgStyle) { _ in
-                    setActiveMsgStyle()
+                .onChange(of: msgTone) { _ in
+                    setActivemsgTone()
                 }
             }
             
@@ -318,23 +318,23 @@ struct MsgToolbarView: View {
         }
     }
     
-    func setActiveMsgStyle() {
-        if msgStyle == AdjustOption.simple.string {
+    func setActivemsgTone() {
+        if msgTone == AdjustOption.simple.string {
             simpleBtnIsActive = true
             academicBtnIsActive = false
             casualBtnIsActive = false
             professionalBtnIsActive = false
-        } else if msgStyle == AdjustOption.academic.string {
+        } else if msgTone == AdjustOption.academic.string {
             simpleBtnIsActive = false
             academicBtnIsActive = true
             casualBtnIsActive = false
             professionalBtnIsActive = false
-        } else if msgStyle == AdjustOption.casual.string {
+        } else if msgTone == AdjustOption.casual.string {
             simpleBtnIsActive = false
             academicBtnIsActive = false
             casualBtnIsActive = true
             professionalBtnIsActive = false
-        } else if msgStyle == AdjustOption.professional.string {
+        } else if msgTone == AdjustOption.professional.string {
             simpleBtnIsActive = false
             academicBtnIsActive = false
             casualBtnIsActive = false

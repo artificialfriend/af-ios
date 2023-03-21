@@ -50,7 +50,7 @@ struct AFMsgView: View {
                                 msgID: $id,
                                 msgText: $text,
                                 msgLength: $length,
-                                msgStyle: $style,
+                                msgTone: $style,
                                 msgTextOpacity: $textOpacity,
                                 msgTextWidth: $textWidth,
                                 msgTextMaxWidth: $textMaxWidth,

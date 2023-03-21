@@ -10,7 +10,8 @@ import SwiftUI
 class UserOO: ObservableObject {
     @Published var user: User = User(
         id: 1,
-        signupIsComplete: false
+        signupIsComplete: false,
+        permissionsRequested: false
     )
     
     func storeUser() {
@@ -27,6 +28,7 @@ class UserOO: ObservableObject {
             let storedUser = try? PropertyListDecoder().decode(User.self, from: encodedUser) {
             user.id = storedUser.id
             user.signupIsComplete = storedUser.signupIsComplete
+            user.permissionsRequested = storedUser.permissionsRequested
         }
     }
 }
@@ -34,4 +36,5 @@ class UserOO: ObservableObject {
 struct User: Codable {
     var id: Int
     var signupIsComplete: Bool
+    var permissionsRequested: Bool
 }

@@ -11,6 +11,7 @@ struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
+    @EnvironmentObject var speechRecognizer: SpeechRecognizer
     //@State private var input: String = ""
     @State private var placeholderText: String = "Ask anything!"
     @State private var trailingPadding: CGFloat = s96
@@ -42,7 +43,7 @@ struct ComposerView: View, KeyboardReadable {
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            TextField("", text: $input, axis: .vertical)
+            TextField("", text: $chat.composerInput, axis: .vertical)
                 .placeholder(when: input.isEmpty, alignment: .leading) {
                     Text(placeholderText)
                         .font(.pDemi)
@@ -60,11 +61,15 @@ struct ComposerView: View, KeyboardReadable {
                 .cornerRadius(cr24)
                 .animation(nil, value: input)
             
-            ComposerBtnsView(input: $input, placeholderText: $placeholderText, composerTrailingPadding: $trailingPadding, shufflePrompts: $shufflePrompts)
-                .frame(height: 37.5)
-                .padding(.trailing, s4)
-                .padding(.bottom, s4)
-                .animation(nil, value: input)
+            ComposerBtnsView(
+                placeholderText: $placeholderText,
+                composerTrailingPadding: $trailingPadding,
+                shufflePrompts: $shufflePrompts
+            )
+            .frame(height: 37.5)
+            .padding(.trailing, s4)
+            .padding(.bottom, s4)
+            .animation(nil, value: input)
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)

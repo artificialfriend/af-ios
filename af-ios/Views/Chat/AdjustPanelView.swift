@@ -15,7 +15,7 @@ struct AdjustPanelView: View {
     @Binding var msgID: Int32
     @Binding var msgText: String
     @Binding var msgLength: String
-    @Binding var msgStyle: String
+    @Binding var msgTone: String
     @Binding var msgTextOpacity: Double
     @Binding var msgBGColor: Color
     @Binding var msgInErrorState: Bool
@@ -70,7 +70,7 @@ struct AdjustPanelView: View {
             }
             .padding(.bottom, s16)
             
-            AdjustPanelLabelView(label: "Change Style")
+            AdjustPanelLabelView(label: "Change Tone")
             
             VStack(spacing: s4) {
                 HStack(spacing: s4) {
@@ -142,8 +142,8 @@ struct AdjustPanelView: View {
             msgLength = option.string
             msgs.first(where: { $0.msgID == msgID })!.length = msgLength
         } else {
-            msgStyle = option.string
-            msgs.first(where: { $0.msgID == msgID })!.style = msgStyle
+            msgTone = option.string
+            msgs.first(where: { $0.msgID == msgID })!.style = msgTone
         }
         
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {

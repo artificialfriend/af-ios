@@ -33,6 +33,9 @@
 		48D921B029AD1EDD00C3D0DA /* AdjustPanelLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */; };
 		48D921BA29B017C000C3D0DA /* MsgsDateLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D921B929B017C000C3D0DA /* MsgsDateLabelView.swift */; };
 		48E2BE6429C624DF00952CEA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */; };
+		48E2BE6629C7EAE300952CEA /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */; };
+		48E2BE6829C8DD9900952CEA /* RecordBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2BE6729C8DD9900952CEA /* RecordBtnView.swift */; };
+		48E2BE6A29C9187900952CEA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2BE6929C9187900952CEA /* TestView.swift */; };
 		CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D2296B0AD4003D1476 /* AFApp.swift */; };
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
@@ -72,6 +75,9 @@
 		48D921AF29AD1EDD00C3D0DA /* AdjustPanelLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustPanelLabelView.swift; sourceTree = "<group>"; };
 		48D921B929B017C000C3D0DA /* MsgsDateLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgsDateLabelView.swift; sourceTree = "<group>"; };
 		48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		48E2BE6729C8DD9900952CEA /* RecordBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordBtnView.swift; sourceTree = "<group>"; };
+		48E2BE6929C9187900952CEA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		CE1A30CF296B0AD4003D1476 /* af-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "af-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A30D2296B0AD4003D1476 /* AFApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFApp.swift; sourceTree = "<group>"; };
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -163,6 +169,7 @@
 				48047DAB29A6E04600C457FB /* MessagesModel.xcdatamodeld */,
 				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
 				483317FD297A1E680008F61E /* Extensions.swift */,
+				48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */,
 				48047DED29A6E90500C457FB /* PersistenceController.swift */,
 				CE1A30D6296B0AD6003D1476 /* Assets.xcassets */,
 				CEB954D62981AB0100C5A9E8 /* af-iosDebug.entitlements */,
@@ -195,8 +202,10 @@
 			isa = PBXGroup;
 			children = (
 				48A3E384298047270093BDA0 /* ChatView.swift */,
+				48E2BE6929C9187900952CEA /* TestView.swift */,
 				48A3E386298095AC0093BDA0 /* ComposerView.swift */,
 				48AA263B298EA63D0091609C /* ComposerBtnsView.swift */,
+				48E2BE6729C8DD9900952CEA /* RecordBtnView.swift */,
 				48D921B929B017C000C3D0DA /* MsgsDateLabelView.swift */,
 				48159818298328AF00201B32 /* UserMsgView.swift */,
 				48B5633429846AAF0077B372 /* AFMsgView.swift */,
@@ -293,11 +302,13 @@
 			files = (
 				48047DF229A997B200C457FB /* SignupBackBtnView.swift in Sources */,
 				48331800297B48830008F61E /* SignupNextBtnView.swift in Sources */,
+				48E2BE6629C7EAE300952CEA /* SpeechRecognizer.swift in Sources */,
 				CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */,
 				48B5633529846AAF0077B372 /* AFMsgView.swift in Sources */,
 				CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */,
 				48D921AE29AD1DF400C3D0DA /* AdjustPanelView.swift in Sources */,
 				48D921B029AD1EDD00C3D0DA /* AdjustPanelLabelView.swift in Sources */,
+				48E2BE6829C8DD9900952CEA /* RecordBtnView.swift in Sources */,
 				48A3E385298047270093BDA0 /* ChatView.swift in Sources */,
 				48159819298328AF00201B32 /* UserMsgView.swift in Sources */,
 				48047DAD29A6E04600C457FB /* MessagesModel.xcdatamodeld in Sources */,
@@ -310,6 +321,7 @@
 				48AA2633298EA2A80091609C /* MsgToolbarView.swift in Sources */,
 				48047DEE29A6E90500C457FB /* PersistenceController.swift in Sources */,
 				CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */,
+				48E2BE6A29C9187900952CEA /* TestView.swift in Sources */,
 				48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */,
 				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
 				489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */,
@@ -457,6 +469,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "af-ios/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded for speech-to-text transcription, then immediately deleted.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "This is used for speech-to-text functionality, so you can talk instead of type.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
@@ -492,6 +506,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "af-ios/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded for speech-to-text transcription, then immediately deleted.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "This is used for speech-to-text functionality, so you can talk instead of type.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
