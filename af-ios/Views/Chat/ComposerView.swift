@@ -11,9 +11,8 @@ struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    @EnvironmentObject var speechRecognizer: SpeechRecognizer
-    //@State private var input: String = ""
-    @State private var placeholderText: String = "Ask anything!"
+    //@EnvironmentObject var speechRecognizer: SpeechRecognizer
+    @State private var placeholderText: PlaceholderText = .notRecording
     @State private var trailingPadding: CGFloat = s96
     @State private var shufflePrompts: [String] = [
         "Summarize season 3 of Succession",
@@ -38,14 +37,13 @@ struct ComposerView: View, KeyboardReadable {
         "Why is my car making a squealing sound?",
         "What are the main tenets of stoicism?"
     ]
-    @Binding var input: String
     let safeAreaHeight: CGFloat
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             TextField("", text: $chat.composerInput, axis: .vertical)
-                .placeholder(when: input.isEmpty, alignment: .leading) {
-                    Text(placeholderText)
+                .placeholder(when: chat.composerInput.isEmpty, alignment: .leading) {
+                    Text(placeholderText.string)
                         .font(.pDemi)
                         .foregroundColor(af.af.interface.softColor)
                 }
@@ -59,7 +57,7 @@ struct ComposerView: View, KeyboardReadable {
                 .padding(.vertical, 10.5)
                 .background(Color.afBlurryWhite)
                 .cornerRadius(cr24)
-                .animation(nil, value: input)
+                .animation(nil, value: chat.composerInput)
             
             ComposerBtnsView(
                 placeholderText: $placeholderText,
@@ -69,7 +67,7 @@ struct ComposerView: View, KeyboardReadable {
             .frame(height: 37.5)
             .padding(.trailing, s4)
             .padding(.bottom, s4)
-            .animation(nil, value: input)
+            .animation(nil, value: chat.composerInput)
         }
         .overlay(
             RoundedRectangle(cornerRadius: cr24)
@@ -81,25 +79,6 @@ struct ComposerView: View, KeyboardReadable {
         .cornerRadius(cr24)
         .padding(.horizontal, s12)
         .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
-        .background {
-            GeometryReader { geo in
-                Color.clear
-                    .onAppear {
-                        setMsgsBottomPadding(height: geo.size.height)
-                    }
-                    .onChange(of: global.keyboardIsPresent) { _ in
-                        if global.keyboardIsPresent {
-                            setMsgsBottomPadding(height: geo.size.height - 32)
-                        } else {
-                            setMsgsBottomPadding(height: geo.size.height)
-                        }
-                    }
-            }
-        }
-        .animation(.shortSpringG, value: input)
-    }
-    
-    func setMsgsBottomPadding(height: CGFloat) {
-        chat.msgsBottomPadding = height + 16
+        .animation(.shortSpringG, value: chat.composerInput)
     }
 }

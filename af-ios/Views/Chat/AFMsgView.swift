@@ -118,7 +118,7 @@ struct AFMsgView: View {
     
     func loadMsg() {
         let prompt = msgs.first(where: { $0.msgID == id - 1})!.text!
-        var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1, text: "", isUserMsg: false, createdAt: "")
+        var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1, text: "", isUserMsg: false/*, createdAt: ""*/)
         toggleLoading()
         chat.msgsBottomPadding += 47.33 + 8
         withAnimation(.linear5) { af.setExpression(to: .thinking) }

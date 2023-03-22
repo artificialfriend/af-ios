@@ -133,13 +133,11 @@ struct GetAFReplyMsg: Codable {
     let userID: Int32
     let text: String
     let isUserMsg: Bool
-    let createdAt: String
     
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
         case text
         case isUserMsg = "is_prompt"
-        case createdAt = "created_at"
     }
 }
 
@@ -168,6 +166,20 @@ enum AdjustOption {
             return "Casual"
         case .professional:
             return "Professional"
+        }
+    }
+}
+
+enum PlaceholderText {
+    case notRecording
+    case recording
+    
+    var string: String {
+        switch self {
+        case .notRecording:
+            return "Ask anything!"
+        case .recording:
+            return "I'm listening!"
         }
     }
 }

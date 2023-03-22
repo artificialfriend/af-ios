@@ -71,7 +71,7 @@ struct ContentView: View, KeyboardReadable {
 
                         Spacer()
 
-                        ComposerView(input: $chat.composerInput, safeAreaHeight: geo.safeAreaInsets.bottom)
+                        ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
                             .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
                             .animation(.linear1, value: chat.composerIsDisabled)
                             .offset(y: composerOffset)
@@ -83,15 +83,19 @@ struct ContentView: View, KeyboardReadable {
                             .background {
                                 GeometryReader { composerGeo in
                                     Color.clear
-                                        .onAppear {
-                                            composerHeight = composerGeo.size.height
-                                            
-                                            if !user.user.signupIsComplete {
-                                                composerOffset = composerHeight / 2
-                                                composerOpacity = 0
-                                            }
-                                        }
+                                        .onAppear { composerHeight = composerGeo.size.height }
                                 }
+                            }
+                            .onAppear {
+                                setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
+                                
+                                if !user.user.signupIsComplete {
+                                    composerOffset = composerHeight / 2
+                                    composerOpacity = 0
+                                }
+                            }
+                            .onChange(of: global.keyboardIsPresent) { _ in
+                                setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
                             }
                     }
                     .ignoresSafeArea(edges: .vertical)
@@ -135,6 +139,10 @@ struct ContentView: View, KeyboardReadable {
     
     
     //FUNCTIONS
+    
+    func setChatBottomPadding(safeAreaHeight: CGFloat) {
+        chat.msgsBottomPadding = safeAreaHeight + 48 + 16
+    }
     
     func clearMessages() {
         for msg in msgs {

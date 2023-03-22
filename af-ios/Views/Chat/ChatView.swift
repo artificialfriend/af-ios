@@ -106,7 +106,7 @@ struct ChatView: View {
                     .animation(animation, value: chat.msgsBottomPadding)
                 }
                 .padding(.top, global.topNavHeight + s8)
-                .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding + s8 : chat.msgsBottomPadding)
+                .padding(.bottom, global.keyboardIsPresent ? chat.msgsBottomPadding - s24 : chat.msgsBottomPadding)
             }
             .background(Color.white)
         }
