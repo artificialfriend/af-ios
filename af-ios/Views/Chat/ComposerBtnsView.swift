@@ -31,7 +31,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @Binding var placeholderText: PlaceholderText
     @Binding var composerTrailingPadding: CGFloat
     @Binding var shufflePrompts: [String]
-    let totalTime = 30 // total time in seconds
+    let totalTime = 60
     
     var body: some View {
         HStack(spacing: 0) {
@@ -136,7 +136,6 @@ struct ComposerBtnsView: View, KeyboardReadable {
     }
 
     func checkSpeechAccess() -> Bool {
-        print("hit speech")
         let speechRecognizer = SFSpeechRecognizer()
         
         guard speechRecognizer != nil else {
@@ -152,7 +151,6 @@ struct ComposerBtnsView: View, KeyboardReadable {
     }
     
     func checkMicrophoneAccess() -> Bool {
-        print("hit mic")
         let audioSession = AVAudioSession.sharedInstance()
         let status = audioSession.recordPermission
         

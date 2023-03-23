@@ -26,8 +26,8 @@ struct AFMsgView: View {
     @State private var error: Error?
     @State var id: Int32
     @State var text: String
-    @State var length: String
-    @State var style: String
+    @State var length: AdjustOption
+    @State var tone: AdjustOption
     @State var inErrorState: Bool
     let isNew: Bool
     let isPremade: Bool
@@ -38,6 +38,8 @@ struct AFMsgView: View {
             ZStack {
                 VStack(spacing: s12) {
                     Text(text)
+                        .font(.p)
+                        .textSelection(.enabled)
                         .opacity(textOpacity)
                         .foregroundColor(.afBlack)
                         .frame(minWidth: textMinWidth, alignment: .leading)
@@ -50,7 +52,7 @@ struct AFMsgView: View {
                                 msgID: $id,
                                 msgText: $text,
                                 msgLength: $length,
-                                msgTone: $style,
+                                msgTone: $tone,
                                 msgTextOpacity: $textOpacity,
                                 msgTextWidth: $textWidth,
                                 msgTextMaxWidth: $textMaxWidth,
@@ -86,7 +88,6 @@ struct AFMsgView: View {
                         }
                 }
             }
-            .font(.p)
             .padding(.horizontal, s16)
             .padding(.vertical, s12)
             .frame(alignment: .bottomLeading)
@@ -125,7 +126,7 @@ struct AFMsgView: View {
         withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
         withAnimation(.shortSpringG) { opacity = 1 }
         
-        chat.getAFReply(userID: user.user.id, prompt: prompt, behavior: "") { result in
+        chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
             withAnimation(.linear1) { toggleLoading() }
             
             Task { try await Task.sleep(nanoseconds: 200_000_000)

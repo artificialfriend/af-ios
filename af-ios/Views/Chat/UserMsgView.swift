@@ -20,6 +20,7 @@ struct UserMsgView: View {
             Spacer()
             
             Text(text)
+                .textSelection(.enabled)
                 .font(.p)
                 .foregroundColor(.white)
                 .padding(.horizontal, s16)

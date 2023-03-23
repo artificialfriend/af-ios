@@ -57,8 +57,8 @@ struct ChatView: View {
                                             AFMsgView(
                                                 id: msg.msgID,
                                                 text: msg.text!,
-                                                length: msg.length!,
-                                                style: msg.style!,
+                                                length: AdjustOption.fromString(msg.length!)!,
+                                                tone: AdjustOption.fromString(msg.tone!)!,
                                                 inErrorState: msg.inErrorState,
                                                 isNew: msg.isNew,
                                                 isPremade: msg.isPremade,

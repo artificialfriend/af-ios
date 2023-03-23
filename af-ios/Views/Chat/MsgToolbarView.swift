@@ -35,8 +35,8 @@ struct MsgToolbarView: View {
     @State private var professionalBtnIsActive: Bool = false
     @Binding var msgID: Int32
     @Binding var msgText: String
-    @Binding var msgLength: String
-    @Binding var msgTone: String
+    @Binding var msgLength: AdjustOption
+    @Binding var msgTone: AdjustOption
     @Binding var msgTextOpacity: Double
     @Binding var msgTextWidth: CGFloat
     @Binding var msgTextMaxWidth: CGFloat
@@ -198,11 +198,26 @@ struct MsgToolbarView: View {
         }
     }
     
+    func createRetryPrompt() -> String {
+        let prompt = msgs.first(where: { $0.msgID == msgID - 1})!.text!
+        
+        if msgLength == .short {
+            if msgTone == .simple { return "Answer this in a brief summary.\n---\n\(prompt)" }
+            else { return "Answer this in a brief summary, \(msgTone.prompt)\n---\n\(prompt)"}
+        } else if msgLength == .medium {
+            if msgTone == .simple { return prompt }
+            else { return "Answer this \(msgTone.prompt)\n---\n\(prompt)"}
+        } else {
+            if msgTone == .simple { return "Answer this in-depth, going into a lot of detail.\n---\n\(prompt)" }
+            else { return "Answer this in-depth, going into a lot of detail, \(msgTone.prompt)\n---\n\(prompt)"}
+        }
+    }
+    
     func handleRetryBtnTap() {
         impactMedium.impactOccurred()
         retryBtnIsDisabled = true
         if msgInErrorState { msgInErrorState = false }
-        let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
+        let prompt = createRetryPrompt()
         withAnimation(.linear5) { af.setExpression(to: .thinking) }
 
         withAnimation(.linear(duration: 0.4).repeatForever(autoreverses: false)) {
@@ -216,7 +231,7 @@ struct MsgToolbarView: View {
             }
         }
 
-        chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
+        chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
             impactMedium.impactOccurred()
             
             withAnimation(.default) {
@@ -299,15 +314,15 @@ struct MsgToolbarView: View {
     }
     
     func setActiveMsgLength() {
-        if msgLength == AdjustOption.short.string {
+        if msgLength == AdjustOption.short {
             shortBtnIsActive = true
             mediumBtnIsActive = false
             longBtnIsActive = false
-        } else if msgLength == AdjustOption.medium.string {
+        } else if msgLength == AdjustOption.medium {
             shortBtnIsActive = false
             mediumBtnIsActive = true
             longBtnIsActive = false
-        } else if msgLength == AdjustOption.long.string {
+        } else if msgLength == AdjustOption.long {
             shortBtnIsActive = false
             mediumBtnIsActive = false
             longBtnIsActive = true
@@ -315,22 +330,22 @@ struct MsgToolbarView: View {
     }
     
     func setActivemsgTone() {
-        if msgTone == AdjustOption.simple.string {
+        if msgTone == AdjustOption.simple {
             simpleBtnIsActive = true
             academicBtnIsActive = false
             casualBtnIsActive = false
             professionalBtnIsActive = false
-        } else if msgTone == AdjustOption.academic.string {
+        } else if msgTone == AdjustOption.academic {
             simpleBtnIsActive = false
             academicBtnIsActive = true
             casualBtnIsActive = false
             professionalBtnIsActive = false
-        } else if msgTone == AdjustOption.casual.string {
+        } else if msgTone == AdjustOption.casual {
             simpleBtnIsActive = false
             academicBtnIsActive = false
             casualBtnIsActive = true
             professionalBtnIsActive = false
-        } else if msgTone == AdjustOption.professional.string {
+        } else if msgTone == AdjustOption.professional {
             simpleBtnIsActive = false
             academicBtnIsActive = false
             casualBtnIsActive = false

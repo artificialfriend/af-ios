@@ -9,7 +9,7 @@
         <attribute name="isUserMsg" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="length" attributeType="String" defaultValueString="Medium"/>
         <attribute name="msgID" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="style" attributeType="String" defaultValueString="Simple"/>
         <attribute name="text" attributeType="String" defaultValueString=""/>
+        <attribute name="tone" attributeType="String" defaultValueString="Simple"/>
     </entity>
 </model>

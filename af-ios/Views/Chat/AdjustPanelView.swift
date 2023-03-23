@@ -14,8 +14,8 @@ struct AdjustPanelView: View {
     @EnvironmentObject var chat: ChatOO
     @Binding var msgID: Int32
     @Binding var msgText: String
-    @Binding var msgLength: String
-    @Binding var msgTone: String
+    @Binding var msgLength: AdjustOption
+    @Binding var msgTone: AdjustOption
     @Binding var msgTextOpacity: Double
     @Binding var msgBGColor: Color
     @Binding var msgInErrorState: Bool
@@ -131,20 +131,45 @@ struct AdjustPanelView: View {
         }
     }
     
+    func createPrompt(option: AdjustOption) -> String {
+        let prompt = msgs.first(where: { $0.msgID == msgID - 1})!.text!
+        
+        switch option {
+        case let adjustOption where adjustOption.type == .length:
+            switch adjustOption {
+            case .medium:
+                if msgTone == .simple { return prompt }
+                else { return "Answer this \(msgTone.prompt)\n---\n\(prompt)" }
+            default:
+                return "\(adjustOption.prompt)\n---\n\(msgText)"
+            }
+        default:
+            switch option {
+            case .simple:
+                if msgLength == .short { return "Answer this in a brief summary.\n---\n\(prompt)"}
+                else if msgLength == .medium { return prompt }
+                else { return "Answer this in-depth, going into a lot of detail.\n---\n\(prompt)" }
+            default:
+                return "Rewrite this \(option.prompt)\n---\n\(msgText)"
+            }
+        }
+    }
+    
     func handleAdjustPanelBtnTap(option: AdjustOption) {
         impactMedium.impactOccurred()
         retryBtnIsDisabled = true
-        let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
         if msgInErrorState { msgInErrorState = false }
         withAnimation(.linear5) { af.setExpression(to: .thinking) }
         
-        if option == .short || option == .medium || option == .long {
-            msgLength = option.string
-            msgs.first(where: { $0.msgID == msgID })!.length = msgLength
+        if option.type == .length {
+            msgLength = option
+            msgs.first(where: { $0.msgID == msgID })!.length = msgLength.string
         } else {
-            msgTone = option.string
-            msgs.first(where: { $0.msgID == msgID })!.style = msgTone
+            msgTone = option
+            msgs.first(where: { $0.msgID == msgID })!.tone = msgTone.string
         }
+        
+        let prompt = createPrompt(option: option)
         
         withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
             retryBtnRotation = Angle(degrees: 180)
@@ -161,7 +186,7 @@ struct AdjustPanelView: View {
             }
         }
 
-        chat.getAFReply(userID: user.user.id, prompt: prompt!, behavior: "") { result in
+        chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
             impactMedium.impactOccurred()
             
             withAnimation(.default) {

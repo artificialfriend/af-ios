@@ -21,9 +21,9 @@ class ChatOO: ObservableObject {
     @Published var composerIsDisabled: Bool = false
     @Published var shuffleBtnIsHidden: Bool = false
     
-    func getAFReply(userID: Int, prompt: String, behavior: String?, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
+    func getAFReply(userID: Int, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
-        let requestBody = GetAFReplyRequestBody(userID: userID, text: prompt, behavior: behavior ?? "")
+        let requestBody = GetAFReplyRequestBody(userID: userID, text: prompt, behavior: "")
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/turbo")!
         var request = URLRequest(url: url)
         
@@ -52,7 +52,7 @@ class ChatOO: ObservableObject {
         
         call.resume()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 30) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 60) {
             if call.state != .completed {
                 call.cancel()
                 let error = NSError(domain: "makePostRequest", code: 3, userInfo: [NSLocalizedDescriptionKey: "Request timed out"])
@@ -141,7 +141,7 @@ struct GetAFReplyMsg: Codable {
     }
 }
 
-enum AdjustOption {
+enum AdjustOption: CaseIterable {
     case short
     case medium
     case long
@@ -168,6 +168,58 @@ enum AdjustOption {
             return "Professional"
         }
     }
+    
+    var type: AdjustOptionType {
+        switch self {
+        case .short:
+            return .length
+        case .medium:
+            return .length
+        case .long:
+            return .length
+        case .simple:
+            return .tone
+        case .academic:
+            return .tone
+        case .casual:
+            return .tone
+        case .professional:
+            return .tone
+        }
+    }
+    
+    var prompt: String {
+        switch self {
+        case .short:
+            return "Summarize this."
+        case .medium:
+            return ""
+        case .long:
+            return "Elaborate on this, going into much more detail."
+        case .simple:
+            return ""
+        case .academic:
+            return "in a formal and academic tone paired with sophisticated vocabulary and grammar."
+        case .casual:
+            return "in a casual and relatable style as if you were explaining something to a friend. Use natural language and phrasing that would be used in every day conversations."
+        case .professional:
+            return "using professional language like an employee would at work."
+        }
+    }
+    
+    static func fromString(_ string: String) -> AdjustOption? {
+        for option in AdjustOption.allCases {
+            if option.string == string {
+                return option
+            }
+        }
+        return nil
+    }
+}
+
+enum AdjustOptionType {
+    case length
+    case tone
 }
 
 enum PlaceholderText {

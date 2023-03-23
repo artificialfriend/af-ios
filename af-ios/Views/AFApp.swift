@@ -24,7 +24,6 @@ struct AFApp: App {
                 .environmentObject(user)
                 .environmentObject(af)
                 .environmentObject(chat)
-                //.environmentObject(speechRecognizer)
                 .preferredColorScheme(.light)
                 //INITIALIZE
                 .onAppear {
