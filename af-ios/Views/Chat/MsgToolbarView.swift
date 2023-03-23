@@ -195,10 +195,6 @@ struct MsgToolbarView: View {
             withAnimation(.linear2.delay(0.1)) {
                 adjustPanelOpacity = 1
             }
-            
-//            Task { try await Task.sleep(nanoseconds: 20_000_000_000)
-//                if adjustPanelIsPresent { handleAdjustBtnTap() }
-//            }
         }
     }
     
@@ -209,7 +205,7 @@ struct MsgToolbarView: View {
         let prompt = msgs.first(where: { $0.msgID == msgID - 1 })!.text
         withAnimation(.linear5) { af.setExpression(to: .thinking) }
 
-        withAnimation(.linear(duration: 0.5).repeatForever(autoreverses: false)) {
+        withAnimation(.linear(duration: 0.4).repeatForever(autoreverses: false)) {
             retryBtnRotation = Angle(degrees: 180)
         }
         
@@ -284,7 +280,7 @@ struct MsgToolbarView: View {
             copyBtnOpacity = 0
         }
         
-        withAnimation(.shortSpringD) {
+        withAnimation(.shortSpringA) {
             copyBtnRotation = Angle(degrees: 90)
         }
         
@@ -296,7 +292,7 @@ struct MsgToolbarView: View {
                 copyBtnOpacity = 1
             }
             
-            withAnimation(.shortSpringD) {
+            withAnimation(.shortSpringA) {
                 copyBtnRotation = Angle(degrees: 0)
             }
         }

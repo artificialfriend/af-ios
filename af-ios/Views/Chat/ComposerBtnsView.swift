@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AVFoundation
+import Speech
 
 struct ComposerBtnsView: View, KeyboardReadable {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
@@ -21,13 +23,15 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @State private var dividerOpacity: Double = 1
     @State private var isRecording: Bool = false
     @State private var recordBtnOpacity: Double = 1
+    @State private var recordBtnIsDisabled: Bool = false
     @State private var stopRecordBtnOpacity: Double = 0
-    @State private var stopRecordBtnIconOpacity: Double = 0
-    @State private var stopRecordBtnScale: CGFloat = 0
     @State private var sendBtnOpacity: Double = 0
+    @State private var shouldCheckPermissions: Bool = false
+    @State private var counter = 0
     @Binding var placeholderText: PlaceholderText
     @Binding var composerTrailingPadding: CGFloat
     @Binding var shufflePrompts: [String]
+    let totalTime = 30 // total time in seconds
     
     var body: some View {
         HStack(spacing: 0) {
@@ -46,13 +50,25 @@ struct ComposerBtnsView: View, KeyboardReadable {
             
             ZStack {
                 //RECORD BUTTON
-                //TODO: ONLY HANDLE IF USER HAS ENABLED PERMISSIONS
                 Button(action: { handleRecordBtnTap() }) {
                     Image("MicIcon")
                         .foregroundColor(af.af.interface.medColor)
                 }
-                .opacity(recordBtnOpacity)
+                .disabled(recordBtnIsDisabled)
+                .opacity(recordBtnIsDisabled ? 0.5 : recordBtnOpacity)
                 .buttonStyle(Spring())
+                .onAppear {
+                    if user.user.permissionsRequested {
+                        if !checkMicrophoneAccess() || !checkSpeechAccess() {
+                            recordBtnIsDisabled = true
+                        }
+                    }
+                }
+                .onChange(of: user.user.permissionsRequested) { _ in
+                    Task { try await Task.sleep(nanoseconds: 1_000_000_000)
+                        checkPermissionsOnTimer()
+                    }
+                }
                 
                 //STOP RECORD BUTTON
                 //THIS IS IMPLEMENTED AS A SEPARATE VIEW SO THAT PERMISSIONS AREN'T REQUESTED UNTIL THE USER TAPS THE BUTTON
@@ -103,11 +119,54 @@ struct ComposerBtnsView: View, KeyboardReadable {
     
     //FUNCTIONS------------------------------------------------//
     
+    func checkPermissionsOnTimer() {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            if !checkMicrophoneAccess() || !checkSpeechAccess() {
+                recordBtnIsDisabled = true
+                counter += 1
+            } else {
+                recordBtnIsDisabled = false
+                counter = totalTime
+            }
+
+            if counter == totalTime {
+                timer.invalidate()
+            }
+        }
+    }
+
+    func checkSpeechAccess() -> Bool {
+        print("hit speech")
+        let speechRecognizer = SFSpeechRecognizer()
+        
+        guard speechRecognizer != nil else {
+            return false
+        }
+        
+        switch SFSpeechRecognizer.authorizationStatus() {
+            case .authorized: return true
+            case .denied: return false
+            case .notDetermined: return false
+            default: return false
+        }
+    }
+    
+    func checkMicrophoneAccess() -> Bool {
+        print("hit mic")
+        let audioSession = AVAudioSession.sharedInstance()
+        let status = audioSession.recordPermission
+        
+        switch status {
+            case .granted: return true
+            case .denied: return false
+            case .undetermined: return false
+            default: return false
+         }
+    }
+    
     func handleSendBtnTap() {
         isRecording = false
         impactMedium.impactOccurred()
-        
-        print(isRecording)
         
         chat.addMsg(
             text: chat.composerInput,

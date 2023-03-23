@@ -123,7 +123,7 @@ struct AFMsgView: View {
         chat.msgsBottomPadding += 47.33 + 8
         withAnimation(.linear5) { af.setExpression(to: .thinking) }
         withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
-        withAnimation(.linear1) { opacity = 1 }
+        withAnimation(.shortSpringG) { opacity = 1 }
         
         chat.getAFReply(userID: user.user.id, prompt: prompt, behavior: "") { result in
             withAnimation(.linear1) { toggleLoading() }

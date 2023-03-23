@@ -35,6 +35,7 @@
 		48E2BE6429C624DF00952CEA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */; };
 		48E2BE6629C7EAE300952CEA /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */; };
 		48E2BE6C29C94AED00952CEA /* StopRecordBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2BE6B29C94AED00952CEA /* StopRecordBtnView.swift */; };
+		48E2BE6E29CBE93400952CEA /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2BE6D29CBE93400952CEA /* PermissionsManager.swift */; };
 		CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D2296B0AD4003D1476 /* AFApp.swift */; };
 		CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A30D4296B0AD4003D1476 /* ContentView.swift */; };
 		CE1A30D7296B0AD6003D1476 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A30D6296B0AD6003D1476 /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		48E2BE6329C624DF00952CEA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		48E2BE6B29C94AED00952CEA /* StopRecordBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRecordBtnView.swift; sourceTree = "<group>"; };
+		48E2BE6D29CBE93400952CEA /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		CE1A30CF296B0AD4003D1476 /* af-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "af-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A30D2296B0AD4003D1476 /* AFApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFApp.swift; sourceTree = "<group>"; };
 		CE1A30D4296B0AD4003D1476 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -137,6 +139,8 @@
 				489DD51D298C45A3006D15A7 /* AFOO.swift */,
 				489DD519298C444F006D15A7 /* ChatOO.swift */,
 				489DD51B298C456D006D15A7 /* SignupOO.swift */,
+				48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */,
+				48E2BE6D29CBE93400952CEA /* PermissionsManager.swift */,
 			);
 			path = "Observable Objects";
 			sourceTree = "<group>";
@@ -167,7 +171,6 @@
 				48047DAB29A6E04600C457FB /* MessagesModel.xcdatamodeld */,
 				CE1A30F6296B1BF8003D1476 /* Styles.swift */,
 				483317FD297A1E680008F61E /* Extensions.swift */,
-				48E2BE6529C7EAE300952CEA /* SpeechRecognizer.swift */,
 				48047DED29A6E90500C457FB /* PersistenceController.swift */,
 				CE1A30D6296B0AD6003D1476 /* Assets.xcassets */,
 				CEB954D62981AB0100C5A9E8 /* af-iosDebug.entitlements */,
@@ -312,6 +315,7 @@
 				481598172981A14200201B32 /* GlobalOO.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,
 				CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */,
+				48E2BE6E29CBE93400952CEA /* PermissionsManager.swift in Sources */,
 				CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */,
 				489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */,
 				CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */,

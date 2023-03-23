@@ -11,6 +11,7 @@ struct UserMsgView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
+    @State private var opacity: Double = 0
     let text: String
     let isNew: Bool
     
@@ -33,6 +34,7 @@ struct UserMsgView: View {
                 .padding(.leading, s64)
                 .padding(.trailing, s12)
         }
+        .opacity(isNew ? opacity : 1)
         .onAppear {
             if isNew { loadIn() }
         }
@@ -40,6 +42,7 @@ struct UserMsgView: View {
     
     func loadIn() {
         chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
+        withAnimation(.shortSpringG) { opacity = 1 }
         
         Task { try await Task.sleep(nanoseconds: 500_000_000)
             chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: false, hasToolbar: true, managedObjectContext: managedObjectContext)

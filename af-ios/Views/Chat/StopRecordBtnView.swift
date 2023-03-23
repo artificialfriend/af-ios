@@ -11,7 +11,6 @@ struct StopRecordBtnView: View {
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    //@EnvironmentObject var speechRecognizer: SpeechRecognizer
     @StateObject var speechRecognizer = SpeechRecognizer()
     @Binding var isRecording: Bool
     @Binding var opacity: Double
@@ -29,7 +28,6 @@ struct StopRecordBtnView: View {
             chat.composerInput = speechRecognizer.transcript
         }
         .onChange(of: isRecording) { _ in
-            print("hit")
             if isRecording {
                 speechRecognizer.reset()
                 speechRecognizer.transcribe()

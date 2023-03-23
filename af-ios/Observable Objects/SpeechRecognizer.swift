@@ -20,8 +20,8 @@ class SpeechRecognizer: ObservableObject {
         var message: String {
             switch self {
             case .nilRecognizer: return "Can't initialize speech recognizer"
-            case .notAuthorizedToRecognize: return "Not authorized to recognize speech"
-            case .notPermittedToRecord: return "Not permitted to record audio"
+            case .notAuthorizedToRecognize: return ""
+            case .notPermittedToRecord: return ""
             case .recognizerIsUnavailable: return "Recognizer is unavailable"
             }
         }
@@ -135,7 +135,11 @@ class SpeechRecognizer: ObservableObject {
         } else {
             errorMessage += error.localizedDescription
         }
-        transcript = "<< \(errorMessage) >>"
+        
+        DispatchQueue.main.async {
+            self.transcript = "\(errorMessage)"
+        }
+        
     }
 }
 
