@@ -42,8 +42,10 @@ struct UserMsgView: View {
     }
     
     func loadIn() {
-        chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
-        withAnimation(.shortSpringG) { opacity = 1 }
+        Task { try await Task.sleep(nanoseconds: 20_000_000)
+            chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
+            withAnimation(.shortSpringG) { opacity = 1 }
+        }
         
         Task { try await Task.sleep(nanoseconds: 500_000_000)
             chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: false, hasToolbar: true, managedObjectContext: managedObjectContext)

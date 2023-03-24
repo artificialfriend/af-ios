@@ -15,6 +15,8 @@ struct ChatView: View {
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
     @State private var animation: Animation = .linear0
+    @State private var currentDateOpacity: Double = 0
+    @State private var currentDateIsPresent: Bool = false
     
     var body: some View {
         ZStack {
@@ -40,9 +42,16 @@ struct ChatView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVStack(spacing: s0) {
                             ForEach(chat.uniqueMsgDates, id: \.self) { date in
-                                MsgsDateLabelView(date: date)
-                                    .padding(.bottom, s8)
-                                    .padding(.top, s32)
+                                if date == chat.uniqueMsgDates.last && chat.dateMsgGroups[date]!.count == 1 && currentDateIsPresent {
+                                    MsgsDateLabelView(date: date)
+                                        .padding(.bottom, s8)
+                                        .padding(.top, s32)
+                                        .opacity(date == chat.uniqueMsgDates.last ? currentDateOpacity : 0)
+                                } else {
+                                    MsgsDateLabelView(date: date)
+                                        .padding(.bottom, s8)
+                                        .padding(.top, s32)
+                                }
                                 
                                 VStack {
                                     ForEach(chat.dateMsgGroups[date]!) { msg in
@@ -53,6 +62,20 @@ struct ChatView: View {
                                             )
                                             .id(msg.msgID)
                                             .fixedSize(horizontal: false, vertical: true)
+                                            .onAppear {
+                                                if chat.dateMsgGroups[date]!.count == 1 {
+                                                    Task { try await Task.sleep(nanoseconds: 20_000_000)
+                                                        currentDateIsPresent = true
+                                                        withAnimation(.linear1) {
+                                                            currentDateOpacity = 1
+                                                        }
+                                                    }
+                                                    
+                                                    Task { try await Task.sleep(nanoseconds: 30_000_000_000)
+                                                        currentDateOpacity = 0
+                                                    }
+                                                }
+                                            }
                                         } else {
                                             AFMsgView(
                                                 id: msg.msgID,

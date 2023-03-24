@@ -197,14 +197,7 @@ struct SignupView: View {
                         dismissAF()
                                 
                         Task { try await Task.sleep(nanoseconds: 1_500_000_000)
-                            af.setExpression(to: .greeting)
                             changeStep()
-                            
-                            Task { try await Task.sleep(nanoseconds: 3_000_000_000)
-                                withAnimation(.linear5) { af.setExpression(to: .neutral) }
-                                user.user.signupIsComplete = true
-                                user.storeUser()
-                            }
                         }
                     }
                 }

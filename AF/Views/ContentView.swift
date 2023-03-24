@@ -114,9 +114,18 @@ struct ContentView: View, KeyboardReadable {
                     .position(x: UIScreen.main.bounds.width - 52, y: topNavHeight + 52)
                     .ignoresSafeArea(edges: .vertical)
                     .onAppear {
-                        Task { try await Task.sleep(nanoseconds: 750_000_000)
-                            toggleAF()
+                        if user.user.signupIsComplete {
+                            Task { try await Task.sleep(nanoseconds: 200_000_000)
+                                toggleAF()
+                            }
+                        } else {
+                            Task { try await Task.sleep(nanoseconds: 750_000_000)
+                                toggleAF()
+                                user.user.signupIsComplete = true
+                                user.storeUser()
+                            }
                         }
+                        
                     }
                     .onLongPressGesture(perform: {
                         afScale = 0
@@ -135,6 +144,53 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
+//        .onAppear {
+//            let msg = Message(context: managedObjectContext)
+//            let now = Date()
+//            let calendar = Calendar.current
+//
+//            msg.msgID = 0
+//            msg.text = "Who are you?"
+//            msg.isUserMsg = true
+//            msg.isNew = false
+//            msg.isPremade = false
+//            msg.hasToolbar = false
+//            msg.createdAt = calendar.date(byAdding: .day, value: -1, to: now)
+//            
+//            DispatchQueue.main.async {
+//                Task { try await Task.sleep(nanoseconds: 50_000_000)
+//                    let date = chat.formatDate(msg.createdAt!)
+//                    if chat.dateMsgGroups.contains(where: {$0.key == date}) {
+//                        chat.dateMsgGroups[date]!.append(msg)
+//                    } else {
+//                        chat.uniqueMsgDates.append(date)
+//                        chat.dateMsgGroups[date] = [msg]
+//                    }
+//                }
+//            }
+//            
+//            let msg2 = Message(context: managedObjectContext)
+//
+//            msg2.msgID = 1
+//            msg2.text = "Who are you?"
+//            msg2.isUserMsg = false
+//            msg2.isNew = false
+//            msg2.isPremade = false
+//            msg2.hasToolbar = true
+//            msg2.createdAt = calendar.date(byAdding: .day, value: -1, to: now)
+//            
+//            DispatchQueue.main.async {
+//                Task { try await Task.sleep(nanoseconds: 50_000_000)
+//                    let date = chat.formatDate(msg2.createdAt!)
+//                    if chat.dateMsgGroups.contains(where: {$0.key == date}) {
+//                        chat.dateMsgGroups[date]!.append(msg2)
+//                    } else {
+//                        chat.uniqueMsgDates.append(date)
+//                        chat.dateMsgGroups[date] = [msg2]
+//                    }
+//                }
+//            }
+//        }
     }
     
     
@@ -180,8 +236,10 @@ struct ContentView: View, KeyboardReadable {
             withAnimation(.shortSpringD) { afScale = 0 }
             withAnimation(.linear1.delay(0.025)) { afOpacity = 0 }
         } else {
+            af.setExpression(to: .greeting)
             withAnimation(.shortSpringF) { afScale = 1 }
             withAnimation(.linear1) { afOpacity = 1 }
+            withAnimation(.linear5.delay(2)) { af.setExpression(to: .neutral) }
         }
     }
 }
