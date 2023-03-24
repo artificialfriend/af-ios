@@ -100,6 +100,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
         }
         .onChange(of: isRecording) { _ in
             if isRecording {
+                withAnimation(.linear5) { af.setExpression(to: .listening) }
                 if !user.user.permissionsRequested { isRecording = false }
                 stopRecordBtnOpacity = 1
                 dividerOpacity = 0
@@ -112,6 +113,12 @@ struct ComposerBtnsView: View, KeyboardReadable {
                 shuffleBtnOpacity = 1
                 composerTrailingPadding = s96
                 placeholderText = .notRecording
+                
+                Task { try await Task.sleep(nanoseconds: 100_000_000)
+                    if chat.composerInput.isEmpty && !af.af.image.name.contains("Thinking") {
+                        withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                    }
+                }
             }
         }
     }
@@ -163,7 +170,9 @@ struct ComposerBtnsView: View, KeyboardReadable {
     }
     
     func handleSendBtnTap() {
+        withAnimation(.linear5) { af.setExpression(to: .thinking) }
         isRecording = false
+        
         impactMedium.impactOccurred()
         
         chat.addMsg(

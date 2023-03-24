@@ -197,7 +197,7 @@ struct SignupView: View {
                         dismissAF()
                                 
                         Task { try await Task.sleep(nanoseconds: 1_500_000_000)
-                            af.setExpression(to: .happy)
+                            af.setExpression(to: .greeting)
                             changeStep()
                             
                             Task { try await Task.sleep(nanoseconds: 3_000_000_000)

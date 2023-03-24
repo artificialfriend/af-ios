@@ -77,40 +77,40 @@ class AFOO: ObservableObject {
             else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2 }
             else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3 }
             else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4 }
-        } else if expression == .sleeping {
-            if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Sleeping }
-            else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Sleeping }
-            else if af.skinColor == .green && af.hairstyle == .three { af.image = AFImage.green3Sleeping }
-            else if af.skinColor == .green && af.hairstyle == .four { af.image = AFImage.green4Sleeping }
-            else if af.skinColor == .blue && af.hairstyle == .one { af.image = AFImage.blue1Sleeping }
-            else if af.skinColor == .blue && af.hairstyle == .two { af.image = AFImage.blue2Sleeping }
-            else if af.skinColor == .blue && af.hairstyle == .three { af.image = AFImage.blue3Sleeping }
-            else if af.skinColor == .blue && af.hairstyle == .four { af.image = AFImage.blue4Sleeping }
-            else if af.skinColor == .purple && af.hairstyle == .one { af.image = AFImage.purple1Sleeping }
-            else if af.skinColor == .purple && af.hairstyle == .two { af.image = AFImage.purple2Sleeping }
-            else if af.skinColor == .purple && af.hairstyle == .three { af.image = AFImage.purple3Sleeping }
-            else if af.skinColor == .purple && af.hairstyle == .four { af.image = AFImage.purple4Sleeping }
-            else if af.skinColor == .pink && af.hairstyle == .one { af.image = AFImage.pink1Sleeping }
-            else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Sleeping }
-            else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Sleeping }
-            else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Sleeping }
-        } else if expression == .happy {
-            if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Happy }
-            else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Happy }
-            else if af.skinColor == .green && af.hairstyle == .three { af.image = AFImage.green3Happy }
-            else if af.skinColor == .green && af.hairstyle == .four { af.image = AFImage.green4Happy }
-            else if af.skinColor == .blue && af.hairstyle == .one { af.image = AFImage.blue1Happy }
-            else if af.skinColor == .blue && af.hairstyle == .two { af.image = AFImage.blue2Happy }
-            else if af.skinColor == .blue && af.hairstyle == .three { af.image = AFImage.blue3Happy }
-            else if af.skinColor == .blue && af.hairstyle == .four { af.image = AFImage.blue4Happy }
-            else if af.skinColor == .purple && af.hairstyle == .one { af.image = AFImage.purple1Happy }
-            else if af.skinColor == .purple && af.hairstyle == .two { af.image = AFImage.purple2Happy }
-            else if af.skinColor == .purple && af.hairstyle == .three { af.image = AFImage.purple3Happy }
-            else if af.skinColor == .purple && af.hairstyle == .four { af.image = AFImage.purple4Happy }
-            else if af.skinColor == .pink && af.hairstyle == .one { af.image = AFImage.pink1Happy }
-            else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Happy }
-            else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Happy }
-            else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Happy }
+        } else if expression == .listening {
+            if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Listening }
+            else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Listening }
+            else if af.skinColor == .green && af.hairstyle == .three { af.image = AFImage.green3Listening }
+            else if af.skinColor == .green && af.hairstyle == .four { af.image = AFImage.green4Listening }
+            else if af.skinColor == .blue && af.hairstyle == .one { af.image = AFImage.blue1Listening }
+            else if af.skinColor == .blue && af.hairstyle == .two { af.image = AFImage.blue2Listening }
+            else if af.skinColor == .blue && af.hairstyle == .three { af.image = AFImage.blue3Listening }
+            else if af.skinColor == .blue && af.hairstyle == .four { af.image = AFImage.blue4Listening }
+            else if af.skinColor == .purple && af.hairstyle == .one { af.image = AFImage.purple1Listening }
+            else if af.skinColor == .purple && af.hairstyle == .two { af.image = AFImage.purple2Listening }
+            else if af.skinColor == .purple && af.hairstyle == .three { af.image = AFImage.purple3Listening }
+            else if af.skinColor == .purple && af.hairstyle == .four { af.image = AFImage.purple4Listening }
+            else if af.skinColor == .pink && af.hairstyle == .one { af.image = AFImage.pink1Listening }
+            else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Listening }
+            else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Listening }
+            else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Listening }
+        } else if expression == .greeting {
+            if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Greeting }
+            else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Greeting }
+            else if af.skinColor == .green && af.hairstyle == .three { af.image = AFImage.green3Greeting }
+            else if af.skinColor == .green && af.hairstyle == .four { af.image = AFImage.green4Greeting }
+            else if af.skinColor == .blue && af.hairstyle == .one { af.image = AFImage.blue1Greeting }
+            else if af.skinColor == .blue && af.hairstyle == .two { af.image = AFImage.blue2Greeting }
+            else if af.skinColor == .blue && af.hairstyle == .three { af.image = AFImage.blue3Greeting }
+            else if af.skinColor == .blue && af.hairstyle == .four { af.image = AFImage.blue4Greeting }
+            else if af.skinColor == .purple && af.hairstyle == .one { af.image = AFImage.purple1Greeting }
+            else if af.skinColor == .purple && af.hairstyle == .two { af.image = AFImage.purple2Greeting }
+            else if af.skinColor == .purple && af.hairstyle == .three { af.image = AFImage.purple3Greeting }
+            else if af.skinColor == .purple && af.hairstyle == .four { af.image = AFImage.purple4Greeting }
+            else if af.skinColor == .pink && af.hairstyle == .one { af.image = AFImage.pink1Greeting }
+            else if af.skinColor == .pink && af.hairstyle == .two { af.image = AFImage.pink2Greeting }
+            else if af.skinColor == .pink && af.hairstyle == .three { af.image = AFImage.pink3Greeting }
+            else if af.skinColor == .pink && af.hairstyle == .four { af.image = AFImage.pink4Greeting }
         } else if expression == .thinking {
             if af.skinColor == .green && af.hairstyle == .one { af.image = AFImage.green1Thinking }
             else if af.skinColor == .green && af.hairstyle == .two { af.image = AFImage.green2Thinking }
@@ -187,8 +187,8 @@ enum Trait {
 }
 
 enum SkinColor: TraitInstance {
-    case green
     case blue
+    case green
     case purple
     case pink
     
@@ -251,38 +251,38 @@ enum AFImage: TraitInstance {
     case pink2
     case pink3
     case pink4
-    case green1Sleeping
-    case green2Sleeping
-    case green3Sleeping
-    case green4Sleeping
-    case blue1Sleeping
-    case blue2Sleeping
-    case blue3Sleeping
-    case blue4Sleeping
-    case purple1Sleeping
-    case purple2Sleeping
-    case purple3Sleeping
-    case purple4Sleeping
-    case pink1Sleeping
-    case pink2Sleeping
-    case pink3Sleeping
-    case pink4Sleeping
-    case green1Happy
-    case green2Happy
-    case green3Happy
-    case green4Happy
-    case blue1Happy
-    case blue2Happy
-    case blue3Happy
-    case blue4Happy
-    case purple1Happy
-    case purple2Happy
-    case purple3Happy
-    case purple4Happy
-    case pink1Happy
-    case pink2Happy
-    case pink3Happy
-    case pink4Happy
+    case green1Listening
+    case green2Listening
+    case green3Listening
+    case green4Listening
+    case blue1Listening
+    case blue2Listening
+    case blue3Listening
+    case blue4Listening
+    case purple1Listening
+    case purple2Listening
+    case purple3Listening
+    case purple4Listening
+    case pink1Listening
+    case pink2Listening
+    case pink3Listening
+    case pink4Listening
+    case green1Greeting
+    case green2Greeting
+    case green3Greeting
+    case green4Greeting
+    case blue1Greeting
+    case blue2Greeting
+    case blue3Greeting
+    case blue4Greeting
+    case purple1Greeting
+    case purple2Greeting
+    case purple3Greeting
+    case purple4Greeting
+    case pink1Greeting
+    case pink2Greeting
+    case pink3Greeting
+    case pink4Greeting
     case green1Thinking
     case green2Thinking
     case green3Thinking
@@ -338,38 +338,38 @@ enum AFImage: TraitInstance {
         case .pink2: return "Pink 2"
         case .pink3: return "Pink 3"
         case .pink4: return "Pink 4"
-        case .green1Sleeping: return "Green 1 Sleeping"
-        case .green2Sleeping: return "Green 2 Sleeping"
-        case .green3Sleeping: return "Green 3 Sleeping"
-        case .green4Sleeping: return "Green 4 Sleeping"
-        case .blue1Sleeping: return "Blue 1 Sleeping"
-        case .blue2Sleeping: return "Blue 2 Sleeping"
-        case .blue3Sleeping: return "Blue 3 Sleeping"
-        case .blue4Sleeping: return "Blue 4 Sleeping"
-        case .purple1Sleeping: return "Purple 1 Sleeping"
-        case .purple2Sleeping: return "Purple 2 Sleeping"
-        case .purple3Sleeping: return "Purple 3 Sleeping"
-        case .purple4Sleeping: return "Purple 4 Sleeping"
-        case .pink1Sleeping: return "Pink 1 Sleeping"
-        case .pink2Sleeping: return "Pink 2 Sleeping"
-        case .pink3Sleeping: return "Pink 3 Sleeping"
-        case .pink4Sleeping: return "Pink 4 Sleeping"
-        case .green1Happy: return "Green 1 Happy"
-        case .green2Happy: return "Green 2 Happy"
-        case .green3Happy: return "Green 3 Happy"
-        case .green4Happy: return "Green 4 Happy"
-        case .blue1Happy: return "Blue 1 Happy"
-        case .blue2Happy: return "Blue 2 Happy"
-        case .blue3Happy: return "Blue 3 Happy"
-        case .blue4Happy: return "Blue 4 Happy"
-        case .purple1Happy: return "Purple 1 Happy"
-        case .purple2Happy: return "Purple 2 Happy"
-        case .purple3Happy: return "Purple 3 Happy"
-        case .purple4Happy: return "Purple 4 Happy"
-        case .pink1Happy: return "Pink 1 Happy"
-        case .pink2Happy: return "Pink 2 Happy"
-        case .pink3Happy: return "Pink 3 Happy"
-        case .pink4Happy: return "Pink 4 Happy"
+        case .green1Listening: return "Green 1 Listening"
+        case .green2Listening: return "Green 2 Listening"
+        case .green3Listening: return "Green 3 Listening"
+        case .green4Listening: return "Green 4 Listening"
+        case .blue1Listening: return "Blue 1 Listening"
+        case .blue2Listening: return "Blue 2 Listening"
+        case .blue3Listening: return "Blue 3 Listening"
+        case .blue4Listening: return "Blue 4 Listening"
+        case .purple1Listening: return "Purple 1 Listening"
+        case .purple2Listening: return "Purple 2 Listening"
+        case .purple3Listening: return "Purple 3 Listening"
+        case .purple4Listening: return "Purple 4 Listening"
+        case .pink1Listening: return "Pink 1 Listening"
+        case .pink2Listening: return "Pink 2 Listening"
+        case .pink3Listening: return "Pink 3 Listening"
+        case .pink4Listening: return "Pink 4 Listening"
+        case .green1Greeting: return "Green 1 Greeting"
+        case .green2Greeting: return "Green 2 Greeting"
+        case .green3Greeting: return "Green 3 Greeting"
+        case .green4Greeting: return "Green 4 Greeting"
+        case .blue1Greeting: return "Blue 1 Greeting"
+        case .blue2Greeting: return "Blue 2 Greeting"
+        case .blue3Greeting: return "Blue 3 Greeting"
+        case .blue4Greeting: return "Blue 4 Greeting"
+        case .purple1Greeting: return "Purple 1 Greeting"
+        case .purple2Greeting: return "Purple 2 Greeting"
+        case .purple3Greeting: return "Purple 3 Greeting"
+        case .purple4Greeting: return "Purple 4 Greeting"
+        case .pink1Greeting: return "Pink 1 Greeting"
+        case .pink2Greeting: return "Pink 2 Greeting"
+        case .pink3Greeting: return "Pink 3 Greeting"
+        case .pink4Greeting: return "Pink 4 Greeting"
         case .green1Thinking: return "Green 1 Thinking"
         case .green2Thinking: return "Green 2 Thinking"
         case .green3Thinking: return "Green 3 Thinking"
@@ -423,38 +423,38 @@ enum AFImage: TraitInstance {
         case .pink2: return Image("Pink2AF")
         case .pink3: return Image("Pink3AF")
         case .pink4: return Image("Pink4AF")
-        case .green1Sleeping: return Image("Green1AFSleeping")
-        case .green2Sleeping: return Image("Green2AFSleeping")
-        case .green3Sleeping: return Image("Green3AFSleeping")
-        case .green4Sleeping: return Image("Green4AFSleeping")
-        case .blue1Sleeping: return Image("Blue1AFSleeping")
-        case .blue2Sleeping: return Image("Blue2AFSleeping")
-        case .blue3Sleeping: return Image("Blue3AFSleeping")
-        case .blue4Sleeping: return Image("Blue4AFSleeping")
-        case .purple1Sleeping: return Image("Purple1AFSleeping")
-        case .purple2Sleeping: return Image("Purple2AFSleeping")
-        case .purple3Sleeping: return Image("Purple3AFSleeping")
-        case .purple4Sleeping: return Image("Purple4AFSleeping")
-        case .pink1Sleeping: return Image("Pink1AFSleeping")
-        case .pink2Sleeping: return Image("Pink2AFSleeping")
-        case .pink3Sleeping: return Image("Pink3AFSleeping")
-        case .pink4Sleeping: return Image("Pink4AFSleeping")
-        case .green1Happy: return Image("Green1AFHappy")
-        case .green2Happy: return Image("Green2AFHappy")
-        case .green3Happy: return Image("Green3AFHappy")
-        case .green4Happy: return Image("Green4AFHappy")
-        case .blue1Happy: return Image("Blue1AFHappy")
-        case .blue2Happy: return Image("Blue2AFHappy")
-        case .blue3Happy: return Image("Blue3AFHappy")
-        case .blue4Happy: return Image("Blue4AFHappy")
-        case .purple1Happy: return Image("Purple1AFHappy")
-        case .purple2Happy: return Image("Purple2AFHappy")
-        case .purple3Happy: return Image("Purple3AFHappy")
-        case .purple4Happy: return Image("Purple4AFHappy")
-        case .pink1Happy: return Image("Pink1AFHappy")
-        case .pink2Happy: return Image("Pink2AFHappy")
-        case .pink3Happy: return Image("Pink3AFHappy")
-        case .pink4Happy: return Image("Pink4AFHappy")
+        case .green1Listening: return Image("Green1AFListening")
+        case .green2Listening: return Image("Green2AFListening")
+        case .green3Listening: return Image("Green3AFListening")
+        case .green4Listening: return Image("Green4AFListening")
+        case .blue1Listening: return Image("Blue1AFListening")
+        case .blue2Listening: return Image("Blue2AFListening")
+        case .blue3Listening: return Image("Blue3AFListening")
+        case .blue4Listening: return Image("Blue4AFListening")
+        case .purple1Listening: return Image("Purple1AFListening")
+        case .purple2Listening: return Image("Purple2AFListening")
+        case .purple3Listening: return Image("Purple3AFListening")
+        case .purple4Listening: return Image("Purple4AFListening")
+        case .pink1Listening: return Image("Pink1AFListening")
+        case .pink2Listening: return Image("Pink2AFListening")
+        case .pink3Listening: return Image("Pink3AFListening")
+        case .pink4Listening: return Image("Pink4AFListening")
+        case .green1Greeting: return Image("Green1AFGreeting")
+        case .green2Greeting: return Image("Green2AFGreeting")
+        case .green3Greeting: return Image("Green3AFGreeting")
+        case .green4Greeting: return Image("Green4AFGreeting")
+        case .blue1Greeting: return Image("Blue1AFGreeting")
+        case .blue2Greeting: return Image("Blue2AFGreeting")
+        case .blue3Greeting: return Image("Blue3AFGreeting")
+        case .blue4Greeting: return Image("Blue4AFGreeting")
+        case .purple1Greeting: return Image("Purple1AFGreeting")
+        case .purple2Greeting: return Image("Purple2AFGreeting")
+        case .purple3Greeting: return Image("Purple3AFGreeting")
+        case .purple4Greeting: return Image("Purple4AFGreeting")
+        case .pink1Greeting: return Image("Pink1AFGreeting")
+        case .pink2Greeting: return Image("Pink2AFGreeting")
+        case .pink3Greeting: return Image("Pink3AFGreeting")
+        case .pink4Greeting: return Image("Pink4AFGreeting")
         case .green1Thinking: return Image("Green1AFThinking")
         case .green2Thinking: return Image("Green2AFThinking")
         case .green3Thinking: return Image("Green3AFThinking")
@@ -658,16 +658,16 @@ enum Interface: TraitInstance {
 
 enum Expression {
     case neutral
-    case sleeping
-    case happy
+    case listening
+    case greeting
     case thinking
     case sweating
     
     var name: String {
         switch self {
         case .neutral: return "Neutral"
-        case .sleeping: return "Sleeping"
-        case .happy: return "Happy"
+        case .listening: return "Listening"
+        case .greeting: return "Greeting"
         case .thinking: return "Thinking"
         case .sweating: return "Sweating"
         }
