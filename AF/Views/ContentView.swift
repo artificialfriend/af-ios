@@ -46,7 +46,6 @@ struct ContentView: View, KeyboardReadable {
                     .onAppear {
                         withAnimation(.linear2) { chatOpacity = 1 }
                     }
-                    
             }
 
             if global.activeSection != .signup {
@@ -115,7 +114,7 @@ struct ContentView: View, KeyboardReadable {
                     .ignoresSafeArea(edges: .vertical)
                     .onAppear {
                         if user.user.signupIsComplete {
-                            Task { try await Task.sleep(nanoseconds: 200_000_000)
+                            Task { try await Task.sleep(nanoseconds: 500_000_000)
                                 toggleAF()
                             }
                         } else {
@@ -156,7 +155,7 @@ struct ContentView: View, KeyboardReadable {
 //            msg.isPremade = false
 //            msg.hasToolbar = false
 //            msg.createdAt = calendar.date(byAdding: .day, value: -1, to: now)
-//            
+//
 //            DispatchQueue.main.async {
 //                Task { try await Task.sleep(nanoseconds: 50_000_000)
 //                    let date = chat.formatDate(msg.createdAt!)
@@ -168,7 +167,7 @@ struct ContentView: View, KeyboardReadable {
 //                    }
 //                }
 //            }
-//            
+//
 //            let msg2 = Message(context: managedObjectContext)
 //
 //            msg2.msgID = 1
@@ -178,7 +177,7 @@ struct ContentView: View, KeyboardReadable {
 //            msg2.isPremade = false
 //            msg2.hasToolbar = true
 //            msg2.createdAt = calendar.date(byAdding: .day, value: -1, to: now)
-//            
+//
 //            DispatchQueue.main.async {
 //                Task { try await Task.sleep(nanoseconds: 50_000_000)
 //                    let date = chat.formatDate(msg2.createdAt!)

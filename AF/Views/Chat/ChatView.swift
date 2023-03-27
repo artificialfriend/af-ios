@@ -53,7 +53,7 @@ struct ChatView: View {
                                         .padding(.top, s32)
                                 }
                                 
-                                VStack {
+                                VStack() {
                                     ForEach(chat.dateMsgGroups[date]!) { msg in
                                         if msg.isUserMsg {
                                             UserMsgView(
@@ -142,6 +142,9 @@ struct ChatView: View {
             Task { try await Task.sleep(nanoseconds: 100_000_000)
                 animation = .shortSpringG
             }
+        }
+        .onTapGesture {
+            dismissKeyboard()
         }
     }
     
