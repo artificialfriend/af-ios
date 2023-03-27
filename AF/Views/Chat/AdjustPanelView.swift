@@ -123,7 +123,7 @@ struct AdjustPanelView: View {
                 adjustBtnColor = af.af.interface.medColor
             }
             
-            withAnimation(.shortSpringG.delay(0.1)) {
+            withAnimation(.shortSpringD.delay(0.1)) {
                 isPresent = false
                 adjustBtnTopKnobOffset = 0
                 adjustBtnBottomKnobOffset = 0
@@ -204,7 +204,7 @@ struct AdjustPanelView: View {
 
             switch result {
                 case .success(let response):
-                    withAnimation(.shortSpringG.delay(0.1)) {
+                    withAnimation(.shortSpringA.delay(0.1)) {
                         msgText = response.response.text
                     }
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
@@ -219,12 +219,12 @@ struct AdjustPanelView: View {
                             opacity = 0
                         }
                         
-                        withAnimation(.shortSpringG.delay(0.1)) {
+                        withAnimation(.shortSpringD.delay(0.1)) {
                             isPresent = false
                         }
                     }
                 
-                    withAnimation(.shortSpringG.delay(0.1)) {
+                    withAnimation(.shortSpringA.delay(0.1)) {
                         msgText = "Sorry, something went wrong... Please try again."
                     }
                     

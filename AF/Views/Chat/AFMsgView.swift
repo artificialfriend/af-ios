@@ -97,7 +97,7 @@ struct AFMsgView: View {
             .cornerRadius(s24, corners: .bottomRight)
             .cornerRadius(s8, corners: .bottomLeft)
             .padding(.leading, s12)
-            .padding(.trailing, s64)
+            .padding(.trailing, 62)
             .onAppear { backgroundColor = af.af.interface.afColor }
             
             Spacer(minLength: 0)
@@ -124,7 +124,7 @@ struct AFMsgView: View {
         chat.msgsBottomPadding += 47.33 + 8
         withAnimation(.linear5) { af.setExpression(to: .thinking) }
         withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
-        withAnimation(.shortSpringG) { opacity = 1 }
+        withAnimation(.shortSpringD) { opacity = 1 }
         
         chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
             withAnimation(.linear1) { toggleLoading() }
@@ -134,7 +134,7 @@ struct AFMsgView: View {
                 
                 switch result {
                 case .success(let response):
-                    withAnimation(.shortSpringG) {
+                    withAnimation(.shortSpringA) {
                         responseMsg = response.response
                         text = responseMsg.text
                     }
@@ -145,7 +145,7 @@ struct AFMsgView: View {
                     msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
                     PersistenceController.shared.save()
                     
-                    withAnimation(.shortSpringG) {
+                    withAnimation(.shortSpringA) {
                         text = "Sorry, something went wrong... Please try again."
                     }
                     
@@ -158,7 +158,7 @@ struct AFMsgView: View {
                 }
                 
                 updateMsg()
-                withAnimation(.shortSpringG) { toolbarIsPresent = true }
+                withAnimation(.shortSpringD) { toolbarIsPresent = true }
                 
                 withAnimation(.linear2.delay(0.3)) {
                     textOpacity = 1

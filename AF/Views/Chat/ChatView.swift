@@ -140,7 +140,7 @@ struct ChatView: View {
             chat.dateMsgGroups = createDateMsgGroups().1
             
             Task { try await Task.sleep(nanoseconds: 100_000_000)
-                animation = .shortSpringG
+                animation = .shortSpringD
             }
         }
         .onTapGesture {

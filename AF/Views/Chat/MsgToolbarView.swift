@@ -176,13 +176,13 @@ struct MsgToolbarView: View {
                 adjustBtnColor = af.af.interface.medColor
             }
             
-            withAnimation(.shortSpringG.delay(0.1)) {
+            withAnimation(.shortSpringD.delay(0.1)) {
                 adjustPanelIsPresent = false
                 adjustBtnTopKnobOffset = 0
                 adjustBtnBottomKnobOffset = 0
             }
         } else {
-            withAnimation(.shortSpringG) {
+            withAnimation(.shortSpringD) {
                 adjustPanelIsPresent = true
                 adjustBtnTopKnobOffset = -6.5
                 adjustBtnBottomKnobOffset = 6.5
@@ -249,7 +249,7 @@ struct MsgToolbarView: View {
 
             switch result {
                 case .success(let response):
-                    withAnimation(.shortSpringG.delay(0.1)) {
+                    withAnimation(.shortSpringA.delay(0.1)) {
                         msgText = response.response.text
                     }
                     msgs.first(where: { $0.msgID == msgID })!.text = msgText
@@ -260,7 +260,7 @@ struct MsgToolbarView: View {
                     msgInErrorState = true
                     if adjustPanelIsPresent { handleAdjustBtnTap() }
                 
-                    withAnimation(.shortSpringG.delay(0.1)) {
+                    withAnimation(.shortSpringA.delay(0.1)) {
                         msgText = "Sorry, something went wrong... Please try again."
                     }
                     

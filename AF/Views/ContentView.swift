@@ -124,7 +124,6 @@ struct ContentView: View, KeyboardReadable {
                                 user.storeUser()
                             }
                         }
-                        
                     }
                     .onLongPressGesture(perform: {
                         afScale = 0
@@ -212,31 +211,31 @@ struct ContentView: View, KeyboardReadable {
     
     func toggleTopNav() {
         if composerIsPresent {
-            withAnimation(.shortSpringD) { topNavOffset = topNavHeight / 2 }
+            withAnimation(.shortSpringB) { topNavOffset = topNavHeight / 2 }
             withAnimation(.linear2) { topNavOpacity = 0 }
         } else {
-            withAnimation(.shortSpringD) { topNavOffset = 0 }
+            withAnimation(.shortSpringB) { topNavOffset = 0 }
             withAnimation(.linear2) { topNavOpacity = 1 }
         }
     }
     
     func toggleComposer() {
         if composerIsPresent {
-            withAnimation(.shortSpringD) { composerOffset = composerHeight / 2 }
+            withAnimation(.shortSpringB) { composerOffset = composerHeight / 2 }
             withAnimation(.linear1) { composerOpacity = 0 }
         } else {
-            withAnimation(.shortSpringD) { composerOffset = 0 }
+            withAnimation(.shortSpringB) { composerOffset = 0 }
             withAnimation(.linear2) { composerOpacity = 1 }
         }
     }
     
     func toggleAF() {
         if afIsPresent {
-            withAnimation(.shortSpringD) { afScale = 0 }
+            withAnimation(.shortSpringB) { afScale = 0 }
             withAnimation(.linear1.delay(0.025)) { afOpacity = 0 }
         } else {
             af.setExpression(to: .greeting)
-            withAnimation(.shortSpringF) { afScale = 1 }
+            withAnimation(.shortSpringC) { afScale = 1 }
             withAnimation(.linear1) { afOpacity = 1 }
             withAnimation(.linear5.delay(2)) { af.setExpression(to: .neutral) }
         }

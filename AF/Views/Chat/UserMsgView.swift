@@ -32,7 +32,7 @@ struct UserMsgView: View {
                 .cornerRadius(s24, corners: .topLeft)
                 .cornerRadius(s8, corners: .bottomRight)
                 .cornerRadius(s24, corners: .bottomLeft)
-                .padding(.leading, s64)
+                .padding(.leading, 62)
                 .padding(.trailing, s12)
         }
         .opacity(isNew ? opacity : 1)
@@ -44,7 +44,7 @@ struct UserMsgView: View {
     func loadIn() {
         Task { try await Task.sleep(nanoseconds: 20_000_000)
             chat.msgsBottomPadding += chat.currentUserMsgHeight + 8
-            withAnimation(.shortSpringG) { opacity = 1 }
+            withAnimation(.shortSpringD) { opacity = 1 }
         }
         
         Task { try await Task.sleep(nanoseconds: 500_000_000)
