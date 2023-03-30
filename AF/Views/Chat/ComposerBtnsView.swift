@@ -26,7 +26,9 @@ struct ComposerBtnsView: View, KeyboardReadable {
     @State private var sendBtnScale: Double = 0
     @State private var sendBtnStackOffset: SendBtnStackOffset = .notInInputState
     @State private var menuBtnIsPresent: Bool = true
+    @State private var menuIsOpen: Bool = false
     @State private var menuBtnOpacity: Double = 1
+    @State private var menuBtnColor: Color = .afBlack
     @State private var shouldCheckPermissions: Bool = false
     @State private var permissionsRequestSecondsCounter: Int = 0
     @Binding var placeholderText: PlaceholderText
@@ -86,18 +88,27 @@ struct ComposerBtnsView: View, KeyboardReadable {
                 .padding(.leading, s4)
                 .padding(.trailing, s12)
             
-            Button(action: {  }) {
+            Button(action: { handleMenuBtnTap() }) {
                 Image("MenuIcon")
-                    .foregroundColor(af.af.interface.medColor)
+                    .foregroundColor(menuBtnColor)
             }
             .opacity(menuBtnOpacity)
             .padding(.trailing, s12)
+            .buttonStyle(Spring())
+            .onAppear() {
+                menuBtnColor = af.af.interface.medColor
+            }
         }
         .onChange(of: isRecording) { _ in
             toggleRecordingState()
+            if chat.menuIsOpen { toggleMenuPresence() }
         }
         .onChange(of: chat.composerInput.isEmpty) { _ in
             toggleSendButtonPresence()
+            if chat.menuIsOpen { toggleMenuPresence() }
+        }
+        .onChange(of: chat.closeMenu) { _ in
+            if chat.closeMenu { toggleMenuPresence() }
         }
     }
     
@@ -130,6 +141,24 @@ struct ComposerBtnsView: View, KeyboardReadable {
             user.storeUser()
         } else {
             isRecording = true
+        }
+    }
+    
+    func handleMenuBtnTap() {
+        impactMedium.impactOccurred()
+        toggleMenuPresence()
+    }
+    
+    func toggleMenuPresence() {
+        if !chat.menuIsOpen {
+            withAnimation(.linear1) { menuBtnColor = af.af.interface.userColor }
+            withAnimation(.shortSpringA) { chat.menuOffset = MenuOffset.open.value }
+            chat.menuIsOpen = true
+        } else {
+            withAnimation(.linear1) { menuBtnColor = af.af.interface.medColor }
+            withAnimation(.easeIn(duration: 0.2)) { chat.menuOffset = MenuOffset.closed.value }
+            chat.closeMenu = false
+            chat.menuIsOpen = false
         }
     }
     

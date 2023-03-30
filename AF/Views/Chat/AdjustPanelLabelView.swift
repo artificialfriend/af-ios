@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct AdjustPanelLabelView: View {
+    @EnvironmentObject var af: AFOO
     let label: String
     
     var body: some View {
         Text(label)
             .font(.twelveBold)
             .textCase(.uppercase)
-            .foregroundColor(.afMedBlack)
+            .foregroundColor(af.af.interface.darkColor.opacity(0.5))
             .padding(.bottom, s6)
     }
 }

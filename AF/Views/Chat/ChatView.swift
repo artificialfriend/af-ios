@@ -144,7 +144,8 @@ struct ChatView: View {
             }
         }
         .onTapGesture {
-            dismissKeyboard()
+            if chat.menuIsOpen { chat.closeMenu = true }
+            else { dismissKeyboard() }
         }
     }
     

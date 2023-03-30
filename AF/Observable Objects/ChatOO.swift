@@ -20,6 +20,9 @@ class ChatOO: ObservableObject {
     @Published var onboardingChatStep: Int = 0
     @Published var composerIsDisabled: Bool = false
     @Published var shuffleBtnIsHidden: Bool = false
+    @Published var menuIsOpen: Bool = false
+    @Published var closeMenu: Bool = false
+    @Published var menuOffset: CGFloat = MenuOffset.closed.value
     
     func getAFReply(userID: Int, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
@@ -232,6 +235,18 @@ enum PlaceholderText {
             return "Ask anything!"
         case .recording:
             return "I'm listening!"
+        }
+    }
+}
+
+enum MenuOffset {
+    case open
+    case closed
+    
+    var value: CGFloat {
+        switch self {
+        case .open: return 0
+        case .closed: return 240
         }
     }
 }

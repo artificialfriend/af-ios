@@ -18,7 +18,7 @@ struct AdjustPanelBtnView: View {
                 Spacer()
                 Text(adjustOption.string)
                     .font(.fourteenBold)
-                    .foregroundColor(isActive ? .white : .afBlack)
+                    .foregroundColor(isActive ? .white : af.af.interface.darkColor.opacity(0.9))
                     .animation(nil, value: isActive)
                 Spacer()
             }

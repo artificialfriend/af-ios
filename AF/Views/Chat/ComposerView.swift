@@ -11,7 +11,6 @@ struct ComposerView: View, KeyboardReadable {
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
-    //@EnvironmentObject var speechRecognizer: SpeechRecognizer
     @State private var placeholderText: PlaceholderText = .notRecording
     @State private var trailingPadding: ComposerTrailingPadding = .notInInputState
     let safeAreaHeight: CGFloat
@@ -43,7 +42,6 @@ struct ComposerView: View, KeyboardReadable {
             .frame(height: 37.5)
             .padding(.trailing, s4)
             .padding(.bottom, s4)
-            //.offset(x: btnsOffset.value)
             .animation(nil, value: chat.composerInput)
         }
         .overlay(

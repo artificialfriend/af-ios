@@ -33,6 +33,7 @@ struct ContentView: View, KeyboardReadable {
     @State private var composerBottomPadding: CGFloat = s0
     @State private var composerTrailingPadding: CGFloat = 56
     @State private var composerIsDisabled: Bool = false
+    @State private var menuOffset: CGFloat = MenuOffset.closed.value
     
     var body: some View {
         ZStack {
@@ -69,6 +70,39 @@ struct ContentView: View, KeyboardReadable {
                             }
 
                         Spacer()
+                        
+                        HStack {
+                            Spacer()
+                            
+                            MenuView()
+                                .opacity(chat.menuIsOpen ? 1 : 0)
+                                .animation(.linear1, value: chat.menuIsOpen)
+                                .padding(.trailing, s12)
+                                .padding(.bottom, s8)
+                                .offset(x: chat.menuOffset)
+                                .gesture(
+                                    DragGesture(minimumDistance: 0)
+                                        .onChanged { value in
+                                            if abs(value.translation.width) > abs(value.translation.height) {
+                                                if value.translation.width > 0 {
+                                                    chat.menuOffset = value.translation.width
+                                                } else {
+                                                    chat.menuOffset = value.translation.width / 5
+                                                }
+                                            }
+                                        }
+                                        .onEnded { value in
+                                            if value.translation.width > 64 {
+                                                chat.closeMenu = true
+                                            } else {
+                                                withAnimation(.shortSpringD) {
+                                                    chat.menuOffset = MenuOffset.open.value
+                                                }
+                                            }
+                                        }
+                                )
+                        }
+                        
 
                         ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
                             .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
@@ -94,6 +128,7 @@ struct ContentView: View, KeyboardReadable {
                                 }
                             }
                             .onChange(of: global.keyboardIsPresent) { _ in
+                                print(geo.safeAreaInsets.bottom)
                                 setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
                             }
                     }
@@ -193,6 +228,8 @@ struct ContentView: View, KeyboardReadable {
     
     
     //FUNCTIONS
+    
+    
     
     func setChatBottomPadding(safeAreaHeight: CGFloat) {
         chat.msgsBottomPadding = safeAreaHeight + 48 + 16
