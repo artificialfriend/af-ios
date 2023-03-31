@@ -15,7 +15,7 @@ struct AdjustPanelLabelView: View {
         Text(label)
             .font(.twelveBold)
             .textCase(.uppercase)
-            .foregroundColor(af.af.interface.darkColor.opacity(0.5))
+            .foregroundColor(af.af.interface.medColor)
             .padding(.bottom, s6)
     }
 }

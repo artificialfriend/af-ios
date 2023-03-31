@@ -32,7 +32,6 @@ struct AdjustPanelBtnView: View {
                     .cornerRadius(adjustOption == .short || adjustOption == .casual ? 18 : cr8, corners: .bottomLeft)
                     .cornerRadius(adjustOption == .long || adjustOption == .professional ? 18 : cr8, corners: .bottomRight)
             )
-            
         }
         .frame(height: 36)
     }

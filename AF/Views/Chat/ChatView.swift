@@ -91,6 +91,8 @@ struct ChatView: View {
                                             .fixedSize(horizontal: false, vertical: true)
                                         }
                                     }
+                                    
+                                    AIQuizView()
                                 }
                             }
                         }
