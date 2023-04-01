@@ -93,6 +93,7 @@ struct ChatView: View {
                                     }
                                     
                                     AIQuizView()
+                                    AIImageView(image: Image("CrystalPrincess"))
                                 }
                             }
                         }

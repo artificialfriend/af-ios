@@ -23,6 +23,7 @@
 		489B7E1F29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */; };
 		489B7E2129D6677600F90640 /* AIQuizButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2029D6677600F90640 /* AIQuizButtonView.swift */; };
 		489B7E2329D691B600F90640 /* AIQuizScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2229D691B600F90640 /* AIQuizScoreView.swift */; };
+		489B7E2529D7D43C00F90640 /* AIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2429D7D43C00F90640 /* AIImageView.swift */; };
 		489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD519298C444F006D15A7 /* ChatOO.swift */; };
 		489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51B298C456D006D15A7 /* SignupOO.swift */; };
 		489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51D298C45A3006D15A7 /* AFOO.swift */; };
@@ -72,6 +73,7 @@
 		489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizQuestionIndicatorView.swift; sourceTree = "<group>"; };
 		489B7E2029D6677600F90640 /* AIQuizButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizButtonView.swift; sourceTree = "<group>"; };
 		489B7E2229D691B600F90640 /* AIQuizScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizScoreView.swift; sourceTree = "<group>"; };
+		489B7E2429D7D43C00F90640 /* AIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIImageView.swift; sourceTree = "<group>"; };
 		489DD519298C444F006D15A7 /* ChatOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOO.swift; sourceTree = "<group>"; };
 		489DD51B298C456D006D15A7 /* SignupOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupOO.swift; sourceTree = "<group>"; };
 		489DD51D298C45A3006D15A7 /* AFOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFOO.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */,
 				489B7E2029D6677600F90640 /* AIQuizButtonView.swift */,
 				489B7E2229D691B600F90640 /* AIQuizScoreView.swift */,
+				489B7E2429D7D43C00F90640 /* AIImageView.swift */,
 			);
 			path = Modes;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				489B7E1D29D65F1C00F90640 /* AIQuizAnswerView.swift in Sources */,
 				CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */,
 				48B5633529846AAF0077B372 /* AFMsgView.swift in Sources */,
+				489B7E2529D7D43C00F90640 /* AIImageView.swift in Sources */,
 				CE1A30D5296B0AD4003D1476 /* ContentView.swift in Sources */,
 				48D921AE29AD1DF400C3D0DA /* AdjustPanelView.swift in Sources */,
 				48D921B029AD1EDD00C3D0DA /* AdjustPanelLabelView.swift in Sources */,
