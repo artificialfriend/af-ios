@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AIQuizScoreView: View {
     @EnvironmentObject var af: AFOO
+    @Binding var score: Int
+    let numberOfQuestions: Int
     
     var body: some View {
         VStack {
@@ -16,7 +18,7 @@ struct AIQuizScoreView: View {
                 .font(.sixteenBold)
                 .foregroundColor(af.af.interface.medColor)
             
-            Text("3/3")
+            Text("\(score)/\(numberOfQuestions)")
                 .font(.sixtyfour)
                 .foregroundColor(af.af.interface.darkColor.opacity(0.9))
         }

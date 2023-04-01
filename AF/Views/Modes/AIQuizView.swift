@@ -12,10 +12,12 @@ struct AIQuizView: View {
     @State private var currentQIndex: Int = 0
     @State private var currentQuestion: String = ""
     @State private var questionOpacity: Double = 1
+    @State private var questionIsAnswered: Bool = false
+    @State private var score: Int = 0
     @State private var quizIsComplete: Bool = false
     let questions: [String] = [
         "What was Leonardo da Vinci's primary area of expertise?",
-        "Who was Leonardo da Vinci apprenticed to when he was around 14 years old?",
+        "Who was Leonardo da Vinci apprenticed to when he was around 14 years old? Who was Leonardo da Vinci apprenticed to when he was around 14 years old?",
         "What is the significance of Leonardo da Vinci's \"Vitruvian Man\" drawing?"
     ]
     let answers: [Int: [String]] = [
@@ -42,7 +44,7 @@ struct AIQuizView: View {
         0: "D. All of the above",
         1: "A. Andrea del Verrocchio",
         2: "C. It combines art and science to examine human proportions"
-        ]
+    ]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -56,10 +58,33 @@ struct AIQuizView: View {
                     .opacity(questionOpacity)
                 
                 VStack(spacing: 4) {
-                    AIQuizAnswerView(answer: answers[currentQIndex]![0])
-                    AIQuizAnswerView(answer: answers[currentQIndex]![1])
-                    AIQuizAnswerView(answer: answers[currentQIndex]![2])
-                    AIQuizAnswerView(answer: answers[currentQIndex]![3])
+                    AIQuizAnswerView(
+                        questionIsAnswered: $questionIsAnswered,
+                        score: $score,
+                        answer: answers[currentQIndex]![0],
+                        correctAnswer: correctAnswers[currentQIndex]!
+                    )
+                    
+                    AIQuizAnswerView(
+                        questionIsAnswered: $questionIsAnswered,
+                        score: $score,
+                        answer: answers[currentQIndex]![1],
+                        correctAnswer: correctAnswers[currentQIndex]!
+                    )
+                    
+                    AIQuizAnswerView(
+                        questionIsAnswered: $questionIsAnswered,
+                        score: $score,
+                        answer: answers[currentQIndex]![2],
+                        correctAnswer: correctAnswers[currentQIndex]!
+                    )
+                    
+                    AIQuizAnswerView(
+                        questionIsAnswered: $questionIsAnswered,
+                        score: $score,
+                        answer: answers[currentQIndex]![3],
+                        correctAnswer: correctAnswers[currentQIndex]!
+                    )
                 }
                 .padding(.horizontal, s12)
                 .padding(.bottom, s12)
@@ -71,14 +96,20 @@ struct AIQuizView: View {
                 }
                 .padding(.bottom, s16)
             } else {
-                AIQuizScoreView()
+                AIQuizScoreView(score: $score, numberOfQuestions: questions.count)
                     .padding(.top, 32)
                     .padding(.bottom, 16)
             }
             
-            AIQuizButtonView(quizIsComplete: $quizIsComplete, currentQIndex: $currentQIndex, questionCount: questions.count)
-                .padding(.horizontal, s8)
-                .padding(.bottom, s8)
+            AIQuizButtonView(
+                questionIsAnswered: $questionIsAnswered,
+                quizIsComplete: $quizIsComplete,
+                score: $score,
+                currentQIndex: $currentQIndex,
+                questionCount: questions.count
+            )
+            .padding(.horizontal, s8)
+            .padding(.bottom, s8)
         }
         .background(af.af.interface.afColor)
         .cornerRadius(32)
@@ -87,12 +118,7 @@ struct AIQuizView: View {
             currentQuestion = questions[currentQIndex]
         }
         .onChange(of: currentQIndex) { _ in
-            withAnimation(.linear1) { questionOpacity = 0 }
-            withAnimation(.shortSpringD.delay(0.1)) { currentQuestion = questions[currentQIndex] }
-            withAnimation(.linear2.delay(0.2)) { questionOpacity = 1 }
+            withAnimation(.shortSpringD) { currentQuestion = questions[currentQIndex] }
         }
-//        .animation(.shortSpringD.delay(0.2), value: currentQIndex)
-//        .animation(nil, value: currentQIndex)
-        
     }
 }
