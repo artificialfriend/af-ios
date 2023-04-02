@@ -17,6 +17,7 @@ struct ContentView: View, KeyboardReadable {
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
     @State private var chatOpacity: Double = 0
+    @State private var modeOpacity: Double = 0
     @State private var topNavIsPresent: Bool = false
     @State private var topNavHeight: CGFloat = 0
     @State private var topNavOffset: CGFloat = 0
@@ -42,19 +43,25 @@ struct ContentView: View, KeyboardReadable {
             }
 
             if global.activeSection == .chat {
-                ChatView()
-                    .opacity(chatOpacity)
-                    .onAppear {
-                        withAnimation(.linear2) { chatOpacity = 1 }
-                    }
+                ZStack {
+                    ChatView()
+                        .opacity(chatOpacity)
+                        .onAppear {
+                            withAnimation(.linear2) { chatOpacity = 1 }
+                        }
+                    
+                    ActiveReadingView()
+                        .opacity(modeOpacity)
+                }
             }
-
+            
             if global.activeSection != .signup {
                 GeometryReader { geo in
                     VStack(spacing: s0) {
                         TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
                             .opacity(topNavOpacity)
                             .offset(y: topNavOffset)
+                            //.animation(.longSpring, value: geo.safeAreaInsets)
                             .background {
                                 GeometryReader { topNavGeo in
                                     Color.clear
@@ -73,7 +80,7 @@ struct ContentView: View, KeyboardReadable {
                         
                         HStack {
                             Spacer()
-                            
+
                             MenuView()
                                 .opacity(chat.menuIsOpen ? 1 : 0)
                                 .animation(.linear1, value: chat.menuIsOpen)
@@ -102,13 +109,12 @@ struct ContentView: View, KeyboardReadable {
                                         }
                                 )
                         }
-                        
 
                         ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
                             .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
                             .animation(.linear1, value: chat.composerIsDisabled)
                             .offset(y: composerOffset)
-                            .padding(.bottom, global.keyboardIsPresent ? s8 : s0)
+                            .padding(.bottom, global.keyboardIsPresent ? -s24 : s0)
                             .disabled(chat.composerIsDisabled)
                             .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                                 global.keyboardIsPresent = newIsKeyboardVisible
@@ -125,13 +131,15 @@ struct ContentView: View, KeyboardReadable {
                                 if !user.user.signupIsComplete {
                                     composerOffset = composerHeight / 2
                                     composerOpacity = 0
+                                } else {
+                                    composerIsPresent = true
                                 }
                             }
                             .onChange(of: global.keyboardIsPresent) { _ in
-                                print(geo.safeAreaInsets.bottom)
                                 setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
                             }
                     }
+                    .ignoresSafeArea(.keyboard)
                     .ignoresSafeArea(edges: .vertical)
                 }
                 .onAppear {
@@ -177,59 +185,30 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
-//        .onAppear {
-//            let msg = Message(context: managedObjectContext)
-//            let now = Date()
-//            let calendar = Calendar.current
-//
-//            msg.msgID = 0
-//            msg.text = "Who are you?"
-//            msg.isUserMsg = true
-//            msg.isNew = false
-//            msg.isPremade = false
-//            msg.hasToolbar = false
-//            msg.createdAt = calendar.date(byAdding: .day, value: -1, to: now)
-//
-//            DispatchQueue.main.async {
-//                Task { try await Task.sleep(nanoseconds: 50_000_000)
-//                    let date = chat.formatDate(msg.createdAt!)
-//                    if chat.dateMsgGroups.contains(where: {$0.key == date}) {
-//                        chat.dateMsgGroups[date]!.append(msg)
-//                    } else {
-//                        chat.uniqueMsgDates.append(date)
-//                        chat.dateMsgGroups[date] = [msg]
-//                    }
-//                }
-//            }
-//
-//            let msg2 = Message(context: managedObjectContext)
-//
-//            msg2.msgID = 1
-//            msg2.text = "Who are you?"
-//            msg2.isUserMsg = false
-//            msg2.isNew = false
-//            msg2.isPremade = false
-//            msg2.hasToolbar = true
-//            msg2.createdAt = calendar.date(byAdding: .day, value: -1, to: now)
-//
-//            DispatchQueue.main.async {
-//                Task { try await Task.sleep(nanoseconds: 50_000_000)
-//                    let date = chat.formatDate(msg2.createdAt!)
-//                    if chat.dateMsgGroups.contains(where: {$0.key == date}) {
-//                        chat.dateMsgGroups[date]!.append(msg2)
-//                    } else {
-//                        chat.uniqueMsgDates.append(date)
-//                        chat.dateMsgGroups[date] = [msg2]
-//                    }
-//                }
-//            }
-//        }
+        .onAppear {
+            
+        }
+        .onChange(of: chat.activeMode) { _ in
+           toggleMode()
+        }
     }
     
     
     //FUNCTIONS
     
-    
+    func toggleMode() {
+        if chat.activeMode == .activeReading {
+            toggleComposer()
+            toggleAF()
+            withAnimation(.linear1) { chatOpacity = 0 }
+            withAnimation(.linear2.delay(0.4)) { modeOpacity = 1 }
+        } else if chat.activeMode == .none {
+            withAnimation(.linear1) { modeOpacity = 0 }
+            withAnimation(.linear2.delay(0.4)) { chatOpacity = 1 }
+            toggleComposer()
+            toggleAF()
+        }
+    }
     
     func setChatBottomPadding(safeAreaHeight: CGFloat) {
         chat.msgsBottomPadding = safeAreaHeight + 48 + 16
@@ -258,23 +237,27 @@ struct ContentView: View, KeyboardReadable {
     
     func toggleComposer() {
         if composerIsPresent {
-            withAnimation(.shortSpringB) { composerOffset = composerHeight / 2 }
+            withAnimation(.medSpring) { composerOffset = composerHeight / 2 }
             withAnimation(.linear1) { composerOpacity = 0 }
+            composerIsPresent = false
         } else {
-            withAnimation(.shortSpringB) { composerOffset = 0 }
+            withAnimation(.medSpring) { composerOffset = 0 }
             withAnimation(.linear2) { composerOpacity = 1 }
+            composerIsPresent = true
         }
     }
     
     func toggleAF() {
         if afIsPresent {
-            withAnimation(.shortSpringB) { afScale = 0 }
+            withAnimation(.medSpring) { afScale = 0 }
             withAnimation(.linear1.delay(0.025)) { afOpacity = 0 }
+            afIsPresent = false
         } else {
             af.setExpression(to: .greeting)
             withAnimation(.shortSpringC) { afScale = 1 }
             withAnimation(.linear1) { afOpacity = 1 }
             withAnimation(.linear5.delay(2)) { af.setExpression(to: .neutral) }
+            afIsPresent = true
         }
     }
 }

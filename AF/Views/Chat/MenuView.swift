@@ -12,15 +12,15 @@ struct MenuView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            MenuItemView(icon: Image("ShuffleIcon"), name: "Active Reader")
+            MenuItemView(icon: Image("ShuffleIcon"), name: "Active Reading", mode: .activeReading)
             
             DividerView(direction: .horizontal)
             
-            MenuItemView(icon: Image("ShuffleIcon"), name: "Planet Study")
+            MenuItemView(icon: Image("ShuffleIcon"), name: "Planet Study", mode: .activeReading)
             
             DividerView(direction: .horizontal)
             
-            MenuItemView(icon: Image("ShuffleIcon"), name: "Story Teller")
+            MenuItemView(icon: Image("ShuffleIcon"), name: "Story Teller", mode: .activeReading)
         }
         .padding(.all, s16)
         .frame(width: 200)

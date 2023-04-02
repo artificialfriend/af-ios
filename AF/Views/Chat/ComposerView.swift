@@ -54,7 +54,8 @@ struct ComposerView: View, KeyboardReadable {
         .cornerRadius(cr24)
         .padding(.horizontal, s12)
         .padding(.bottom, safeAreaHeight == 0 ? s16 : safeAreaHeight)
-        .animation(.shortSpringD, value: chat.composerInput)
+        .animation(.shortSpringD, value: safeAreaHeight)
+        .animation(.shortSpringB, value: chat.composerInput)
     }
 }
 

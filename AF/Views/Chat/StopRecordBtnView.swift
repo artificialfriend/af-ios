@@ -20,7 +20,7 @@ struct StopRecordBtnView: View {
             handleBtnTap()
         }) {
             Image("MicIcon")
-                .foregroundColor(.afUserRed)
+                .foregroundColor(af.af.interface.userColor)
         }
         .opacity(opacity)
         .buttonStyle(Spring())

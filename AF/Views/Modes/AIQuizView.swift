@@ -16,34 +16,34 @@ struct AIQuizView: View {
     @State private var score: Int = 0
     @State private var quizIsComplete: Bool = false
     let questions: [String] = [
-        "What was Leonardo da Vinci's primary area of expertise?",
-        "Who was Leonardo da Vinci apprenticed to when he was around 14 years old? Who was Leonardo da Vinci apprenticed to when he was around 14 years old?",
-        "What is the significance of Leonardo da Vinci's \"Vitruvian Man\" drawing?"
+        "What was the name of the bicycle shop that Orville and Wilbur Wright opened in Dayton, Ohio in 1892?",
+        "What was the duration of the Wright brothers' first successful flight in 1903?",
+        "What was the purpose of the Wright Company, which Orville and Wilbur Wright founded in 1909?"
     ]
     let answers: [Int: [String]] = [
         0: [
-            "A. Engineering",
-            "B. Anatomy",
-            "C. Art",
-            "D. All of the above"
+            "A. The Wright Brothers Bicycle Shop",
+            "B. The Dayton Bicycle Emporium",
+            "C. The Cycle Workshop",
+            "D. The Bike Hub"
         ],
         1: [
-            "A. Andrea del Verrocchio",
-            "B. Ludovico Sforza",
-            "C. Cesare Borgia",
-            "D. Francis I"
+            "A. 6 seconds",
+            "B. 10 seconds",
+            "C. 12 seconds",
+            "D. 15 seconds"
         ],
         2: [
-            "A. It is a study of human emotions",
-            "B. It is a depiction of military equipment",
-            "C. It combines art and science to examine human proportions",
-            "D. It is a representation of flying machines"
+            "A. To design and build aircraft",
+            "B. To sell bicycle parts",
+            "C. To manufacture cars",
+            "D. To manufacture telephones"
         ]
     ]
     let correctAnswers: [Int: String] = [
-        0: "D. All of the above",
-        1: "A. Andrea del Verrocchio",
-        2: "C. It combines art and science to examine human proportions"
+        0: "A. The Wright Brothers Bicycle Shop",
+        1: "C. 12 seconds",
+        2: "A. To design and build aircraft"
     ]
     
     var body: some View {
@@ -52,6 +52,7 @@ struct AIQuizView: View {
                 Text(currentQuestion)
                     .font(.pDemi)
                     .foregroundColor(af.af.interface.darkColor.opacity(0.9))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, s20)
                     .padding(.bottom, s16)
                     .padding(.horizontal, s24)

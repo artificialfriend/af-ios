@@ -91,9 +91,6 @@ struct ChatView: View {
                                             .fixedSize(horizontal: false, vertical: true)
                                         }
                                     }
-                                    
-                                    AIQuizView()
-                                    AIImageView(image: Image("CrystalPrincess"))
                                 }
                             }
                         }

@@ -23,6 +23,7 @@ class ChatOO: ObservableObject {
     @Published var menuIsOpen: Bool = false
     @Published var closeMenu: Bool = false
     @Published var menuOffset: CGFloat = MenuOffset.closed.value
+    @Published var activeMode: ActiveMode = .none
     
     func getAFReply(userID: Int, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
@@ -247,6 +248,18 @@ enum MenuOffset {
         switch self {
         case .open: return 0
         case .closed: return 240
+        }
+    }
+}
+
+enum ActiveMode {
+    case none
+    case activeReading
+    
+    var name: String {
+        switch self {
+        case .none: return "None"
+        case .activeReading: return "Active Reading"
         }
     }
 }
