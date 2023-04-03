@@ -9,7 +9,8 @@ import SwiftUI
 
 struct QuestionView: View {
     @EnvironmentObject var af: AFOO
-    @State private var input: String = ""
+    @Binding var input: String
+    @Binding var topicSubmitted: Bool
     let question: String = "What do you want to read? Be as specific as you'd like!"
     
     var body: some View {
@@ -26,18 +27,12 @@ struct QuestionView: View {
                 .padding(.horizontal, s12)
                 .padding(.bottom, s24)
             
-            QuestionButtonView(input: $input)
+            QuestionBtnView(input: $input, topicSubmitted: $topicSubmitted)
                 .padding(.horizontal, s8)
                 .padding(.bottom, s8)
         }
         .background(af.af.interface.afColor)
         .cornerRadius(32)
         .padding(.horizontal, s12)
-    }
-}
-
-struct QuestionView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuestionView()
     }
 }

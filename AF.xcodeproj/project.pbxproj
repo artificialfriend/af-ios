@@ -21,14 +21,15 @@
 		489B7E1A29D65B0100F90640 /* AIQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E1929D65B0000F90640 /* AIQuizView.swift */; };
 		489B7E1D29D65F1C00F90640 /* AIQuizAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E1C29D65F1C00F90640 /* AIQuizAnswerView.swift */; };
 		489B7E1F29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */; };
-		489B7E2129D6677600F90640 /* AIQuizButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2029D6677600F90640 /* AIQuizButtonView.swift */; };
+		489B7E2129D6677600F90640 /* AIQuizBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2029D6677600F90640 /* AIQuizBtnView.swift */; };
 		489B7E2329D691B600F90640 /* AIQuizScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2229D691B600F90640 /* AIQuizScoreView.swift */; };
 		489B7E2529D7D43C00F90640 /* AIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2429D7D43C00F90640 /* AIImageView.swift */; };
 		489B7E2729D7D95F00F90640 /* AITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2629D7D95F00F90640 /* AITextView.swift */; };
 		489B7E2929D7E68A00F90640 /* ActiveReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2829D7E68A00F90640 /* ActiveReadingView.swift */; };
 		489B7E2B29D8F03800F90640 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2A29D8F03800F90640 /* QuestionView.swift */; };
-		489B7E2D29D8F2F600F90640 /* QuestionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2C29D8F2F600F90640 /* QuestionButtonView.swift */; };
+		489B7E2D29D8F2F600F90640 /* QuestionBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2C29D8F2F600F90640 /* QuestionBtnView.swift */; };
 		489B7E2F29D8FF8000F90640 /* QuestionTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */; };
+		489B7E3129DA73BE00F90640 /* HomeBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3029DA73BE00F90640 /* HomeBtnView.swift */; };
 		489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD519298C444F006D15A7 /* ChatOO.swift */; };
 		489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51B298C456D006D15A7 /* SignupOO.swift */; };
 		489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51D298C45A3006D15A7 /* AFOO.swift */; };
@@ -76,14 +77,15 @@
 		489B7E1929D65B0000F90640 /* AIQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizView.swift; sourceTree = "<group>"; };
 		489B7E1C29D65F1C00F90640 /* AIQuizAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizAnswerView.swift; sourceTree = "<group>"; };
 		489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizQuestionIndicatorView.swift; sourceTree = "<group>"; };
-		489B7E2029D6677600F90640 /* AIQuizButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizButtonView.swift; sourceTree = "<group>"; };
+		489B7E2029D6677600F90640 /* AIQuizBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizBtnView.swift; sourceTree = "<group>"; };
 		489B7E2229D691B600F90640 /* AIQuizScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizScoreView.swift; sourceTree = "<group>"; };
 		489B7E2429D7D43C00F90640 /* AIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIImageView.swift; sourceTree = "<group>"; };
 		489B7E2629D7D95F00F90640 /* AITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITextView.swift; sourceTree = "<group>"; };
 		489B7E2829D7E68A00F90640 /* ActiveReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveReadingView.swift; sourceTree = "<group>"; };
 		489B7E2A29D8F03800F90640 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
-		489B7E2C29D8F2F600F90640 /* QuestionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionButtonView.swift; sourceTree = "<group>"; };
+		489B7E2C29D8F2F600F90640 /* QuestionBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionBtnView.swift; sourceTree = "<group>"; };
 		489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTextFieldView.swift; sourceTree = "<group>"; };
+		489B7E3029DA73BE00F90640 /* HomeBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBtnView.swift; sourceTree = "<group>"; };
 		489DD519298C444F006D15A7 /* ChatOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOO.swift; sourceTree = "<group>"; };
 		489DD51B298C456D006D15A7 /* SignupOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupOO.swift; sourceTree = "<group>"; };
 		489DD51D298C45A3006D15A7 /* AFOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFOO.swift; sourceTree = "<group>"; };
@@ -131,17 +133,18 @@
 		489B7E1B29D65B0800F90640 /* Modes */ = {
 			isa = PBXGroup;
 			children = (
-				489B7E1929D65B0000F90640 /* AIQuizView.swift */,
+				489B7E2829D7E68A00F90640 /* ActiveReadingView.swift */,
 				489B7E2A29D8F03800F90640 /* QuestionView.swift */,
 				489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */,
-				489B7E2C29D8F2F600F90640 /* QuestionButtonView.swift */,
+				489B7E2C29D8F2F600F90640 /* QuestionBtnView.swift */,
+				489B7E2629D7D95F00F90640 /* AITextView.swift */,
+				489B7E1929D65B0000F90640 /* AIQuizView.swift */,
 				489B7E1C29D65F1C00F90640 /* AIQuizAnswerView.swift */,
 				489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */,
-				489B7E2029D6677600F90640 /* AIQuizButtonView.swift */,
+				489B7E2029D6677600F90640 /* AIQuizBtnView.swift */,
 				489B7E2229D691B600F90640 /* AIQuizScoreView.swift */,
 				489B7E2429D7D43C00F90640 /* AIImageView.swift */,
-				489B7E2629D7D95F00F90640 /* AITextView.swift */,
-				489B7E2829D7E68A00F90640 /* ActiveReadingView.swift */,
+				489B7E3029DA73BE00F90640 /* HomeBtnView.swift */,
 			);
 			path = Modes;
 			sourceTree = "<group>";
@@ -372,7 +375,7 @@
 				489B7E2B29D8F03800F90640 /* QuestionView.swift in Sources */,
 				489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */,
 				CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */,
-				489B7E2129D6677600F90640 /* AIQuizButtonView.swift in Sources */,
+				489B7E2129D6677600F90640 /* AIQuizBtnView.swift in Sources */,
 				48AA2633298EA2A80091609C /* MsgToolbarView.swift in Sources */,
 				489B7E1F29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift in Sources */,
 				48047DEE29A6E90500C457FB /* PersistenceController.swift in Sources */,
@@ -387,12 +390,13 @@
 				48D921BA29B017C000C3D0DA /* MsgsDateLabelView.swift in Sources */,
 				48AA263C298EA63D0091609C /* ComposerBtnsView.swift in Sources */,
 				48D921AC29AD1BEC00C3D0DA /* AdjustPanelBtnView.swift in Sources */,
-				489B7E2D29D8F2F600F90640 /* QuestionButtonView.swift in Sources */,
+				489B7E2D29D8F2F600F90640 /* QuestionBtnView.swift in Sources */,
 				48AA2638298EA4D90091609C /* TraitInstanceView.swift in Sources */,
 				483317FE297A1E680008F61E /* Extensions.swift in Sources */,
 				483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */,
 				489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */,
 				488425BB299A8817008FA19E /* UserOO.swift in Sources */,
+				489B7E3129DA73BE00F90640 /* HomeBtnView.swift in Sources */,
 				48AA262F298EA13B0091609C /* TraitCategoryView.swift in Sources */,
 				489B7E1A29D65B0100F90640 /* AIQuizView.swift in Sources */,
 			);

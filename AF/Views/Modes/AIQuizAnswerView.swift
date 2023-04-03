@@ -18,7 +18,8 @@ struct AIQuizAnswerView: View {
     @Binding var questionIsAnswered: Bool
     @Binding var score: Int
     let answer: String
-    let correctAnswer: String
+    let answerIndex: Int
+    let correctAnswerIndex: Int
     
     var body: some View {
         Button(action: { handleBtnTap() }) {
@@ -26,12 +27,14 @@ struct AIQuizAnswerView: View {
                 Text(answer)
                     .font(.sixteen)
                     .opacity(0.9)
+                    .lineLimit(10)
                 
-                Spacer(minLength: 0)
+                Spacer(minLength: 8)
                 
                 ZStack {
                     Circle()
                         .foregroundColor(correctIndicatorBGColor)
+                    
                     correctIndicatorIcon
                         .resizable()
                         .foregroundColor(.white)
@@ -39,12 +42,11 @@ struct AIQuizAnswerView: View {
                 }
                 .frame(width: 24, height: 24)
                 .opacity(correctIndicatorOpacity)
-                
             }
+            .padding(.vertical, s12)
             .padding(.leading, s16)
             .padding(.trailing, s8)
-            .frame(maxWidth: .infinity)
-            .frame(height: 48, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .foregroundColor(textColor)
             .background(bgColor)
             .overlay(RoundedRectangle(cornerRadius: cr8).stroke(lineWidth: 2).foregroundColor(borderColor))
@@ -66,7 +68,7 @@ struct AIQuizAnswerView: View {
                 correctIndicatorOpacity = 0
             } else {
                 withAnimation(.linear2.delay(1)) {
-                    if answer == correctAnswer {
+                    if answerIndex == correctAnswerIndex {
                         bgColor = .afGreen2
                         borderColor = .afUserGreen
                         textColor = .afDarkGreen
@@ -77,7 +79,9 @@ struct AIQuizAnswerView: View {
     }
     
     func handleBtnTap() {
-        if answer == correctAnswer {
+        impactMedium.impactOccurred()
+        
+        if answerIndex == correctAnswerIndex {
             bgColor = .afGreen2
             borderColor = .afUserGreen
             textColor = .afDarkGreen

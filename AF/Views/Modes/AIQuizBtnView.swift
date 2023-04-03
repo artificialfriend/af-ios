@@ -1,5 +1,5 @@
 //
-//  AIQuizButtonView.swift
+//  AIQuizBtnView.swift
 //  AF
 //
 //  Created by Cam Crain on 2023-03-30.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AIQuizButtonView: View {
+struct AIQuizBtnView: View {
     @EnvironmentObject var af: AFOO
     @State private var label: String = "Next"
     @State private var isDisabled: Bool = false

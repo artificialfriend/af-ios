@@ -1,5 +1,5 @@
 //
-//  QuestionButtonView.swift
+//  QuestionBtnView.swift
 //  AF
 //
 //  Created by Cam Crain on 2023-04-01.
@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct QuestionButtonView: View {
+struct QuestionBtnView: View {
     @EnvironmentObject var af: AFOO
     @Binding var input: String
+    @Binding var topicSubmitted: Bool
     
     var body: some View {
         Button(action: { handleBtnTap() }) {
@@ -32,5 +33,7 @@ struct QuestionButtonView: View {
     }
     
     func handleBtnTap() {
+        topicSubmitted = false
+        topicSubmitted = true
     }
 }

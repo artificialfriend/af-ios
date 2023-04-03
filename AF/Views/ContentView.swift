@@ -57,87 +57,92 @@ struct ContentView: View, KeyboardReadable {
             
             if global.activeSection != .signup {
                 GeometryReader { geo in
-                    VStack(spacing: s0) {
-                        TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
-                            .opacity(topNavOpacity)
-                            .offset(y: topNavOffset)
-                            //.animation(.longSpring, value: geo.safeAreaInsets)
-                            .background {
-                                GeometryReader { topNavGeo in
-                                    Color.clear
-                                        .onAppear {
-                                            topNavHeight = topNavGeo.size.height
-                                            
-                                            if !user.user.signupIsComplete {
-                                                topNavOffset = -topNavHeight / 2
-                                                topNavOpacity = 0
+                    ZStack {
+                        VStack {
+                            TopNavView(safeAreaHeight: geo.safeAreaInsets.top)
+                                .opacity(topNavOpacity)
+                                .offset(y: topNavOffset)
+                                .background {
+                                    GeometryReader { topNavGeo in
+                                        Color.clear
+                                            .onAppear {
+                                                topNavHeight = topNavGeo.size.height
+                                                
+                                                if !user.user.signupIsComplete {
+                                                    topNavOffset = -topNavHeight / 2
+                                                    topNavOpacity = 0
+                                                }
                                             }
-                                        }
+                                    }
                                 }
-                            }
-
-                        Spacer()
-                        
-                        HStack {
+                            
                             Spacer()
-
-                            MenuView()
-                                .opacity(chat.menuIsOpen ? 1 : 0)
-                                .animation(.linear1, value: chat.menuIsOpen)
-                                .padding(.trailing, s12)
-                                .padding(.bottom, s8)
-                                .offset(x: chat.menuOffset)
-                                .gesture(
-                                    DragGesture(minimumDistance: 0)
-                                        .onChanged { value in
-                                            if abs(value.translation.width) > abs(value.translation.height) {
-                                                if value.translation.width > 0 {
-                                                    chat.menuOffset = value.translation.width
-                                                } else {
-                                                    chat.menuOffset = value.translation.width / 5
-                                                }
-                                            }
-                                        }
-                                        .onEnded { value in
-                                            if value.translation.width > 64 {
-                                                chat.closeMenu = true
-                                            } else {
-                                                withAnimation(.shortSpringD) {
-                                                    chat.menuOffset = MenuOffset.open.value
-                                                }
-                                            }
-                                        }
-                                )
                         }
+                        
+                        VStack(spacing: s0) {
+                            Spacer()
+                            
+                            HStack {
+                                Spacer()
 
-                        ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                            .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
-                            .animation(.linear1, value: chat.composerIsDisabled)
-                            .offset(y: composerOffset)
-                            .padding(.bottom, global.keyboardIsPresent ? -s24 : s0)
-                            .disabled(chat.composerIsDisabled)
-                            .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                global.keyboardIsPresent = newIsKeyboardVisible
+                                MenuView()
+                                    .opacity(chat.menuIsOpen ? 1 : 0)
+                                    .animation(.linear1, value: chat.menuIsOpen)
+                                    .padding(.trailing, s12)
+                                    .padding(.bottom, s8)
+                                    .offset(x: chat.menuOffset)
+                                    .gesture(
+                                        DragGesture(minimumDistance: 0)
+                                            .onChanged { value in
+                                                if abs(value.translation.width) > abs(value.translation.height) {
+                                                    if value.translation.width > 0 {
+                                                        chat.menuOffset = value.translation.width
+                                                    } else {
+                                                        chat.menuOffset = value.translation.width / 5
+                                                    }
+                                                }
+                                            }
+                                            .onEnded { value in
+                                                if value.translation.width > 64 {
+                                                    chat.closeMenu = true
+                                                } else {
+                                                    withAnimation(.shortSpringD) {
+                                                        chat.menuOffset = MenuOffset.open.value
+                                                    }
+                                                }
+                                            }
+                                    )
                             }
-                            .background {
-                                GeometryReader { composerGeo in
-                                    Color.clear
-                                        .onAppear { composerHeight = composerGeo.size.height }
+
+                            ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
+                                .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
+                                .animation(.linear1, value: chat.composerIsDisabled)
+                                .offset(y: composerOffset)
+                                .padding(.bottom, global.keyboardIsPresent ? -s24 : s0)
+                                .disabled(chat.composerIsDisabled)
+                                .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                    global.keyboardIsPresent = newIsKeyboardVisible
                                 }
-                            }
-                            .onAppear {
-                                setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
-                                
-                                if !user.user.signupIsComplete {
-                                    composerOffset = composerHeight / 2
-                                    composerOpacity = 0
-                                } else {
-                                    composerIsPresent = true
+                                .background {
+                                    GeometryReader { composerGeo in
+                                        Color.clear
+                                            .onAppear { composerHeight = composerGeo.size.height }
+                                    }
                                 }
-                            }
-                            .onChange(of: global.keyboardIsPresent) { _ in
-                                setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
-                            }
+                                .onAppear {
+                                    setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
+                                    
+                                    if !user.user.signupIsComplete {
+                                        composerOffset = composerHeight / 2
+                                        composerOpacity = 0
+                                    } else {
+                                        composerIsPresent = true
+                                    }
+                                }
+                                .onChange(of: global.keyboardIsPresent) { _ in
+                                    setChatBottomPadding(safeAreaHeight: geo.safeAreaInsets.bottom)
+                                }
+                        }
                     }
                     .ignoresSafeArea(.keyboard)
                     .ignoresSafeArea(edges: .vertical)
