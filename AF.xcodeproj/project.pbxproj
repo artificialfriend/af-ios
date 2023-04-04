@@ -30,6 +30,7 @@
 		489B7E2D29D8F2F600F90640 /* QuestionBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2C29D8F2F600F90640 /* QuestionBtnView.swift */; };
 		489B7E2F29D8FF8000F90640 /* QuestionTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */; };
 		489B7E3129DA73BE00F90640 /* HomeBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3029DA73BE00F90640 /* HomeBtnView.swift */; };
+		489B7E3329DB5AD500F90640 /* AIQuizQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3229DB5AD500F90640 /* AIQuizQuestionView.swift */; };
 		489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD519298C444F006D15A7 /* ChatOO.swift */; };
 		489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51B298C456D006D15A7 /* SignupOO.swift */; };
 		489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51D298C45A3006D15A7 /* AFOO.swift */; };
@@ -86,6 +87,7 @@
 		489B7E2C29D8F2F600F90640 /* QuestionBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionBtnView.swift; sourceTree = "<group>"; };
 		489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTextFieldView.swift; sourceTree = "<group>"; };
 		489B7E3029DA73BE00F90640 /* HomeBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBtnView.swift; sourceTree = "<group>"; };
+		489B7E3229DB5AD500F90640 /* AIQuizQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizQuestionView.swift; sourceTree = "<group>"; };
 		489DD519298C444F006D15A7 /* ChatOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOO.swift; sourceTree = "<group>"; };
 		489DD51B298C456D006D15A7 /* SignupOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupOO.swift; sourceTree = "<group>"; };
 		489DD51D298C45A3006D15A7 /* AFOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFOO.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				489B7E2C29D8F2F600F90640 /* QuestionBtnView.swift */,
 				489B7E2629D7D95F00F90640 /* AITextView.swift */,
 				489B7E1929D65B0000F90640 /* AIQuizView.swift */,
+				489B7E3229DB5AD500F90640 /* AIQuizQuestionView.swift */,
 				489B7E1C29D65F1C00F90640 /* AIQuizAnswerView.swift */,
 				489B7E1E29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift */,
 				489B7E2029D6677600F90640 /* AIQuizBtnView.swift */,
@@ -367,6 +370,7 @@
 				48047DAD29A6E04600C457FB /* MessagesModel.xcdatamodeld in Sources */,
 				481598172981A14200201B32 /* GlobalOO.swift in Sources */,
 				4864640A29D289E20085B73E /* MenuView.swift in Sources */,
+				489B7E3329DB5AD500F90640 /* AIQuizQuestionView.swift in Sources */,
 				4864640C29D2971E0085B73E /* MenuItemView.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,
 				CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */,

@@ -20,7 +20,7 @@ struct TopNavView: View {
         VStack(spacing: s0) {
             VStack {
                 HStack(spacing: s0) {
-                    Button(action: { handleBtnTap() }) {
+                    Button(action: { handleCloseBtnTap() }) {
                         Image("CloseIcon")
                             .opacity(closeBtnOpacity)
                             .foregroundColor(af.af.interface.medColor)
@@ -36,9 +36,12 @@ struct TopNavView: View {
                     
                     Spacer()
                     
-                    Image("DocsIcon")
-                        .opacity(0)
-                        .foregroundColor(af.af.interface.medColor)
+                    Button(action: { handleResetBtnTap() }) {
+                        Image("ResetIcon")
+                            .opacity(closeBtnOpacity)
+                            .foregroundColor(af.af.interface.medColor)
+                    }
+                    .buttonStyle(Spring())
                 }
                 .padding(.top, safeAreaHeight + s12)
                 .padding(.horizontal, s16)
@@ -61,9 +64,14 @@ struct TopNavView: View {
         }
     }
     
-    func handleBtnTap() {
+    func handleCloseBtnTap() {
         impactMedium.impactOccurred()
         chat.activeMode = .none
+    }
+    
+    func handleResetBtnTap() {
+        impactMedium.impactOccurred()
+        chat.resetActiveReadingMode = true
     }
     
     func toggleMode() {

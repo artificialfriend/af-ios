@@ -118,7 +118,7 @@ struct ContentView: View, KeyboardReadable {
                                 .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
                                 .animation(.linear1, value: chat.composerIsDisabled)
                                 .offset(y: composerOffset)
-                                .padding(.bottom, global.keyboardIsPresent ? -s24 : s0)
+                                .padding(.bottom, global.keyboardIsPresent ? -20 : s0)
                                 .disabled(chat.composerIsDisabled)
                                 .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                                     global.keyboardIsPresent = newIsKeyboardVisible

@@ -24,6 +24,7 @@ class ChatOO: ObservableObject {
     @Published var closeMenu: Bool = false
     @Published var menuOffset: CGFloat = MenuOffset.closed.value
     @Published var activeMode: ActiveMode = .none
+    @Published var resetActiveReadingMode: Bool = false
     
     func getAFReply(userID: Int, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID

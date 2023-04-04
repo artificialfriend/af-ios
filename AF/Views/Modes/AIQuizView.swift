@@ -9,11 +9,11 @@ import SwiftUI
 
 struct AIQuizView: View {
     @EnvironmentObject var af: AFOO
-    @State private var currentQuestion: String = ""
+    @EnvironmentObject var chat: ChatOO
+    //@State private var currentQuestion: String = ""
     @State private var questionOpacity: Double = 1
     @State private var questionIsAnswered: Bool = false
     @State private var score: Int = 0
-    @State private var quizIsComplete: Bool = false
     @State private var spinnerOpacity: Double = 1
     @State private var spinnerRotation: Angle = Angle(degrees: 0)
     @State private var mainOpacity: Double = 0
@@ -21,7 +21,8 @@ struct AIQuizView: View {
     @State private var answers: [[String]] = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
     @State private var correctAnswers: [Int] = [0, 0, 0]
     @State private var mainIsPresent: Bool = false
-    @Binding var isLoading: Bool
+    @State private var questionsOffset: CGFloat = 0
+    @State private var isLoading: Bool = false
     @Binding var response: String
     @Binding var currentQIndex: Int
     
@@ -31,73 +32,72 @@ struct AIQuizView: View {
                 .opacity(spinnerOpacity)
                 .foregroundColor(af.af.interface.softColor)
                 .rotationEffect(spinnerRotation)
-                .animation(.loadingSpin, value: isLoading)
             
             if mainIsPresent {
                 VStack(spacing: 0) {
-                    if !quizIsComplete {
-                        Text(currentQuestion)
-                            .font(.pDemi)
-                            .foregroundColor(af.af.interface.darkColor.opacity(0.9))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, s20)
-                            .padding(.bottom, s16)
-                            .padding(.horizontal, s24)
-                            .opacity(questionOpacity)
+                    HStack(alignment: .top, spacing: 24) {
+                        AIQuizQuestionView(
+                            question: $questions[0],
+                            answers: $answers[0],
+                            correctAnswer: $correctAnswers[0],
+                            questionIsAnswered: $questionIsAnswered,
+                            score: $score
+                        )
+                        .opacity(currentQIndex == 0 ? 1 : 0)
+                        .animation(.linear2, value: currentQIndex)
+                        .frame(width: UIScreen.main.bounds.width - 48)
                         
-                        VStack(spacing: 4) {
-                            AIQuizAnswerView(
-                                questionIsAnswered: $questionIsAnswered,
-                                score: $score,
-                                answer: answers[currentQIndex][0],
-                                answerIndex: 0,
-                                correctAnswerIndex: correctAnswers[currentQIndex]
-                            )
-                            
-                            AIQuizAnswerView(
-                                questionIsAnswered: $questionIsAnswered,
-                                score: $score,
-                                answer: answers[currentQIndex][1],
-                                answerIndex: 1,
-                                correctAnswerIndex: correctAnswers[currentQIndex]
-                            )
-                            
-                            AIQuizAnswerView(
-                                questionIsAnswered: $questionIsAnswered,
-                                score: $score,
-                                answer: answers[currentQIndex][2],
-                                answerIndex: 2,
-                                correctAnswerIndex: correctAnswers[currentQIndex]
-                            )
-                            
-                            AIQuizAnswerView(
-                                questionIsAnswered: $questionIsAnswered,
-                                score: $score,
-                                answer: answers[currentQIndex][3],
-                                answerIndex: 3,
-                                correctAnswerIndex: correctAnswers[currentQIndex]
-                            )
-                        }
-                        .padding(.horizontal, s12)
-                        .padding(.bottom, s12)
+                        AIQuizQuestionView(
+                            question: $questions[1],
+                            answers: $answers[1],
+                            correctAnswer: $correctAnswers[1],
+                            questionIsAnswered: $questionIsAnswered,
+                            score: $score
+                        )
+                        .opacity(currentQIndex == 1 ? 1 : 0)
+                        .animation(.linear2, value: currentQIndex)
+                        .frame(width: UIScreen.main.bounds.width - 48)
                         
-                        HStack(spacing: 12) {
-                            AIQuizQuestionIndicatorView(currentQIndex: $currentQIndex, qIndex: 0)
-                            AIQuizQuestionIndicatorView(currentQIndex: $currentQIndex, qIndex: 1)
-                            AIQuizQuestionIndicatorView(currentQIndex: $currentQIndex, qIndex: 2)
+                        AIQuizQuestionView(
+                            question: $questions[2],
+                            answers: $answers[2],
+                            correctAnswer: $correctAnswers[2],
+                            questionIsAnswered: $questionIsAnswered,
+                            score: $score
+                        )
+                        .opacity(currentQIndex == 2 ? 1 : 0)
+                        .animation(.linear2, value: currentQIndex)
+                        .frame(width: UIScreen.main.bounds.width - 48)
+                        
+                        VStack {
+                            Spacer()
+                            AIQuizScoreView(score: $score, numberOfQuestions: questions.count)
+                                .padding(.top, s32)
+                            Spacer()
                         }
-                        .padding(.bottom, s16)
-                    } else {
-                        AIQuizScoreView(score: $score, numberOfQuestions: questions.count)
-                            .padding(.top, 32)
-                            .padding(.bottom, 16)
+                        .opacity(currentQIndex == questions.count ? 1 : 0)
+                        .animation(.linear2, value: currentQIndex)
+                        .frame(width: UIScreen.main.bounds.width - 48)
+                        
                     }
+                    .frame(width: UIScreen.main.bounds.width - 48, alignment: .leading)
+                    .offset(x: questionsOffset)
+                    .padding(.bottom, s16)
+                    
+                    HStack(spacing: 12) {
+                        AIQuizQuestionIndicatorView(currentQIndex: $currentQIndex, qIndex: 0)
+                        AIQuizQuestionIndicatorView(currentQIndex: $currentQIndex, qIndex: 1)
+                        AIQuizQuestionIndicatorView(currentQIndex: $currentQIndex, qIndex: 2)
+                    }
+                    .opacity(currentQIndex == questions.count ? 0 : 1)
+                    .animation(.linear2, value: currentQIndex)
+                    .padding(.bottom, s12)
                     
                     AIQuizBtnView(
                         questionIsAnswered: $questionIsAnswered,
-                        quizIsComplete: $quizIsComplete,
                         score: $score,
                         currentQIndex: $currentQIndex,
+                        questionsOffset: $questionsOffset,
                         questionCount: questions.count
                     )
                     .padding(.horizontal, s8)
@@ -109,18 +109,47 @@ struct AIQuizView: View {
             }
         }
         .padding(.horizontal, s12)
+        .frame(width: UIScreen.main.bounds.width)
         .onAppear { toggleLoading() }
         .onChange(of: currentQIndex) { _ in
-            withAnimation(.shortSpringD) { currentQuestion = questions[currentQIndex] }
+            //withAnimation(.shortSpringD) { currentQuestion = questions[currentQIndex] }
+            changeQuestion()
         }
         .onChange(of: response) { _ in
-            loadIn()
+            if response != "" { loadIn() }
+        }
+        .onChange(of: chat.resetActiveReadingMode) { _ in
+            if chat.resetActiveReadingMode == true { reset() }
+        }
+    }
+    
+    func reset() {
+        response = ""
+        currentQIndex = 0
+        questionOpacity = 1
+        questionIsAnswered = false
+        score = 0
+        spinnerOpacity = 1
+        isLoading = false
+        spinnerRotation = Angle(degrees: 0)
+        mainOpacity = 0
+        questions = ["", "", ""]
+        answers = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
+        correctAnswers = [0, 0, 0]
+        mainIsPresent = false
+        questionsOffset = 0
+    }
+    
+    func changeQuestion() {
+        if currentQIndex != 0 {
+            withAnimation(.medSpring) { questionsOffset += -UIScreen.main.bounds.width + 24 }
+        } else {
+            withAnimation(.medSpring) { questionsOffset = 0 }
         }
     }
     
     func loadIn() {
         parseResponse()
-        currentQuestion = questions[currentQIndex]
         withAnimation(.linear1) { spinnerOpacity = 0 }
         
         Task { try await Task.sleep(nanoseconds: 300_000_000)
@@ -133,32 +162,29 @@ struct AIQuizView: View {
     func parseResponse() {
         let lines = response.split(separator: "\n")
         var currentAnswers: [String] = []
-        questions = []
-        answers = []
-        correctAnswers = []
         
         for line in lines {
             if line.hasPrefix("Answer:") {
-                let correctAnswer = String(line.dropFirst(8))
-                switch correctAnswer.first {
-                    case "A":
-                    correctAnswers.append(0)
-                    case "B":
-                    correctAnswers.append(1)
-                    case "C":
-                    correctAnswers.append(2)
-                    case "D":
-                    correctAnswers.append(3)
-                    default:
-                    break
-                }
-                
+                let correctAnswer = String(line.dropFirst(7))
+                if correctAnswer.contains("A") { correctAnswers.append(0) }
+                else if correctAnswer.contains("B") { correctAnswers.append(1) }
+                else if correctAnswer.contains("C") { correctAnswers.append(2) }
+                else { correctAnswers.append(3) }
+                correctAnswers.removeFirst()
                 answers.append(currentAnswers)
+                answers.removeFirst()
                 currentAnswers = []
             } else if line.hasPrefix("A.") || line.hasPrefix("B.") || line.hasPrefix("C.") || line.hasPrefix("D.") {
-                currentAnswers.append(String(line.dropFirst(3)))
+                var charsToDrop: Int = 3
+                let index = line.index(line.startIndex, offsetBy: 2)
+                if line[index] != " " { charsToDrop = 2 }
+                currentAnswers.append(String(line.dropFirst(charsToDrop)))
             } else {
-                questions.append(String(line.dropFirst(3)))
+                var charsToDrop: Int = 3
+                let index = line.index(line.startIndex, offsetBy: 2)
+                if line[index] != " " { charsToDrop = 2 }
+                questions.append(String(line.dropFirst(charsToDrop)))
+                questions.removeFirst()
             }
         }
         
@@ -170,7 +196,7 @@ struct AIQuizView: View {
     func toggleLoading() {
         if !isLoading {
             isLoading = true
-            spinnerRotation = Angle(degrees: 360)
+            withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
         } else {
             isLoading = false
             spinnerRotation = Angle(degrees: 0)

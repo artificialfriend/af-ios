@@ -10,6 +10,7 @@ import SwiftUI
 struct QuestionTextFieldView: View {
     @EnvironmentObject var af: AFOO
     @Binding var input: String
+    @Binding var isDisabled: Bool
     
     var body: some View {
         TextField("", text: $input, onCommit: {
@@ -19,6 +20,7 @@ struct QuestionTextFieldView: View {
                 Text("Ex. How did WW2 start?")
                     .foregroundColor(af.af.interface.softColor)
             }
+            .disabled(isDisabled)
             .font(.p)
             .foregroundColor(.afBlack)
             .multilineTextAlignment(.leading)

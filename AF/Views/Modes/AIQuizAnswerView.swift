@@ -11,6 +11,7 @@ struct AIQuizAnswerView: View {
     @EnvironmentObject var af: AFOO
     @State private var bgColor: Color = .black
     @State private var borderColor: Color = .black
+    @State private var borderOpacity: Double = 0
     @State private var textColor: Color = .black
     @State private var correctIndicatorIcon: Image = Image("SmallCheckIcon")
     @State private var correctIndicatorBGColor: Color = .afUserGreen
@@ -49,8 +50,9 @@ struct AIQuizAnswerView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .foregroundColor(textColor)
             .background(bgColor)
-            .overlay(RoundedRectangle(cornerRadius: cr8).stroke(lineWidth: 2).foregroundColor(borderColor))
+            .overlay(RoundedRectangle(cornerRadius: cr8).stroke(lineWidth: 4).foregroundColor(borderColor).opacity(borderOpacity))
             .cornerRadius(cr8)
+            .animation(.linear1, value: questionIsAnswered)
         }
         .buttonStyle(Spring())
         .onAppear {
@@ -62,6 +64,7 @@ struct AIQuizAnswerView: View {
             if !questionIsAnswered {
                 bgColor = af.af.interface.afColor2
                 borderColor = af.af.interface.afColor2
+                borderOpacity = 0
                 textColor = af.af.interface.darkColor
                 correctIndicatorBGColor = .afUserGreen
                 correctIndicatorIcon = Image("SmallCheckIcon")
@@ -71,6 +74,7 @@ struct AIQuizAnswerView: View {
                     if answerIndex == correctAnswerIndex {
                         bgColor = .afGreen2
                         borderColor = .afUserGreen
+                        borderOpacity = 1
                         textColor = .afDarkGreen
                     }
                 }
@@ -81,20 +85,24 @@ struct AIQuizAnswerView: View {
     func handleBtnTap() {
         impactMedium.impactOccurred()
         
-        if answerIndex == correctAnswerIndex {
-            bgColor = .afGreen2
-            borderColor = .afUserGreen
-            textColor = .afDarkGreen
-            score += 1
-        } else {
-            bgColor = .afRed2
-            borderColor = .afUserRed
-            textColor = .afDarkRed
-            correctIndicatorBGColor = .afUserRed
-            correctIndicatorIcon = Image("SmallXIcon")
+        if !questionIsAnswered {
+            if answerIndex == correctAnswerIndex {
+                bgColor = .afGreen2
+                borderColor = .afUserGreen
+                borderOpacity = 1
+                textColor = .afDarkGreen
+                score += 1
+            } else {
+                bgColor = .afRed2
+                borderColor = .afUserRed
+                borderOpacity = 1
+                textColor = .afDarkRed
+                correctIndicatorBGColor = .afUserRed
+                correctIndicatorIcon = Image("SmallXIcon")
+            }
+            
+            correctIndicatorOpacity = 1
+            questionIsAnswered = true
         }
-        
-        correctIndicatorOpacity = 1
-        questionIsAnswered = true
     }
 }
