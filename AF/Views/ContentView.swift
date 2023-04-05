@@ -42,7 +42,7 @@ struct ContentView: View, KeyboardReadable {
                 SignupView()
             }
 
-            if global.activeSection == .chat {
+            if global.activeSection != .signup {
                 ZStack {
                     ChatView()
                         .opacity(chatOpacity)
@@ -52,6 +52,10 @@ struct ContentView: View, KeyboardReadable {
                     
                     ActiveReadingView()
                         .opacity(modeOpacity)
+                    
+                    if global.activeSection == .modeBuilder {
+                        ModeBuilderView()
+                    }
                 }
             }
             
@@ -115,7 +119,7 @@ struct ContentView: View, KeyboardReadable {
                             }
 
                             ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
-                                .opacity(chat.composerIsDisabled ? 0.5 : composerOpacity)
+                                .opacity(chat.composerIsDisabled ? 0.5 : global.activeSection == .modeBuilder ? 0 : composerOpacity)
                                 .animation(.linear1, value: chat.composerIsDisabled)
                                 .offset(y: composerOffset)
                                 .padding(.bottom, global.keyboardIsPresent ? -20 : s0)
@@ -152,7 +156,7 @@ struct ContentView: View, KeyboardReadable {
                 }
             }
 
-            if global.activeSection != .signup {
+            if global.activeSection != .signup && global.activeSection != .modeBuilder {
                 AFView()
                     .opacity(afOpacity)
                     .offset(y: afOffset)
@@ -190,9 +194,6 @@ struct ContentView: View, KeyboardReadable {
             }
         }
         .background(Color.white)
-        .onAppear {
-            
-        }
         .onChange(of: chat.activeMode) { _ in
            toggleMode()
         }

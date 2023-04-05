@@ -31,6 +31,19 @@
 		489B7E2F29D8FF8000F90640 /* QuestionTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */; };
 		489B7E3129DA73BE00F90640 /* HomeBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3029DA73BE00F90640 /* HomeBtnView.swift */; };
 		489B7E3329DB5AD500F90640 /* AIQuizQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3229DB5AD500F90640 /* AIQuizQuestionView.swift */; };
+		489B7E3529DBD42900F90640 /* TopNavAddModeBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3429DBD42900F90640 /* TopNavAddModeBtnView.swift */; };
+		489B7E3729DCA6F400F90640 /* ModeBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3629DCA6F400F90640 /* ModeBuilderView.swift */; };
+		489B7E3A29DCA72500F90640 /* AddBlockBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3929DCA72500F90640 /* AddBlockBtnView.swift */; };
+		489B7E3C29DCA8FD00F90640 /* AddBlockInnerBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3B29DCA8FD00F90640 /* AddBlockInnerBtnView.swift */; };
+		489B7E3E29DCD52200F90640 /* QuestionBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3D29DCD52200F90640 /* QuestionBuilderView.swift */; };
+		489B7E4029DCD7F700F90640 /* BuilderTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E3F29DCD7F700F90640 /* BuilderTextFieldView.swift */; };
+		489B7E4229DCDA4A00F90640 /* BuilderLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4129DCDA4A00F90640 /* BuilderLabelView.swift */; };
+		489B7E4429DCDD5300F90640 /* BuilderHeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4329DCDD5300F90640 /* BuilderHeadingView.swift */; };
+		489B7E4629DCF05700F90640 /* BuilderConnectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4529DCF05700F90640 /* BuilderConnectorView.swift */; };
+		489B7E4829DCF19600F90640 /* AITextBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4729DCF19600F90640 /* AITextBuilderView.swift */; };
+		489B7E4A29DD1CC500F90640 /* AITextToneBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4929DD1CC500F90640 /* AITextToneBtnView.swift */; };
+		489B7E4C29DE12DD00F90640 /* AIQuizBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4B29DE12DD00F90640 /* AIQuizBuilderView.swift */; };
+		489B7E4E29DE13DD00F90640 /* AIQuizLengthBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4D29DE13DD00F90640 /* AIQuizLengthBtnView.swift */; };
 		489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD519298C444F006D15A7 /* ChatOO.swift */; };
 		489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51B298C456D006D15A7 /* SignupOO.swift */; };
 		489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51D298C45A3006D15A7 /* AFOO.swift */; };
@@ -88,6 +101,19 @@
 		489B7E2E29D8FF8000F90640 /* QuestionTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTextFieldView.swift; sourceTree = "<group>"; };
 		489B7E3029DA73BE00F90640 /* HomeBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBtnView.swift; sourceTree = "<group>"; };
 		489B7E3229DB5AD500F90640 /* AIQuizQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizQuestionView.swift; sourceTree = "<group>"; };
+		489B7E3429DBD42900F90640 /* TopNavAddModeBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavAddModeBtnView.swift; sourceTree = "<group>"; };
+		489B7E3629DCA6F400F90640 /* ModeBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeBuilderView.swift; sourceTree = "<group>"; };
+		489B7E3929DCA72500F90640 /* AddBlockBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBlockBtnView.swift; sourceTree = "<group>"; };
+		489B7E3B29DCA8FD00F90640 /* AddBlockInnerBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBlockInnerBtnView.swift; sourceTree = "<group>"; };
+		489B7E3D29DCD52200F90640 /* QuestionBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionBuilderView.swift; sourceTree = "<group>"; };
+		489B7E3F29DCD7F700F90640 /* BuilderTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderTextFieldView.swift; sourceTree = "<group>"; };
+		489B7E4129DCDA4A00F90640 /* BuilderLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderLabelView.swift; sourceTree = "<group>"; };
+		489B7E4329DCDD5300F90640 /* BuilderHeadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderHeadingView.swift; sourceTree = "<group>"; };
+		489B7E4529DCF05700F90640 /* BuilderConnectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderConnectorView.swift; sourceTree = "<group>"; };
+		489B7E4729DCF19600F90640 /* AITextBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITextBuilderView.swift; sourceTree = "<group>"; };
+		489B7E4929DD1CC500F90640 /* AITextToneBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITextToneBtnView.swift; sourceTree = "<group>"; };
+		489B7E4B29DE12DD00F90640 /* AIQuizBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizBuilderView.swift; sourceTree = "<group>"; };
+		489B7E4D29DE13DD00F90640 /* AIQuizLengthBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizLengthBtnView.swift; sourceTree = "<group>"; };
 		489DD519298C444F006D15A7 /* ChatOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOO.swift; sourceTree = "<group>"; };
 		489DD51B298C456D006D15A7 /* SignupOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupOO.swift; sourceTree = "<group>"; };
 		489DD51D298C45A3006D15A7 /* AFOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFOO.swift; sourceTree = "<group>"; };
@@ -152,11 +178,31 @@
 			path = Modes;
 			sourceTree = "<group>";
 		};
+		489B7E3829DCA6FC00F90640 /* Mode Builder */ = {
+			isa = PBXGroup;
+			children = (
+				489B7E3629DCA6F400F90640 /* ModeBuilderView.swift */,
+				489B7E3929DCA72500F90640 /* AddBlockBtnView.swift */,
+				489B7E3B29DCA8FD00F90640 /* AddBlockInnerBtnView.swift */,
+				489B7E3D29DCD52200F90640 /* QuestionBuilderView.swift */,
+				489B7E4729DCF19600F90640 /* AITextBuilderView.swift */,
+				489B7E4929DD1CC500F90640 /* AITextToneBtnView.swift */,
+				489B7E4B29DE12DD00F90640 /* AIQuizBuilderView.swift */,
+				489B7E4D29DE13DD00F90640 /* AIQuizLengthBtnView.swift */,
+				489B7E3F29DCD7F700F90640 /* BuilderTextFieldView.swift */,
+				489B7E4129DCDA4A00F90640 /* BuilderLabelView.swift */,
+				489B7E4329DCDD5300F90640 /* BuilderHeadingView.swift */,
+				489B7E4529DCF05700F90640 /* BuilderConnectorView.swift */,
+			);
+			path = "Mode Builder";
+			sourceTree = "<group>";
+		};
 		489DA246297624CA00A37ED4 /* Global */ = {
 			isa = PBXGroup;
 			children = (
 				CE1A30EF296B1AA5003D1476 /* AFView.swift */,
 				48A3E382298040E10093BDA0 /* TopNavView.swift */,
+				489B7E3429DBD42900F90640 /* TopNavAddModeBtnView.swift */,
 				CE1A30F2296B1B48003D1476 /* DividerView.swift */,
 			);
 			path = Global;
@@ -245,6 +291,7 @@
 				489DA246297624CA00A37ED4 /* Global */,
 				CE1A30F8296B1C15003D1476 /* Chat */,
 				CE1A3101296B1DBC003D1476 /* Signup */,
+				489B7E3829DCA6FC00F90640 /* Mode Builder */,
 				489B7E1B29D65B0800F90640 /* Modes */,
 			);
 			path = Views;
@@ -354,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48047DF229A997B200C457FB /* SignupBackBtnView.swift in Sources */,
+				489B7E4A29DD1CC500F90640 /* AITextToneBtnView.swift in Sources */,
 				48331800297B48830008F61E /* SignupNextBtnView.swift in Sources */,
 				48E2BE6629C7EAE300952CEA /* SpeechRecognizer.swift in Sources */,
 				48E2BE6C29C94AED00952CEA /* StopRecordBtnView.swift in Sources */,
@@ -368,30 +416,39 @@
 				48159819298328AF00201B32 /* UserMsgView.swift in Sources */,
 				489B7E2729D7D95F00F90640 /* AITextView.swift in Sources */,
 				48047DAD29A6E04600C457FB /* MessagesModel.xcdatamodeld in Sources */,
+				489B7E4429DCDD5300F90640 /* BuilderHeadingView.swift in Sources */,
 				481598172981A14200201B32 /* GlobalOO.swift in Sources */,
 				4864640A29D289E20085B73E /* MenuView.swift in Sources */,
+				489B7E4629DCF05700F90640 /* BuilderConnectorView.swift in Sources */,
 				489B7E3329DB5AD500F90640 /* AIQuizQuestionView.swift in Sources */,
 				4864640C29D2971E0085B73E /* MenuItemView.swift in Sources */,
 				48A3E383298040E10093BDA0 /* TopNavView.swift in Sources */,
 				CE1A30F3296B1B48003D1476 /* DividerView.swift in Sources */,
 				48E2BE6E29CBE93400952CEA /* PermissionsManager.swift in Sources */,
+				489B7E3529DBD42900F90640 /* TopNavAddModeBtnView.swift in Sources */,
 				CE1A3105296B1E07003D1476 /* EditorView.swift in Sources */,
 				489B7E2B29D8F03800F90640 /* QuestionView.swift in Sources */,
+				489B7E4829DCF19600F90640 /* AITextBuilderView.swift in Sources */,
+				489B7E4C29DE12DD00F90640 /* AIQuizBuilderView.swift in Sources */,
 				489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */,
 				CE1A30D3296B0AD4003D1476 /* AFApp.swift in Sources */,
 				489B7E2129D6677600F90640 /* AIQuizBtnView.swift in Sources */,
 				48AA2633298EA2A80091609C /* MsgToolbarView.swift in Sources */,
 				489B7E1F29D661BE00F90640 /* AIQuizQuestionIndicatorView.swift in Sources */,
+				489B7E3C29DCA8FD00F90640 /* AddBlockInnerBtnView.swift in Sources */,
 				48047DEE29A6E90500C457FB /* PersistenceController.swift in Sources */,
 				489B7E2329D691B600F90640 /* AIQuizScoreView.swift in Sources */,
 				489B7E2929D7E68A00F90640 /* ActiveReadingView.swift in Sources */,
 				CE1A3103296B1DDA003D1476 /* SignupView.swift in Sources */,
 				48A3E387298095AC0093BDA0 /* ComposerView.swift in Sources */,
+				489B7E4229DCDA4A00F90640 /* BuilderLabelView.swift in Sources */,
 				CE1A30F0296B1AA5003D1476 /* AFView.swift in Sources */,
 				489B7E2F29D8FF8000F90640 /* QuestionTextFieldView.swift in Sources */,
 				489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */,
 				48AA2636298EA4050091609C /* TraitInstanceRowView.swift in Sources */,
+				489B7E4029DCD7F700F90640 /* BuilderTextFieldView.swift in Sources */,
 				48D921BA29B017C000C3D0DA /* MsgsDateLabelView.swift in Sources */,
+				489B7E3A29DCA72500F90640 /* AddBlockBtnView.swift in Sources */,
 				48AA263C298EA63D0091609C /* ComposerBtnsView.swift in Sources */,
 				48D921AC29AD1BEC00C3D0DA /* AdjustPanelBtnView.swift in Sources */,
 				489B7E2D29D8F2F600F90640 /* QuestionBtnView.swift in Sources */,
@@ -399,8 +456,11 @@
 				483317FE297A1E680008F61E /* Extensions.swift in Sources */,
 				483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */,
 				489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */,
+				489B7E3729DCA6F400F90640 /* ModeBuilderView.swift in Sources */,
 				488425BB299A8817008FA19E /* UserOO.swift in Sources */,
+				489B7E3E29DCD52200F90640 /* QuestionBuilderView.swift in Sources */,
 				489B7E3129DA73BE00F90640 /* HomeBtnView.swift in Sources */,
+				489B7E4E29DE13DD00F90640 /* AIQuizLengthBtnView.swift in Sources */,
 				48AA262F298EA13B0091609C /* TraitCategoryView.swift in Sources */,
 				489B7E1A29D65B0100F90640 /* AIQuizView.swift in Sources */,
 			);

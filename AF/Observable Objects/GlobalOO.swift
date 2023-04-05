@@ -16,5 +16,6 @@ class GlobalOO: ObservableObject {
 enum Section {
     case signup
     case chat
+    case modeBuilder
     case menu
 }
