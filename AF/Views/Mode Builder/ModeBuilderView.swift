@@ -21,63 +21,70 @@ struct ModeBuilderView: View {
     @State private var aiQuizScale: CGFloat = 0
     
     var body: some View {
-        ScrollViewReader { scrollView in
-            ScrollView {
-                VStack {
-                    if questionIsPresent {
-                        QuestionBuilderView()
-                            .opacity(questionOpacity)
-                            .scaleEffect(questionScale)
-                        
-                        BuilderConnectorView()
-                            .opacity(questionIsPresent ? 1 : 0)
-                            .animation(.linear2.delay(0.05), value: questionIsPresent)
+        GeometryReader { geo in
+            ZStack(alignment: .bottom) {
+                ScrollViewReader { scrollView in
+                    ScrollView {
+                        VStack {
+                            if questionIsPresent {
+                                QuestionBuilderView()
+                                    .opacity(questionOpacity)
+                                    .scaleEffect(questionScale)
+                                
+                                BuilderConnectorView()
+                                    .opacity(questionIsPresent ? 1 : 0)
+                                    .animation(.linear2.delay(0.05), value: questionIsPresent)
+                            }
+                            
+                            if aiTextIsPresent {
+                                AITextBuilderView()
+                                    .opacity(aiTextOpacity)
+                                    .scaleEffect(aiTextScale)
+                                
+                                BuilderConnectorView()
+                                    .opacity(aiTextIsPresent ? 1 : 0)
+                                    .animation(.linear2.delay(0.05), value: aiTextIsPresent)
+                            }
+                            
+                            if aiQuizIsPresent {
+                                AIQuizBuilderView()
+                                    .opacity(aiQuizOpacity)
+                                    .scaleEffect(aiQuizScale)
+                                
+                                BuilderConnectorView()
+                                    .opacity(aiQuizIsPresent ? 1 : 0)
+                                    .animation(.linear2.delay(0.05), value: aiQuizIsPresent)
+                            }
+                            
+                            AddBlockBtnView(
+                                state: $addBlockBtnState,
+                                questionIsPresent: $questionIsPresent,
+                                questionOpacity: $questionOpacity,
+                                questionScale: $questionScale,
+                                aiTextIsPresent: $aiTextIsPresent,
+                                aiTextOpacity: $aiTextOpacity,
+                                aiTextScale: $aiTextScale,
+                                aiQuizIsPresent: $aiQuizIsPresent,
+                                aiQuizOpacity: $aiQuizOpacity,
+                                aiQuizScale: $aiQuizScale
+                            )
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal, s12)
+                        .padding(.top, global.topNavHeight + s16)
+                        .padding(.bottom, 320)
                     }
-                    
-                    if aiTextIsPresent {
-                        AITextBuilderView()
-                            .opacity(aiTextOpacity)
-                            .scaleEffect(aiTextScale)
-                        
-                        BuilderConnectorView()
-                            .opacity(aiTextIsPresent ? 1 : 0)
-                            .animation(.linear2.delay(0.05), value: aiTextIsPresent)
+                    .ignoresSafeArea(.all)
+                    .background(Color.white)
+                    .onTapGesture {
+                        dismissKeyboard()
                     }
-                    
-                    if aiQuizIsPresent {
-                        AIQuizBuilderView()
-                            .opacity(aiQuizOpacity)
-                            .scaleEffect(aiQuizScale)
-                        
-                        BuilderConnectorView()
-                            .opacity(aiQuizIsPresent ? 1 : 0)
-                            .animation(.linear2.delay(0.05), value: aiQuizIsPresent)
-                    }
-                    
-                    AddBlockBtnView(
-                        state: $addBlockBtnState,
-                        questionIsPresent: $questionIsPresent,
-                        questionOpacity: $questionOpacity,
-                        questionScale: $questionScale,
-                        aiTextIsPresent: $aiTextIsPresent,
-                        aiTextOpacity: $aiTextOpacity,
-                        aiTextScale: $aiTextScale,
-                        aiQuizIsPresent: $aiQuizIsPresent,
-                        aiQuizOpacity: $aiQuizOpacity,
-                        aiQuizScale: $aiQuizScale
-                    )
-                    
-                    Spacer()
                 }
-                .padding(.horizontal, s12)
-                .padding(.top, global.topNavHeight + s16)
-                .padding(.bottom, 280)
+                
+                ModeBuilderSaveBtnView(safeAreaHeight: geo.safeAreaInsets.bottom)
             }
-            .ignoresSafeArea(.all)
-            .background(Color.white)
-            .onTapGesture {
-                dismissKeyboard()
-            }
+            .ignoresSafeArea(edges: .vertical)
         }
     }
 }

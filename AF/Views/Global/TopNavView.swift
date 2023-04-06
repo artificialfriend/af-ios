@@ -81,6 +81,9 @@ struct TopNavView: View {
         .onChange(of: chat.activeMode) { _ in
             toggleMode()
         }
+        .onChange(of: global.activeSection) { _ in
+            if global.activeSection == .chat { switchToChat() }
+        }
     }
     
     func handleRightBtnTap() {
@@ -114,18 +117,26 @@ struct TopNavView: View {
     
     func toggleModeBuilder() {
         if global.activeSection == .chat {
-            global.activeSection = .modeBuilder
-            label = "New Mode"
-            rightBtnOpacity = 1
-            rightBtnState = .modeBuilder
-            newModeBtnOpacity = 0
+            switchToModeBuilder()
         } else if global.activeSection == .modeBuilder {
-            global.activeSection = .chat
-            label = af.af.name
-            rightBtnOpacity = 0
-            rightBtnState = .mode
-            newModeBtnOpacity = 1
+            switchToChat()
         }
+    }
+    
+    func switchToChat() {
+        global.activeSection = .chat
+        label = af.af.name
+        rightBtnOpacity = 0
+        rightBtnState = .mode
+        newModeBtnOpacity = 1
+    }
+    
+    func switchToModeBuilder() {
+        global.activeSection = .modeBuilder
+        label = "New Mode"
+        rightBtnOpacity = 1
+        rightBtnState = .modeBuilder
+        newModeBtnOpacity = 0
     }
 }
 

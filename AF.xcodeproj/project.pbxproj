@@ -44,6 +44,7 @@
 		489B7E4A29DD1CC500F90640 /* AITextToneBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4929DD1CC500F90640 /* AITextToneBtnView.swift */; };
 		489B7E4C29DE12DD00F90640 /* AIQuizBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4B29DE12DD00F90640 /* AIQuizBuilderView.swift */; };
 		489B7E4E29DE13DD00F90640 /* AIQuizLengthBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4D29DE13DD00F90640 /* AIQuizLengthBtnView.swift */; };
+		489B7E5029DE27CF00F90640 /* ModeBuilderSaveBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B7E4F29DE27CF00F90640 /* ModeBuilderSaveBtnView.swift */; };
 		489DD51A298C444F006D15A7 /* ChatOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD519298C444F006D15A7 /* ChatOO.swift */; };
 		489DD51C298C456D006D15A7 /* SignupOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51B298C456D006D15A7 /* SignupOO.swift */; };
 		489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DD51D298C45A3006D15A7 /* AFOO.swift */; };
@@ -114,6 +115,7 @@
 		489B7E4929DD1CC500F90640 /* AITextToneBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITextToneBtnView.swift; sourceTree = "<group>"; };
 		489B7E4B29DE12DD00F90640 /* AIQuizBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizBuilderView.swift; sourceTree = "<group>"; };
 		489B7E4D29DE13DD00F90640 /* AIQuizLengthBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIQuizLengthBtnView.swift; sourceTree = "<group>"; };
+		489B7E4F29DE27CF00F90640 /* ModeBuilderSaveBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeBuilderSaveBtnView.swift; sourceTree = "<group>"; };
 		489DD519298C444F006D15A7 /* ChatOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOO.swift; sourceTree = "<group>"; };
 		489DD51B298C456D006D15A7 /* SignupOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupOO.swift; sourceTree = "<group>"; };
 		489DD51D298C45A3006D15A7 /* AFOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFOO.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				489B7E3629DCA6F400F90640 /* ModeBuilderView.swift */,
+				489B7E4F29DE27CF00F90640 /* ModeBuilderSaveBtnView.swift */,
 				489B7E3929DCA72500F90640 /* AddBlockBtnView.swift */,
 				489B7E3B29DCA8FD00F90640 /* AddBlockInnerBtnView.swift */,
 				489B7E3D29DCD52200F90640 /* QuestionBuilderView.swift */,
@@ -417,6 +420,7 @@
 				489B7E2729D7D95F00F90640 /* AITextView.swift in Sources */,
 				48047DAD29A6E04600C457FB /* MessagesModel.xcdatamodeld in Sources */,
 				489B7E4429DCDD5300F90640 /* BuilderHeadingView.swift in Sources */,
+				489B7E5029DE27CF00F90640 /* ModeBuilderSaveBtnView.swift in Sources */,
 				481598172981A14200201B32 /* GlobalOO.swift in Sources */,
 				4864640A29D289E20085B73E /* MenuView.swift in Sources */,
 				489B7E4629DCF05700F90640 /* BuilderConnectorView.swift in Sources */,
