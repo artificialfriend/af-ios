@@ -18,14 +18,17 @@ struct AddBlockInnerBtnView: View {
     
     var body: some View {
         Button(action: { handleBtnTap() }) {
-            HStack {
+            HStack(spacing: s8) {
+                blockType.icon
+                    .foregroundColor(af.af.interface.medColor)
+                
                 Text(blockType.label)
                     .font(.sixteenBold)
                     .foregroundColor(af.af.interface.darkColor.opacity(0.9))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .frame(height: s40)
-            .padding(.horizontal, s16)
+            .padding(.horizontal, s12)
             .background(af.af.interface.afColor2)
             .cornerRadius(blockType.topCornerRadii, corners: [.topLeft, .topRight])
             .cornerRadius(blockType.bottomCornerRadii, corners: [.bottomLeft, .bottomRight])
@@ -53,6 +56,14 @@ enum AddBlockType {
         case .aiText: return "AI Text"
         case .aiQuiz: return "AI Quiz"
         case .question: return "Question"
+        }
+    }
+    
+    var icon: Image {
+        switch self {
+        case .aiText: return Image("AITextIcon")
+        case .aiQuiz: return Image("AIQuizIcon")
+        case .question: return Image("QuestionIcon")
         }
     }
     

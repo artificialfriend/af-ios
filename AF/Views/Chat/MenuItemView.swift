@@ -17,10 +17,10 @@ struct MenuItemView: View {
     var body: some View {
         Button(action: { handleBtnTap() }) {
             HStack {
-                icon
-                    .resizable()
-                    .foregroundColor(af.af.interface.medColor)
-                    .frame(width: s20, height: s20)
+//                icon
+//                    .resizable()
+//                    .foregroundColor(af.af.interface.medColor)
+//                    .frame(width: s20, height: s20)
                 
                 Text(name)
                     .font(.s)

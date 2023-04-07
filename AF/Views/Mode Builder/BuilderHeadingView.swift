@@ -26,13 +26,20 @@ struct BuilderHeadingView: View {
             }
             .foregroundColor(af.af.interface.medColor)
             
-            HStack {
+            HStack(spacing: s6) {
+                blockType.icon
+                    .foregroundColor(af.af.interface.darkColor.opacity(0.9))
+                
                 Text(blockType.name)
                     .font(.sixteenBold)
                     .foregroundColor(af.af.interface.darkColor.opacity(0.9))
+                    .padding(.bottom, -2)
+                
+                Spacer()
             }
         }
-        .padding(.horizontal, s16)
+        .padding(.leading, s20)
+        .padding(.trailing, s16)
         .frame(height: s40)
         .background(af.af.interface.afColor2)
     }
@@ -40,16 +47,22 @@ struct BuilderHeadingView: View {
 
 enum BlockType {
     case aiText
-    case aiImage
     case aiQuiz
     case question
     
     var name: String {
         switch self {
         case .aiText: return "AI Text"
-        case .aiImage: return "AI Image"
         case .aiQuiz: return "AI Quiz"
         case .question: return "Question"
+        }
+    }
+    
+    var icon: Image {
+        switch self {
+        case .aiText: return Image("AITextIcon")
+        case .aiQuiz: return Image("AIQuizIcon")
+        case .question: return Image("QuestionIcon")
         }
     }
 }
