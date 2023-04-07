@@ -17,6 +17,9 @@ struct ContentView: View, KeyboardReadable {
     @State private var isKeyboardVisible = false
     @State private var chatIsPresent: Bool = false
     @State private var chatOpacity: Double = 0
+    @State private var chatOffset: CGFloat = 0
+    @State private var modeBuilderOpacity: Double = 0
+    @State private var modeBuilderOffset: ModeBuilderOffset = .closed
     @State private var modeOpacity: Double = 0
     @State private var topNavIsPresent: Bool = false
     @State private var topNavHeight: CGFloat = 0
@@ -46,6 +49,7 @@ struct ContentView: View, KeyboardReadable {
                 ZStack {
                     ChatView()
                         .opacity(chatOpacity)
+                        .offset(x: chatOffset)
                         .onAppear {
                             withAnimation(.linear2) { chatOpacity = 1 }
                         }
@@ -53,9 +57,13 @@ struct ContentView: View, KeyboardReadable {
                     ActiveReadingView()
                         .opacity(modeOpacity)
                     
-                    if global.activeSection == .modeBuilder {
-                        ModeBuilderView()
-                    }
+                    
+                    ModeBuilderView()
+                        .opacity(modeBuilderOpacity)
+                        .offset(x: modeBuilderOffset.value)
+                }
+                .onChange(of: global.activeSection) { _ in
+                    toggleModeBuilder()
                 }
             }
             
@@ -121,7 +129,9 @@ struct ContentView: View, KeyboardReadable {
                             ComposerView(safeAreaHeight: geo.safeAreaInsets.bottom)
                                 .opacity(chat.composerIsDisabled ? 0.5 : global.activeSection == .modeBuilder ? 0 : composerOpacity)
                                 .animation(.linear1, value: chat.composerIsDisabled)
+                                .animation(.linear2, value: global.activeSection)
                                 .offset(y: composerOffset)
+                                .offset(x: chatOffset)
                                 .padding(.bottom, global.keyboardIsPresent ? -20 : s0)
                                 .disabled(chat.composerIsDisabled)
                                 .onReceive(keyboardPublisher) { newIsKeyboardVisible in
@@ -156,7 +166,7 @@ struct ContentView: View, KeyboardReadable {
                 }
             }
 
-            if global.activeSection != .signup && global.activeSection != .modeBuilder {
+            if global.activeSection != .signup {
                 AFView()
                     .opacity(afOpacity)
                     .offset(y: afOffset)
@@ -177,20 +187,6 @@ struct ContentView: View, KeyboardReadable {
                             }
                         }
                     }
-                    .onLongPressGesture(perform: {
-                        afScale = 0
-                        afOpacity = 0
-                        UserDefaults.standard.removeObject(forKey: "af")
-                        UserDefaults.standard.removeObject(forKey: "user")
-                        global.activeSection = .signup
-                            
-                        Task { try await Task.sleep(nanoseconds: 500_000_000)
-                            clearMessages()
-                            chat.dateMsgGroups = [:]
-                            chat.uniqueMsgDates = []
-                            PersistenceController.shared.save()
-                        }
-                    })
             }
         }
         .background(Color.white)
@@ -213,6 +209,42 @@ struct ContentView: View, KeyboardReadable {
             withAnimation(.linear2.delay(0.4)) { chatOpacity = 1 }
             toggleComposer()
             toggleAF()
+        }
+    }
+    
+    func toggleModeBuilder() {
+        if global.activeSection == .chat {
+            dismissModeBuilder()
+        } else if global.activeSection == .modeBuilder {
+            presentModeBuilder()
+        }
+    }
+    
+    func presentModeBuilder() {
+        toggleAF(doesGreeting: false)
+        
+        withAnimation(.linear1) {
+            chatOpacity = 0
+            modeBuilderOpacity = 1
+        }
+        
+        withAnimation(.medSpring) {
+            chatOffset = -ModeBuilderOffset.closed.value
+            modeBuilderOffset = .open
+        }
+    }
+    
+    func dismissModeBuilder() {
+        toggleAF(doesGreeting: false)
+        
+        withAnimation(.linear1) {
+            chatOpacity = 1
+            modeBuilderOpacity = 0
+        }
+        
+        withAnimation(.medSpring) {
+            chatOffset = 0
+            modeBuilderOffset = .closed
         }
     }
     
@@ -253,17 +285,29 @@ struct ContentView: View, KeyboardReadable {
         }
     }
     
-    func toggleAF() {
+    func toggleAF(doesGreeting: Bool = true) {
         if afIsPresent {
             withAnimation(.medSpring) { afScale = 0 }
             withAnimation(.linear1.delay(0.025)) { afOpacity = 0 }
             afIsPresent = false
         } else {
-            af.setExpression(to: .greeting)
+            if doesGreeting { af.setExpression(to: .greeting) }
             withAnimation(.shortSpringC) { afScale = 1 }
             withAnimation(.linear1) { afOpacity = 1 }
-            withAnimation(.linear5.delay(2)) { af.setExpression(to: .neutral) }
+            if doesGreeting { withAnimation(.linear5.delay(2)) { af.setExpression(to: .neutral) } }
             afIsPresent = true
+        }
+    }
+}
+
+enum ModeBuilderOffset {
+    case open
+    case closed
+    
+    var value: CGFloat {
+        switch self {
+        case .open: return 0
+        case .closed: return UIScreen.main.bounds.width - 48
         }
     }
 }

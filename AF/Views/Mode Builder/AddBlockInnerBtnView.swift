@@ -13,6 +13,7 @@ struct AddBlockInnerBtnView: View {
     @Binding var presenceToControl: Bool
     @Binding var opacityToControl: Double
     @Binding var scaleToControl: CGFloat
+    @Binding var saveBtnIsPresent: Bool
     let blockType: AddBlockType
     
     var body: some View {
@@ -33,23 +34,23 @@ struct AddBlockInnerBtnView: View {
     }
     
     func handleBtnTap() {
-        withAnimation(.medSpring) { addBlockBtnState = .closed }
-        withAnimation(.medSpring) { presenceToControl = true }
-        withAnimation(.medSpring.delay(0.05)) { scaleToControl = 1 }
-        withAnimation(.linear2.delay(0.05)) { opacityToControl = 1 }
+        impactMedium.impactOccurred()
+        withAnimation(.shortSpringB) { addBlockBtnState = .closed }
+        withAnimation(.shortSpringB) { presenceToControl = true }
+        withAnimation(.shortSpringB.delay(0.1)) { scaleToControl = 1 }
+        withAnimation(.linear2.delay(0.1)) { opacityToControl = 1 }
+        saveBtnIsPresent = true
     }
 }
 
 enum AddBlockType {
     case aiText
-    case aiImage
     case aiQuiz
     case question
     
     var label: String {
         switch self {
         case .aiText: return "AI Text"
-        case .aiImage: return "AI Image"
         case .aiQuiz: return "AI Quiz"
         case .question: return "Question"
         }

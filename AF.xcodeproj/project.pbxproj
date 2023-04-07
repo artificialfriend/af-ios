@@ -15,6 +15,9 @@
 		483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FB297A09DA0008F61E /* NameFieldView.swift */; };
 		483317FE297A1E680008F61E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FD297A1E680008F61E /* Extensions.swift */; };
 		48331800297B48830008F61E /* SignupNextBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483317FF297B48830008F61E /* SignupNextBtnView.swift */; };
+		483BDAFD29E097CE0036BD57 /* TopNavChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483BDAFC29E097CE0036BD57 /* TopNavChatView.swift */; };
+		483BDAFF29E09BF80036BD57 /* TopNavModeBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483BDAFE29E09BF80036BD57 /* TopNavModeBuilderView.swift */; };
+		483BDB0129E09C620036BD57 /* TopNavModeBuilderNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483BDB0029E09C620036BD57 /* TopNavModeBuilderNameView.swift */; };
 		4864640A29D289E20085B73E /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4864640929D289E20085B73E /* MenuView.swift */; };
 		4864640C29D2971E0085B73E /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4864640B29D2971E0085B73E /* MenuItemView.swift */; };
 		488425BB299A8817008FA19E /* UserOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488425BA299A8817008FA19E /* UserOO.swift */; };
@@ -86,6 +89,9 @@
 		483317FB297A09DA0008F61E /* NameFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFieldView.swift; sourceTree = "<group>"; };
 		483317FD297A1E680008F61E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		483317FF297B48830008F61E /* SignupNextBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupNextBtnView.swift; sourceTree = "<group>"; };
+		483BDAFC29E097CE0036BD57 /* TopNavChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavChatView.swift; sourceTree = "<group>"; };
+		483BDAFE29E09BF80036BD57 /* TopNavModeBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavModeBuilderView.swift; sourceTree = "<group>"; };
+		483BDB0029E09C620036BD57 /* TopNavModeBuilderNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavModeBuilderNameView.swift; sourceTree = "<group>"; };
 		4864640929D289E20085B73E /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		4864640B29D2971E0085B73E /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		488425BA299A8817008FA19E /* UserOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOO.swift; sourceTree = "<group>"; };
@@ -205,6 +211,9 @@
 			children = (
 				CE1A30EF296B1AA5003D1476 /* AFView.swift */,
 				48A3E382298040E10093BDA0 /* TopNavView.swift */,
+				483BDAFC29E097CE0036BD57 /* TopNavChatView.swift */,
+				483BDAFE29E09BF80036BD57 /* TopNavModeBuilderView.swift */,
+				483BDB0029E09C620036BD57 /* TopNavModeBuilderNameView.swift */,
 				489B7E3429DBD42900F90640 /* TopNavAddModeBtnView.swift */,
 				CE1A30F2296B1B48003D1476 /* DividerView.swift */,
 			);
@@ -407,6 +416,7 @@
 				489B7E4A29DD1CC500F90640 /* AITextToneBtnView.swift in Sources */,
 				48331800297B48830008F61E /* SignupNextBtnView.swift in Sources */,
 				48E2BE6629C7EAE300952CEA /* SpeechRecognizer.swift in Sources */,
+				483BDB0129E09C620036BD57 /* TopNavModeBuilderNameView.swift in Sources */,
 				48E2BE6C29C94AED00952CEA /* StopRecordBtnView.swift in Sources */,
 				489B7E1D29D65F1C00F90640 /* AIQuizAnswerView.swift in Sources */,
 				CE1A30F7296B1BF8003D1476 /* Styles.swift in Sources */,
@@ -456,8 +466,10 @@
 				48AA263C298EA63D0091609C /* ComposerBtnsView.swift in Sources */,
 				48D921AC29AD1BEC00C3D0DA /* AdjustPanelBtnView.swift in Sources */,
 				489B7E2D29D8F2F600F90640 /* QuestionBtnView.swift in Sources */,
+				483BDAFF29E09BF80036BD57 /* TopNavModeBuilderView.swift in Sources */,
 				48AA2638298EA4D90091609C /* TraitInstanceView.swift in Sources */,
 				483317FE297A1E680008F61E /* Extensions.swift in Sources */,
+				483BDAFD29E097CE0036BD57 /* TopNavChatView.swift in Sources */,
 				483317FC297A09DA0008F61E /* NameFieldView.swift in Sources */,
 				489DD51E298C45A3006D15A7 /* AFOO.swift in Sources */,
 				489B7E3729DCA6F400F90640 /* ModeBuilderView.swift in Sources */,

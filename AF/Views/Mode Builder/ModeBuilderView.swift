@@ -12,13 +12,17 @@ struct ModeBuilderView: View {
     @State private var addBlockBtnState: AddBlockBtnState = .closed
     @State private var questionIsPresent: Bool = false
     @State private var questionOpacity: Double = 0
-    @State private var questionScale: CGFloat = 0
+    @State private var questionScale: CGFloat = 0.9
     @State private var aiTextIsPresent: Bool = false
     @State private var aiTextOpacity: Double = 0
-    @State private var aiTextScale: CGFloat = 0
+    @State private var aiTextScale: CGFloat = 0.9
     @State private var aiQuizIsPresent: Bool = false
     @State private var aiQuizOpacity: Double = 0
-    @State private var aiQuizScale: CGFloat = 0
+    @State private var aiQuizScale: CGFloat = 0.9
+    @State private var saveBtnIsPresent: Bool = false
+    @State private var saveBtnOpacity: Double = 0
+    @State private var saveBtnHeight: CGFloat = 0
+    @State private var saveBtnBottomPadding: CGFloat = 0
     
     var body: some View {
         GeometryReader { geo in
@@ -66,7 +70,8 @@ struct ModeBuilderView: View {
                                 aiTextScale: $aiTextScale,
                                 aiQuizIsPresent: $aiQuizIsPresent,
                                 aiQuizOpacity: $aiQuizOpacity,
-                                aiQuizScale: $aiQuizScale
+                                aiQuizScale: $aiQuizScale,
+                                saveBtnIsPresent: $saveBtnIsPresent
                             )
                             
                             Spacer()
@@ -82,9 +87,45 @@ struct ModeBuilderView: View {
                     }
                 }
                 
-                ModeBuilderSaveBtnView(safeAreaHeight: geo.safeAreaInsets.bottom)
+                ModeBuilderSaveBtnView(
+                    isPresent: $saveBtnIsPresent,
+                    safeAreaHeight: geo.safeAreaInsets.bottom
+                )
+                .opacity(saveBtnOpacity)
+                .background {
+                    GeometryReader { geo in
+                        Color.clear
+                            .onAppear {
+                                saveBtnHeight = geo.size.height
+                                saveBtnBottomPadding = -saveBtnHeight
+                            }
+                    }
+                }
+                .padding(.bottom, saveBtnBottomPadding)
+                
             }
             .ignoresSafeArea(edges: .vertical)
+            .onChange(of: saveBtnIsPresent) { _ in
+                if !saveBtnIsPresent { dismissSaveBtn() }
+                else { presentSaveBtn() }
+            }
+        }
+        .ignoresSafeArea(.keyboard)
+    }
+    
+    func presentSaveBtn() {
+        withAnimation(.shortSpringB) { saveBtnBottomPadding = 0 }
+        withAnimation(.linear2) { saveBtnOpacity = 1 }
+        saveBtnIsPresent = true
+    }
+    
+    func dismissSaveBtn() {
+        withAnimation(.medSpring) { saveBtnBottomPadding = -saveBtnHeight }
+        withAnimation(.linear2) { saveBtnOpacity = 0 }
+        saveBtnIsPresent = false
+        
+        Task { try await Task.sleep(nanoseconds: 300_000_000)
+            global.activeSection = .chat
         }
     }
 }

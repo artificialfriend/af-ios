@@ -9,9 +9,7 @@ import SwiftUI
 
 struct ModeBuilderSaveBtnView: View {
     @EnvironmentObject var global: GlobalOO
-    @State private var labelOpacity: Double = 1
-    @State private var spinnerOpacity: Double = 0
-    @State private var spinnerRotation: Angle = Angle(degrees: 0)
+    @Binding var isPresent: Bool
     let safeAreaHeight: CGFloat
     
     var body: some View {
@@ -20,16 +18,9 @@ struct ModeBuilderSaveBtnView: View {
                 
             VStack {
                 Button(action: { handleBtnTap() }) {
-                    ZStack {
+                    HStack {
                         Text("Save")
                             .font(.m)
-                            .opacity(labelOpacity)
-                        
-                        Image("SpinnerIcon")
-                            .resizable()
-                            .frame(width: 22, height: 22)
-                            .opacity(spinnerOpacity)
-                            .rotationEffect(spinnerRotation)
                     }
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -45,15 +36,11 @@ struct ModeBuilderSaveBtnView: View {
             .background(Color.afBlurryWhite)
         }
         .background(Blur())
+        .ignoresSafeArea(.keyboard)
     }
     
     func handleBtnTap() {
-        withAnimation(.linear1) { labelOpacity = 0 }
-        withAnimation(.linear2.delay(0.2)) { spinnerOpacity = 1 }
-        withAnimation(.loadingSpin.delay(0.2)) { spinnerRotation = Angle(degrees: 360) }
-        
-        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
-            global.activeSection = .chat
-        }
+        impactMedium.impactOccurred()
+        isPresent = false
     }
 }

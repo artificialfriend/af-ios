@@ -19,6 +19,7 @@ struct AddBlockBtnView: View {
     @Binding var aiQuizIsPresent: Bool
     @Binding var aiQuizOpacity: Double
     @Binding var aiQuizScale: CGFloat
+    @Binding var saveBtnIsPresent: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -45,15 +46,8 @@ struct AddBlockBtnView: View {
                     presenceToControl: $aiTextIsPresent,
                     opacityToControl: $aiTextOpacity,
                     scaleToControl: $aiTextScale,
+                    saveBtnIsPresent: $saveBtnIsPresent,
                     blockType: .aiText
-                )
-                
-                AddBlockInnerBtnView(
-                    addBlockBtnState: $state,
-                    presenceToControl: $aiTextIsPresent,
-                    opacityToControl: $aiTextOpacity,
-                    scaleToControl: $aiTextScale,
-                    blockType: .aiImage
                 )
                 
                 AddBlockInnerBtnView(
@@ -61,6 +55,7 @@ struct AddBlockBtnView: View {
                     presenceToControl: $aiQuizIsPresent,
                     opacityToControl: $aiQuizOpacity,
                     scaleToControl: $aiQuizScale,
+                    saveBtnIsPresent: $saveBtnIsPresent,
                     blockType: .aiQuiz
                 )
                 
@@ -69,6 +64,7 @@ struct AddBlockBtnView: View {
                     presenceToControl: $questionIsPresent,
                     opacityToControl: $questionOpacity,
                     scaleToControl: $questionScale,
+                    saveBtnIsPresent: $saveBtnIsPresent,
                     blockType: .question
                 )
             }
@@ -104,7 +100,7 @@ enum AddBlockBtnState {
     var height: CGFloat {
         switch self {
         case .closed: return 48
-        case .open: return 228
+        case .open: return 184
         }
     }
     

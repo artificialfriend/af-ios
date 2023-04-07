@@ -152,7 +152,7 @@ struct ComposerBtnsView: View, KeyboardReadable {
     func toggleMenuPresence() {
         if !chat.menuIsOpen {
             withAnimation(.linear1) { menuBtnColor = af.af.interface.userColor }
-            withAnimation(.shortSpringD) { chat.menuOffset = MenuOffset.open.value }
+            withAnimation(.shortSpringB) { chat.menuOffset = MenuOffset.open.value }
             chat.menuIsOpen = true
         } else {
             withAnimation(.linear1) { menuBtnColor = af.af.interface.medColor }
