@@ -66,6 +66,7 @@ struct TopNavChatView: View {
     }
     
     func handleNewModeBtnTap() {
+        impactMedium.impactOccurred()
         global.activeSection = .modeBuilder
     }
 }

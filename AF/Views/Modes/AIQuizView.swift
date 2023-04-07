@@ -98,7 +98,7 @@ struct AIQuizView: View {
                         score: $score,
                         currentQIndex: $currentQIndex,
                         questionsOffset: $questionsOffset,
-                        questionCount: questions.count
+                        questions: $questions
                     )
                     .padding(.horizontal, s8)
                     .padding(.bottom, s8)
@@ -112,7 +112,6 @@ struct AIQuizView: View {
         .frame(width: UIScreen.main.bounds.width)
         .onAppear { toggleLoading() }
         .onChange(of: currentQIndex) { _ in
-            //withAnimation(.shortSpringD) { currentQuestion = questions[currentQIndex] }
             changeQuestion()
         }
         .onChange(of: response) { _ in

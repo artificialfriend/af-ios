@@ -92,11 +92,11 @@ struct SignupView: View {
                     .keyboardType(.alphabet)
                     .disableAutocorrection(true)
                     .focused($keyboardFocused)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                keyboardFocused = true
-                            }
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            keyboardFocused = true
                         }
+                    }
             }
             
             if currentStep != .create {
