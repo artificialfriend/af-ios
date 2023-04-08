@@ -31,7 +31,7 @@ struct TopNavChatView: View {
             Text(label)
                 .foregroundColor(.afBlack)
                 .font(.l)
-                .offset(x: 22)
+                //.offset(x: 22)
             
             Spacer()
             
@@ -45,12 +45,12 @@ struct TopNavChatView: View {
                 .buttonStyle(Spring())
                 
                 //ADD MODE BUTTON
-                Button(action: { handleNewModeBtnTap() } ) {
-                    TopNavAddModeBtnView()
-                        .opacity(newModeBtnOpacity)
-                }
-                .buttonStyle(Spring())
-                .padding(.trailing, -s4)
+//                Button(action: { handleNewModeBtnTap() } ) {
+//                    TopNavAddModeBtnView()
+//                        .opacity(newModeBtnOpacity)
+//                }
+//                .buttonStyle(Spring())
+//                .padding(.trailing, -s4)
             }
         }
     }

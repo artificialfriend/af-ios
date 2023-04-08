@@ -54,6 +54,9 @@ struct TopNavModeBuilderNameView: View {
         impactMedium.impactOccurred()
         
         if nameFieldIsFocused { nameFieldIsFocused = false }
-        else { nameFieldIsFocused = true }
+        else {
+            nameFieldIsFocused = true
+            if name == "New Mode" { name = "" }
+        }
     }
 }

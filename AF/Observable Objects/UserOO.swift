@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Foundation
 
 class UserOO: ObservableObject {
     @Published var user: User = User(
-        id: 1,
+        id: UIDevice.current.identifierForVendor!.uuidString,
         signupIsComplete: false,
         permissionsRequested: false
     )
@@ -34,7 +35,7 @@ class UserOO: ObservableObject {
 }
 
 struct User: Codable {
-    var id: Int
+    var id: String
     var signupIsComplete: Bool
     var permissionsRequested: Bool
 }
