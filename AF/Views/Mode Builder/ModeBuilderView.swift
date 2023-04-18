@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ModeBuilderView: View {
     @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var af: AFOO
     @State private var addBlockBtnState: AddBlockBtnState = .closed
     @State private var questionIsPresent: Bool = false
     @State private var questionOpacity: Double = 0
@@ -73,6 +74,13 @@ struct ModeBuilderView: View {
                                 aiQuizScale: $aiQuizScale,
                                 saveBtnIsPresent: $saveBtnIsPresent
                             )
+                            
+                            Text("This is a dummy view - you can interact with it but can't actually create a mode.")
+                                .font(.s)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(af.af.interface.medColor)
+                                .padding(.top, s8)
+                                .padding(.horizontal, s24)
                             
                             Spacer()
                         }

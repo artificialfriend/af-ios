@@ -16,13 +16,13 @@ struct BuilderHeadingView: View {
             HStack(spacing: s12) {
                 Spacer()
                 
-                Image("SettingsIcon")
-                    .resizable()
-                    .frame(width: 22, height: 22)
+//                Image("SettingsIcon")
+//                    .resizable()
+//                    .frame(width: 22, height: 22)
                 
-                Image("DeleteIcon")
-                    .resizable()
-                    .frame(width: 22, height: 22)
+//                Image("DeleteIcon")
+//                    .resizable()
+//                    .frame(width: 22, height: 22)
             }
             .foregroundColor(af.af.interface.medColor)
             
