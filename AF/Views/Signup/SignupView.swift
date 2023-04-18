@@ -10,6 +10,7 @@ import AuthenticationServices
 
 struct SignupView: View {
     @EnvironmentObject var global: GlobalOO
+    @EnvironmentObject var signup: SignupOO
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @FocusState private var keyboardFocused: Bool
@@ -155,7 +156,11 @@ struct SignupView: View {
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .background(Color.white)
         .onAppear { loadIn() }
+        .onTapGesture {
+            keyboardFocused = false
+        }
     }
     
     
@@ -169,6 +174,20 @@ struct SignupView: View {
         if currentStep == .name {
             if !nameFieldInput.isEmpty { af.af.name = nameFieldInput }
             af.storeAF()
+            
+            if user.user.id == 1 {
+                signup.createAccount() { result in
+                    switch result {
+                    case .success(let response):
+                        user.user.id = response.response.user_id
+                        print("hit success")
+                    case .failure:
+                        print("hit failure")
+                    }
+                }
+                
+                user.storeUser()
+            }
         }
     }
 

@@ -26,7 +26,7 @@ class ChatOO: ObservableObject {
     @Published var activeMode: ActiveMode = .none
     @Published var resetActiveReadingMode: Bool = false
     
-    func getAFReply(userID: String, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
+    func getAFReply(userID: Int, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
         //TODO: Change userID to actual userID
         let requestBody = GetAFReplyRequestBody(userID: userID, text: prompt, behavior: "")
         let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/turbo")!
@@ -119,7 +119,7 @@ class ChatOO: ObservableObject {
 }
 
 struct GetAFReplyRequestBody: Codable {
-    let userID: String
+    let userID: Int//String
     let text: String
     let behavior: String
     
@@ -135,7 +135,7 @@ struct GetAFReplyResponseBody: Codable {
 }
 
 struct GetAFReplyMsg: Codable {
-    let userID: String
+    let userID: Int//String
     let text: String
     let isUserMsg: Bool
     

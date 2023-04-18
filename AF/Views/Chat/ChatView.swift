@@ -125,7 +125,7 @@ struct ChatView: View {
                         .rotationEffect(Angle(degrees: 180))
                     }
                     .rotationEffect(Angle(degrees: 180))
-                    .scrollDismissesKeyboard(.immediately)
+                    //.scrollDismissesKeyboard(.immediately)
                     .animation(animation, value: chat.msgsBottomPadding)
                 }
                 .padding(.top, global.topNavHeight + s8)

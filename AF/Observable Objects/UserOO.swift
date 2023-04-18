@@ -10,7 +10,7 @@ import Foundation
 
 class UserOO: ObservableObject {
     @Published var user: User = User(
-        id: UIDevice.current.identifierForVendor!.uuidString,
+        id: 1,
         signupIsComplete: false,
         permissionsRequested: false
     )
@@ -35,7 +35,7 @@ class UserOO: ObservableObject {
 }
 
 struct User: Codable {
-    var id: String
+    var id: Int
     var signupIsComplete: Bool
     var permissionsRequested: Bool
 }
