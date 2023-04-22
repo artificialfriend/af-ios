@@ -52,6 +52,12 @@ struct ContentView: View, KeyboardReadable {
                         .offset(x: chatOffset)
                         .onAppear {
                             withAnimation(.linear2) { chatOpacity = 1 }
+                            
+                            if msgs.count == 0 {
+                                Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                                    chat.addMsg(text: "", isUserMsg: false, isNew: true, isPremade: true, hasToolbar: false, managedObjectContext: managedObjectContext)
+                                }
+                            }
                         }
                     
                     ActiveReadingView()
@@ -208,7 +214,7 @@ struct ContentView: View, KeyboardReadable {
             withAnimation(.linear1) { modeOpacity = 0 }
             withAnimation(.linear2.delay(0.4)) { chatOpacity = 1 }
             toggleComposer()
-            toggleAF()
+            toggleAF(doesGreeting: false)
         }
     }
     

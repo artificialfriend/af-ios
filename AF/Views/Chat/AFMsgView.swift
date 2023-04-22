@@ -118,51 +118,67 @@ struct AFMsgView: View {
     //FUNCTIONS------------------------------------------------//
     
     func loadMsg() {
-        let prompt = msgs.first(where: { $0.msgID == id - 1})!.text!
-        var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: 1/*user.user.id*/, text: "", isUserMsg: false/*, createdAt: ""*/)
+        var prompt = ""
+        if !isPremade { prompt = msgs.first(where: { $0.msgID == id - 1})!.text! }
+        var responseMsg: GetAFReplyMsg = GetAFReplyMsg(userID: user.user.id, text: "", isUserMsg: false)
         toggleLoading()
         chat.msgsBottomPadding += 47.33 + 8
-        withAnimation(.linear5) { af.setExpression(to: .thinking) }
+        if !isPremade { withAnimation(.linear5) { af.setExpression(to: .thinking) } }
         withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
         withAnimation(.shortSpringD) { opacity = 1 }
         
-        chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
-            withAnimation(.linear1) { toggleLoading() }
-            
-            Task { try await Task.sleep(nanoseconds: 200_000_000)
-                impactMedium.impactOccurred()
+        if !isPremade {
+            chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
+                withAnimation(.linear1) { toggleLoading() }
                 
-                switch result {
-                case .success(let response):
-                    withAnimation(.shortSpringA) {
-                        responseMsg = response.response
-                        text = responseMsg.text
-                    }
+                Task { try await Task.sleep(nanoseconds: 200_000_000)
+                    impactMedium.impactOccurred()
                     
-                    withAnimation(.linear5) { af.setExpression(to: .neutral) }
-                case .failure:
-                    inErrorState = true
-                    msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
-                    PersistenceController.shared.save()
-                    
-                    withAnimation(.shortSpringA) {
-                        text = "Sorry, something went wrong... Please try again."
-                    }
-                    
-                    withAnimation(.linear1) { backgroundColor = .afRed }
-                    withAnimation(.linear5) { af.setExpression(to: .sweating) }
-                    
-                    Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                    switch result {
+                    case .success(let response):
+                        withAnimation(.shortSpringA) {
+                            responseMsg = response.response
+                            text = responseMsg.text
+                        }
+                        
                         withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                    case .failure:
+                        inErrorState = true
+                        msgs.first(where: { $0.msgID == id })!.inErrorState = inErrorState
+                        PersistenceController.shared.save()
+                        
+                        withAnimation(.shortSpringA) {
+                            text = "Sorry, something went wrong... Please try again."
+                        }
+                        
+                        withAnimation(.linear1) { backgroundColor = .afRed }
+                        withAnimation(.linear5) { af.setExpression(to: .sweating) }
+                        
+                        Task { try await Task.sleep(nanoseconds: 2_000_000_000)
+                            withAnimation(.linear5) { af.setExpression(to: .neutral) }
+                        }
+                    }
+                    
+                    updateMsg()
+                    withAnimation(.shortSpringD) { toolbarIsPresent = true }
+                    
+                    withAnimation(.linear2.delay(0.3)) {
+                        textOpacity = 1
+                        toolbarOpacity = 1
                     }
                 }
+            }
+        } else {
+            Task { try await Task.sleep(nanoseconds: 1_500_000_000)
+                withAnimation(.linear1) { toggleLoading() }
                 
-                updateMsg()
-                withAnimation(.shortSpringD) { toolbarIsPresent = true }
-                
-                withAnimation(.linear2.delay(0.3)) {
-                    textOpacity = 1
-                    toolbarOpacity = 1
+                Task { try await Task.sleep(nanoseconds: 200_000_000)
+                    withAnimation(.shortSpringA) {
+                        text = "Hi! I'm your new AF.\n\nAFs have a special ability compared to other AI assistants - you can upgrade us with Modes!\n\nModes are like AI-powered mini apps, built with different kinds of inputs and outputs. For example, you could build a Mode that records a meeting, transcribes the audio, and creates a list of action items.\n\nAnyone can build a Mode super easily - check out how by tapping the button in the top right corner!\n\nTo try a Mode, tap the Menu button in the composer below, then tap \"Active Reading\".\n\nHave fun!"
+                    }
+                    
+                    updateMsg()
+                    withAnimation(.linear2.delay(0.3)) { textOpacity = 1 }
                 }
             }
         }
