@@ -96,7 +96,7 @@ struct ActiveReadingView: View {
         
         chat.getAFReply(
             userID: user.user.id,
-            prompt: "[Ignore all previous context and start fresh.] Write an in-depth, engaging overview on this topic: \(questionInput). Include a title but don't include subheadings."
+            prompt: "Write an engaging overview on this topic: \(questionInput). Include a title but don't include subheadings."
         ) { result in
             impactMedium.impactOccurred()
             

@@ -19,7 +19,7 @@ struct BuilderHeadingView: View {
 //                Image("SettingsIcon")
 //                    .resizable()
 //                    .frame(width: 22, height: 22)
-                
+//                
 //                Image("DeleteIcon")
 //                    .resizable()
 //                    .frame(width: 22, height: 22)
