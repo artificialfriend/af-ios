@@ -46,7 +46,7 @@ class ChatOO: ObservableObject {
         
         //let concatenatedPrompt = concatenateMessagesWithPrompt(currentPrompt: prompt, managedObjectContext: managedObjectContext)
         let requestBody = GetAFReplyRequestBody(userID: userID, text: assembledPrompt, behavior: "")
-        let url = URL(string: "https://af-backend-yysri.ondigitalocean.app/chat/turbo")!
+        let url = URL(string: "https://pthjvxlfvjsoszanhhzv.supabase.co/functions/v1/chat")!
         var request = URLRequest(url: url)
         
         request.httpMethod = "POST"
