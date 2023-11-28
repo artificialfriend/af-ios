@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MsgToolbarView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var user: UserOO
     @EnvironmentObject var af: AFOO
     @EnvironmentObject var chat: ChatOO
@@ -231,7 +232,12 @@ struct MsgToolbarView: View {
             }
         }
 
-        chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
+        chat.getAFReply(
+            userID: user.user.id,
+            prompt: prompt,
+            isMode: false,
+            managedObjectContext: managedObjectContext
+        ) { result in
             impactMedium.impactOccurred()
             
             withAnimation(.default) {

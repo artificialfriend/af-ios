@@ -128,7 +128,12 @@ struct AFMsgView: View {
         withAnimation(.shortSpringD) { opacity = 1 }
         
         if !isPremade {
-            chat.getAFReply(userID: user.user.id, prompt: prompt) { result in
+            chat.getAFReply(
+                userID: user.user.id,
+                prompt: prompt,
+                isMode: false,
+                managedObjectContext: managedObjectContext
+            ) { result in
                 withAnimation(.linear1) { toggleLoading() }
                 
                 Task { try await Task.sleep(nanoseconds: 200_000_000)

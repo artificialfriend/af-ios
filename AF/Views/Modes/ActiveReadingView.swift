@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ActiveReadingView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var global: GlobalOO
     @EnvironmentObject var chat: ChatOO
     @EnvironmentObject var user: UserOO
@@ -96,7 +97,9 @@ struct ActiveReadingView: View {
         
         chat.getAFReply(
             userID: user.user.id,
-            prompt: "Write an engaging overview on this topic: \(questionInput). Include a title but don't include subheadings."
+            prompt: "Write an engaging overview on this topic: \(questionInput). Include a title but don't include subheadings.",
+            isMode: true,
+            managedObjectContext: managedObjectContext
         ) { result in
             impactMedium.impactOccurred()
             
@@ -116,7 +119,9 @@ struct ActiveReadingView: View {
         
         chat.getAFReply(
             userID: user.user.id,
-            prompt: "Create 3 multiple choice questions from this text. Use the following format:\n\n1. [Question]\nA. [Option]\nB. [Option]\nC. [Option]\nD. [Option]\nAnswer: [Answer]\n\n---\n\n\(aiTextResponse)"
+            prompt: "Create 3 multiple choice questions from this text. Use the following format:\n\n1. [Question]\nA. [Option]\nB. [Option]\nC. [Option]\nD. [Option]\nAnswer: [Answer]\n\n---\n\n\(aiTextResponse)",
+            isMode: true,
+            managedObjectContext: managedObjectContext
         ) { result in
             switch result {
             case .success(let response):

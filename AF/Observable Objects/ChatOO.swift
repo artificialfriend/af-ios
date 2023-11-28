@@ -26,10 +26,27 @@ class ChatOO: ObservableObject {
     @Published var activeMode: ActiveMode = .none
     @Published var resetActiveReadingMode: Bool = false
     
-    func getAFReply(userID: Int, prompt: String, completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void) {
+    func getAFReply(
+        userID: Int,
+        prompt: String,
+        isMode: Bool,
+        managedObjectContext: NSManagedObjectContext,
+        completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void
+    ) {
         //TODO: Change userID to actual userID
-        let requestBody = GetAFReplyRequestBody(userID: userID, text: prompt, behavior: "")
-        let url = URL(string: "https://af-backend-gu2hcas3ba-uw.a.run.app/chat/turbo")!
+        let assembledPrompt: String
+        
+        if isMode {
+            assembledPrompt = prompt
+        } else {
+            assembledPrompt = concatenateMessagesWithPrompt(currentPrompt: prompt, managedObjectContext: managedObjectContext)
+        }
+        
+        print(assembledPrompt)
+        
+        //let concatenatedPrompt = concatenateMessagesWithPrompt(currentPrompt: prompt, managedObjectContext: managedObjectContext)
+        let requestBody = GetAFReplyRequestBody(userID: userID, text: assembledPrompt, behavior: "")
+        let url = URL(string: "https://af-backend-yysri.ondigitalocean.app/chat/turbo")!
         var request = URLRequest(url: url)
         
         request.httpMethod = "POST"
@@ -115,6 +132,31 @@ class ChatOO: ObservableObject {
         formatter.timeZone = TimeZone.current
         let localDate = formatter.string(from: utcDate!)
         return localDate
+    }
+    
+    func fetchPreviousMessages(managedObjectContext: NSManagedObjectContext) -> [String] {
+        let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
+            
+        // Sorting by createdAt date to maintain conversation order
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        do {
+            // Fetching the messages
+            let fetchedMessages = try managedObjectContext.fetch(fetchRequest)
+            
+            // Extracting the text from each message
+            return fetchedMessages.map { $0.text ?? "" }
+        } catch {
+            print("Error fetching messages: \(error)")
+            return []
+        }
+    }
+    
+    func concatenateMessagesWithPrompt(currentPrompt: String, managedObjectContext: NSManagedObjectContext) -> String {
+        let previousMessages = fetchPreviousMessages(managedObjectContext: managedObjectContext)
+        let concatenatedPrompt = previousMessages.joined(separator: "\n") + "\n" + currentPrompt
+        return concatenatedPrompt
     }
 }
 

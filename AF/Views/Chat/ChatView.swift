@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ChatView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.msgID)]) var msgs: FetchedResults<Message>
