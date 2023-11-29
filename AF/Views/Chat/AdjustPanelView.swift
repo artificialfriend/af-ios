@@ -190,7 +190,7 @@ struct AdjustPanelView: View {
         chat.getAFReply(
             userID: user.user.id,
             prompt: prompt, 
-            isMode: false,
+            excludeContext: true,
             managedObjectContext: managedObjectContext
         ) { result in
             impactMedium.impactOccurred()

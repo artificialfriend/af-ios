@@ -29,35 +29,33 @@ class ChatOO: ObservableObject {
     func getAFReply(
         userID: Int,
         prompt: String,
-        isMode: Bool,
+        excludeContext: Bool,
         managedObjectContext: NSManagedObjectContext,
         completion: @escaping (Result<GetAFReplyResponseBody, Error>) -> Void
     ) {
-        //TODO: Change userID to actual userID
-        let assembledPrompt: String
+        let messages: [OpenAIMessage]
         
-        if isMode {
-            assembledPrompt = prompt
+        if excludeContext {
+            messages = [OpenAIMessage(role: "user", content: prompt)]
         } else {
-            assembledPrompt = concatenateMessagesWithPrompt(currentPrompt: prompt, managedObjectContext: managedObjectContext)
+            messages = fetchPreviousMessages(managedObjectContext: managedObjectContext)
         }
         
-        print(assembledPrompt)
-        
-        //let concatenatedPrompt = concatenateMessagesWithPrompt(currentPrompt: prompt, managedObjectContext: managedObjectContext)
-        let requestBody = GetAFReplyRequestBody(userID: userID, text: assembledPrompt, behavior: "")
+        let requestBody = OpenAIRequestBody(messages: messages)
         let url = URL(string: "https://pthjvxlfvjsoszanhhzv.supabase.co/functions/v1/chat")!
         var request = URLRequest(url: url)
         
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0aGp2eGxmdmpzb3N6YW5oaHp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAyMTgyNzUsImV4cCI6MjAwNTc5NDI3NX0.cam44lHieyYeSSx-lUAblbfILI1Q4gM-bErQ2t5N9zc", forHTTPHeaderField: "Authorization")
         request.httpBody = try! JSONEncoder().encode(requestBody)
-
+        
         let call = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
-            
+            print(String(data: data, encoding: .utf8) ?? "No raw data")
             do {
-                let response = try JSONDecoder().decode(GetAFReplyResponseBody.self, from: data)
+                let replyResponse = try JSONDecoder().decode(OpenAIResponseBody.self, from: data)
+                let response = GetAFReplyResponseBody(response: GetAFReplyMsg(userID: userID, text: replyResponse.response, isUserMsg: false))
                 
                 DispatchQueue.main.async {
                     if error != nil {
@@ -68,6 +66,7 @@ class ChatOO: ObservableObject {
                     }
                 }
             } catch let error as NSError {
+                print(error)
                 completion(.failure(error))
             }
         }
@@ -134,7 +133,7 @@ class ChatOO: ObservableObject {
         return localDate
     }
     
-    func fetchPreviousMessages(managedObjectContext: NSManagedObjectContext) -> [String] {
+    func fetchPreviousMessages(managedObjectContext: NSManagedObjectContext) -> [OpenAIMessage] {
         let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
             
         // Sorting by createdAt date to maintain conversation order
@@ -146,22 +145,15 @@ class ChatOO: ObservableObject {
             let fetchedMessages = try managedObjectContext.fetch(fetchRequest)
             
             // Extracting the text from each message
-            return fetchedMessages.map { $0.text ?? "" }
+            return fetchedMessages.map { OpenAIMessage(role: $0.isUserMsg ? "user" : "assistant", content: $0.text ?? "") }
         } catch {
-            print("Error fetching messages: \(error)")
             return []
         }
-    }
-    
-    func concatenateMessagesWithPrompt(currentPrompt: String, managedObjectContext: NSManagedObjectContext) -> String {
-        let previousMessages = fetchPreviousMessages(managedObjectContext: managedObjectContext)
-        let concatenatedPrompt = previousMessages.joined(separator: "\n") + "\n" + currentPrompt
-        return concatenatedPrompt
     }
 }
 
 struct GetAFReplyRequestBody: Codable {
-    let userID: Int//String
+    let userID: Int
     let text: String
     let behavior: String
     
@@ -172,12 +164,30 @@ struct GetAFReplyRequestBody: Codable {
     }
 }
 
+struct OpenAIRequestBody: Codable {
+    let messages: [OpenAIMessage]
+}
+
+struct OpenAIResponseBody: Codable {
+    let response: String
+}
+
+struct OpenAIMessage: Codable {
+    let role: String
+    let content: String
+    
+    enum CodingKeys: String, CodingKey {
+        case role
+        case content
+    }
+}
+
 struct GetAFReplyResponseBody: Codable {
     let response: GetAFReplyMsg
 }
 
 struct GetAFReplyMsg: Codable {
-    let userID: Int//String
+    let userID: Int
     let text: String
     let isUserMsg: Bool
     

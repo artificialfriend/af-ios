@@ -97,8 +97,8 @@ struct ActiveReadingView: View {
         
         chat.getAFReply(
             userID: user.user.id,
-            prompt: "Write an engaging overview on this topic: \(questionInput). Include a title but don't include subheadings.",
-            isMode: true,
+            prompt: "Write an engaging overview on this topic: \(questionInput). Include a title but don't include subheadings. Do NOT include \"Overview:\" before the body",
+            excludeContext: true,
             managedObjectContext: managedObjectContext
         ) { result in
             impactMedium.impactOccurred()
@@ -106,7 +106,6 @@ struct ActiveReadingView: View {
             switch result {
             case .success(let response):
                 aiTextResponse = response.response.text
-                print(aiTextResponse)
                 triggerAIQuiz()
             case .failure:
                 aiTextResponse = "Sorry, something went wrong... Please try again."
@@ -120,13 +119,12 @@ struct ActiveReadingView: View {
         chat.getAFReply(
             userID: user.user.id,
             prompt: "Create 3 multiple choice questions from this text. Use the following format:\n\n1. [Question]\nA. [Option]\nB. [Option]\nC. [Option]\nD. [Option]\nAnswer: [Answer]\n\n---\n\n\(aiTextResponse)",
-            isMode: true,
+            excludeContext: true,
             managedObjectContext: managedObjectContext
         ) { result in
             switch result {
             case .success(let response):
                 aiQuizResponse = response.response.text
-                print(aiQuizResponse)
             case .failure:
                 aiQuizResponse = "Sorry, something went wrong... Please try again."
             }

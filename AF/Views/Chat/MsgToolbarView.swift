@@ -235,7 +235,7 @@ struct MsgToolbarView: View {
         chat.getAFReply(
             userID: user.user.id,
             prompt: prompt,
-            isMode: false,
+            excludeContext: false,
             managedObjectContext: managedObjectContext
         ) { result in
             impactMedium.impactOccurred()

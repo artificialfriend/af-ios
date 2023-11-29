@@ -186,10 +186,6 @@ struct AIQuizView: View {
                 questions.removeFirst()
             }
         }
-        
-        print(questions)
-        print(answers)
-        print(correctAnswers)
     }
     
     func toggleLoading() {

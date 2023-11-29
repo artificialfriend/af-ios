@@ -28,7 +28,9 @@ struct AIQuizAnswerView: View {
                 Text(answer)
                     .font(.sixteen)
                     .opacity(0.9)
-                    .lineLimit(10)
+                    //.lineLimit(10)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 Spacer(minLength: 8)
                 
