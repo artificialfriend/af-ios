@@ -127,8 +127,6 @@ struct AFMsgView: View {
         withAnimation(.loadingSpin) { spinnerRotation = Angle(degrees: 360) }
         withAnimation(.shortSpringD) { opacity = 1 }
         
-        print(prompt)
-        
         if !isPremade {
             chat.getAFReply(
                 userID: user.user.id,

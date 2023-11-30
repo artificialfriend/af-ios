@@ -260,7 +260,7 @@ enum AdjustOption: CaseIterable {
         case .casual:
             return "in a casual and relatable style as if you were explaining something to a friend. Use natural language and phrasing that would be used in every day conversations."
         case .professional:
-            return "using professional language like an employee would at work."
+            return "using professional language like an employee would at work. DO NOT FORMAT LIKE A LETTER OR EMAIL"
         }
     }
     
