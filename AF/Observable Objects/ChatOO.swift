@@ -52,7 +52,7 @@ class ChatOO: ObservableObject {
         
         let call = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
-            print(String(data: data, encoding: .utf8) ?? "No raw data")
+            
             do {
                 let replyResponse = try JSONDecoder().decode(OpenAIResponseBody.self, from: data)
                 let response = GetAFReplyResponseBody(response: GetAFReplyMsg(userID: userID, text: replyResponse.response, isUserMsg: false))
